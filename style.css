@@ -1,0 +1,113 @@
+span.annotation { border-bottom: 2px solid; }
+span.annotation span.annotation { padding-bottom:4px; }
+span.annotation span.annotation span.annotation { padding-bottom:6px; }
+span.annotation span.annotation span.annotation span.annotation { padding-bottom:8px; }
+span.linktarget { border-bottom: 2px solid; }
+
+.column {
+    max-width: 60%;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+.margin-right {
+    margin-right: -22%;
+    margin-left: 2%;
+    max-width: 20%;
+    margin-top: 0;
+    font-size: 80%;
+    text-align: left;
+    float: right;
+}
+.margin-left {
+    margin-left: -22%;
+    margin-right: 2%;
+    max-width: 20%;
+    margin-top: 0;
+    text-align: right;
+    float: left;
+}
+table.no-borders,
+table.no-borders th,
+table.no-borders td {
+    border: none;
+}
+table.no-borders {
+    border-collapse: collapse;
+}
+mjx-container[display="true"] {
+    font-size: 1.2em !important;
+}
+mjx-container:not([display="true"]) {
+    font-size: 1em !important;
+}
+
+
+span[data-uid="0"] { border-color: orange; }
+span[data-uid="1"] { border-color: blue; }
+span[data-uid="2"] { border-color: red; }
+span[data-uid="3"] { border-color: green; }
+span[data-uid="4"] { border-color: purple; }
+span[data-uid="5"] { border-color: violet; }
+p         { text-align: justify; }
+p         { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco; }
+table     { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco; }
+a         { color: #2288bb; text-decoration:underline; }
+a:visited { color: #888888; }
+a:hover   { color: white; background-color: #33aaff; text-decoration:underline; }
+code      {
+font-family: "Hermes TTY EWD", Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+font-size: 0.95em;
+background-color: #f7f7f7;
+color: #333;
+overflow-x: auto;
+white-space: pre;
+}
+@font-face {
+font-family: "F1785 GLC Baskerville Normal";
+src: url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.eot");
+src: url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.eot?#iefix") format("embedded-opentype"),
+url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.woff2") format("woff2"),
+url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.woff") format("woff"),
+url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.ttf") format("truetype"),
+url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/1785-GLC-Baskerville.svg#F1785 GLC Baskerville Normal") format("svg");
+}
+@font-face {
+font-family: "Hermes TTY EWD";
+src: url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/Hermes-TTY-EWD.ttf") format("truetype");
+}
+@font-face {
+font-family: "Glass TTY VT220";
+src: url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/fonts/Glass-TTY-VT220.ttf") format("truetype");
+}
+code.inline { display: inline; background-color: #ebebeb; font-size: 0.75em; }
+pre code  {
+font-family: "Hermes TTY EWD", Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+display: block;
+padding: 1em;
+margin: 1em 0;
+border-left: 8px solid #ddd;
+border-radius: 8px;
+line-height: 1.5;
+}
+body {
+max-width: max-content;
+margin: auto;
+}
+header {
+background-color: #ebebeb;
+padding: 20px;
+border-radius: 15px 15px 0 0; /* top-left, top-right, bottom-right, bottom-left */
+font-size: 30px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco;
+}
+footer {
+background-color: #ebebeb;
+padding: 20px;
+border-radius: 0 0 15px 15px; /* top-left, top-right, bottom-right, bottom-left */
+font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco;
+}
+td { padding: 10px 20px; }
+table.no-borders thead th {
+padding: 10px 20px;
+font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco;
+text-align: left;
+}

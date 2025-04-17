@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Card processing phases</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="phases"></a><div class="column"><header>Card processing phases</header>
+<a name="phases-00000"></a><p>Deck processing happens in the following phases:</p>
+<a name="phases-syntax"></a><p><em>1</em>. Syntax. The deck consists of one of more <i>cardfiles</i>. Cardfiles are read  sequentially and parsed. The word &quot;parsed&quot; should not be taken too  seriously. There is no formal grammar and the &quot;parser&quot; is just a bunch of  <a href="https://docs.python.org/3.6/library/stdtypes.html#str.split"><code class="inline">str.split()</code></a> and <a href="https://docs.python.org/3.6/library/stdtypes.html#str.strip"><code class="inline">str.strip()</code></a> calls. The main parser&#x27;s logic is in  <a href="https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/card#:~:text=cardread"><code class="inline">card.cardread()</code></a> function. (Fun fact: the hyperlinks to the functions in the  preceding <a href="attributes.html#attributes-00015">sentences</a> are generated automatically.) A cardfile consists of:</p>
+<a name="phases-00002"></a><p>– the formatting instruction indicating the boundaries between fragments and cards,</p>
+<a name="phases-00003"></a><p>– the text of the fragments and</p>
+<a name="phases-00004"></a><p>– the <i>attributes</i> associated with a fragment or a            card or a deck. An attribute is a key-value pair, where the key is a string and            the value is either a string or a list of strings.</p>
+<a name="phases-00005"></a><p>The deck, cards and fragments are <i>nodes</i>. The parser builds a tree of nodes  with the deck as the root and with cards and fragments as its children and  grandchildren respectively.</p>
+<a name="phases-00006"></a><p><em>2</em>. Cross-referencing. The next phase, implemented in <a href="https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master/card#:~:text=crossref"><code class="inline">card.crossref()</code></a>    function, interprets attributes to create <i>layout instructions</i> for the    text. This happens in multiple steps:</p>
+<a name="phases-00007"></a><p>– First, each element in the tree is assigned a unique identifier that is used            to refer to it in the future. The user can specify the identifier by setting            the <code class="inline">id</code> attribute.</p>
+<a name="phases-00008"></a><p>– Then, card are orgnised into collection according to <i>tags</i> and <i>series</i>. <em>TDB</em>.</p>
+<a name="phases-00009"></a><p>– At the next step, styles and links are applied. This is the most involved            part of layout creation. Styles and links are specified by regular            expressions. The expressions are matched against the next,            appropriate layout commands are inserted and the text is split into            pieces. card supports general link mechanism: both ends of a link can            be specified by an URL, an identifier of a node in the deck, or an            identifier together with a regular expression.</p>
+<a name="phases-00010"></a><p>– Once all layout instructions are generated their are assumbled into a program            for an abstract layout engine.</p>
+<a name="phases-00011"></a><p><em>3</em>. In the final step, the abstract program is executed by an engine (only    HTML engine exists at the moment), which produces the output.</p>
+<a name="phases-00012"></a><p>We shall now look at each of the phases in more detail.</p><footer><a href="index.html#index">&lt;</a>&nbsp;<a href="series_trunk.html">trunk</a>&nbsp;<a href="syntax.html#syntax">&gt;</a>&nbsp;&nbsp;&nbsp;&lt;&nbsp;<a href="series_processing.html">processing</a>&nbsp;<a href="syntax.html#syntax">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

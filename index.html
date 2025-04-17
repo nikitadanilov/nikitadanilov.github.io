@@ -1,9 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="0; url='https://www.cofault.com'" />
-  </head>
-  <body>
-    <p>goto <a href="https://www.cofault.com">https://www.cofault.com</a>.</p>
-  </body>
+ <head>
+   <meta charset="UTF-8">
+   <title>Overview</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="index"></a><div class="column"><header>Overview</header>
+<a name="index-00000"></a><p>This is the documentation for the <a href="https://github.com/nikitadanilov/card">card</a> tool.</p>
+<a name="index-00001"></a><p>card is similar to various &quot;publishing&quot; tools that take as the input content marked up with various formatting instructions and then render it in various formats. It is much simpler than <a href="https://gohugo.io/">hugo</a> or <a href="https://pandoc.org/">pandoc</a> and its intended scope is more of a component in a note-taking system, than a full-blown site publishing engine.</p>
+<a name="index-00002"></a><p>The input is a &quot;deck&quot;, which is a set of &quot;cards&quot;, each consisting of &quot;fragments&quot;. Fragments correspond to paragraphs and things like code and math displays in the output. Cards are used to ogranise content into &quot;series&quot;, they can correspond to pages in the output, but not necessarily.</p>
+<a name="index-00003"></a><p>Decks, cards and fragments all have attributes.</p>
+<a name="index-00004"></a><p>The documentation is, naturally, maintained via card <a href="https://github.com/nikitadanilov/card/blob/master/self.deck">here</a>.</p>
+<a name="index-00005"></a><p>Here is <a href="https://github.com/nikitadanilov/card/blob/master/self.deck">the source code</a> for this card, so far (this is not a Quine preceeded by its own quotation):</p>
+<a name="index-00006"></a><pre><code>// C card self-documentation deck
+// name Overview
+// id intro
+// +# trunk 0
+This is the documentation for the card tool.
+/ += . &quot;card&quot; -&gt; https://github.com/nikitadanilov/card
+
+card is similar to various &quot;publishing&quot; tools that take as the input content
+marked up with various formatting instructions and then render it in various
+formats. It is much simpler than hugo or pandoc and its intended scope is more
+of a component in a note-taking system, than a full-blown site publishing engine.
+/ += . &quot;hugo&quot; -&gt; https://gohugo.io/
+/ += . &quot;pandoc&quot; -&gt; https://pandoc.org/
+
+The input is a &quot;deck&quot;, which is a set of &quot;cards&quot;, each consisting of
+&quot;fragments&quot;. Fragments correspond to paragraphs and things like code and math
+displays in the output. Cards are used to ogranise content into &quot;series&quot;, they
+can correspond to pages in the output, but not necessarily.
+
+Decks, cards and fragments all have attributes.
+
+The documentation is, naturally, maintained via card here.
+/ += . &quot;here&quot; -&gt; https://github.com/nikitadanilov/card/blob/master/self.deck
+
+Here is the source code for this card, so far (this is not a Quine preceeded by
+its own quotation):
+/ += . &quot;the source code&quot; -&gt; https://github.com/nikitadanilov/card/blob/master/self.deck</code></pre>
+<a name="index-00007"></a><p>Note that markup instructions are not embedded in the text. For example, the link to Hugo&#x27;s website is created by</p>
+<a name="index-00008"></a><pre><code>/ += . &quot;hugo&quot; -&gt; https://gohugo.io/</code></pre>
+<a name="index-00009"></a><p>This attaches the hyperlink to the part of the preceding paragraph matching the regular expression &quot;hugo&quot;.</p>
+<a name="index-00010"></a><p>The separation between the text and the markup makes (in my personal opinion, that is) the content source more readable.</p><footer>&lt;&nbsp;<a href="series_trunk.html">trunk</a>&nbsp;<a href="phases.html#phases">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
 </html>
