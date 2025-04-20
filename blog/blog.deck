@@ -1,0 +1,513 @@
+/// +TeX \( \def\List{\operatorname{List}} \)
+/// +TeX \( \def\integer{\operatorname{integer}} \)
+/// +TeX \( \def\nat{\operatorname{nat}} \)
+/// +TeX \( \def\Bool{\operatorname{Bool}} \)
+/// +TeX \( \def\Punct{\operatorname{Punct}} \)
+/// +TeX \( \def\BT{\operatorname{BT}} \)
+/// +TeX \( \def\B{\operatorname{B}} \)
+/// +TeX \( \def\T{\operatorname{T}} \)
+/// +TeX \( \def\R{\operatorname{R}} \)
+/// +TeX \( \def\Set{\operatorname{Set}} \)
+/// +TeX \( \def\Bag{\operatorname{Bag}} \)
+/// +TeX \( \def\Ring{\operatorname{Ring}} \)
+/// +TeX \( \def\plug{\operatorname{plug}} \)
+/// +TeX \( \def\Zipper{\operatorname{Zipper}} \)
+/// +TeX \( \def\cosh{\operatorname{cosh}} \)
+/// +TeX \( \def\sinh{\operatorname{sinh}} \)
+/// +TeX \( \def\ch{\operatorname{ch}} \)
+/// +TeX \( \def\sh{\operatorname{sh}} \)
+/// +TeX \( \def\d{\partial} \)
+
+// name What is cosh(List(Bool))? Or beyond algebra: analysis of data types.
+// id aodt
+// +# blog aodt
+// +# timeline 2025/04/16
+// +tags programming
+// +tags math
+
+
+There is that curious idea that you can think of a type in a programming
+language as a kind of algebraic object. Take (homogeneous) lists for example. A
+list of integers is either an empty list (i.e., `nil`) or a pair of an integer
+(the head of the list) and another list (the tail of the list). You can
+symbolically write this as
+/ += . "type" -> https://en.wikipedia.org/wiki/Data_type
+/ += . "algebraic object" -> https://en.wikipedia.org/wiki/Algebraic_data_type
+
+; math
+\List(\integer) = 1 + \integer \cdot \List(\integer)
+
+Here \(1\) is the _unit type_ with one element, it does not matter what this
+element is exactly. \(A + B\) is a _disjoint sum_ of \(A\) and \(B\). It is a
+tagged union type, whose values are values of \(A\) or \(B\) marked as
+such. \(A \cdot B\) is the product type. Its values are pairs of values of
+\(A\) and \(B\).
+/ += . "tagged union" -> https://en.wikipedia.org/wiki/Tagged_union
+/ += . "disjoint sum" -> https://en.wikipedia.org/wiki/Disjoint_union
+/ += . "product type" -> https://en.wikipedia.org/wiki/Product_type
+
+In general, we have
+/ +* "general" The underlying mathematical machinery includes "polynomial functors", "monads", "Lambek's theorem", etc. You can stop digging when you reach "Knaster-Tarski theorem" and "Beck's tripleability condition".
+
+; math
+\List(x) = 1 + x \cdot \List(x)
+
+In Haskell this is written as
+
+; code
+data List x = Nil | Cons x (List x)
+
+Similarly, a binary tree with values of type \(x\) at the nodes can be written as
+
+; math
+\BT(x) = 1 + x\cdot \BT(x) \cdot \BT(x)
+
+That is, a binary tree is either empty or a triple of the root, the left
+sub-tree and the right sub-tree. If we are only interested in the "shapes" of
+the binary trees we need
+
+; math
+\B = \BT(1) = 1 + \B^2
+
+Nothing too controversial so far. Now, apply some trivial algebra:
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+        \List(x) &\;=\;& 1 + x \cdot \List(x)       \\
+        \List(x) - x \cdot \List(x) &\;=\;& 1       \\
+        \List(x) \cdot (1 - x) &\;=\;& 1            \\
+        \List(x) &\;=\;& \frac{1}{1 - x}            \\
+        \List(x) &\;=\;& 1 + x + x^2 + x^3 + \cdots
+\end{array}
+
+Going from \(\List(x) - x \cdot \List(x)\) to \(\List(x) \cdot (1 - x)\) in the
+middle step arguably makes _some_ sense: product of sets and types distributes
+over sum, much like it does for integers. But the rest is difficult to justify
+or even interpret. What is the difference of types or their infinite series?
+
+The last equation, however, is perfectly valid: an element of \(\List(x)\) is
+either `nil`, or a singleton element of \(x\), or a pair of elements of \(x\) or
+a triple, etc. This is somewhat similar to the cavalier methods of
+eighteenth-century mathematicians like Euler and the Bernoulli brothers, who
+would boldly go where no series converged before and through a sequence of
+meaningless intermediate steps arrive to a correct result.
+
+One can apply all kinds of usual algebraic transformations to \(\List(x) = (1 -
+x)^{-1}\). For example,
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}l@{\quad}}
+        \List(a + b)         &\;=\;&    \frac{1}{1 - a - b} \\
+                             &\;=\;&    \frac{1}{1 - a}\cdot\frac{1}{1 - \frac{b}{1 - a}} \\
+                             &\;=\;&    \List(a)\cdot\List(\frac{b}{1 - a}) \\
+                             &\;=\;&    \List(a)\cdot\List(b\cdot\List(a))
+\end{array}
+
+This corresponds to the regular expressions identity \((a|b)^* = a^*(ba^*)^*\).
+
+Apply the same trick to binary trees:
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}l@{\quad}}
+        \BT                        &\;=\;&    1 + \BT^2 \cdot x          &     \\
+        \BT^2 \cdot x - \BT + 1    &\;=\;&    0                          & \text{(Solve the quadratic equation.)}  \\
+        \BT                        &\;=\;&    \frac{1\pm\sqrt{1-4\cdot x}}{2\cdot x} & \text{(Use binomial theorem)} \\
+        \sqrt{1-4\cdot x}          &\;=\;&    \sum_{k=0}^\infty \binom{\tfrac12}{k}(-4\cdot x)^k & \\
+        \BT(x)                     &\;=\;&    1 + x + 2\cdot x^2 + 5\cdot x^3 + 14\cdot x^4 + 42\cdot x^5 + \cdots & \\
+                                   &\;=\;&    \sum_{n=0}^\infty C_n\cdot x^n, &
+\end{array}
+
+Where \(C_n=\frac{1}{n+1}\binom{2\cdot n}{n}\)—the \(n\)-th Catalan number, that
+is the number of binary trees with \(n\) nodes. To understand the last series we
+need to decide what \(n\cdot x\) is, where \(n\) is a non-negative integer
+and \(x\) is a type. Two natural interpretations are
+// += . "Catalan number" -> https://en.wikipedia.org/wiki/Catalan_number
+
+; math
+n \cdot x = x + x + \cdots = \sum_0^{n - 1} x
+
+and
+
+; math
+n \cdot x = \{0, \ldots, n - 1\} \cdot x
+
+which both mean the same: an element of \(n\cdot x\) is an element of \(x\)
+marked with one of \(n\) "branches", and this is the same as a pair \((i, t)\)
+where \(0 <= i < n\) and \(t\) is an element of \(x\).
+
+The final series then shows that a binary tree is either an empty tree (\(1\)) or
+an \(n\)-tuple of \(x\)-es associated with one of \(C_n\) shapes of
+binary trees with \(n\) nodes. It worked again!
+
+Now, watch carefully. Take simple unmarked binary trees: \(\B = \BT(1) = 1 +
+\B^2\). In this case, we can "calculate" the solution exactly:
+
+; math
+\B^2 - \B + 1 = 0
+
+hence
+
+; math
+\B = \frac{1 \pm \sqrt{1 - 4}}{2} = \frac{1}{2} \pm i\cdot\frac{3}{2} = e^{\pm i\cdot\frac{\pi}{3}}
+
+Both solutions are sixth-degree roots of \(1\): \(\B^6 = 1\). OK, this is still
+completely meaningless, right? Yes, but it also means that \(\B^7 = \B\), which
+--if correct-- would imply that there is a bijection between the set of all
+binary trees and the set of all 7-tuples of binary trees. Haha, clearly
+impossible... Actually, it's a more or less well-known fact.
+/ += . "fact" -> https://arxiv.org/pdf/math/9405205
+
+A note is in order. All "sets" and "types" that we talked about so far are at
+most countably infinite so, of course, there exists a bijection between \(\B\)
+and \(\B^7\) simply because both of these sets are countable. What is
+interesting, and what the paper linked to above explicitly establishes, is that
+there is as they call it "a very explicit" bijection between these sets, that
+is a "structural" bijection that does not look arbitrarily deep into its
+argument trees. For example, in a functional programming language, such a
+bijection can be coded through pattern matching _without_ recursion.
+
+Here is another neat example. A rose tree is a kind of tree datatype where a
+node has an arbitrary list of children:
+/ += . "rose tree" -> https://en.wikipedia.org/wiki/Rose_tree
+
+; math
+\R(x) = x\cdot\List(\R(x))
+
+Substituting \(\List(x) = (1 - x)^{-1}\) we get
+
+; math
+\R(x) = \frac{x}{1 - R(x)}
+
+or
+
+; math
+\R^2(x) - \R(x) + x = 0
+
+Hence \(\R = \R(1)\) is defined by the same equation as \(\B = \BT(1)\): \(\R^2
+- \R + 1 = 0\). So, there must be a bijection between \(\R\) and \(\B\), and of
+course there is: one of the first things LISP hackers realised in the late 1950s
+is that an arbitrary tree can be encoded with cons cells.
+/ += . "cons" -> https://en.wikipedia.org/wiki/Cons
+
+All this is, by the way, is equally applicable to infinite datatypes (that is,
+streams, branching transition systems, etc.)
+/ +* "infinite datatypes" Mathematically, this means that instead of "initial algebras" we treat types as "final co-algebras".
+
+That was pure algebra, there is nothing "analytical" here. Analysis historically
+started with the notion of derivative. And sure, you can define and calculate
+derivatives of data type constructors like \(\List\) and \(\BT\). These
+derivatives are generalisations of zipper-like structures: they represent
+"holes" in the data-type, that can be filled by an instance of the
+type-parameter.
+/ += . "calculate derivatives" -> https://www.cs.le.ac.uk/people/ma139/docs/derivative.pdf
+/ += . "zipper" -> https://en.wikipedia.org/wiki/Zipper_(data_structure)
+
+For example, suppose you have a list \((x_0, \ldots, x_k, \ldots, x_{n - 1})\)
+of type \(\List(x)\) then a hole is obtained by cutting out the element \(x_k\)
+that is \((x_0, \ldots, x_{k-1}, \blacksquare, x_{k+1}, \ldots, x_{n -
+1})\) and is fully determined by the part of the list to the left of the hole
+\((x_0, \ldots, x_{k - 1})\) and the part to the right \((x_{k+1}, \ldots, x_{n
+- 1})\). Both of these can be arbitrary lists (including empty), so a hole is
+determined by a pair of lists and we would expect \(\d \List(x) =
+\List^2(x)\). But Euler would have told us this immediately, because \(\List(x)
+= (1 - x)^{-1}\) hence
+
+; math
+\d \List(x) = \d (1 - x)^{-1} = (1 - x)^{-2} = \List^2(x)
+
+In general the derivative of a type constructor (of a "function" analytically
+speaking) \(T(x)\) comes with a "very explicit" surjective function
+
+; math
+\plug : \d T(x) \cdot x \to T(x)
+
+injective on each of its arguments, and has the usual properties of a derivative,
+among others:
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+        \d (A + B)     &\;=\;&  \d A + \d B \\
+        \d (A \cdot B) &\;=\;&  \d A \cdot B + A \cdot \d B \\
+        \d_x A(B(x))   &\;=\;&  \d_B A(B) \cdot \d_x B(x) \\
+        \d  x          &\;=\;&  1 \\
+        \d  x^n        &\;=\;&  n\cdot x^{n-1} \\
+        \d  n          &\;=\;&  0
+\end{array}
+
+For binary trees we get
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+        \d \BT(x)   &\;=\;&   \d (1 + x\cdot \BT^2(x)) \\
+                          &\;=\;&   0 + \BT^2(x) + 2\cdot x\cdot \BT(x) \cdot \d \BT(x) \\
+                          &\;=\;&   \BT^2(x) / (1 - 2\cdot x\cdot \BT(x)) \\
+                          &\;=\;&   \BT^2(x) \cdot \List(2\cdot x\cdot \BT(x)) \\
+                          &\;=\;&   \BT^2(x) \cdot \Zipper_2(x)
+\end{array}
+
+Here \(\Zipper_2(x) = \List(2\cdot x\cdot \BT(x))\) is the classical Huet's zipper for binary
+trees. We have an additional \(\BT^2(x)\) multiplier, because Huet's zipper plugs
+an entire sub-tree, that is, it's a \(\BT(x)\)-sized hole, whereas our
+derivative is an \(x\)-sized hole.
+/ += . "classical Huet's zipper" -> https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf
+
+For \(n\)-ary trees \(\T = 1 + x\cdot \T^n(x)\) we similarly have
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+          \d \T(x)  &\;=\;&   \d (1 + x\cdot \T^n(x)) \\
+                          &\;=\;&   0 + \T^n(x) + n\cdot x\cdot \T^{n-1}(x) \cdot \d \T(x) \\
+                          &\;=\;&   \T^n(x) / (1 - n\cdot x\cdot \T^{n -1}(x)) \\
+                          &\;=\;&   \T^n(x) \cdot \List(n\cdot x\cdot \T^{n - 1}(x)) \\
+                          &\;=\;&   \T^n(x) \cdot \Zipper_n(x)
+\end{array}
+
+At this point we have basic type constructors for arrays (\(x^n\)), lists and
+variously shaped trees, which we can combine and compute their derivatives. We
+can also try constructors with multiple type parameters (e.g., trees with
+different types at the leaves and internal nodes) and verify that the usual
+partial-differentiation rules apply. But your inner Euler must be jumping up and
+down: much more is possible!
+
+Indeed it is. Recall the "graded" representation of \(\List(x)\):
+/ += . "graded" -> https://en.wikipedia.org/wiki/Graded_structure
+
+; math
+\List(x) = 1 + x + x^2 + x^3 + \cdots
+
+This formula says that there is one (i.e, \(|x|^0\)) list of length \(0\), one
+list (of length \(1\)) for each element of \(x\), one list for each ordered pair
+of elements of \(x\), for each ordered triple, etc. What if we forget the order
+of \(n\)-tuples? Then, by identifying each of the possible \(n!\) permutations,
+we would get, instead of lists with \(n\) elements, multisets (bags) with \(n\)
+elements.
+/ += . "multisets" -> https://en.wikipedia.org/wiki/Multiset
+
+; math
+\Bag(x) = \frac{1}{0!} + \frac{x}{1!} + \frac{x^2}{2!} + \cdots + \frac{x^k}{k!} + \cdots = e^x
+
+This counting argument, taken literally, does not hold water. For one thing, it
+implies that every term in \(e^x\) series is an integer (hint: there are no
+\(n!\) \(n\)-tuples belonging to the same class as \((t, t, \ldots, t)\)). But it
+drives the intuition in the right direction and \(\Bag(x)\) does have the same
+properties as the exponent. Before we demonstrate this, let's look at another
+example.
+/ +* "literally" Formally we move from polynomial functors to "analytic functors" introduced by A. Joyal.
+/ += https://link.springer.com/chapter/10.1007/BFb0072514 -> . "literally"
+
+A list of \(n\) elements is one of \(|x|^n\) \(n\)-tuples of elements of
+\(x\). A bag with \(n\) elements is one of such tuples, considered up to a
+permutation. A _set_ with \(n\) elements is an \(n\)-tuple of _different_
+elements considered up to a permutation. Hence, where for lists and bags we have
+\(x^n\), sets have \(x\cdot(x - 1)\cdot\cdots\cdot(x - n + 1)\) by the standard
+combinatorial argument: there are \(x\) options for the first element, \(x - 1\)
+options for the second element and so on.
+
+That is,
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+\Set(x) &\;=\;& 1 + \frac{x}{1!} + \frac{x\cdot(x - 1)}{2!} + \frac{x\cdot(x - 1)\cdot(x - 2)}{3!} + \cdots + \frac{x\cdot(x - 1)\cdot\cdots\cdot(x - k + 1)}{k!} + \cdots \\
+        &\;=\;& (1 + 1)^x \;\;\;\;\text{(By binomial)} \\
+        &\;=\;& 2^x
+\end{array}
+
+OK, we have \(\Bag(x) = e^x\) and \(\Set(x) = 2^x\). The latter makes sense from
+the cardinality point of view: there are \(2^x\) subsets of set \(x\) (even when
+\(x\) is infinite). Moreover, both \(\Set\) and \(\Bag\) satisfy the basic
+exponential identity \(\alpha^{x + y} = \alpha^x\cdot\alpha^y\). Indeed a bag of
+integers and Booleans can be uniquely and unambiguously separated into the bag
+of integers and the bag of Booleans, that can be poured back together to produce
+the original bag, and the same for sets. This does not work for lists: you can
+separate a list of integers and Booleans into two lists, but there is no way to
+restore the original list from the parts. This provides a roundabout argument,
+if you ever need one, that function \((1 - x)^{-1}\) does not have form
+\(\alpha^x\) for any \(\alpha\).
+
+Next, \(\alpha^x\) is the type of functions from \(x\) to \(\alpha\), \(\alpha^x
+= [x \to \alpha]\). For sets this means that an element of \(\Set(x)\), say \(U\),
+can be thought of as the characteristic function \(U : x \to \{0, 1\}\)
+/ += . "characteristic function" -> https://en.wikipedia.org/wiki/Indicator_function
+
+; math
+U(t) =
+\begin{cases}
+  1, & t \in U,\\
+  0, & t \notin U.
+\end{cases}
+
+For \(\Bag(x)\) we want to identify a bag \(V\) with a function \(V : x \to
+e\). What is \(e\)? By an easy sleight of hand we get:
+
+; math
+e = e^1 = \Bag(1) = \{ 0, 1, \ldots \} = \nat
+
+(Because for the one-element unit type \(1\), a bag from \(\Bag(1)\) is fully
+determined by the (non-negative) number of times the only element of \(1\) is
+present in the bag.)
+
+Hence, we have \(\Bag(x) = \nat^x = [x \to \nat]\), which looks surprisingly
+reasonable: a bag of \(x\)-es can be identified with the function that for each
+element of \(x\) gives the number of occurrences of this element in the
+bag. (Finite) bags are technically "free commutative monoids" generated by \(x\).
+/ += . "free commutative monoids" -> https://en.wikipedia.org/wiki/Free_monoid#The_free_commutative_monoid
+
+Moreover, the most famous property of \(e^x\) is that it is its own derivative,
+so we would expect
+
+; math
+\d \Bag(x) = \Bag(x)
+
+And it is: if you take a bag and make a hole in it, by removing one of its
+elements, you get nothing more and nothing less than another bag. The "plug"
+function \(\plug : \Bag(x)\cdot x \to \Bag(x)\) is just multiset union:
+
+; math
+\plug (V, t) = V \cup \{t\},
+
+which is clearly "very explicit" and possesses the required properties of
+injectivity and surjectivity. This works neither for lists, trees and arrays
+(because you have to specify where the new element is to be added) nor for sets
+(because if you add an element already in the set, the plug-map is not
+injective).
+
+The central rôle of \(e^x\) in analysis indicates that perhaps it is multiset,
+rather than list, that is the most important datastructure.
+
+If we try to calculate the derivative of \(\Set(x)\) we would get \(\d\Set(x) =
+\d(2^x) = \d e^{\ln(2)\cdot x} = \ln(2)\cdot 2^x = \ln(2)\cdot\Set(x)\), of
+which we cannot make much sense (yet!), but we can calculate
+
+; math
+\Bag(\d\Set(x)) = e^{\d\Set(x)} = e^{\ln(2)\cdot\Set(x)} = 2^{Set(x)} = \Set(\Set(x))
+
+Nice. Whatever the derivative of \(\Set(x)\) is, a bag of them is a set of sets
+of \(x\).
+
+Thinking about a type constructor \(T(x) = \sum_{i>0} a_i\cdot x^i\) as an
+non-empty (\(i > 0\)) container, we can consider its pointed version, where a
+particular element in the container is marked:
+/ += . "pointed" -> https://en.wikipedia.org/wiki/Pointed_set
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+\Punct(T(x)) &\;=\;& \sum_{i>0} i\cdot a_i\cdot x^i \\
+             &\;=\;& x\cdot \sum_{i>0} i\cdot a_i\cdot x^{i-1} \\
+             &\;=\;& x\cdot \sum_{i>0} a_i\cdot \d x^i \\
+             &\;=\;& x\cdot \d \sum_{i>0} a_i\cdot x^i \\
+             &\;=\;& x\cdot \d T(x)
+\end{array}
+
+This has clear intuitive explanation: if you cut a hole in a container and kept
+the removed element aside, you, in effect, marked the removed element.
+
+The next logical step is to try to recall as many Taylor expansions as one can
+to see what types they correspond to. Start with the easy ones: hyperbolic functions
+/ +* "hyperbolic functions" When I first studied these functions long time ago, they used to be called \(\sh\) and \(\ch\), pronounced roughly "shine" and "coshine". The inexorable march of progress...
+
+; math
+\cosh(x) = 1 + \frac{x^2}{2!} + \frac{x^4}{4!} + \cdots
+
+and
+
+; math
+\sinh(x) = x + \frac{x^3}{3!} + \frac{x^5}{5!} + \cdots
+
+\(\cosh(x)\) is the type of bags of \(x\) with an even number of elements and
+\(\sinh(x)\) is the type of bags of \(x\) with an odd number of elements. Of
+course, \(\cosh\) and \(\sinh\) happen to be an even and an odd function
+respectively. So to answer the question in the title: \(\cosh(\List(\Bool))\) is
+the type of bags of even number of lists of Booleans. It is easy to check that
+all usual hyperbolic trigonometry identities hold.
+/ += . "an even and an odd function" -> https://en.wikipedia.org/wiki/Even_and_odd_functions
+
+We can also write down a general function type \([ x \to (1 + y) ]\):
+
+; math
+[ x \to (1 + y) ] = (1 + y)^x = 1 + y\cdot x + y^2\cdot\frac{x\cdot(x - 1)}{2!} + y^3\cdot\frac{x\cdot(x-1)\cdot(x-2)}{3!} + \cdots
+
+Combinatorial interpretation(s) (there are at least two of them!) are left to
+the curious reader.
+
+We have by now seen the series with the terms of the form \(n_k\cdot x^k\)
+(\(n_k \in \nat\)) corresponding to various tree-list types, the series with the
+terms \(n_k\cdot\frac{x^k}{k!}\) corresponding to function-exponent types. What
+about "logarithm"-like series with terms of the form \(n_k\cdot\frac{x^k}{k}\)?
+Similarly to the exponential case, we try to interpret them as types where
+groups of \(n\) \(n\)-tuples are identified. The obvious candidates for such
+groups are all possible _rotations_ of an \(n\)-tuple. The learned name for
+\(n\)-tuples identified up to a rotation is "an (aperiodic) necklace", we will
+call it a ring. The type of non-empty rings of elements of \(x\) is given by
+/ += . "necklace" -> https://en.wikipedia.org/wiki/Necklace_(combinatorics)#Aperiodic_necklaces
+
+; math
+\Ring(x) = x + \frac{x^2}{2} + \frac{x^3}{3} + \cdots
+
+Compare with:
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+\ln(1 + x) &\;=\;& x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots \\
+\ln(1 - x) &\;=\;& - x - \frac{x^2}{2} - \frac{x^3}{3} - \frac{x^4}{4} - \cdots \\
+- \ln(1 - x) &\;=\;& x + \frac{x^2}{2} + \frac{x^3}{3} + \frac{x^4}{4} + \cdots \\
+             &\;=\;& \Ring(x)
+\end{array}
+
+Now comes the cool part:
+
+; math
+\Bag(\Ring(x)) = e^{\Ring(x)} = e^{- \ln(1 - x)} = (1 - x)^{-1} = \List(x)
+
+We are led to believe that for any type there is a "very explicit" bijection
+between bags of rings and lists. That is, it is possible to decompose any list
+to a multiset of rings (containing the same elements, because _nothing_ about
+\(x\) is given) in such a way that the original list can be unambiguously
+recovered from the multiset.
+
+Sounds pretty far-fetched? It is called Chen–Fox–Lyndon theorem, by the
+way. This theorem has a curious history. The most accessible exposition is in De
+Bruijn, Klarner, Multisets of aperiodic cycles (1982). The "Lyndon words" term
+is after Lyndon, On Burnside's Problem (1954). The original result is in Ширшов,
+Подалгебры свободных лиевых алгебр (1953), where it is used to estimate
+dimensions of sub-algebras of free Lie algebras. See also I.57 (p. 85) in
+Analytic Combinatorics by Flajolet and Sedgewick.
+/ += . "Chen–Fox–Lyndon theorem" -> https://en.wikipedia.org/wiki/Monoid_factorisation#Chen%E2%80%93Fox%E2%80%93Lyndon_theorem
+/ += . "Multisets of aperiodic cycles" -> https://pure.tue.nl/ws/files/1674487/597568.pdf
+/ += . "On Burnside's Problem" -> https://www.ams.org/journals/tran/1954-077-02/S0002-9947-1954-0064049-X/S0002-9947-1954-0064049-X.pdf
+/ += . "Подалгебры свободных лиевых алгебр" -> https://www.mathnet.ru/links/b8bccc0594081ab6fad538ff3448ac8f/sm5381.pdf
+/ += . "Analytic Combinatorics" -> https://algo.inria.fr/flajolet/Publications/book.pdf
+/ += . "Lyndon words" -> https://en.wikipedia.org/wiki/Lyndon_word
+
+If you are still not convinced that \(\Ring(x) = -\ln(1 - x)\), consider
+
+; math
+\d\Ring(x) = -\d\ln(1 - x) = (1 - x)^{-1} = \List(x)
+
+If you cut a hole in a ring, you get a list!
+
+We still have no interpretation for alternating series like \(\ln(1 + x) = x -
+x^2/2 + x^3/3 - x^4/4 + \cdots\). Fortunately, our good old friend \(\List(x) = (1 - x)^{-1}\) gives us
+
+; math
+\List(2) = -1
+
+which, together with the inclusion–exclusion principle, can be used to concoct
+plausibly looking explanations of types like \(\sin(x) = x - x^3/3! + x^5/5! +
+\cdots\), etc.
+/ += . "inclusion–exclusion principle" -> https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle
+
+Of course, (almost) all here can be made formal and rigorous. Types under \(+\)
+and \(\cdot\) form a semiring. The additive structure can be extended to an
+abelian group by the Grothendieck group construction. The field of fractions can be
+built. Puiseux and Levi-Civita series in this field provide "analysis"
+without the baggage of limits and topology.
+/ += . "semiring" -> https://en.wikipedia.org/wiki/Semiring
+/ += . "Grothendieck group" -> https://en.wikipedia.org/wiki/Grothendieck_group
+/ += . "field of fractions" -> https://en.wikipedia.org/wiki/Field_of_fractions
+/ += . "Puiseux" -> https://en.wikipedia.org/wiki/Puiseux_series
+/ += . "Levi-Civita" -> https://en.wikipedia.org/wiki/Levi-Civita_field
+
+But they definitely had more fun back in the eighteenth century. Can we, instead
+of talking about "fibre bundles over \(\Ring(\lambda t.t\cdot x)\)", dream of
+Möbius strips of streams?
+/ += . "fibre bundles" -> https://en.wikipedia.org/wiki/Fiber_bundle
