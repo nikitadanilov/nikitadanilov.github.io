@@ -1,0 +1,676 @@
+// name Long [story of] division.
+// id division
+// +# blog long-division
+// +# timeline 2025/02/25
+// +tags programming
+// +tags math
+
+The following text can be viewed as extremely dry and intimidating, or, equally, lightheadedly funny.
+
+Let's formally verify the venerable long-division algorithm.
+
+; code
+uintN_t div(uintN_t n, uintN_t d) {
+        uintN_t q := 0;
+        uintN_t r := 0;
+        int     i := N - 1;
+        while (i != -1) {
+                r <<= 1;
+                r |= ((n >> i) & 1);
+                if (r >= d) {
+                        r := r - d;
+                        q |= 1 << i;
+                }
+                i := i - 1;
+        }
+        return q;
+}
+  
+Here `uintN_t` is the type of unsigned `N`-bit integers, `N > 0`.
+  
+We shall establish formal correctness via Hoare logic. The following is by no
+means an introduction to the subject, our presentation skims over a large number
+of important details, please refer to the literature cited on the Wikipedia
+page. The basic element of Hoare logic is a _Hoare triple_, which is a
+construction of the form
+/ += . "Hoare logic" -> https://en.wikipedia.org/wiki/Hoare_logic
+
+; code
+⟦ precondition ⟧
+COMMAND
+⟦ postcondition ⟧
+
+This triple means that if an execution of `COMMAND` starts in a state satisfying
+`precondition`, then the execution can only terminate in a state satisfying
+`postcondition`. (We use *⟦* and *⟧* instead of more traditional { and },
+because our ambient language uses braces.) The pre- and postconditions are
+formulae of predicate calculus that can refer to the terms of the programming
+language (variables, literals, etc.). A triple is valid, if it can be proved
+starting from the usual rules of the predicate calculus and certain axioms. For
+a given programming language, one presents a list of axioms, describing the
+behaviour of the language constructs, and then proves _soundness_, i.e.,
+establishes that the axioms and the accepted rules of inference are satisfied by
+all possible computations. We will need the following axioms:
+/ += . "soundness" -> https://en.wikipedia.org/wiki/Soundness
+
+Axiom of assignment
+
+; code
+⟦ S[ x := E ] ⟧
+x := E
+⟦ S ⟧
+
+Here `S[ x:= E ]` is the result of substituting `E` for each occurrence of `x`
+in the formula `S`. (In this form the axiom really only works for simple
+unaliased variables and does not work for pointers or arrays, which is
+sufficient in our case.) The axiom looks "backward", so let's play with it a
+bit. First, check that the assignment does set the variable to the desired
+value:
+  
+; code
+⟦ ? ⟧
+x := 4
+⟦ x == 4 ⟧
+
+
+The command is a simple assignment `x := 4`, the postcondition, `x == 4`,
+verifies that the variable got the expected value. What precondition guarantees
+that the assignment establishes the postcondition? The assignment axiom gives us
+for the precondition `(x == 4)[ x := 4 ] = (4 == 4) = true`. That is, no matter
+what was going on before the assignment, after it terminates, `x == 4`, as
+expected:
+
+; code
+⟦ true ⟧
+x := 4
+⟦ x == 4 ⟧
+
+  
+A bit more complex example:
+
+; code
+⟦ ? ⟧
+x := x + 1
+⟦ x > 0 ⟧
+  
+What precondition guarantees that `x` will be positive after increment? We can
+compute the precondition, it is `(x > 0)[ x := x + 1 ] = (x + 1 > 0) = (x > -1)`
+— perfectly reasonable.
+  
+What if we are given a precondition does not have the form that the axiom requires?  
+
+; code
+⟦ x == A ⟧
+x := x + d
+⟦ ? ⟧
+
+There is no postcondition `S`, such that `(x == A) = S[ x := x + d ]`
+
+Well, in this case you are stuck. To derive a postcondition using the axiom of
+assignment, you first have to massage the precondition in a form, where `x` only
+happens as part of `E`. Fortunately in this case it's easy:
+  
+; code
+/* Comments as in PL/I. */
+⟦ x == A ⟧
+/* Simple arithmetics: add d to both sides. */
+⟦ x + d == A + d ⟧
+x := x + d
+⟦ x == A + d ⟧
+
+  
+What if the precondition does not contain `x`? Then the assignment is useless
+for program correctness, and, hence, can be most likely discarded. :-)
+  
+Typically, when you use the assignment axiom for a formal verification, you have
+to come up with a precondition, that has one or more instances of `E` and then
+the axiom let's you to jump to a postcondition where each `E` is simplified to
+`x`.
+    
+Next is *Axiom of composition*. This axiom describes the `;`-sequencing
+operator.
+  
+If we have
+
+; code
+⟦ precondition ⟧
+COMMAND0
+⟦ condition ⟧
+
+  
+and
+  
+; code
+⟦ condition ⟧
+COMMAND1
+⟦ postcondition ⟧
+
+  
+Then the axiom allows us to conclude
+  
+; code
+⟦ precondition ⟧
+COMMAND0 ; COMMAND1
+⟦ postcondition ⟧
+
+  
+This matches the expected semantics of sequential execution.
+
+*Conditional axiom*
+  
+For a conditional statement of a form
+
+; code
+if (guard) { 
+        COMMAND0 
+} else {
+        COMMAND1 
+}
+
+We have
+ 
+; code
+⟦ precondition ⟧
+if (guard) {
+        ⟦ guard && precondition ⟧
+        COMMAND0;
+        ⟦ postcondition ⟧
+} else {
+        ⟦ !guard && precondition ⟧
+        COMMAND0;
+        ⟦ postcondition ⟧
+}
+⟦ postcondition ⟧
+
+  
+That is, if both "then" and "else" commands establish the same postcondition,
+given the original precondition strengthened by the guard or its negation, then
+the entire conditional statement establishes the same postcondition. This is
+fairly intuitively obvious.
+
+
+Finally, we need
+
+*While-loop axiom*
+  
+Consider a loop
+
+; code
+while (guard) {
+        BODY
+}
+
+To apply the while-loop axiom, we have to find an assertion, called _a loop
+invariant_ that is preserved by the loop body, that is such that
+
+; code
+⟦ guard && invariant ⟧
+BODY
+⟦ invariant ⟧
+
+If the body is entered, while the invariant holds (and the guard holds too),
+then the invariant is true at the end of the body execution. Given an invariant,
+the while-loop axiom gives
+
+; code
+⟦ invariant ⟧
+while (guard) {
+        BODY
+}
+⟦ !guard && invariant ⟧
+
+In other words, if the invariant was true at the beginning of the loop
+execution, then it is true when the loop terminates. The while-loop axiom shows
+to an observant reader that loops are pure magic: it is the only construction
+that starts in a state satisfying a known condition, given by the invariant, and
+then miraculously strengthens that condition by adding `!guard`
+conjunct. Perhaps due to this the founders of structured programming preferred
+while-loops to the much-derided loops with "a control variable", like `DO` loops
+in FORTRAN and for-each loops of the modern languages.
+  
+There are many more axioms (what about the rules for function calls and
+recursion?), but we won't need them or will hand-wave around them.
+  
+Now, back to the long division. We want to establish the validity of the following triple:
+
+; code
+uintN_t div(uintN_t n, uintN_t d) {
+        ⟦ d > 0 ⟧
+        uintN_t q := 0;
+        uintN_t r := 0;
+        int     i := N - 1;
+        while (i != -1) {
+                r <<= 1;
+                r |= ((n >> i) & 1);
+                if (r >= d) {
+                        r := r - d;
+                        q |= 1 << i;
+                }
+                i := i - 1;
+        }
+        ⟦ n == d*q + r && 0 <= r && r < d ⟧
+        return q;
+}
+  
+The structure of the code basically forces the structure of any possible proof:
+
+> Find an invariant, preserved by the loop body.
+
+> Prove that the invariant is established before the loop is entered.
+
+> Prove that the desired postcondition follows from the conjunction of the
+  invariant and the negation of the guard.
+  
+Finding a suitable invariant is the most non-trivial part of the
+job. Fortunately, in this case we are helped by our (presumed) experience of
+manually executing this algorithm all too many times at the elementary
+school. To make it less boring, I give an example of how long division is done
+in my native country, you should be able to figure it out:
+
+; img
+>>
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/div/log-div.jpg
+
+After the first step (when the subtraction under the first horizontal line on
+the left has been completed), the algorithm established that `273 == 97*2 + 79`,
+where by construction `79 < 97`, which looks promisingly similar to the form of
+the postcondition that we want to establish: `n == d*q + r && r < d`. It then
+makes sense to select as the invariant "the highest `N - i - 1` digits of
+dividend (i.e., `n`), divided by the divisor (i.e., `d`), have the highest `N -
+i - 1` digits of `q` as the quotient and `r` at the remainder" (in our binary
+case the digits are bits).
+  
+Provided that we manage to establish that this is actually an invariant, the
+other remaining pieces fall in place quickly:
+
+>At the beginning of the loop, `i == N - 1` so "the highest `N - i - 1` bits"
+ degenerate into "the highest 0 bits", for which the condition is vacuous.
+
+>Similarly at the termination of the loop we have `i == -1`, so `N - i - 1 == N`
+  and we have the desired postcondition.
+
+But before we embark on the actual proof, we have to introduce some terminology,
+to simplify the necessary formal manipulations.
+  
+We are operating on `N`-bit unsigned binary numbers. We shall refer to the more
+and less significant bits as "left" or "last" or "high" and "right" or "first"
+or "low" respectively, with the appropriate comparative and superlative forms
+and without, of course, making any assumptions about endianness. Bits are
+indexed `0 ... N - 1` from right to left (Thank you, Fibonacci, very
+clever! Not.).
+  
+We will do a lot of bit-shifting. Recall that for `t >= 0`, `x >> t ==
+floor(x/2^t)` and `x << t == x*2^t`. Again, all values are unsigned, and so are
+shifts. Bitwise `OR` and `AND` are denoted as `|` and `&` as in C.
+  
+On a loop iteration with a particular value of `i`, we will be especially
+interested in shifts by `i` and `i + 1` bits. Write
+
+>`B' = (1 << i)` for the `i`-th bit bitmask.
+
+>`B" = (1 << (i + 1))` for the `(i + 1)`-st bit bitmask.
+
+>`t' = (t >> i)`, for the value `t` shifted `i` bits right.
+
+>`t" = (t >> (i + 1))`, for the value `t` shifted `i + 1` bits right.
+
+>`M(k) = (1 << k) - 1`, for the bitmask of the first `k` bits.
+  
+We treat `'` and `"` as singular operators, binding tighter than any binary
+ones.
+/ += . "singular" -> https://en.wikipedia.org/wiki/Arity#:~:text=the%20term%20%22singulary%22%20is%20the%20correct%20adjective%2C%20rather%20than%20%22unary%22
+  
+As a warm-up, prove the following
+  
+>*Lemma* `x' == 2*x" + x'&1`
+
+(Once you rewrite `2*x"` as `(x >> (i + 1)) << 1`, it should be trivial.)
+  
+"The highest `N - i - 1` bits" of `x` mentioned in the informal invariant above
+can be obtained by discarding the remaining `N - (N - i - 1) == i + 1` bits, and
+so are `x >> (i + 1)`, or, as we luckily agreed, `x"`. It makes sense to try `n"
+== d*q" + r && r < d && 0 <= r` as the invariant. This assertion is established
+at the loop entrance and guarantees the final postcondition after the loop
+termination. Unfortunately, it is *not* an invariant of our loop. To conclude
+this, observe that this assertion holds at the loop entrance even if the initial
+value of `q` is not `0`. If it were an invariant, then initialising `q` to an
+arbitrary value would still produce a correct result, which is clearly not the
+case, because bits of `q` are only set (by `q |= 1 << i`) and never cleared, so
+in the final value of `q` all the bits set initially remain set.
+  
+As it turns out (after many a painful attempt), this is the only obstruction and
+once we add to the invariant a conjunct `q&M(i + 1) == 0` stating that `i + 1`
+lowest bits of `q` are 0, we obtain the desired invariant:
+  
+>*Loop invariant* `n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0`
+  
+(If you want a good laugh and have some time to spare, paste `div()` code in a
+ChatGPT chat and ask various models what the loop invariant is.)
+/ += . "ChatGPT" -> https://chatgpt.com/
+  
+To the proof then. First, check that the invariant is established at the loop
+entrance that is, that the following triple is valid.
+
+; code
+⟦ d > 0 ⟧
+uintN_t q := 0;
+uintN_t r := 0;
+int     i := N - 1;
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 ⟧
+
+  
+Go from bottom to top, applying the assignment axiom and simplifying on each
+step. First, expand the invariant as
+  
+; code
+⟦ n >> (i + 1) == d*(q >> (i + 1)) + r && r < d && 0 <= r && q&((1 << (i + 1)) - 1) == 0 ⟧
+
+Now apply the assignment axiom (i.e., replace `i` with `(N - 1)`)...
+  
+; code
+⟦ n >> ((N - 1) + 1) == d*(q >> ((N - 1) + 1)) + r && r < d && 0 <= r && q&((1 << ((N - 1) + 1)) - 1) == 0 ⟧
+i := N - 1;
+⟦ n >> (i + 1) == d*(q >> (i + 1)) + r && r < d && 0 <= r && q&((1 << (i + 1)) - 1) == 0 ⟧
+
+... simplify, use `x >> N == 0` for any `N`-bit value, and apply the assignment
+axiom again ...
+  
+; code
+⟦ 0 == d*0 + 0 && 0 < d && 0 <= 0 && (q & ~0) == 0 ⟧
+r := 0
+⟦ 0 == d*0 + r && r < d && 0 <= r && (q & ~0) == 0 ⟧
+
+ ... and one more time ... 
+  
+; code
+⟦ 0 == 0 && 0 < d && (0 & ~0) == 0 ⟧
+q := 0
+⟦ 0 == d*0 + 0 && 0 < d && 0 <= 0 && (q & ~0) == 0 ⟧
+
+ ... which finally gives
+
+; code
+⟦ 0 < d ⟧
+
+Which is exactly the given precondition. _Voilà!_ Interestingly, it seems
+division by zero is impossible, because there is no suitable remainder.
+
+Next, we need to prove that the invariant is preserved by the loop body. This is
+by far the most complex and inundating part of the proof. We want to establish
+the following triple (at this point let's expand the compound assignment
+operators and add a trivial `else` to the conditional so that it conforms to the
+form expected by our conditional axiom):
+
+; code
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 && i != -1 ⟧
+r := r << 1;
+r := r | ((n >> i) & 1);
+if (r >= d) {
+        r := r - d;
+        q := q | (1 << i);
+} else {
+}
+i := i - 1;
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 ⟧
+  
+First, the guard `i != -1` is only needed to guarantee that shifts by `i` and `i
++ 1` bits make sense. It is not used for anything else and will not be mentioned
+again.
+  
+We can proceed as before: start at the bottom and apply the assignment axiom to
+work our way up:
+  
+; code
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧
+i := i - 1;
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 ⟧
+
+Note that after substituting `i - 1` for `i`, `x"` nicely transforms into
+`x'`. But at this point we are stuck: we know the postcondition that the
+conditional operator must establish, but we have no idea what _its_ suitable
+precondition is. Take a step back. We now have `n' == d*q' + r && r < d && 0 <=
+r && q&M(i) == 0`, that we will call the _target_. The composition of two
+assignments and one conditional operator, starting from the loop invariant must
+establish the target. Write it down:
+   
+>*Loop invariant* `n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0`
+   
+>*Target* `n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0`
+    
+Comparing the loop invariant and the target, we see that transforming the former
+into the latter takes:
+
+>Replacing `q"` with `q'`.
+
+>Replacing `n"` with `n'`.
+
+>Replacing `q&M(i + 1) == 0` with `q&M(i) == 0`.
+
+The last one is easy: if the first `i + 1` bits of `q` are zero (this is what
+`q&M(i + 1) == 0` means), then _a fortiori_ so are its `i` first bits, so
+`q&M(i) == 0`.
+  
+As for replacing `q"` with `q'` and `n"` with `n'`, we will do this via the
+lemma we stated (and you proved) earlier. We will now apply transformations to
+the loop invariant such that: (i) it will make it possible to apply the lemma
+and (ii) it will produce the result that will be a suitable precondition for the
+following assignments. The right-hand sides of the assignments are `r <<= 1`
+(that is `2*r`) and `r | ((n >> i) & 1)` (that is `r | (n'&1)`), so we will try
+to produce an assertion having sub-formulae of this form.
+  
+The starting invariant again:
+
+; code
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 ⟧
+
+Multiply both sides of all conjuncts by `2`. This produces terms such that the
+lemma and the assignment axiom for `r := 2*r` can be applied.
+
+; code
+⟦ 2*n" == 2*d*q" + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+
+Immediately we can apply the lemma: `2*q" == q' - q'&1`.
+
+; code
+⟦ 2*n" == d*(q' - q'&1) + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+
+`q&M(i + 1) == 0` hence we can drop `q'&1`, as it is guaranteed to be `0`.
+
+; code
+⟦ 2*n" == d*q' + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+
+Amazing! We got rid of `q"` and this is even before the first statement of the
+loop body was executed. Continue...
+  
+Looking forward to `r := r | n'&1`, we see that we have no `|`-s in sight, so
+the assignment axiom cannot be applied directly. Intuitively, this should not be
+the problem, because after `r` is doubled, its lowest bit is zero, and so `|` to
+it is the same as `+`, and we have plenty of additions. To prove this it will be
+nice to have a conjunct `r&1 == 0` at that point. But if such a conjunct is
+present, then *before* the `r := 2*r` assignment it looked (as per the
+assignment axiom) as `(2*r)&1 == 0`, which is always true, and so we can just as
+well insert it at this point!
+
+; code
+⟦ 2*n" == d*q' + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 && (2*r)&1 == 0 ⟧
+
+More pressingly, to apply the assignment axiom to `r := r | n'&1` we need `n'&1`
+next to each `r`. To this end, observe that `n'&1` is either `0` or `1`, and so
+if `2*r < 2*d` then `2*r + n'&1 < 2*d`.
+
+; code
+⟦ 2*n" == d*q' + 2*r && 2*r + n'&1 < 2*d && 0 <= 2*r && q&M(i + 1) == 0 && (2*r)&1 == 0 ⟧
+
+We are fully ready to apply the assignment axiom:  
+
+; code
+⟦ 2*n" == d*q' + 2*r && 2*r + n'&1 < 2*d && 0 <= 2*r && q&M(i + 1) == 0 && (2*r)&1 == 0 ⟧
+r := 2*r
+⟦ 2*n" == d*q' + r && r + n'&1 < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+
+Apply the lemma: `2*n" == n' - n'&1`
+  
+; code
+⟦ n' == d*q' + r + n'&1 && r + n'&1 < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+
+The next statement is the assignment `r := r | n'&1`. Thanks to `r&1 == 0`
+conjunct, carefully prepared in advance, we know that we can replace `r + n'&1`
+with `r | n'&1` and apply the assignment axiom:
+
+; code
+⟦ n' == d*q' + r + n'&1 && r + n'&1 < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+⟦ n' == d*q' + (r | n'&1) && (r | n'&1) < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+r := r | n'&1
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 ⟧
+
+One starts feeling at this point, that the steps of the derivation are
+practically forced by the form of the invariant. The appearance of `r + n'&1`
+components in the assertion is a result of using the lemma to get rid of `q"`
+and `n"`. In fact, it seems possible that the algorithm itself could have been
+derived _ad initio_, given the invariant. More about this at the end.
+
+We found the mysterious precondition of the conditional statement. One
+relatively simple final step remains: we have to establish that both conditional
+branches, given this precondition, establish the target. Let's start with the `r >= d` branch.
+We need
+
+; code
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 && r >= d ⟧
+r := r - d;
+q := q | B'
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧
+
+Experienced as we are at this point, we can easily transform the precondition to
+a form suitable for the next assignment (and also drop the redundant `0 <= r`
+conjunct, implied by the conditional guard):
+  
+; code
+⟦ n' == d*q' + (r - d) + d && r - d < d && q&M(i + 1) == 0 && r - d >= 0 ⟧
+
+Apply the assignment axiom
+  
+; code
+⟦ n' == d*q' + (r - d) + d && r - d < d && q&M(i + 1) == 0 && r - d >= 0 ⟧
+r := r - d
+⟦ n' == d*q' + r + d && r < d && q&M(i + 1) == 0 && r >= 0 ⟧
+  
+Prepare for the `q := q | B'` assignment. To this end, we have to transform the
+last assertion to a form where `q` only happens as a part of `q | B'`. First,
+from `q&M(i + 1) == 0` it follows that `q | B' == q + B'` (because `i`-th bit of
+`q` is zero). Next, do the easy part, `q&M(i + 1) == 0`: weaken it, as was
+discussed above, to `q&M(i) == 0`, then, use `(B' | M(i)) == 0` (immediately
+from the definition of `M(i)`) to arrive at `(q | B')&M(i) == 0`.
+  
+Next, deal with `d*q' + r + d`.
+    
+; code
+         d*q' + r + d
+      == d*(q' + 1)  + r
+      == d*(q + B')' + r /* Convince yourself that (x >> i) + 1 == (x + (1 << i)) >> i */
+      == d*(q | B')' + r
+  
+Apply the assignment axiom
+
+; code
+⟦ n' == d*(q | B')' + r && r < d && (q|B')&M(i) == 0 && r >= 0 ⟧
+q := q | B'
+⟦ n' == d*q' + r && r < d && q&M(i) == 0 && r >= 0 ⟧
+
+Wait a second. This is exactly the target: `n' == d*q' + r && r < d && 0 <= r &&
+q&M(i) == 0`. We are done! What remains, is the trivial verification for the `r
+< d` conditional branch:
+
+; code
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 && r < d ⟧
+/* Algebra and weakening q&M(i + 1) == 0 to q&M(i) == 0 */
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧  
+
+*We are done with the verification of the loop invariant!*
+
+We now know that our loop invariant is indeed an invariant. The while-loop axiom
+then assures us that at the termination of the loop, the invariant will still
+hold, together with the negation of the guard:
+
+; code
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 ⟧
+while (i != -1) {
+        r <<= 1;
+        r |= ((n >> i) & 1);
+        if (r >= d) {
+                r := r - d;
+                q |= 1 << i;
+        }
+        i := i - 1;
+}
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 && i == -1 ⟧
+ 
+OK, so substitute `i == -1` to the invariant:
+
+; code
+⟦ n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0 && i == -1 ⟧
+⟦ n == d*q + r && r < d && 0 <= r ⟧
+
+Hallelujah!
+
+Let's put it all together
+
+; code
+uintN_t div(uintN_t n, uintN_t d) {
+⟦ d > 0 ⟧
+⟦ 0 == 0 && 0 < d && (0 & ~0) == 0 ⟧
+        uintN_t q := 0;
+⟦ 0 == d*0 + 0 && 0 < d && 0 <= 0 && (q & ~0) == 0 ⟧
+        uintN_t r := 0;
+⟦ 0 == d*0 + r && r < d && 0 <= r && (q & ~0) == 0 ⟧
+        int     i := N - 1;
+⟦ n" == d*q" + r && 0 <= r && r < d && q&M(i + 1) == 0 ⟧
+        while (i != -1) {
+⟦ n" == d*q" + r && 0 <= r && r < d  && q&M(i + 1) == 0 && i != -1 ⟧
+⟦ 2*n" == 2*d*q" + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+⟦ 2*n" == d*(q' - q'&1) + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+⟦ 2*n" == d*q' + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 ⟧
+⟦ 2*n" == d*q' + 2*r && 2*r < 2*d && 0 <= 2*r && q&M(i + 1) == 0 && (2*r)&1 == 0 ⟧
+⟦ 2*n" == d*q' + 2*r && 2*r + n'&1 < 2*d && 0 <= 2*r && q&M(i + 1) == 0 && (2*r)&1 == 0 ⟧
+                r <<= 1;
+⟦ 2*n" == d*q' + r && r + n'&1 < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+⟦ n' == d*q' + r + n'&1 && r + n'&1 < 2*d && 0 <= r && q&M(i + 1) == 0 && r&1 == 0 ⟧
+                r |= ((n >> i) & 1);
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 ⟧
+                if (r >= d) {
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 && r >= d ⟧
+⟦ n' == d*q' + r + d && r < d && q&M(i + 1) == 0 && r >= 0 ⟧
+                        r := r - d;
+⟦ n' == d*q' + r + d && r < d && q&M(i + 1) == 0 && r >= 0 ⟧
+⟦ n' == d*(q | B')' + r && r < d && (q|B')&M(i) == 0 && r >= 0 ⟧
+                        q |= 1 << i;
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧
+                } else {
+⟦ n' == d*q' + r && r < 2*d && 0 <= r && q&M(i + 1) == 0 && r < d ⟧
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧
+                }
+⟦ n' == d*q' + r && r < d && 0 <= r && q&M(i) == 0 ⟧
+                i := i - 1;
+⟦ n" == d*q" + r && 0 <= r && r < d && q&M(i + 1) == 0 ⟧
+        }
+⟦ n" == d*q" + r && 0 <= r && r < d && i == -1 ⟧
+⟦ n == d*q + r && 0 <= r && r < d ⟧
+        return q;
+}
+
+Seriously, the proof above looks at a first (and then any following) sight, as a
+random barrage of bizarre formal spasms in haphazard directions. It is
+practically impossible to construct such a sequence of assertions in a
+top-to-bottom fashion, unless one spends an unhealthy amount of time interacting
+with Hoare triples in dark alleys.
+  
+And this is why nobody is doing it this way (among humans that is, automated
+provers are only too happy to try insane numbers of possible dead-ends). Early
+on, a much better-structured approach, going in the opposite direction, starting
+from the known targets (postconditions) was developed, see Predicate
+transformer semantics, or better still, read A Discipline of Programming ("59683rd Edition" as the Amazon page mentions
+nonchalantly). Dijkstra also shared the opinion that the structure of the
+program and the postcondition are tightly locked to the extent that it is
+possible to derive a program, given its formal specification, see the amazing EWD1162.
+/ += . "Predicate transformer semantics" -> https://en.wikipedia.org/wiki/Predicate_transformer_semantics
+/ += . "A Discipline of Programming" -> https://www.amazon.com/Discipline-Programming-Edsger-W-Dijkstra/dp/013215871X
+/ += . "EWD1162" -> https://www.cs.utexas.edu/~EWD/ewd11xx/EWD1162.PDF
