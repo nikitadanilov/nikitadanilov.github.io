@@ -50,7 +50,7 @@ because the cost of alloc() in terms of processor cycles is independent of the
 number of allocated objects and the total size of the heap, in other words,
 alloc() is O(1) and this constant cost is not high. This means garbage
 collection without "stop-the-world" pauses, at least as long as the mutator does
-not genuinely exhaust the heap with reachable objects.&nbsp;
+not genuinely exhaust the heap with reachable objects.
 
 Treadmill is "in-place" because the address of an allocated object does not
 change. This is in contrast with _copying_ garbage collectors that can move an
