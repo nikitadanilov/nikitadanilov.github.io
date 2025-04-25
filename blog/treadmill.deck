@@ -8,11 +8,14 @@
 // +cd (^|[ ])(?P<open>)FREE(?P<close>)
 // +cd (^|[ ])(?P<open>)TOSCAN(?P<close>)
 
-_Treadmill_ is a "real-time" in-place garbage collection algorithm designed by
-H. Baker. It is simple, elegant, efficient and surprisingly little
-known. Speaking of which, Mr. Baker's Wikipedia page rivals one for an obscure
-Roman decadent poet in scarcity of information.
-/ += https://dl.acm.org/doi/pdf/10.1145/130854.130862 -> . "algorithm"
+_Treadmill_ is a "real-time" in-place garbage collection algorithm (PDF,
+Postscript) designed by H. Baker. It is simple, elegant, efficient and
+surprisingly little known. Speaking of which, Mr. Baker's Wikipedia page rivals
+one for an obscure Roman decadent poet in scarcity of information.
+/ += https://dl.acm.org/doi/pdf/10.1145/130854.130862 -> . "PDF"
+/ += https://www.plover.com/~mjd/misc/hbaker-archive/NoMotionGC.ps.Z -> . "Postscript"
+/ += . "PDF" -> https://dl.acm.org/doi/pdf/10.1145/130854.130862
+/ += . "Postscript" -> https://www.plover.com/~mjd/misc/hbaker-archive/NoMotionGC.ps.Z
 / += . "page" -> https://en.wikipedia.org/wiki/Henry_Baker_(computer_scientist)
 
 The general situation of garbage collection is that there is a program (called
@@ -66,11 +69,12 @@ objects they point to, *gray* objects have been scanned, but the objects they
 point to are not guaranteed to be scanned and *white* objects have not been
 scanned.
 / += . "On-the-Fly Garbage Collection: An Exercise in Cooperation" -> https://lamport.azurewebsites.net/pubs/garbage.pdf
+/ += https://lamport.azurewebsites.net/pubs/garbage.pdf -> . "On-the-Fly Garbage Collection: An Exercise in Cooperation"
 
 For historical reasons, Baker's papers colour free (un-allocated) objects white
 and use black-gray-ecru instead of black-gray-white. We stick with *ecru*, at
 least to get a chance to learn a fancy word.
-/ += . "ecru" -> https://en.wikipedia.org/wiki/Ecru
+/ += . "ecru(?= instead)" -> https://en.wikipedia.org/wiki/Ecru
 
 Consider the simplest case first:
 
@@ -94,7 +98,8 @@ Allocation of new objects happens at `free` (clockwise), scan advances at `scan`
 (the latter 2 terms, somewhat confusing for a cyclic list of objects, are
 re-used from an earlier paper, where a copying real-time garbage collector was
 introduced).
-/ += . "paper" -> https://www.plover.com/~mjd/misc/hbaker-archive/NoMotionGC.ps.Z
+/ += . "paper" -> https://dspace.mit.edu/bitstream/handle/1721.1/41976/AI_WP_139.pdf
+/ += https://dspace.mit.edu/bitstream/handle/1721.1/41976/AI_WP_139.pdf -> . "paper"
 
 Remarkably, the entire description and the proof of correctness of Treadmill
 algorithm (and many other similar algorithms) depends on a single invariant:
@@ -139,12 +144,13 @@ nodes to point to other reachable nodes. There is no pointer arithmetic
 black, gray or ecru, so it seems, at the first sight, that the only way the
 mutator can violate the invariant is by setting a field in a black object to
 point to an ecru object. This is indeed the case with some collection algorithms
-(called "gray mutator algorithms" in The Garbage Collection Handbook. The art of
-automatic memory management). Such algorithms use a _write barrier_, which is a
-special code inserted by the compiler before (or instead of) updating a pointer
-field. The simplest write barrier prevents a violation of the 3-colour invariant
-by graying the ecru target object if necessary:
-/ += . "The Garbage Collection Handbook. The art of automatic memory management" -> https://dspace.mit.edu/bitstream/handle/1721.1/41976/AI_WP_139.pdf
+(called "gray mutator algorithms" in The Garbage Collection Handbook). Such
+algorithms use a _write barrier_, which is a special code inserted by the
+compiler before (or instead of) updating a pointer field. The simplest write
+barrier prevents a violation of the 3-colour invariant by graying the ecru
+target object if necessary:
+/ += . "The Garbage Collection Handbook. The art of automatic memory management" -> https://gchandbook.org/
+/ += https://gchandbook.org/ -> . "The Garbage Collection Handbook"
 
 ; code
 writebarrier(obj, field, target) {
@@ -162,7 +168,7 @@ darken(obj) { /* Make an ecru object gray. */
 More sophisticated write barriers were studied that make use of the old value of
 `obj.field` or are integrated with virtual memory sub-system, see The Garbage
 Collection Handbook for details.
-/ += . "The Garbage Collection Handbook" -> https://dspace.mit.edu/bitstream/handle/1721.1/41976/AI_WP_139.pdf
+/ += . "The Garbage Collection Handbook" -> https://gchandbook.org/
 
 In our case, however, when the mutator reads a pointer field of an object, it
 effectively stores the read value in a register (or in a stack frame slot) and
