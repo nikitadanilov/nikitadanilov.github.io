@@ -37,12 +37,12 @@ and run-time (e.g., Boehm garbage collector for C and C++).
 
 The earliest garbage collectors were part of Lisp run-time. Lisp programs tend
 to allocate a large number of cons cells and organise them in complex structures
-with cycles and sub-structure sharing. In fact, some of the had garbage
+with cycles and sub-structure sharing. In fact, some of the Lisp Machines had garbage
 collection implemented in hardware and allocated everything including stack
 frames and binding environments in the heap. Even processor instructions were
 stored as cons cells in the heap.
 / += . "cons cells" -> https://en.wikipedia.org/wiki/Cons
-/ += . "Lisp" -> https://en.wikipedia.org/wiki/Lisp_(programming_language)
+/ += . "Lisp(?= programs)" -> https://en.wikipedia.org/wiki/Lisp_(programming_language)
 / += . "Lisp Machines" -> https://en.wikipedia.org/wiki/Lisp_machine
 
 To allocate a new object, the mutator calls alloc(). Treadmill is "real-time"
