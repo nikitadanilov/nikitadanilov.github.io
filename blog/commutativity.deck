@@ -1,0 +1,21 @@
+// name Blindsight spot.
+// id commutativity
+// +# blog commutativity
+// +# timeline 2014/10/16
+
+I just realised that in any unital ring commutativity of addition follows from distributivity:
+
+; math
+
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+a + b &\;=\;& -a + a + a + b + b - b \\
+      &\;=\;& -a + a\cdot(1 + 1) + b\cdot(1 + 1) - b \\
+      &\;=\;& -a + (a + b)\cdot(1 + 1) - b \\
+      &\;=\;& -a + (a + b)\cdot 1 + (a + b)\cdot 1 - b \\
+      &\;=\;& -a + a + b + a + b - b \\
+      &\;=\;&  b + a 
+\end{array}
+
+The same holds for unital modules, algebras, vector spaces, _&c_. Note that
+multiplication doesn't even need to be associative. It's amazing how such things
+can pass unnoticed.
