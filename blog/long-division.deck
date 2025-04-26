@@ -53,7 +53,9 @@ establishes that the axioms and the accepted rules of inference are satisfied by
 all possible computations. We will need the following axioms:
 / += . "soundness" -> https://en.wikipedia.org/wiki/Soundness
 
+; head
 Axiom of assignment
+/ level 3
 
 ; code
 ⟦ S[ x := E ] ⟧
@@ -127,10 +129,13 @@ to come up with a precondition, that has one or more instances of `E` and then
 the axiom let's you to jump to a postcondition where each `E` is simplified to
 `x`.
     
-Next is *Axiom of composition*. This axiom describes the `;`-sequencing
-operator.
-  
-If we have
+Next is
+
+; head
+Axiom of composition
+/ level 3
+
+This axiom describes the `;`-sequencing operator. If we have
 
 ; code
 ⟦ precondition ⟧
@@ -156,7 +161,9 @@ COMMAND0 ; COMMAND1
   
 This matches the expected semantics of sequential execution.
 
-*Conditional axiom*
+; head
+Conditional axiom
+/ level 3
   
 For a conditional statement of a form
 
@@ -191,7 +198,9 @@ fairly intuitively obvious.
 
 Finally, we need
 
-*While-loop axiom*
+; head
+While-loop axiom
+/ level 3
   
 Consider a loop
 

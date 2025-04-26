@@ -32,7 +32,7 @@
 COMMAND
 ⟦ postcondition ⟧</code></pre>
 <a name="division-00006"></a><p>This triple means that if an execution of <code class="inline">COMMAND</code> starts in a state satisfying <code class="inline">precondition</code>, then the execution can only terminate in a state satisfying <code class="inline">postcondition</code>. (We use <b>⟦</b> and <b>⟧</b> instead of more traditional { and }, because our ambient language uses braces.) The pre- and postconditions are formulae of predicate calculus that can refer to the terms of the programming language (variables, literals, <i>etc</i>.). A triple is valid, if it can be proved starting from the usual rules of the predicate calculus and certain axioms. For a given programming language, one presents a list of axioms, describing the behaviour of the language constructs, and then proves <a href="https://en.wikipedia.org/wiki/Soundness"><i>soundness</i></a>, <i>i.e.</i>, establishes that the axioms and the accepted rules of inference are satisfied by all possible computations. We will need the following axioms:</p>
-<a name="division-00007"></a><p>Axiom of assignment</p>
+<a name="division-00007"></a><h3>Axiom of assignment</h3>
 <a name="division-00008"></a><pre><code>⟦ S[ x := E ] ⟧
 x := E
 ⟦ S ⟧</code></pre>
@@ -63,29 +63,30 @@ x := x + d
 ⟦ x == A + d ⟧</code></pre>
 <a name="division-00021"></a><p>What if the precondition does not contain <code class="inline">x</code>? Then the assignment is useless for program correctness, and, hence, can be most likely discarded. :-)</p>
 <a name="division-00022"></a><p>Typically, when you use the assignment axiom for a formal verification, you have to come up with a precondition, that has one or more instances of <code class="inline">E</code> and then the axiom let&#x27;s you to jump to a postcondition where each <code class="inline">E</code> is simplified to <code class="inline">x</code>.</p>
-<a name="division-00023"></a><p>Next is <b>Axiom of composition</b>. This axiom describes the <code class="inline">;</code>-sequencing operator.</p>
-<a name="division-00024"></a><p>If we have</p>
-<a name="division-00025"></a><pre><code>⟦ precondition ⟧
+<a name="division-00023"></a><p>Next is</p>
+<a name="division-00024"></a><h3>Axiom of composition</h3>
+<a name="division-00025"></a><p>This axiom describes the <code class="inline">;</code>-sequencing operator. If we have</p>
+<a name="division-00026"></a><pre><code>⟦ precondition ⟧
 COMMAND0
 ⟦ condition ⟧</code></pre>
-<a name="division-00026"></a><p>and</p>
-<a name="division-00027"></a><pre><code>⟦ condition ⟧
+<a name="division-00027"></a><p>and</p>
+<a name="division-00028"></a><pre><code>⟦ condition ⟧
 COMMAND1
 ⟦ postcondition ⟧</code></pre>
-<a name="division-00028"></a><p>Then the axiom allows us to conclude</p>
-<a name="division-00029"></a><pre><code>⟦ precondition ⟧
+<a name="division-00029"></a><p>Then the axiom allows us to conclude</p>
+<a name="division-00030"></a><pre><code>⟦ precondition ⟧
 COMMAND0 ; COMMAND1
 ⟦ postcondition ⟧</code></pre>
-<a name="division-00030"></a><p>This matches the expected semantics of sequential execution.</p>
-<a name="division-00031"></a><p><b>Conditional axiom</b></p>
-<a name="division-00032"></a><p>For a conditional statement of a form</p>
-<a name="division-00033"></a><pre><code>if (guard) { 
+<a name="division-00031"></a><p>This matches the expected semantics of sequential execution.</p>
+<a name="division-00032"></a><h3>Conditional axiom</h3>
+<a name="division-00033"></a><p>For a conditional statement of a form</p>
+<a name="division-00034"></a><pre><code>if (guard) { 
         COMMAND0 
 } else {
         COMMAND1 
 }</code></pre>
-<a name="division-00034"></a><p>We have</p>
-<a name="division-00035"></a><pre><code>⟦ precondition ⟧
+<a name="division-00035"></a><p>We have</p>
+<a name="division-00036"></a><pre><code>⟦ precondition ⟧
 if (guard) {
         ⟦ guard &amp;&amp; precondition ⟧
         COMMAND0;
@@ -96,27 +97,27 @@ if (guard) {
         ⟦ postcondition ⟧
 }
 ⟦ postcondition ⟧</code></pre>
-<a name="division-00036"></a><p>That is, if both &quot;then&quot; and &quot;else&quot; commands establish the same postcondition, given the original precondition strengthened by the guard or its negation, then the entire conditional statement establishes the same postcondition. This is fairly intuitively obvious.</p>
-<a name="division-00037"></a><p>Finally, we need</p>
-<a name="division-00038"></a><p><b>While-loop axiom</b></p>
-<a name="division-00039"></a><p>Consider a loop</p>
-<a name="division-00040"></a><pre><code>while (guard) {
+<a name="division-00037"></a><p>That is, if both &quot;then&quot; and &quot;else&quot; commands establish the same postcondition, given the original precondition strengthened by the guard or its negation, then the entire conditional statement establishes the same postcondition. This is fairly intuitively obvious.</p>
+<a name="division-00038"></a><p>Finally, we need</p>
+<a name="division-00039"></a><h3>While-loop axiom</h3>
+<a name="division-00040"></a><p>Consider a loop</p>
+<a name="division-00041"></a><pre><code>while (guard) {
         BODY
 }</code></pre>
-<a name="division-00041"></a><p>To apply the while-loop axiom, we have to find an assertion, called <i>a loop invariant</i> that is preserved by the loop body, that is such that</p>
-<a name="division-00042"></a><pre><code>⟦ guard &amp;&amp; invariant ⟧
+<a name="division-00042"></a><p>To apply the while-loop axiom, we have to find an assertion, called <i>a loop invariant</i> that is preserved by the loop body, that is such that</p>
+<a name="division-00043"></a><pre><code>⟦ guard &amp;&amp; invariant ⟧
 BODY
 ⟦ invariant ⟧</code></pre>
-<a name="division-00043"></a><p>If the body is entered, while the invariant holds (and the guard holds too), then the invariant is true at the end of the body execution. Given an invariant, the while-loop axiom gives</p>
-<a name="division-00044"></a><pre><code>⟦ invariant ⟧
+<a name="division-00044"></a><p>If the body is entered, while the invariant holds (and the guard holds too), then the invariant is true at the end of the body execution. Given an invariant, the while-loop axiom gives</p>
+<a name="division-00045"></a><pre><code>⟦ invariant ⟧
 while (guard) {
         BODY
 }
 ⟦ !guard &amp;&amp; invariant ⟧</code></pre>
-<a name="division-00045"></a><p>In other words, if the invariant was true at the beginning of the loop execution, then it is true when the loop terminates. The while-loop axiom shows to an observant reader that loops are pure magic: it is the only construction that starts in a state satisfying a known condition, given by the invariant, and then miraculously strengthens that condition by adding <code class="inline">!guard</code> conjunct. Perhaps due to this the founders of structured programming preferred while-loops to the much-derided loops with &quot;a control variable&quot;, like <code class="inline">DO</code> loops in FORTRAN and for-each loops of the modern languages.</p>
-<a name="division-00046"></a><p>There are many more axioms (what about the rules for function calls and recursion?), but we won&#x27;t need them or will hand-wave around them.</p>
-<a name="division-00047"></a><p>Now, back to the long division. We want to establish the validity of the following triple:</p>
-<a name="division-00048"></a><pre><code>uintN_t div(uintN_t n, uintN_t d) {
+<a name="division-00046"></a><p>In other words, if the invariant was true at the beginning of the loop execution, then it is true when the loop terminates. The while-loop axiom shows to an observant reader that loops are pure magic: it is the only construction that starts in a state satisfying a known condition, given by the invariant, and then miraculously strengthens that condition by adding <code class="inline">!guard</code> conjunct. Perhaps due to this the founders of structured programming preferred while-loops to the much-derided loops with &quot;a control variable&quot;, like <code class="inline">DO</code> loops in FORTRAN and for-each loops of the modern languages.</p>
+<a name="division-00047"></a><p>There are many more axioms (what about the rules for function calls and recursion?), but we won&#x27;t need them or will hand-wave around them.</p>
+<a name="division-00048"></a><p>Now, back to the long division. We want to establish the validity of the following triple:</p>
+<a name="division-00049"></a><pre><code>uintN_t div(uintN_t n, uintN_t d) {
         ⟦ d &gt; 0 ⟧
         uintN_t q := 0;
         uintN_t r := 0;
@@ -133,59 +134,59 @@ while (guard) {
         ⟦ n == d*q + r &amp;&amp; 0 &lt;= r &amp;&amp; r &lt; d ⟧
         return q;
 }</code></pre>
-<a name="division-00049"></a><p>The structure of the code basically forces the structure of any possible proof:</p>
-<a name="division-00050"></a><p style="margin-left: 3em;">Find an invariant, preserved by the loop body.</p>
-<a name="division-00051"></a><p style="margin-left: 3em;">Prove that the invariant is established before the loop is entered.</p>
-<a name="division-00052"></a><p style="margin-left: 3em;">Prove that the desired postcondition follows from the conjunction of the   invariant and the negation of the guard.</p>
-<a name="division-00053"></a><p>Finding a suitable invariant is the most non-trivial part of the job. Fortunately, in this case we are helped by our (presumed) experience of manually executing this algorithm all too many times at the elementary school. To make it less boring, I give an example of how long division is done in my native country, you should be able to figure it out:</p>
-<a name="division-00054"></a><p style="margin-left: 6em;"><center>
+<a name="division-00050"></a><p>The structure of the code basically forces the structure of any possible proof:</p>
+<a name="division-00051"></a><p style="margin-left: 3em;">Find an invariant, preserved by the loop body.</p>
+<a name="division-00052"></a><p style="margin-left: 3em;">Prove that the invariant is established before the loop is entered.</p>
+<a name="division-00053"></a><p style="margin-left: 3em;">Prove that the desired postcondition follows from the conjunction of the   invariant and the negation of the guard.</p>
+<a name="division-00054"></a><p>Finding a suitable invariant is the most non-trivial part of the job. Fortunately, in this case we are helped by our (presumed) experience of manually executing this algorithm all too many times at the elementary school. To make it less boring, I give an example of how long division is done in my native country, you should be able to figure it out:</p>
+<a name="division-00055"></a><p style="margin-left: 6em;"><center>
 <img src="https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/div/log-div.jpg" border="0" width="50%"></center></p>
-<a name="division-00055"></a><p>After the first step (when the subtraction under the first horizontal line on the left has been completed), the algorithm established that <code class="inline">273 == 97*2 + 79</code>, where by construction <code class="inline">79 &lt; 97</code>, which looks promisingly similar to the form of the postcondition that we want to establish: <code class="inline">n == d*q + r &amp;&amp; r &lt; d</code>. It then makes sense to select as the invariant &quot;the highest <code class="inline">N - i - 1</code> digits of dividend (<i>i.e.</i>, <code class="inline">n</code>), divided by the divisor (<i>i.e.</i>, <code class="inline">d</code>), have the highest <code class="inline">N - i - 1</code> digits of <code class="inline">q</code> as the quotient and <code class="inline">r</code> at the remainder&quot; (in our binary case the digits are bits).</p>
-<a name="division-00056"></a><p>Provided that we manage to establish that this is actually an invariant, the other remaining pieces fall in place quickly:</p>
-<a name="division-00057"></a><p style="margin-left: 3em;">At the beginning of the loop, <code class="inline">i == N - 1</code> so &quot;the highest <code class="inline">N - i - 1</code> bits&quot;  degenerate into &quot;the highest 0 bits&quot;, for which the condition is vacuous.</p>
-<a name="division-00058"></a><p style="margin-left: 3em;">Similarly at the termination of the loop we have <code class="inline">i == -1</code>, so <code class="inline">N - i - 1 == N</code>   and we have the desired postcondition.</p>
-<a name="division-00059"></a><p>But before we embark on the actual proof, we have to introduce some terminology, to simplify the necessary formal manipulations.</p>
-<a name="division-00060"></a><p>We are operating on <code class="inline">N</code>-bit unsigned binary numbers. We shall refer to the more and less significant bits as &quot;left&quot; or &quot;last&quot; or &quot;high&quot; and &quot;right&quot; or &quot;first&quot; or &quot;low&quot; respectively, with the appropriate comparative and superlative forms and without, of course, making any assumptions about endianness. Bits are indexed <code class="inline">0 ... N - 1</code> from right to left (Thank you, Fibonacci, very clever! Not.).</p>
-<a name="division-00061"></a><p>We will do a lot of bit-shifting. Recall that for <code class="inline">t &gt;= 0</code>, <code class="inline">x &gt;&gt; t == floor(x/2^t)</code> and <code class="inline">x &lt;&lt; t == x*2^t</code>. Again, all values are unsigned, and so are shifts. Bitwise <code class="inline">OR</code> and <code class="inline">AND</code> are denoted as <code class="inline">|</code> and <code class="inline">&amp;</code> as in C.</p>
-<a name="division-00062"></a><p>On a loop iteration with a particular value of <code class="inline">i</code>, we will be especially interested in shifts by <code class="inline">i</code> and <code class="inline">i + 1</code> bits. Write</p>
-<a name="division-00063"></a><p style="margin-left: 3em;"><code class="inline">B&#x27; = (1 &lt;&lt; i)</code> for the <code class="inline">i</code>-th bit bitmask.</p>
-<a name="division-00064"></a><p style="margin-left: 3em;"><code class="inline">B&quot; = (1 &lt;&lt; (i + 1))</code> for the <code class="inline">(i + 1)</code>-st bit bitmask.</p>
-<a name="division-00065"></a><p style="margin-left: 3em;"><code class="inline">t&#x27; = (t &gt;&gt; i)</code>, for the value <code class="inline">t</code> shifted <code class="inline">i</code> bits right.</p>
-<a name="division-00066"></a><p style="margin-left: 3em;"><code class="inline">t&quot; = (t &gt;&gt; (i + 1))</code>, for the value <code class="inline">t</code> shifted <code class="inline">i + 1</code> bits right.</p>
-<a name="division-00067"></a><p style="margin-left: 3em;"><code class="inline">M(k) = (1 &lt;&lt; k) - 1</code>, for the bitmask of the first <code class="inline">k</code> bits.</p>
-<a name="division-00068"></a><p>We treat <code class="inline">&#x27;</code> and <code class="inline">&quot;</code> as <a href="https://en.wikipedia.org/wiki/Arity#:~:text=the%20term%20%22singulary%22%20is%20the%20correct%20adjective%2C%20rather%20than%20%22unary%22">singular</a> operators, binding tighter than any binary ones.</p>
-<a name="division-00069"></a><p>As a warm-up, prove the following</p>
-<a name="division-00070"></a><p style="margin-left: 3em;"><b>Lemma</b> <code class="inline">x&#x27; == 2*x&quot; + x&#x27;&amp;1</code></p>
-<a name="division-00071"></a><p>(Once you rewrite <code class="inline">2*x&quot;</code> as <code class="inline">(x &gt;&gt; (i + 1)) &lt;&lt; 1</code>, it should be trivial.)</p>
-<a name="division-00072"></a><p>&quot;The highest <code class="inline">N - i - 1</code> bits&quot; of <code class="inline">x</code> mentioned in the informal invariant above can be obtained by discarding the remaining <code class="inline">N - (N - i - 1) == i + 1</code> bits, and so are <code class="inline">x &gt;&gt; (i + 1)</code>, or, as we luckily agreed, <code class="inline">x&quot;</code>. It makes sense to try <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r</code> as the invariant. This assertion is established at the loop entrance and guarantees the final postcondition after the loop termination. Unfortunately, it is <b>not</b> an invariant of our loop. To conclude this, observe that this assertion holds at the loop entrance even if the initial value of <code class="inline">q</code> is not <code class="inline">0</code>. If it were an invariant, then initialising <code class="inline">q</code> to an arbitrary value would still produce a correct result, which is clearly not the case, because bits of <code class="inline">q</code> are only set (by <code class="inline">q |= 1 &lt;&lt; i</code>) and never cleared, so in the final value of <code class="inline">q</code> all the bits set initially remain set.</p>
-<a name="division-00073"></a><p>As it turns out (after many a painful attempt), this is the only obstruction and once we add to the invariant a conjunct <code class="inline">q&amp;M(i + 1) == 0</code> stating that <code class="inline">i + 1</code> lowest bits of <code class="inline">q</code> are 0, we obtain the desired invariant:</p>
-<a name="division-00074"></a><p style="margin-left: 3em;"><b>Loop invariant</b> <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0</code></p>
-<a name="division-00075"></a><p>(If you want a good laugh and have some time to spare, paste <code class="inline">div()</code> code in a <a href="https://chatgpt.com/">ChatGPT</a> chat and ask various models what the loop invariant is.)</p>
-<a name="division-00076"></a><p>To the proof then. First, check that the invariant is established at the loop entrance that is, that the following triple is valid.</p>
-<a name="division-00077"></a><pre><code>⟦ d &gt; 0 ⟧
+<a name="division-00056"></a><p>After the first step (when the subtraction under the first horizontal line on the left has been completed), the algorithm established that <code class="inline">273 == 97*2 + 79</code>, where by construction <code class="inline">79 &lt; 97</code>, which looks promisingly similar to the form of the postcondition that we want to establish: <code class="inline">n == d*q + r &amp;&amp; r &lt; d</code>. It then makes sense to select as the invariant &quot;the highest <code class="inline">N - i - 1</code> digits of dividend (<i>i.e.</i>, <code class="inline">n</code>), divided by the divisor (<i>i.e.</i>, <code class="inline">d</code>), have the highest <code class="inline">N - i - 1</code> digits of <code class="inline">q</code> as the quotient and <code class="inline">r</code> at the remainder&quot; (in our binary case the digits are bits).</p>
+<a name="division-00057"></a><p>Provided that we manage to establish that this is actually an invariant, the other remaining pieces fall in place quickly:</p>
+<a name="division-00058"></a><p style="margin-left: 3em;">At the beginning of the loop, <code class="inline">i == N - 1</code> so &quot;the highest <code class="inline">N - i - 1</code> bits&quot;  degenerate into &quot;the highest 0 bits&quot;, for which the condition is vacuous.</p>
+<a name="division-00059"></a><p style="margin-left: 3em;">Similarly at the termination of the loop we have <code class="inline">i == -1</code>, so <code class="inline">N - i - 1 == N</code>   and we have the desired postcondition.</p>
+<a name="division-00060"></a><p>But before we embark on the actual proof, we have to introduce some terminology, to simplify the necessary formal manipulations.</p>
+<a name="division-00061"></a><p>We are operating on <code class="inline">N</code>-bit unsigned binary numbers. We shall refer to the more and less significant bits as &quot;left&quot; or &quot;last&quot; or &quot;high&quot; and &quot;right&quot; or &quot;first&quot; or &quot;low&quot; respectively, with the appropriate comparative and superlative forms and without, of course, making any assumptions about endianness. Bits are indexed <code class="inline">0 ... N - 1</code> from right to left (Thank you, Fibonacci, very clever! Not.).</p>
+<a name="division-00062"></a><p>We will do a lot of bit-shifting. Recall that for <code class="inline">t &gt;= 0</code>, <code class="inline">x &gt;&gt; t == floor(x/2^t)</code> and <code class="inline">x &lt;&lt; t == x*2^t</code>. Again, all values are unsigned, and so are shifts. Bitwise <code class="inline">OR</code> and <code class="inline">AND</code> are denoted as <code class="inline">|</code> and <code class="inline">&amp;</code> as in C.</p>
+<a name="division-00063"></a><p>On a loop iteration with a particular value of <code class="inline">i</code>, we will be especially interested in shifts by <code class="inline">i</code> and <code class="inline">i + 1</code> bits. Write</p>
+<a name="division-00064"></a><p style="margin-left: 3em;"><code class="inline">B&#x27; = (1 &lt;&lt; i)</code> for the <code class="inline">i</code>-th bit bitmask.</p>
+<a name="division-00065"></a><p style="margin-left: 3em;"><code class="inline">B&quot; = (1 &lt;&lt; (i + 1))</code> for the <code class="inline">(i + 1)</code>-st bit bitmask.</p>
+<a name="division-00066"></a><p style="margin-left: 3em;"><code class="inline">t&#x27; = (t &gt;&gt; i)</code>, for the value <code class="inline">t</code> shifted <code class="inline">i</code> bits right.</p>
+<a name="division-00067"></a><p style="margin-left: 3em;"><code class="inline">t&quot; = (t &gt;&gt; (i + 1))</code>, for the value <code class="inline">t</code> shifted <code class="inline">i + 1</code> bits right.</p>
+<a name="division-00068"></a><p style="margin-left: 3em;"><code class="inline">M(k) = (1 &lt;&lt; k) - 1</code>, for the bitmask of the first <code class="inline">k</code> bits.</p>
+<a name="division-00069"></a><p>We treat <code class="inline">&#x27;</code> and <code class="inline">&quot;</code> as <a href="https://en.wikipedia.org/wiki/Arity#:~:text=the%20term%20%22singulary%22%20is%20the%20correct%20adjective%2C%20rather%20than%20%22unary%22">singular</a> operators, binding tighter than any binary ones.</p>
+<a name="division-00070"></a><p>As a warm-up, prove the following</p>
+<a name="division-00071"></a><p style="margin-left: 3em;"><b>Lemma</b> <code class="inline">x&#x27; == 2*x&quot; + x&#x27;&amp;1</code></p>
+<a name="division-00072"></a><p>(Once you rewrite <code class="inline">2*x&quot;</code> as <code class="inline">(x &gt;&gt; (i + 1)) &lt;&lt; 1</code>, it should be trivial.)</p>
+<a name="division-00073"></a><p>&quot;The highest <code class="inline">N - i - 1</code> bits&quot; of <code class="inline">x</code> mentioned in the informal invariant above can be obtained by discarding the remaining <code class="inline">N - (N - i - 1) == i + 1</code> bits, and so are <code class="inline">x &gt;&gt; (i + 1)</code>, or, as we luckily agreed, <code class="inline">x&quot;</code>. It makes sense to try <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r</code> as the invariant. This assertion is established at the loop entrance and guarantees the final postcondition after the loop termination. Unfortunately, it is <b>not</b> an invariant of our loop. To conclude this, observe that this assertion holds at the loop entrance even if the initial value of <code class="inline">q</code> is not <code class="inline">0</code>. If it were an invariant, then initialising <code class="inline">q</code> to an arbitrary value would still produce a correct result, which is clearly not the case, because bits of <code class="inline">q</code> are only set (by <code class="inline">q |= 1 &lt;&lt; i</code>) and never cleared, so in the final value of <code class="inline">q</code> all the bits set initially remain set.</p>
+<a name="division-00074"></a><p>As it turns out (after many a painful attempt), this is the only obstruction and once we add to the invariant a conjunct <code class="inline">q&amp;M(i + 1) == 0</code> stating that <code class="inline">i + 1</code> lowest bits of <code class="inline">q</code> are 0, we obtain the desired invariant:</p>
+<a name="division-00075"></a><p style="margin-left: 3em;"><b>Loop invariant</b> <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0</code></p>
+<a name="division-00076"></a><p>(If you want a good laugh and have some time to spare, paste <code class="inline">div()</code> code in a <a href="https://chatgpt.com/">ChatGPT</a> chat and ask various models what the loop invariant is.)</p>
+<a name="division-00077"></a><p>To the proof then. First, check that the invariant is established at the loop entrance that is, that the following triple is valid.</p>
+<a name="division-00078"></a><pre><code>⟦ d &gt; 0 ⟧
 uintN_t q := 0;
 uintN_t r := 0;
 int     i := N - 1;
 ⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00078"></a><p>Go from bottom to top, applying the assignment axiom and simplifying on each step. First, expand the invariant as</p>
-<a name="division-00079"></a><pre><code>⟦ n &gt;&gt; (i + 1) == d*(q &gt;&gt; (i + 1)) + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;((1 &lt;&lt; (i + 1)) - 1) == 0 ⟧</code></pre>
-<a name="division-00080"></a><p>Now apply the assignment axiom (<i>i.e.</i>, replace <code class="inline">i</code> with <code class="inline">(N - 1)</code>)...</p>
-<a name="division-00081"></a><pre><code>⟦ n &gt;&gt; ((N - 1) + 1) == d*(q &gt;&gt; ((N - 1) + 1)) + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;((1 &lt;&lt; ((N - 1) + 1)) - 1) == 0 ⟧
+<a name="division-00079"></a><p>Go from bottom to top, applying the assignment axiom and simplifying on each step. First, expand the invariant as</p>
+<a name="division-00080"></a><pre><code>⟦ n &gt;&gt; (i + 1) == d*(q &gt;&gt; (i + 1)) + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;((1 &lt;&lt; (i + 1)) - 1) == 0 ⟧</code></pre>
+<a name="division-00081"></a><p>Now apply the assignment axiom (<i>i.e.</i>, replace <code class="inline">i</code> with <code class="inline">(N - 1)</code>)...</p>
+<a name="division-00082"></a><pre><code>⟦ n &gt;&gt; ((N - 1) + 1) == d*(q &gt;&gt; ((N - 1) + 1)) + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;((1 &lt;&lt; ((N - 1) + 1)) - 1) == 0 ⟧
 i := N - 1;
 ⟦ n &gt;&gt; (i + 1) == d*(q &gt;&gt; (i + 1)) + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;((1 &lt;&lt; (i + 1)) - 1) == 0 ⟧</code></pre>
-<a name="division-00082"></a><p>... simplify, use <code class="inline">x &gt;&gt; N == 0</code> for any <code class="inline">N</code>-bit value, and apply the assignment axiom again ...</p>
-<a name="division-00083"></a><pre><code>⟦ 0 == d*0 + 0 &amp;&amp; 0 &lt; d &amp;&amp; 0 &lt;= 0 &amp;&amp; (q &amp; ~0) == 0 ⟧
+<a name="division-00083"></a><p>... simplify, use <code class="inline">x &gt;&gt; N == 0</code> for any <code class="inline">N</code>-bit value, and apply the assignment axiom again ...</p>
+<a name="division-00084"></a><pre><code>⟦ 0 == d*0 + 0 &amp;&amp; 0 &lt; d &amp;&amp; 0 &lt;= 0 &amp;&amp; (q &amp; ~0) == 0 ⟧
 r := 0
 ⟦ 0 == d*0 + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; (q &amp; ~0) == 0 ⟧</code></pre>
-<a name="division-00084"></a><p>... and one more time ...</p>
-<a name="division-00085"></a><pre><code>⟦ 0 == 0 &amp;&amp; 0 &lt; d &amp;&amp; (0 &amp; ~0) == 0 ⟧
+<a name="division-00085"></a><p>... and one more time ...</p>
+<a name="division-00086"></a><pre><code>⟦ 0 == 0 &amp;&amp; 0 &lt; d &amp;&amp; (0 &amp; ~0) == 0 ⟧
 q := 0
 ⟦ 0 == d*0 + 0 &amp;&amp; 0 &lt; d &amp;&amp; 0 &lt;= 0 &amp;&amp; (q &amp; ~0) == 0 ⟧</code></pre>
-<a name="division-00086"></a><p>... which finally gives</p>
-<a name="division-00087"></a><pre><code>⟦ 0 &lt; d ⟧</code></pre>
-<a name="division-00088"></a><p>Which is exactly the given precondition. <i>Voilà!</i> Interestingly, it seems division by zero is impossible, because there is no suitable remainder.</p>
-<a name="division-00089"></a><p>Next, we need to prove that the invariant is preserved by the loop body. This is by far the most complex and inundating part of the proof. We want to establish the following triple (at this point let&#x27;s expand the compound assignment operators and add a trivial <code class="inline">else</code> to the conditional so that it conforms to the form expected by our conditional axiom):</p>
-<a name="division-00090"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; i != -1 ⟧
+<a name="division-00087"></a><p>... which finally gives</p>
+<a name="division-00088"></a><pre><code>⟦ 0 &lt; d ⟧</code></pre>
+<a name="division-00089"></a><p>Which is exactly the given precondition. <i>Voilà!</i> Interestingly, it seems division by zero is impossible, because there is no suitable remainder.</p>
+<a name="division-00090"></a><p>Next, we need to prove that the invariant is preserved by the loop body. This is by far the most complex and inundating part of the proof. We want to establish the following triple (at this point let&#x27;s expand the compound assignment operators and add a trivial <code class="inline">else</code> to the conditional so that it conforms to the form expected by our conditional axiom):</p>
+<a name="division-00091"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; i != -1 ⟧
 r := r &lt;&lt; 1;
 r := r | ((n &gt;&gt; i) &amp; 1);
 if (r &gt;= d) {
@@ -195,73 +196,73 @@ if (r &gt;= d) {
 }
 i := i - 1;
 ⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00091"></a><p>First, the guard <code class="inline">i != -1</code> is only needed to guarantee that shifts by <code class="inline">i</code> and <code class="inline">i + 1</code> bits make sense. It is not used for anything else and will not be mentioned again.</p>
-<a name="division-00092"></a><p>We can proceed as before: start at the bottom and apply the assignment axiom to work our way up:</p>
-<a name="division-00093"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0 ⟧
+<a name="division-00092"></a><p>First, the guard <code class="inline">i != -1</code> is only needed to guarantee that shifts by <code class="inline">i</code> and <code class="inline">i + 1</code> bits make sense. It is not used for anything else and will not be mentioned again.</p>
+<a name="division-00093"></a><p>We can proceed as before: start at the bottom and apply the assignment axiom to work our way up:</p>
+<a name="division-00094"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0 ⟧
 i := i - 1;
 ⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00094"></a><p>Note that after substituting <code class="inline">i - 1</code> for <code class="inline">i</code>, <code class="inline">x&quot;</code> nicely transforms into <code class="inline">x&#x27;</code>. But at this point we are stuck: we know the postcondition that the conditional operator must establish, but we have no idea what <i>its</i> suitable precondition is. Take a step back. We now have <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code>, that we will call the <i>target</i>. The composition of two assignments and one conditional operator, starting from the loop invariant must establish the target. Write it down:</p>
-<a name="division-00095"></a><p style="margin-left: 3em;"><b>Loop invariant</b> <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0</code></p>
-<a name="division-00096"></a><p style="margin-left: 3em;"><b>Target</b> <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code></p>
-<a name="division-00097"></a><p>Comparing the loop invariant and the target, we see that transforming the former into the latter takes:</p>
-<a name="division-00098"></a><p style="margin-left: 3em;">Replacing <code class="inline">q&quot;</code> with <code class="inline">q&#x27;</code>.</p>
-<a name="division-00099"></a><p style="margin-left: 3em;">Replacing <code class="inline">n&quot;</code> with <code class="inline">n&#x27;</code>.</p>
-<a name="division-00100"></a><p style="margin-left: 3em;">Replacing <code class="inline">q&amp;M(i + 1) == 0</code> with <code class="inline">q&amp;M(i) == 0</code>.</p>
-<a name="division-00101"></a><p>The last one is easy: if the first <code class="inline">i + 1</code> bits of <code class="inline">q</code> are zero (this is what <code class="inline">q&amp;M(i + 1) == 0</code> means), then <i>a fortiori</i> so are its <code class="inline">i</code> first bits, so <code class="inline">q&amp;M(i) == 0</code>.</p>
-<a name="division-00102"></a><p>As for replacing <code class="inline">q&quot;</code> with <code class="inline">q&#x27;</code> and <code class="inline">n&quot;</code> with <code class="inline">n&#x27;</code>, we will do this via the lemma we stated (and you proved) earlier. We will now apply transformations to the loop invariant such that: (i) it will make it possible to apply the lemma and (ii) it will produce the result that will be a suitable precondition for the following assignments. The right-hand sides of the assignments are <code class="inline">r &lt;&lt;= 1</code> (that is <code class="inline">2*r</code>) and <code class="inline">r | ((n &gt;&gt; i) &amp; 1)</code> (that is <code class="inline">r | (n&#x27;&amp;1)</code>), so we will try to produce an assertion having sub-formulae of this form.</p>
-<a name="division-00103"></a><p>The starting invariant again:</p>
-<a name="division-00104"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00105"></a><p>Multiply both sides of all conjuncts by <code class="inline">2</code>. This produces terms such that the lemma and the assignment axiom for <code class="inline">r := 2*r</code> can be applied.</p>
-<a name="division-00106"></a><pre><code>⟦ 2*n&quot; == 2*d*q&quot; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00107"></a><p>Immediately we can apply the lemma: <code class="inline">2*q&quot; == q&#x27; - q&#x27;&amp;1</code>.</p>
-<a name="division-00108"></a><pre><code>⟦ 2*n&quot; == d*(q&#x27; - q&#x27;&amp;1) + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00109"></a><p><code class="inline">q&amp;M(i + 1) == 0</code> hence we can drop <code class="inline">q&#x27;&amp;1</code>, as it is guaranteed to be <code class="inline">0</code>.</p>
-<a name="division-00110"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00111"></a><p>Amazing! We got rid of <code class="inline">q&quot;</code> and this is even before the first statement of the loop body was executed. Continue...</p>
-<a name="division-00112"></a><p>Looking forward to <code class="inline">r := r | n&#x27;&amp;1</code>, we see that we have no <code class="inline">|</code>-s in sight, so the assignment axiom cannot be applied directly. Intuitively, this should not be the problem, because after <code class="inline">r</code> is doubled, its lowest bit is zero, and so <code class="inline">|</code> to it is the same as <code class="inline">+</code>, and we have plenty of additions. To prove this it will be nice to have a conjunct <code class="inline">r&amp;1 == 0</code> at that point. But if such a conjunct is present, then <b>before</b> the <code class="inline">r := 2*r</code> assignment it looked (as per the assignment axiom) as <code class="inline">(2*r)&amp;1 == 0</code>, which is always true, and so we can just as well insert it at this point!</p>
-<a name="division-00113"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧</code></pre>
-<a name="division-00114"></a><p>More pressingly, to apply the assignment axiom to <code class="inline">r := r | n&#x27;&amp;1</code> we need <code class="inline">n&#x27;&amp;1</code> next to each <code class="inline">r</code>. To this end, observe that <code class="inline">n&#x27;&amp;1</code> is either <code class="inline">0</code> or <code class="inline">1</code>, and so if <code class="inline">2*r &lt; 2*d</code> then <code class="inline">2*r + n&#x27;&amp;1 &lt; 2*d</code>.</p>
-<a name="division-00115"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧</code></pre>
-<a name="division-00116"></a><p>We are fully ready to apply the assignment axiom:</p>
-<a name="division-00117"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧
+<a name="division-00095"></a><p>Note that after substituting <code class="inline">i - 1</code> for <code class="inline">i</code>, <code class="inline">x&quot;</code> nicely transforms into <code class="inline">x&#x27;</code>. But at this point we are stuck: we know the postcondition that the conditional operator must establish, but we have no idea what <i>its</i> suitable precondition is. Take a step back. We now have <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code>, that we will call the <i>target</i>. The composition of two assignments and one conditional operator, starting from the loop invariant must establish the target. Write it down:</p>
+<a name="division-00096"></a><p style="margin-left: 3em;"><b>Loop invariant</b> <code class="inline">n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0</code></p>
+<a name="division-00097"></a><p style="margin-left: 3em;"><b>Target</b> <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code></p>
+<a name="division-00098"></a><p>Comparing the loop invariant and the target, we see that transforming the former into the latter takes:</p>
+<a name="division-00099"></a><p style="margin-left: 3em;">Replacing <code class="inline">q&quot;</code> with <code class="inline">q&#x27;</code>.</p>
+<a name="division-00100"></a><p style="margin-left: 3em;">Replacing <code class="inline">n&quot;</code> with <code class="inline">n&#x27;</code>.</p>
+<a name="division-00101"></a><p style="margin-left: 3em;">Replacing <code class="inline">q&amp;M(i + 1) == 0</code> with <code class="inline">q&amp;M(i) == 0</code>.</p>
+<a name="division-00102"></a><p>The last one is easy: if the first <code class="inline">i + 1</code> bits of <code class="inline">q</code> are zero (this is what <code class="inline">q&amp;M(i + 1) == 0</code> means), then <i>a fortiori</i> so are its <code class="inline">i</code> first bits, so <code class="inline">q&amp;M(i) == 0</code>.</p>
+<a name="division-00103"></a><p>As for replacing <code class="inline">q&quot;</code> with <code class="inline">q&#x27;</code> and <code class="inline">n&quot;</code> with <code class="inline">n&#x27;</code>, we will do this via the lemma we stated (and you proved) earlier. We will now apply transformations to the loop invariant such that: (i) it will make it possible to apply the lemma and (ii) it will produce the result that will be a suitable precondition for the following assignments. The right-hand sides of the assignments are <code class="inline">r &lt;&lt;= 1</code> (that is <code class="inline">2*r</code>) and <code class="inline">r | ((n &gt;&gt; i) &amp; 1)</code> (that is <code class="inline">r | (n&#x27;&amp;1)</code>), so we will try to produce an assertion having sub-formulae of this form.</p>
+<a name="division-00104"></a><p>The starting invariant again:</p>
+<a name="division-00105"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
+<a name="division-00106"></a><p>Multiply both sides of all conjuncts by <code class="inline">2</code>. This produces terms such that the lemma and the assignment axiom for <code class="inline">r := 2*r</code> can be applied.</p>
+<a name="division-00107"></a><pre><code>⟦ 2*n&quot; == 2*d*q&quot; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
+<a name="division-00108"></a><p>Immediately we can apply the lemma: <code class="inline">2*q&quot; == q&#x27; - q&#x27;&amp;1</code>.</p>
+<a name="division-00109"></a><pre><code>⟦ 2*n&quot; == d*(q&#x27; - q&#x27;&amp;1) + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
+<a name="division-00110"></a><p><code class="inline">q&amp;M(i + 1) == 0</code> hence we can drop <code class="inline">q&#x27;&amp;1</code>, as it is guaranteed to be <code class="inline">0</code>.</p>
+<a name="division-00111"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
+<a name="division-00112"></a><p>Amazing! We got rid of <code class="inline">q&quot;</code> and this is even before the first statement of the loop body was executed. Continue...</p>
+<a name="division-00113"></a><p>Looking forward to <code class="inline">r := r | n&#x27;&amp;1</code>, we see that we have no <code class="inline">|</code>-s in sight, so the assignment axiom cannot be applied directly. Intuitively, this should not be the problem, because after <code class="inline">r</code> is doubled, its lowest bit is zero, and so <code class="inline">|</code> to it is the same as <code class="inline">+</code>, and we have plenty of additions. To prove this it will be nice to have a conjunct <code class="inline">r&amp;1 == 0</code> at that point. But if such a conjunct is present, then <b>before</b> the <code class="inline">r := 2*r</code> assignment it looked (as per the assignment axiom) as <code class="inline">(2*r)&amp;1 == 0</code>, which is always true, and so we can just as well insert it at this point!</p>
+<a name="division-00114"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧</code></pre>
+<a name="division-00115"></a><p>More pressingly, to apply the assignment axiom to <code class="inline">r := r | n&#x27;&amp;1</code> we need <code class="inline">n&#x27;&amp;1</code> next to each <code class="inline">r</code>. To this end, observe that <code class="inline">n&#x27;&amp;1</code> is either <code class="inline">0</code> or <code class="inline">1</code>, and so if <code class="inline">2*r &lt; 2*d</code> then <code class="inline">2*r + n&#x27;&amp;1 &lt; 2*d</code>.</p>
+<a name="division-00116"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧</code></pre>
+<a name="division-00117"></a><p>We are fully ready to apply the assignment axiom:</p>
+<a name="division-00118"></a><pre><code>⟦ 2*n&quot; == d*q&#x27; + 2*r &amp;&amp; 2*r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= 2*r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; (2*r)&amp;1 == 0 ⟧
 r := 2*r
 ⟦ 2*n&quot; == d*q&#x27; + r &amp;&amp; r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧</code></pre>
-<a name="division-00118"></a><p>Apply the lemma: <code class="inline">2*n&quot; == n&#x27; - n&#x27;&amp;1</code></p>
-<a name="division-00119"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r + n&#x27;&amp;1 &amp;&amp; r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧</code></pre>
-<a name="division-00120"></a><p>The next statement is the assignment <code class="inline">r := r | n&#x27;&amp;1</code>. Thanks to <code class="inline">r&amp;1 == 0</code> conjunct, carefully prepared in advance, we know that we can replace <code class="inline">r + n&#x27;&amp;1</code> with <code class="inline">r | n&#x27;&amp;1</code> and apply the assignment axiom:</p>
-<a name="division-00121"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r + n&#x27;&amp;1 &amp;&amp; r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧
+<a name="division-00119"></a><p>Apply the lemma: <code class="inline">2*n&quot; == n&#x27; - n&#x27;&amp;1</code></p>
+<a name="division-00120"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r + n&#x27;&amp;1 &amp;&amp; r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧</code></pre>
+<a name="division-00121"></a><p>The next statement is the assignment <code class="inline">r := r | n&#x27;&amp;1</code>. Thanks to <code class="inline">r&amp;1 == 0</code> conjunct, carefully prepared in advance, we know that we can replace <code class="inline">r + n&#x27;&amp;1</code> with <code class="inline">r | n&#x27;&amp;1</code> and apply the assignment axiom:</p>
+<a name="division-00122"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r + n&#x27;&amp;1 &amp;&amp; r + n&#x27;&amp;1 &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧
 ⟦ n&#x27; == d*q&#x27; + (r | n&#x27;&amp;1) &amp;&amp; (r | n&#x27;&amp;1) &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r&amp;1 == 0 ⟧
 r := r | n&#x27;&amp;1
 ⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧</code></pre>
-<a name="division-00122"></a><p>One starts feeling at this point, that the steps of the derivation are practically forced by the form of the invariant. The appearance of <code class="inline">r + n&#x27;&amp;1</code> components in the assertion is a result of using the lemma to get rid of <code class="inline">q&quot;</code> and <code class="inline">n&quot;</code>. In fact, it seems possible that the algorithm itself could have been derived <i>ad initio</i>, given the invariant. More about this at the end.</p>
-<a name="division-00123"></a><p>We found the mysterious precondition of the conditional statement. One relatively simple final step remains: we have to establish that both conditional branches, given this precondition, establish the target. Let&#x27;s start with the <code class="inline">r &gt;= d</code> branch. We need</p>
-<a name="division-00124"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r &gt;= d ⟧
+<a name="division-00123"></a><p>One starts feeling at this point, that the steps of the derivation are practically forced by the form of the invariant. The appearance of <code class="inline">r + n&#x27;&amp;1</code> components in the assertion is a result of using the lemma to get rid of <code class="inline">q&quot;</code> and <code class="inline">n&quot;</code>. In fact, it seems possible that the algorithm itself could have been derived <i>ad initio</i>, given the invariant. More about this at the end.</p>
+<a name="division-00124"></a><p>We found the mysterious precondition of the conditional statement. One relatively simple final step remains: we have to establish that both conditional branches, given this precondition, establish the target. Let&#x27;s start with the <code class="inline">r &gt;= d</code> branch. We need</p>
+<a name="division-00125"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r &gt;= d ⟧
 r := r - d;
 q := q | B&#x27;
 ⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0 ⟧</code></pre>
-<a name="division-00125"></a><p>Experienced as we are at this point, we can easily transform the precondition to a form suitable for the next assignment (and also drop the redundant <code class="inline">0 &lt;= r</code> conjunct, implied by the conditional guard):</p>
-<a name="division-00126"></a><pre><code>⟦ n&#x27; == d*q&#x27; + (r - d) + d &amp;&amp; r - d &lt; d &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r - d &gt;= 0 ⟧</code></pre>
-<a name="division-00127"></a><p>Apply the assignment axiom</p>
-<a name="division-00128"></a><pre><code>⟦ n&#x27; == d*q&#x27; + (r - d) + d &amp;&amp; r - d &lt; d &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r - d &gt;= 0 ⟧
+<a name="division-00126"></a><p>Experienced as we are at this point, we can easily transform the precondition to a form suitable for the next assignment (and also drop the redundant <code class="inline">0 &lt;= r</code> conjunct, implied by the conditional guard):</p>
+<a name="division-00127"></a><pre><code>⟦ n&#x27; == d*q&#x27; + (r - d) + d &amp;&amp; r - d &lt; d &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r - d &gt;= 0 ⟧</code></pre>
+<a name="division-00128"></a><p>Apply the assignment axiom</p>
+<a name="division-00129"></a><pre><code>⟦ n&#x27; == d*q&#x27; + (r - d) + d &amp;&amp; r - d &lt; d &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r - d &gt;= 0 ⟧
 r := r - d
 ⟦ n&#x27; == d*q&#x27; + r + d &amp;&amp; r &lt; d &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r &gt;= 0 ⟧</code></pre>
-<a name="division-00129"></a><p>Prepare for the <code class="inline">q := q | B&#x27;</code> assignment. To this end, we have to transform the last assertion to a form where <code class="inline">q</code> only happens as a part of <code class="inline">q | B&#x27;</code>. First, from <code class="inline">q&amp;M(i + 1) == 0</code> it follows that <code class="inline">q | B&#x27; == q + B&#x27;</code> (because <code class="inline">i</code>-th bit of <code class="inline">q</code> is zero). Next, do the easy part, <code class="inline">q&amp;M(i + 1) == 0</code>: weaken it, as was discussed above, to <code class="inline">q&amp;M(i) == 0</code>, then, use <code class="inline">(B&#x27; | M(i)) == 0</code> (immediately from the definition of <code class="inline">M(i)</code>) to arrive at <code class="inline">(q | B&#x27;)&amp;M(i) == 0</code>.</p>
-<a name="division-00130"></a><p>Next, deal with <code class="inline">d*q&#x27; + r + d</code>.</p>
-<a name="division-00131"></a><pre><code>         d*q&#x27; + r + d
+<a name="division-00130"></a><p>Prepare for the <code class="inline">q := q | B&#x27;</code> assignment. To this end, we have to transform the last assertion to a form where <code class="inline">q</code> only happens as a part of <code class="inline">q | B&#x27;</code>. First, from <code class="inline">q&amp;M(i + 1) == 0</code> it follows that <code class="inline">q | B&#x27; == q + B&#x27;</code> (because <code class="inline">i</code>-th bit of <code class="inline">q</code> is zero). Next, do the easy part, <code class="inline">q&amp;M(i + 1) == 0</code>: weaken it, as was discussed above, to <code class="inline">q&amp;M(i) == 0</code>, then, use <code class="inline">(B&#x27; | M(i)) == 0</code> (immediately from the definition of <code class="inline">M(i)</code>) to arrive at <code class="inline">(q | B&#x27;)&amp;M(i) == 0</code>.</p>
+<a name="division-00131"></a><p>Next, deal with <code class="inline">d*q&#x27; + r + d</code>.</p>
+<a name="division-00132"></a><pre><code>         d*q&#x27; + r + d
       == d*(q&#x27; + 1)  + r
       == d*(q + B&#x27;)&#x27; + r /* Convince yourself that (x &gt;&gt; i) + 1 == (x + (1 &lt;&lt; i)) &gt;&gt; i */
       == d*(q | B&#x27;)&#x27; + r</code></pre>
-<a name="division-00132"></a><p>Apply the assignment axiom</p>
-<a name="division-00133"></a><pre><code>⟦ n&#x27; == d*(q | B&#x27;)&#x27; + r &amp;&amp; r &lt; d &amp;&amp; (q|B&#x27;)&amp;M(i) == 0 &amp;&amp; r &gt;= 0 ⟧
+<a name="division-00133"></a><p>Apply the assignment axiom</p>
+<a name="division-00134"></a><pre><code>⟦ n&#x27; == d*(q | B&#x27;)&#x27; + r &amp;&amp; r &lt; d &amp;&amp; (q|B&#x27;)&amp;M(i) == 0 &amp;&amp; r &gt;= 0 ⟧
 q := q | B&#x27;
 ⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; q&amp;M(i) == 0 &amp;&amp; r &gt;= 0 ⟧</code></pre>
-<a name="division-00134"></a><p>Wait a second. This is exactly the target: <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code>. We are done! What remains, is the trivial verification for the <code class="inline">r &lt; d</code> conditional branch:</p>
-<a name="division-00135"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r &lt; d ⟧
+<a name="division-00135"></a><p>Wait a second. This is exactly the target: <code class="inline">n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0</code>. We are done! What remains, is the trivial verification for the <code class="inline">r &lt; d</code> conditional branch:</p>
+<a name="division-00136"></a><pre><code>⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; 2*d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; r &lt; d ⟧
 /* Algebra and weakening q&amp;M(i + 1) == 0 to q&amp;M(i) == 0 */
 ⟦ n&#x27; == d*q&#x27; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i) == 0 ⟧</code></pre>
-<a name="division-00136"></a><p><b>We are done with the verification of the loop invariant!</b></p>
-<a name="division-00137"></a><p>We now know that our loop invariant is indeed an invariant. The while-loop axiom then assures us that at the termination of the loop, the invariant will still hold, together with the negation of the guard:</p>
-<a name="division-00138"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧
+<a name="division-00137"></a><p><b>We are done with the verification of the loop invariant!</b></p>
+<a name="division-00138"></a><p>We now know that our loop invariant is indeed an invariant. The while-loop axiom then assures us that at the termination of the loop, the invariant will still hold, together with the negation of the guard:</p>
+<a name="division-00139"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 ⟧
 while (i != -1) {
         r &lt;&lt;= 1;
         r |= ((n &gt;&gt; i) &amp; 1);
@@ -272,12 +273,12 @@ while (i != -1) {
         i := i - 1;
 }
 ⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; i == -1 ⟧</code></pre>
-<a name="division-00139"></a><p>OK, so substitute <code class="inline">i == -1</code> to the invariant:</p>
-<a name="division-00140"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; i == -1 ⟧
+<a name="division-00140"></a><p>OK, so substitute <code class="inline">i == -1</code> to the invariant:</p>
+<a name="division-00141"></a><pre><code>⟦ n&quot; == d*q&quot; + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r &amp;&amp; q&amp;M(i + 1) == 0 &amp;&amp; i == -1 ⟧
 ⟦ n == d*q + r &amp;&amp; r &lt; d &amp;&amp; 0 &lt;= r ⟧</code></pre>
-<a name="division-00141"></a><p>Hallelujah!</p>
-<a name="division-00142"></a><p>Let&#x27;s put it all together</p>
-<a name="division-00143"></a><pre><code>uintN_t div(uintN_t n, uintN_t d) {
+<a name="division-00142"></a><p>Hallelujah!</p>
+<a name="division-00143"></a><p>Let&#x27;s put it all together</p>
+<a name="division-00144"></a><pre><code>uintN_t div(uintN_t n, uintN_t d) {
 ⟦ d &gt; 0 ⟧
 ⟦ 0 == 0 &amp;&amp; 0 &lt; d &amp;&amp; (0 &amp; ~0) == 0 ⟧
         uintN_t q := 0;
@@ -317,8 +318,8 @@ while (i != -1) {
 ⟦ n&quot; == d*q&quot; + r &amp;&amp; 0 &lt;= r &amp;&amp; r &lt; d &amp;&amp; i == -1 ⟧
 ⟦ n == d*q + r &amp;&amp; 0 &lt;= r &amp;&amp; r &lt; d ⟧
         return q;
-}</code></pre><p class="margin-right"><span class="annotation" data-uid="2"> It takes a specific English dialect to give justise to this sentence.</span>&nbsp;<br></p>
-<a name="division-00144"></a><p>Seriously, the proof above looks at a first (and then any following) sight, as a random barrage of bizarre formal spasms in haphazard directions. It is practically impossible to construct such a sequence of assertions in a top-to-bottom fashion, unless one spends an unhealthy amount of time interacting with <span class="annotation" data-uid="2">Hoare triples in dark alleys</span>.</p>
-<a name="division-00145"></a><p>And this is why nobody is doing it this way (among humans that is, automated provers are only too happy to try insane numbers of possible dead-ends). Early on, a much better-structured approach, going in the opposite direction, starting from the known targets (postconditions) was developed, see <a href="https://en.wikipedia.org/wiki/Predicate_transformer_semantics">Predicate transformer semantics</a>, or better still, read <a href="https://www.amazon.com/Discipline-Programming-Edsger-W-Dijkstra/dp/013215871X">A Discipline of Programming</a> (&quot;59683rd Edition&quot; as the Amazon page mentions nonchalantly). Dijkstra also shared the opinion that the structure of the program and the postcondition are tightly locked to the extent that it is possible to derive a program, given its formal specification, see the amazing <a href="https://www.cs.utexas.edu/~EWD/ewd11xx/EWD1162.PDF">EWD1162</a>.</p><footer><a href="iso.html#iso">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="parmigianino.html#parmigianino">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="euclid.html#euclid">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="aodt.html#aodt">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+}</code></pre><p class="margin-right"><span class="annotation" data-uid="1"> It takes a specific English dialect to give justise to this sentence.</span>&nbsp;<br></p>
+<a name="division-00145"></a><p>Seriously, the proof above looks at a first (and then any following) sight, as a random barrage of bizarre formal spasms in haphazard directions. It is practically impossible to construct such a sequence of assertions in a top-to-bottom fashion, unless one spends an unhealthy amount of time interacting with <span class="annotation" data-uid="1">Hoare triples in dark alleys</span>.</p>
+<a name="division-00146"></a><p>And this is why nobody is doing it this way (among humans that is, automated provers are only too happy to try insane numbers of possible dead-ends). Early on, a much better-structured approach, going in the opposite direction, starting from the known targets (postconditions) was developed, see <a href="https://en.wikipedia.org/wiki/Predicate_transformer_semantics">Predicate transformer semantics</a>, or better still, read <a href="https://www.amazon.com/Discipline-Programming-Edsger-W-Dijkstra/dp/013215871X">A Discipline of Programming</a> (&quot;59683rd Edition&quot; as the Amazon page mentions nonchalantly). Dijkstra also shared the opinion that the structure of the program and the postcondition are tightly locked to the extent that it is possible to derive a program, given its formal specification, see the amazing <a href="https://www.cs.utexas.edu/~EWD/ewd11xx/EWD1162.PDF">EWD1162</a>.</p><footer><a href="iso.html#iso">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="parmigianino.html#parmigianino">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="euclid.html#euclid">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="aodt.html#aodt">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
  </body>
 </html>
