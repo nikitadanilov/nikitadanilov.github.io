@@ -2,8 +2,10 @@
 // id commutativity
 // +# blog commutativity
 // +# timeline 2014/10/16
+// +tags math
 
-I just realised that in any unital ring commutativity of addition follows from distributivity:
+I just realised that in any unital ring commutativity of addition follows from
+distributivity:
 
 ; math
 

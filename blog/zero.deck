@@ -1,0 +1,66 @@
+// name Zero everywhere.
+// id zero
+// +# blog zero
+// +# timeline 2014/12/13
+// +tags math
+
+; img
+/ url https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7sSbGi4zvDY2F4HbR0uDssmUCFc9szMj0KqqXlSlTtAaN8b9aTn5hYY5qbccWhPaaNEUX3GTv5xXURQjkRGrj0ZPC8AWhOpjJ4hvAUJxNLtGmRp1OqOul7pzRc4U-J5FKa_FWdQ/s1600/zero-limit.jpg
+
+
+(студенческая олимпиада МФТИ по математике, 2013, задача 3)
+/ += . "студенческая олимпиада МФТИ по математике" -> https://vk.com/doc177654709_349274647
+
+Предположим, что \(\forall x\in\mathbb{R}\to f(x) \neq 0\). Возьмем произвольный
+интервал \([a, b] \subset \mathbb{R}\), \(a \lt b\) и докажем, что на этом
+интервале есть точка \(x_0\) такая, что \(\lim \limits_{x\to x_0} f(x) \neq
+0\).
+
+Пусть \(T_n = |f|^{-1}([\frac{1}{n}, +\infty)) \cap [a, b]\), т.е. \(x \in T_n
+\equiv |f(x)| \ge \frac{1}{n} \wedge x\in[a, b]\), для \(n > 0\).
+
+Если каждое \(T_n\) нигде неплотно, нигде неплотно и их объединение, (т.к. \([a,
+b]\) — бэровское пространство), но их объединение это весь интервал \([a, b]\) —
+противоречие. Следовательно, некоторое \(T_n\) имеет внутреннюю точку, \(x_0 \in
+T_n\), тогда \(T_n\) содержит \(x_0\) вместе с неким открытым интервалом на
+котором, таким образом, \(|f(x)| ≥ \frac{1}{n}\), и, следовательно, \(|\lim
+\limits_{x\to x_0} f(x)| \ge \frac{1}{n} \gt 0\).
+/ += . "бэровское пространство" -> http://en.wikipedia.org/wiki/Baire_space
+
+Заметим, что мы доказали больше, чем требовалось, а именно, что множество нулей
+всюду плотно. Или, что функция всюду сходящаяся к непрерывной, почти всюду
+непрерывна (замените \(0\) на произвольную непрерывную
+\(g:\mathbb{R}\to\mathbb{R}\)).
+
+(2014.12.15) Обобщение.
+
+Let \(X\) be a Baire space, \(Y\)—a second-countable Urysohn space and \(f,g : X
+\to Y\)—arbitrary maps. If \((\forall x\in X)(\lim\limits_{t\to x}f(t) =
+\lim\limits_{t\to x}g(t))\) then \(f = g\) on a dense subset.
+
+>_Proof_ (by contraposition). Suppose that there is an open \(A \subseteq X\),
+such that \((\forall x\in A)(f(x)\neq g(x))\). Let \(B\) be a countable base of
+\(Y\).
+
+>Define a countable family of subsets of \(A\): \(T_{U,V} = f^{-1}(U) \cap
+ g^{-1}(V) \cap A\), where \(U, V \in B\) (that is, \(U\) and \(V\) are open
+ subsets of \(Y\)). For any \(x\in A\), \(f(x)\neq g(x)\), and because \(Y\)
+ is Urysohn, there are \(U, V\in B, cl(U)\cap cl(V) = \varnothing,
+ f(x)\in U, g(x)\in V\), that is, \(x\in T_{U,V}\) that is,
+
+; math
+\bigcup\limits_{cl(U)\cap cl(V) = \varnothing} T_{U,V} = A
+
+>Because \(X\) and hence \(A\) are Baire spaces, one of \(T_{U,V}\) in the union
+ above, say \(T_{U_0, V_0}\) is not nowhere dense. That is, there is an open set
+ \(G\subseteq A\) such that for any \(x_0\in G\), and any open neighbourhood
+ \(S, x_0\in S\), \(S \cap T_{U_0,V_0}\neq\varnothing\), that is there exists a
+ \(x'\in S\) such that \(f(x') \in U_0\) and \(g(x')\in V_0\).
+
+>Suppose that \(\lim\limits_{t\to x_0}f(t) = \lim\limits_{t\to x_0}g(t) = y\in
+ Y\). This means that every open neighbourhood of \(y\) intersects with \(U_0\),
+ hence \(y\in cl(U_0)\). Similarly \(y\in cl(V_0)\), contradiction with
+ \(cl(U_0)\cap cl(V_0) = \varnothing\). _End of proof_.
+
+PS: для задачи 2, ответ \(k = 2\cdot n - 2\).
+

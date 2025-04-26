@@ -5,7 +5,6 @@
 // +tags programming
 // +tags math
 
-
 There is that curious idea that you can think of a type in a programming
 language as a kind of algebraic object. Take (homogeneous) lists for example. A
 list of integers is either an empty list (i.e., `nil`) or a pair of an integer
