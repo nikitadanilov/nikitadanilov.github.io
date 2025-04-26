@@ -1,0 +1,42 @@
+// name Unexpected isomorphism.
+// id iso
+// +# blog iso
+// +# timeline 2020/10/15
+// +tags math
+
+Since Cantor's "I see it, but I cannot believe it" (1877), we know that
+\(\mathbb{R}^n\) are isomorphic sets for all \(n > 0\). This being as
+shocking as it is, over time we learn to live with it, because the bijections
+between continua of different dimensions are extremely discontinuous and we
+assume that if we limit ourselves to any reasonably well-behaving class of maps
+the isomorphisms will disappear. Will they?
+
+>_Theorem_. Additive groups \(\mathbb{R}^n\) are isomorphic for all \(n >0\)
+ (and, therefore, isomorphic to the additive group of the complex numbers).
+
+>_Proof_. Each \(\mathbb{R}^n\) is a vector space over rationals. Assuming axiom
+ of choice, any vector space has a basis. By simple cardinality considerations,
+ the cardinality of a basis of \(\mathbb{R}^n\) over \(\mathbb{Q}\) is the same
+ as cardinality of \(\mathbb{R}^n\). Therefore all \(\mathbb{R}^n\) have the
+ same dimension over \(\mathbb{Q}\), and, therefore, are isomorphic as vector
+ spaces and as additive groups.
+>_End of proof_.
+
+This means that for any \(n, m > 0\) there are bijections \(f : \mathbb{R}^n
+\to \mathbb{R}^m\) such that \(f(a + b) = f(a) + f(b)\) and, necessary,
+\(f(p\cdot a + q\cdot b) = p\cdot f(a) + q\cdot f(b)\) for all rational \(p\)
+and \(q\).
+
+I feel that this should be highly counter-intuitive for anybody who internalised
+the Cantor result, or, maybe, especially to such people. The reason is that
+intuitively there are many more continuous maps than algebraic homomorphisms
+between the "same" pair of objects. Indeed, the formula defining continuity has
+the form \(\forall x\forall\epsilon\exists\delta\forall y P(x, \epsilon, \delta,
+y)\) (a local property), while homomorphisms are defined by \(\forall x\forall y
+Q(x, y)\) (a stronger global property). Because of this, topological categories
+have much denser lattices of sub- and quotient-objects than algebraic ones. From
+this one would expect that as there are no isomorphisms (continuous bijections)
+between continua of different dimensions, there definitely should be no
+homomorphisms between them. Yet there they are.
+  
+  
