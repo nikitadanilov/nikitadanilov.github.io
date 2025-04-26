@@ -6,35 +6,35 @@
 
 When studying computing science we all learn how to convert an expression in the
 "normal" ("infix", "algebraic") notation to "reverse Polish" notation. For
-example, an expression `a/b + c/d` is converted to `a b / c d / +`. An
+example, an expression `a/b + c/d` is converted to `b a / d c / +`. An
 expression in Polish notation can be seen as a program for a stack automaton:
 / += . "infix" -> https://en.wikipedia.org/wiki/Infix_notation
 / += . "reverse Polish" -> https://en.wikipedia.org/wiki/Reverse_Polish_notation
 / += . "a stack automaton" -> https://en.wikipedia.org/wiki/Pushdown_automaton
 
 ; code
-PUSH A
-PUSH B
-MUL
-PUSH C
-PUSH D
-MUL
+PUSH b
+PUSH a
+DIV
+PUSH d
+PUSH c
+DIV
 ADD
 
 Where `PUSH` pushes its argument on the top of the (implicit) stack, while
-`ADD` and `MUL` pop 2 top elements from the stack, perform the respective
+`ADD` and `DIV` pop 2 top elements from the stack, perform the respective
 operation and push the result back.
 
 For reasons that will be clearer anon, let's re-write this program as
 
 ; code
 Container c;
-c.put(A);
-c.put(B);
-c.put(c.get() * c.get())
-c.put(C);
-c.put(D);
-c.put(c.get() * c.get())
+c.put(b);
+c.put(a);
+c.put(c.get() / c.get())
+c.put(d);
+c.put(c);
+c.put(c.get() / c.get())
 c.put(c.get() + c.get())
 
 Where `Container` is the type of stacks, c.put() pushes the element on the top
