@@ -1,0 +1,93 @@
+// name A curious case of stacks and queues.
+// id stack-queue
+// +# blog stack-queue
+// +# timeline 2020/11/11
+// +tags programming
+
+
+When studying computing science we all learn how to convert an expression in the
+"normal" ("infix", "algebraic") notation to "reverse Polish" notation. For
+example, an expression `a/b + c/d` is converted to `a b / c d / +`. An
+expression in Polish notation can be seen as a program for a stack automaton:
+/ += . "infix" -> https://en.wikipedia.org/wiki/Infix_notation
+/ += . "reverse Polish" -> https://en.wikipedia.org/wiki/Reverse_Polish_notation
+/ += . "a stack automaton" -> https://en.wikipedia.org/wiki/Pushdown_automaton
+
+; code
+PUSH A
+PUSH B
+MUL
+PUSH C
+PUSH D
+MUL
+ADD
+
+Where `PUSH` pushes its argument on the top of the (implicit) stack, while
+`ADD` and `MUL` pop 2 top elements from the stack, perform the respective
+operation and push the result back.
+
+For reasons that will be clearer anon, let's re-write this program as
+
+; code
+Container c;
+c.put(A);
+c.put(B);
+c.put(c.get() * c.get())
+c.put(C);
+c.put(D);
+c.put(c.get() * c.get())
+c.put(c.get() + c.get())
+
+Where `Container` is the type of stacks, c.put() pushes the element on the top
+of the stack and c.get() pops and returns the top of the stack. LIFO
+discipline of stacks is so widely used (implemented natively on all modern
+processors, built in programming languages in the form of call-stack) that one
+never ask whether a different method of evaluating expressions is possible.
+/ += . "LIFO" -> https://en.wikipedia.org/wiki/LIFO
+
+Here is a problem: find a way to translate infix notation to a program for a
+queue automaton, that is, in a program like the one above, but where `Container`
+is the type of FIFO queues with c.put() enqueuing an element at the rear of
+the queue and c.get() dequeuing at the front. This problem was reportedly
+solved by Jan L.A. van de Snepscheut sometime during spring 1984.
+/ += . "FIFO" -> https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)
+/ += . "queues" -> https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
+/ += . "reportedly" -> https://www.cs.utexas.edu/users/EWD/ewd08xx/EWD887.PDF
+/ += . "Jan L.A. van de Snepscheut" -> https://en.wikipedia.org/wiki/Jan_L._A._van_de_Snepscheut
+
+While you are thinking about it, consider the following tree-traversal code (in
+some abstract imaginary language):
+
+; code
+walk(Treenode root) {
+        Container todo;
+        todo.put(root);
+        while (!todo.is_empty()) {
+                next = todo.get();
+                visit(next);
+                for (child in next.children) {
+                        todo.put(child);
+                }
+        }
+}
+
+Where `node.children` is the list of node children suitable for iteration by
+`for` loop.
+
+Convince yourself that if `Container` is the type of stacks, tree-walk is
+depth-first. And if `Container` is the type of queues, tree-walk is
+breadth-first. Then, convince yourself that a depth-first walk of the parse tree
+of an infix expression produces the expression in Polish notation (unreversed)
+and its breadth-first walk produces the expression in "queue notation" (that is,
+the desired program for a queue automaton). Isn't it marvelous that traversing a
+parse tree with a stack container gives you the program for stack-based
+execution and traversing the same tree with a queue container gives you the
+program for queue-based execution?
+
+I feel that there is something deep behind this. A. Stepanov had an intuition
+(which cost him dearly) that _algorithms are defined on algebraic
+structures_. Elegant interconnection between queues and stacks on one hand and
+tree-walks and automaton programs on the other, tells us that the correspondence
+between algorithms and structures goes in both directions.
+/ += . "A. Stepanov" -> https://en.wikipedia.org/wiki/Alexander_Stepanov
+/ += . "dearly" -> http://www.stlport.org/resources/StepanovUSA.html
