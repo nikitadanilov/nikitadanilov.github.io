@@ -6,6 +6,7 @@
 
 ; img
 / url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/3-lisp/epigraph.png
+/ width 75%
 
 | Source
 / += . "Source" -> https://github.com/nikitadanilov/3-lisp/blob/master/3-lisp.lisp#L259
@@ -155,6 +156,7 @@ simple`):
 
 ; img
 / url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/3-lisp/reduce.png
+/ width 75%
 
 *Implementation*
 
@@ -162,6 +164,7 @@ It is of course not possible to run an infinite tower of interpreters directly.
 
 ; img
 / url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/3-lisp/infinity.png
+/ width 75%
 
 3-LISP implementation creates a meta-level on demand, when a reflective lambda
 is invoked. At that moment the state of the meta-level interpreter is
