@@ -344,7 +344,7 @@ lowest bits of `q` are 0, we obtain the desired invariant:
   
 >*Loop invariant* `n" == d*q" + r && r < d && 0 <= r && q&M(i + 1) == 0`
   
-(If you want a good laugh and have some time to spare, paste `div()` code in a
+(If you want a good laugh and have some time to spare, paste div() code in a
 ChatGPT chat and ask various models what the loop invariant is.)
 / += . "ChatGPT" -> https://chatgpt.com/
   
@@ -662,6 +662,7 @@ random barrage of bizarre formal spasms in haphazard directions. It is
 practically impossible to construct such a sequence of assertions in a
 top-to-bottom fashion, unless one spends an unhealthy amount of time interacting
 with Hoare triples in dark alleys.
+/ +* "Hoare triples in dark alleys" It takes a specific English dialect to give justise to this sentence.
   
 And this is why nobody is doing it this way (among humans that is, automated
 provers are only too happy to try insane numbers of possible dead-ends). Early

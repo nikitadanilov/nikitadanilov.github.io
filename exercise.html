@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>a trivial exercise.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="exercise"></a>\( \def\List{\operatorname{List}} \)
+\( \def\integer{\operatorname{integer}} \)
+\( \def\nat{\operatorname{nat}} \)
+\( \def\Bool{\operatorname{Bool}} \)
+\( \def\Punct{\operatorname{Punct}} \)
+\( \def\BT{\operatorname{BT}} \)
+\( \def\B{\operatorname{B}} \)
+\( \def\T{\operatorname{T}} \)
+\( \def\R{\operatorname{R}} \)
+\( \def\Set{\operatorname{Set}} \)
+\( \def\Bag{\operatorname{Bag}} \)
+\( \def\Ring{\operatorname{Ring}} \)
+\( \def\plug{\operatorname{plug}} \)
+\( \def\Zipper{\operatorname{Zipper}} \)
+\( \def\cosh{\operatorname{cosh}} \)
+\( \def\sinh{\operatorname{sinh}} \)
+\( \def\ch{\operatorname{ch}} \)
+\( \def\sh{\operatorname{sh}} \)
+\( \def\d{\partial} \)
+<div class="column"><header>a trivial exercise.</header>
+<a name="exercise-00000"></a><p>Let&#x27;s find a sum</p>
+<a name="exercise-00001"></a>$$\sum_{n=1}^\infty {1\over{n(n+2)}}$$
+<a name="exercise-00002"></a><p>There is a well-know standard way, that I managed to recall eventually. Given that</p>
+<a name="exercise-00003"></a>$${1 \over n(n+2)} = {1 \over 2}\cdot \left({1\over n} - {1\over n+2}\right)$$
+<a name="exercise-00004"></a><p>the sum can be re-written as</p>
+<a name="exercise-00005"></a>$$\sum_{n=1}^\infty {1\over{n(n+2)}} = \sum_{n=1}^\infty {1 \over 2}\left({1\over n} - {1\over n+2}\right) = {1\over 2}\left({1\over 1} - {1\over 3} + {1\over 2} - {1\over 4} + {1\over 3} - {1\over 5} + {1\over 4} - {1\over 6} \cdots\right)$$
+<a name="exercise-00006"></a><p>with almost all terms canceling each other, leaving</p>
+<a name="exercise-00007"></a>$$\sum_{n=1}^\infty {1\over{n(n+2)}} = {1\over 2}\left(1 + {1\over 2}\right) = {3\over 4}$$
+<a name="exercise-00008"></a><p>While this is easy to check, very little help is given on understanding how to arrive to the solution in the first place. Indeed, the first (and crucial) step is a rabbit pulled <i>sans motif</i> out of a conjurer hat. The solution, fortunately, can be found in a more systematic fashion, by a relatively generic method. Enter <a href="http://en.wikipedia.org/wiki/Generating_function">generating functions</a>.</p>
+<a name="exercise-00009"></a><p>First, introduce a function</p>
+<a name="exercise-00010"></a>$$f(t) = \sum_{n=1}^\infty {t^{n + 1}\over n}$$
+<a name="exercise-00011"></a><p>The series on the right converge absolutely when \(|t| &lt; 1\), so one can define</p>
+<a name="exercise-00012"></a>$$g(t) = \int f(t) dt = \int \sum_{n=1}^\infty {t^{n + 1}\over n} = \sum_{n=1}^\infty \int {t^{n + 1}\over n} = \sum_{n=1}^\infty {t^{n + 2}\over {n(n+2)}} + C$$
+<a name="exercise-00013"></a><p>with the sum in question being</p>
+<a name="exercise-00014"></a>$$\sum_{n=1}^\infty {1\over{n(n+2)}} = g(1) - C = g(1) - g(0)$$
+<a name="exercise-00015"></a><p>Definition of the \(g\) function follows immediately from the form of the original sum, and there is a limited set of operations (integration, differentiation, <i>etc</i>.) applicable to \(g\) to produce \(f\).</p>
+<a name="exercise-00016"></a><p>The rest is more or less automatic. Note that</p>
+<a name="exercise-00017"></a>$$- ln(1 - t) = t + {t^2\over 2} + {t^3\over 3} + \cdots$$
+<a name="exercise-00018"></a><p>so that</p>
+<a name="exercise-00019"></a>$$f(t) = t^2 + {t^3\over 2} + {t^4\over 3} + \cdots = - t \cdot ln(1-t)$$
+<a name="exercise-00020"></a><p>therefore</p>
+<a name="exercise-00021"></a>$$g(t) = - \int t \cdot ln(1-t) dt = \cdots = {1\over 4} (1 - t)^2 - {1\over 2} (1 - t)^2 ln(1 - t) + (1 - t) ln(1 - t) + t + C$$
+<a name="exercise-00022"></a><p>where the integral is standard. Now,</p>
+<a name="exercise-00023"></a>$$g(1) - g(0) = 1 - {1\over 4} = {3\over 4}$$
+<a name="exercise-00024"></a><p><i>Voilà</i>!</p>
+<a name="exercise-00025"></a><p>And just to check that things are not too far askew, a sub-exercise in <a href="http://en.wikipedia.org/wiki/Tacit_programming">pointless programming</a>:</p>
+<a name="exercise-00026"></a><pre><code>scala&gt; (1 to 10000).map(x =&gt; 1.0/(x*(x+2))).reduceLeft(_+_)
+res0: Double = 0.749900014997506</code></pre>
+<a name="exercise-00027"></a><p>PS: of course this post is an exercise in <a href="http://spiny.at.org/%7Ecola/tex2img">tex2img</a> usage.</p>
+<a name="exercise-00028"></a><p>PPS: Ed. 2022: tex2img is gone, switch to mathjax.</p><footer><a href="euclid.html#euclid">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="iso.html#iso">&gt;</a>&nbsp;&nbsp;&nbsp;&lt;&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="parmigianino.html#parmigianino">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

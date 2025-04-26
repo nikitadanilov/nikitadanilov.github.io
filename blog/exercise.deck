@@ -1,0 +1,86 @@
+// name a trivial exercise.
+// id exercise
+// +# blog exercise
+// +# timeline 2009/08/21
+// +tags programming
+
+Let's find a sum
+
+; math
+\sum_{n=1}^\infty {1\over{n(n+2)}}
+
+There is a well-know standard way, that I managed to recall eventually. Given
+that
+
+; math
+{1 \over n(n+2)} = {1 \over 2}\cdot \left({1\over n} - {1\over n+2}\right)
+
+the sum can be re-written as
+
+; math
+\sum_{n=1}^\infty {1\over{n(n+2)}} = \sum_{n=1}^\infty {1 \over 2}\left({1\over n} - {1\over n+2}\right) = {1\over 2}\left({1\over 1} - {1\over 3} + {1\over 2} - {1\over 4} + {1\over 3} - {1\over 5} + {1\over 4} - {1\over 6} \cdots\right)
+
+with almost all terms canceling each other, leaving
+
+; math
+\sum_{n=1}^\infty {1\over{n(n+2)}} = {1\over 2}\left(1 + {1\over 2}\right) = {3\over 4}
+
+While this is easy to check, very little help is given on understanding how to
+arrive to the solution in the first place. Indeed, the first (and crucial) step
+is a rabbit pulled _sans motif_ out of a conjurer hat. The solution,
+fortunately, can be found in a more systematic fashion, by a relatively generic
+method. Enter generating functions.
+/ += . "generating functions" -> http://en.wikipedia.org/wiki/Generating_function
+
+First, introduce a function
+
+; math
+f(t) = \sum_{n=1}^\infty {t^{n + 1}\over n}
+
+The series on the right converge absolutely when \(|t| < 1\), so one can define
+
+; math
+g(t) = \int f(t) dt = \int \sum_{n=1}^\infty {t^{n + 1}\over n} = \sum_{n=1}^\infty \int {t^{n + 1}\over n} = \sum_{n=1}^\infty {t^{n + 2}\over {n(n+2)}} + C
+
+with the sum in question being
+
+; math
+\sum_{n=1}^\infty {1\over{n(n+2)}} = g(1) - C = g(1) - g(0)
+
+Definition of the \(g\) function follows immediately from the form of the
+original sum, and there is a limited set of operations (integration,
+differentiation, etc.) applicable to \(g\) to produce \(f\).
+
+The rest is more or less automatic. Note that
+
+; math
+- ln(1 - t) = t + {t^2\over 2} + {t^3\over 3} + \cdots
+
+so that
+
+; math
+f(t) = t^2 + {t^3\over 2} + {t^4\over 3} + \cdots = - t \cdot ln(1-t)
+
+therefore
+
+; math
+g(t) = - \int t \cdot ln(1-t) dt = \cdots = {1\over 4} (1 - t)^2 - {1\over 2} (1 - t)^2 ln(1 - t) + (1 - t) ln(1 - t) + t + C
+
+where the integral is standard. Now,
+
+; math
+g(1) - g(0) = 1 - {1\over 4} = {3\over 4}
+
+_Voilà_!
+
+And just to check that things are not too far askew, a sub-exercise in pointless programming:
+/ += . "pointless programming" -> http://en.wikipedia.org/wiki/Tacit_programming
+
+; code
+scala> (1 to 10000).map(x => 1.0/(x*(x+2))).reduceLeft(_+_)
+res0: Double = 0.749900014997506
+
+PS: of course this post is an exercise in tex2img usage.
+/ += . "tex2img" -> http://spiny.at.org/%7Ecola/tex2img
+
+PPS: Ed. 2022: tex2img is gone, switch to mathjax.
