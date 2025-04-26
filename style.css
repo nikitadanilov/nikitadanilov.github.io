@@ -40,6 +40,21 @@ mjx-container[display="true"] {
 mjx-container:not([display="true"]) {
     font-size: 1em !important;
 }
+.align-left {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+.align-right {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+}
+.align-centre {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
 
 
 span[data-uid="0"] { border-color: orange; }
