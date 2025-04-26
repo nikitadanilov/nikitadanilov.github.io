@@ -1,0 +1,214 @@
+// name Euclid continuity
+// id euclid
+// +# blog eculid
+// +# timeline 2024/05/07
+// +tags math
+
+Let's talk about one of the simplest, if not trivial, subjects in the oldest and
+best-established branch of mathematics: rectangle area in elementary Euclid
+geometry. The story contains two twists and an anecdote.
+
+We all know that the area of a rectangle or a parallelogram is a product of its
+base and height, and the area of a triangle is half of that (areas of a
+parallelogram, a triangle and a rectangle can all be reduced to each other by a
+device invented by Euclid), but Euclid would not say that: the idea that
+measures such as lengths, areas or volumes can be multiplied is alien to him, as
+it still is to Galileo. There is a huge body of literature on the evolution that
+culminated with our modern notion of number, unifying disparate incompatible
+numbers and measures of the past mathematics, enough to say that before
+Newton-Leibniz time, ratios and fractions were not the same.
+
+Euclid instead says (Book VI, prop. I, hereinafter quotes from the Elements are
+given as <Greek | English | Russian>):
+
+<τὰ τρίγωνα καὶ τὰ παραλληλόγραμμα, τὰ ὑπὸ τὸ αὐτὸ ὕψος ὄντα πρὸς ἄλληλά ἐστιν
+ὡς αἱ βάσεις. | Triangles and parallelograms, which are under the same height are
+to one another as their bases. | Треугольники и параллелограммы под одной и той
+же высотой, [относятся] друг к другу как основания.>
+/ += . "τὰ τρίγωνα καὶ τὰ παραλληλόγραμμα, τὰ ὑπὸ τὸ αὐτὸ ὕψος ὄντα πρὸς ἄλληλά ἐστιν ὡς αἱ βάσεις" -> https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0085%3Abook%3D6%3Atype%3DProp%3Anumber%3D1
+/ += . "Triangles and parallelograms, which are under the same height are to one another as their bases" -> http://aleph0.clarku.edu/~djoyce/elements/bookVI/propVI1.html
+/ += . "Треугольники и параллелограммы под одной и той же высотой, \[относятся\] друг к другу как основания" -> https://archive.org/details/1-6_euclid_elements/page/174/mode/1up
+
+Given rectangles \(ABCD\) and \(AEFD\) with the same height \(AD\), we want to
+prove that the ratio of their areas is the same as of their bases:
+\(\Delta(ABCD)/\Delta(AEFD) = AB/AE\).
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/euclid/ABCD-AEFD.png
+/ width 100%
+
+First, consider a case where the bases are commensurable, that is, as we would
+say \(AB/AE = n/m\) for some integers \(n\) and \(m\), or as Euclid would say,
+there is a length \(AX\), such that \(AB = n \cdot AX\) (that is, the interval
+\(AB\) is equal to \(n\) times extended interval \(AX\)) and \(AE = m \cdot
+AX\). Then, \(ABCD\) can be divided into \(n\) equal rectangles \(AXYD\) with
+the height \(AD\) the base \(AX\) and the area \(\Delta_0\), and \(AEFD\) can be
+divided into \(m\) of them.
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/euclid/comm.png
+/ width 100%
+
+Then,
+
+; math
+\begin{array}{lclclcl}
+\Delta(ABCD) & = & \Delta(AXYD) & + & \Delta(XX'Y'Y) & + & \ldots\\
+             & = & n \cdot \Delta_0, & & & &
+\end{array}
+
+and
+
+; math
+\begin{array}{lclclcl}
+\Delta(AEFD) & = & \Delta(AXYD) & + & \Delta(XX'Y'Y) & + & \ldots \\ 
+             & = & m \cdot \Delta_0
+\end{array}
+
+so that \(\Delta(ABCD)/\Delta(AEFD) = n/m = AB/AE\), as required.
+
+Starting from the early twentieth century, the rigorous proof of the remaining
+incommensurable case in a school-level exposition typically involves some form
+of a limit and is based on an implicit or explicit continuity axiom, usually
+equivalent to Cavaliery principle.
+/ += . "Cavaliery principle" -> https://en.wikipedia.org/wiki/Cavalieri%27s_principle
+
+There is, however, a completely elementary, short and elegant proof, that
+requires no additional assumptions. This proof is used by Legendre (I don't know
+who is the original author) in _his_ Elements, _Éléments de
+géométrie_. Depending on the edition, it is Proposition III in either Book III
+(p. 100) or Book IV (page 90, some nineteenth-century editions, especially with
+"additions and modifications by M. A. Blanchet", are butchered beyond
+recognition, be careful). The proof goes like this:
+/ += . "Legendre" -> https://en.wikipedia.org/wiki/Adrien-Marie_Legendre
+/ += . "Éléments de géométrie" -> https://maa.org/press/periodicals/convergence/mathematical-treasure-adrien-marie-legendre-s-l-ments-de-g-om-trie
+/ += . "p. 100" -> https://www.survivorlibrary.com/library/elements_of_geometry_1875.pdf
+/ += . "page 90" -> https://upload.wikimedia.org/wikipedia/commons/6/60/Elements_of_geometry_and_trigonometry_from_the_works_of_A.M._Legendre_-_revised_and_adapted_to_the_course_of_mathematical_instruction_in_the_United_States_%28IA_elementsgeometr13legegoog%29.pdf
+
+For incommensurable \(AB\) and \(AE\) consider the ratio
+\(\Delta(ABCD)/\Delta(AEFD)\). If \(\Delta(ABCD)/\Delta(AEFD) = AB/AE\) we are
+done. If \(\Delta(ABCD)/\Delta(AEFD)\) is not equal to \(AB/AE\), it is instead
+equal to \(AB/AO\) and either \(AE < AO\) or \(AE > AO\).  Consider the first
+case (the other one is similar).
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/euclid/ABEO.png
+/ width 100%
+
+The points at the base are in order \(A\), then \(B\), then \(E\), then \(O\).
+
+Divide \(AB\) into \(n\) equal intervals, each shorter that \(EO\). This
+requires what we now call the Archimedes-Eudoxus axiom and which is implied by
+Definition IV of Book V:
+/ += . "Archimedes-Eudoxus axiom" -> https://encyclopediaofmath.org/wiki/Archimedean_axiom
+
+<λόγον ἔχειν πρὸς ἄλληλα μεγέθη λέγεται, ἃ δύναται πολλαπλασιαζόμενα ἀλλήλων
+ὑπερέχειν. | Magnitudes are said to have a ratio to one another which can, when
+multiplied, exceed one another. | Величины имеют отношение между собой, если они
+взятые кратно могут превзойти друг друга.>
+/ += . "λόγον ἔχειν πρὸς ἄλληλα μεγέθη λέγεται, ἃ δύναται πολλαπλασιαζόμενα ἀλλήλων ὑπερέχειν" -> https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0085%3Abook%3D5%3Atype%3DDef%3Anumber%3D4
+/ += . "Magnitudes are said to have a ratio to one another which can, when multiplied, exceed one another" -> http://aleph0.clarku.edu/~djoyce/elements/bookV/defV4.html
+/ += . "Величины имеют отношение между собой, если они взятые кратно могут превзойти друг друга" -> https://archive.org/details/1-6_euclid_elements/page/142/mode/1up
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/euclid/ABEOn.png
+/ width 100%
+
+Then continue dividing \(BE\), until we get to a point \(I\) outside of \(BE\),
+but within \(EO\) (because the interval is shorter than \(EO\)). The points
+are now in order \(A\), then \(B\), then \(E\), then \(I\), then \(O\).
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/master/euclid/ABEOnm.png
+/ width 100%
+
+\(AB\) and \(AI\) are commensurable, so \(\Delta(ABCD)/\Delta(AIKD) =
+AB/AI\). Also, \(\Delta(ABCD)/\Delta(AEFD) = AB/AO\), so
+\(\Delta(AIKD)/\Delta(AEFD) = AI/AO\). By construction \(AI < AO\), hence
+\(\Delta(AIKD) < \Delta(AEFD)\), but \(AEFD\) is a proper part of \(AIKD\), so
+\(\Delta(AEFD) < \Delta(AIKD)\). Contradiction.
+
+Step back and look at the structure of these two proofs from the modern
+perspective. Fix the height and let \(\Delta(X)\) be the area of the rectangle
+with the base of length \(X\). By an assumption that we would call "additivity
+of measure" \(\Delta(X+Y) = \Delta(X) + \Delta(Y)\), that is, \(\Delta\) is an
+additive function. A general and easy-to-establish fact (mentioned with
+remarkable persistency on this blog [Unexpected isomorphism], [The Hunt for
+Addi(c)tive Monster]) is that any additive function is linear on rationals, that
+is, \(\Delta(n/m \cdot X) = n/m \cdot \Delta(X)\). This corresponds to the
+"commensurable" part of the proofs. To complete a proof we need linearity:
+\(\Delta(X) = X \cdot H\), where \(H = \Delta(1)\). But additive functions are
+_not_ necessarily linear. To obtain linearity, an additional condition
+is needed. The traditional proof uses continuity: a continuous (at least at one
+point) additive function is necessarily linear.
+/ += . "Unexpected isomorphism" -> https://www.cofault.com/2020/10/unexpected-isomorphism.html
+/ += . "The Hunt for Addi\(c\)tive Monster" -> https://www.cofault.com/2010/02/hunt-for-addictive-monster-2.html
+
+Legendre's proof uses monotonicity: a monotonic additive function is always
+linear. This is clever, because monotonicity is not an additional assumption: it
+follows from the already assumed positivity of measure: If \(Y > X\), then
+\(\Delta(Y) = \Delta(X + (Y - X)) = \Delta(X) + \Delta(Y - X) > \Delta(X)\), as
+\(\Delta(Y - X) > 0\).
+
+How does the original Euclid's proof look like? (He proves the triangle version,
+which is similar to rectangles.)
+
+; img
+/ url https://blogger.googleusercontent.com/img/a/AVvXsEhi2sAeqg6X00WciT_oaLLRhe-hLdujzecJiLjweyJYOYtr6ITSYvGpAJGKD4Nj3NOaF1pNHdEj5Ab3gTNudR6-wTTjdt9iS1M85g2HQJl980CeOxwLcq0I1s3B_zCBi8ApLfef_N2RT5jQX6KYLnrf-tUiJ-Z35KlsmCFxbFXf9D3rSVt2YW6auA
+/ width 100%
+
+Wait... It is unbelievably short, especially given that the Elements use no
+notation and spell everything in words _and_ it covers both triangles and
+parallelograms. It definitely has no separate "commensurable" and
+"imcommensurable" parts. How is this possible?
+
+The trick is in the _definition_ of equal ratios, Def. V of Book V:
+
+<ἐν τῷ αὐτῷ λόγῳ μεγέθη λέγεται εἶναι πρῶτον πρὸς δεύτερον καὶ τρίτον πρὸς
+τέταρτον, ὅταν τὰ τοῦ πρώτου καὶ τρίτου ἰσάκις πολλαπλάσια τῶν τοῦ δευτέρου καὶ
+τετάρτου ἰσάκις πολλαπλασίων καθ᾽ ὁποιονοῦν πολλαπλασιασμὸν ἑκάτερον ἑκατέρου ἢ
+ἅμα ὑπερέχῃ ἢ ἅμα ἴσα ᾖ ἢ ἅμα ἐλλείπῃ ληφθέντα κατάλληλα.| Magnitudes are said
+to be in the same ratio, the first to the second and the third to the fourth,
+when, if any equimultiples whatever are taken of the first and third, and any
+equimultiples whatever of the second and fourth, the former equimultiples alike
+exceed, are alike equal to, or alike fall short of, the latter equimultiples
+respectively taken in corresponding order. | Говорят, что величины находятся в
+том же отношении: первая ко второй и третья к четвёртой, если равнократные
+первой и третьей одновременно больше, или одновременно равны, или одновременно
+меньше равнократных второй и четвёртой каждая каждой при какой бы то ни было
+кратности, если взять их в соответственном порядке>
+/ += . "ἐν τῷ αὐτῷ λόγῳ μεγέθη λέγεται εἶναι πρῶτον πρὸς δεύτερον καὶ τρίτον πρὸς τέταρτον, ὅταν τὰ τοῦ πρώτου καὶ τρίτου ἰσάκις πολλαπλάσια τῶν τοῦ δευτέρου καὶ τετάρτου ἰσάκις πολλαπλασίων καθ᾽ ὁποιονοῦν πολλαπλασιασμὸν ἑκάτερον ἑκατέρου ἢ ἅμα ὑπερέχῃ ἢ ἅμα ἴσα ᾖ ἢ ἅμα ἐλλείπῃ ληφθέντα κατάλληλα" -> https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0085%3Abook%3D5%3Atype%3DDef%3Anumber%3D5
+/ += . "Magnitudes are said to be in the same ratio, the first to the second and the third to the fourth, when, if any equimultiples whatever are taken of the first and third, and any equimultiples whatever of the second and fourth, the former equimultiples alike exceed, are alike equal to, or alike fall short of, the latter equimultiples respectively taken in corresponding order" -> http://aleph0.clarku.edu/~djoyce/elements/bookV/defV5.html
+/ += . "Говорят, что величины находятся в том же отношении: первая ко второй и третья к четвёртой, если равнократные первой и третьей одновременно больше, или одновременно равны, или одновременно меньше равнократных второй и четвёртой каждая каждой при какой бы то ни было кратности, если взять их в соответственном порядке" -> https://archive.org/details/1-6_euclid_elements/page/142/mode/1up 
+
+In modern notation this means that
+
+; math
+\Delta_1 / \Delta_2 = b_1 / b_2 \equiv (\forall n\in\mathbb{N}) (\forall m\in\mathbb{N}) (n\cdot\Delta_1 \gtreqqless m\cdot\Delta_2 = n\cdot b_1 \gtreqqless m\cdot b_2),
+
+where \(\gtreqqless\) is "FORTRAN 3-way comparison operator" (aka C++ spaceship
+operator):
+/ += . "3-way comparison" -> https://en.wikipedia.org/wiki/Three-way_comparison
+/ += . "spaceship operator" -> https://en.wikipedia.org/wiki/Three-way_comparison#Spaceship_operator
+
+; math
+    X \gtreqqless Y =  
+\begin{cases}
+    -1, & X < Y\\
+     0, & X = Y\\
+    +1, & X > Y
+\end{cases}
+
+This looks like a rather artificial definition of ratio equality, but with it
+the proof of Proposition I and many other proofs in Books V and VI, become
+straightforward or even forced.
+
+The approach of selecting the definitions to streamline the proofs is
+characteristic of abstract twentieth-century mathematics and it is amazing to
+see it in full force in the earliest mathematical text we have.
+
+I'll conclude with the promised anecdote (unfortunately, I do not remember the
+source). An acquaintance of Newton having met him in the Cambridge library and
+found, on inquiry, that Newton is reading the Elements, remarked something to
+the effect of "But Sir Isaac, haven't your methods superseded and obsoleted
+Euclid?". This is one of the two recorded cases when Newton laughed.
