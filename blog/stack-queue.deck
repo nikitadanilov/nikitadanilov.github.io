@@ -4,7 +4,6 @@
 // +# timeline 2020/11/11
 // +tags programming
 
-
 When studying computing science we all learn how to convert an expression in the
 "normal" ("infix", "algebraic") notation to "reverse Polish" notation. For
 example, an expression `a/b + c/d` is converted to `a b / c d / +`. An
