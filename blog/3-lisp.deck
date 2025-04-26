@@ -145,7 +145,7 @@ bound to the continuation. Environment and continuation together represent the
 3-LISP interpreter state (much like registers and memory represent the machine
 language interpreter state), this representation goes all the way back to SECD
 machine, see The Mechanical Evaluation of Expressions.
-/ += . "continuation" -> https://en.wikipedia.org/wiki/Continuation
+/ += . "continuation(?=\.)" -> https://en.wikipedia.org/wiki/Continuation
 / += . "SECD machine" -> https://en.wikipedia.org/wiki/SECD_machine
 / += . "The Mechanical Evaluation of Expressions" -> https://doi.org/10.1093%2Fcomjnl%2F6.4.308
 
@@ -179,7 +179,7 @@ in fact, remarkably fast.
 / += . "make-c1" -> https://github.com/nikitadanilov/3-lisp/blob/master/3-lisp.lisp#L1586
 / += . "read-eval-loop" -> https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop
 / += . "READ-NORMALISE-PRINT" -> https://github.com/nikitadanilov/3-lisp/blob/master/3-lisp.lisp#L1563
-/ += . "EXTREMELY INEFFICIENT" -> https://github.com/nikitadanilov/3-lisp/blob/master/3-lisp.lisp#L33
+/ += . "extremely inefficient" -> https://github.com/nikitadanilov/3-lisp/blob/master/3-lisp.lisp#L33
 
 *Porting*
 
