@@ -1,0 +1,288 @@
+// name purelisp: introduction
+// id purelisp.introduction
+// +# blog purelisp.introduction
+// +# purelisp 0.introduction
+// +# timeline 2005/04/11.09:45
+// +tags programming
+// +tags LISP
+
+Some time ago (I just re-checked and... Good Lord it was in October of 2003,
+time moves fast indeed) I wrote simple LISP interpreter (purelisp) in
+Java. This, otherwise seemingly pointless activity could be justified as an
+exercise in SableCC usage.
+/ += . "SableCC" -> http://www.sablecc.org/
+/ +* "October of 2003" Welcome from 2025.
+
+; head
+SableCC
+/ level 3
+
+SableCC is a nice compiler building toolkit with pretty standard (by nowaday
+standards) set of features: on input it takes a description of the language, and
+produces Java classes with lexer and skeleton parser. Language is defined by a
+grammar and terminals are defined by regular expressions. Our simple version of
+LISP uses `lisp.grammar` as the definition, note that larger fraction of language
+definition is a table indicating what unicode characters are "_letters_" in the
+sense of being acceptable as part of an identifier.
+/ +* "lisp.grammar" I have the source code somewhere.
+
+From language definition SableCC generates:
+
+>Java classes corresponding to tokens of the grammar.
+
+>Lexer class that transforms input stream into sequence of tokens (optionally
+ omitting some tokens, e.g., white-spaces).
+
+>Parser class that constructs typed AST (abstract syntax tree) from the sequence of tokens.
+
+>Set of _tree-walker_ base classes. Tree-walkers traverse tree in specific
+ order, calling certain methods of tree node object when entering and leaving
+ it. This is called "_visitor pattern_" by the people in dire need of names.
+
+The only thing left to do to finish simple interpreter is to subclass suitable
+tree-walker with the class that interprets program while traversing its
+AST. LISP program (as LISP fans will never cease to remind us) is but a LISP
+data, hence, natural choice for our interpreter is to build LISP object as a
+result of tree traversal. And building such an object is indeed simple:
+`local.purelisp.eval.TreeBuilder`.
+/ +* "TreeBuilder" To be found.
+
+; head
+purelisp introduction
+/ level 3
+
+Computational universe of purelisp consists of objects, partitioned into
+disjoint _types_. Objects can be _evaluated_. Evaluation takes as input an
+object to be evaluated and auxiliary object of type _environment_ that affects
+evaluation. Result of evaluation is an object again. This can be the same object
+that is being evaluated, some already existing object, or new
+object. Ultimately, evaluation can result in error, and no result is produced in
+this case. Rules of evaluation for some objects are hard-wired into
+interpreter. For other objects, evaluation is multi-step process defined in
+terms of some actions performed on other objects.
+
+In particular, one important type of objects, viz. _cons cells_ have evaluation
+defined in terms of _application_ of an object to a sequence of objects
+(referred to as _arguments_ of application). Rules of application are again
+type-dependent: hard-wired into interpreter (e.g., for built-in functions), or
+defined through combination of evaluation and application.
+
+Evaluation and application are fundamental mutually-recursive operations on top
+of which computation is implemented in LISP.
+
+LISP program is actually nothing more than description of object according to
+some standard syntax. LISP interpreter reads this description, build
+corresponding objects and evaluates it in some "_current_" environment.
+
+\
+
+// name purelisp: object types
+// id purelisp.object-types
+// +# blog purelisp.object-types
+// +# purelisp 1.object-types
+// +# timeline 2005/04/11.10:32
+// +tags programming
+// +tags LISP
+// +cd (^|[ ])(?P<open>)CAR(?P<close>)
+// +cd (^|[ ])(?P<open>)CDR(?P<close>)
+// +cd (^|[ ])(?P<open>)NIL(?P<close>)
+// +cd (^|[ ])(?P<open>)LAMBDA(?P<close>)
+
+As was noted in the previous card, objects in purelisp are partitioned into
+disjoint types.
+
+; head
+types of objects
+/ level 3
+
+Some LISP object types have _read syntax_, which is a way to generate string
+representation of a given object. Built-in function `(read)` builds object given
+its string representation. Read syntax is given together with description of
+object types below.
+
+>_Number_. Represent arbitrary range integers (implemented in
+ `local.purelisp.eval.LInt` by `java.math.BigInteger`). Number evaluates to
+ itself, cannot be applied to anything, supports basic arithmetic operations.
+
+>read syntax for integers
+
+; code
+>>10
+0o12
+0xa
+0t1010
+
+>all represent number 10
+
+>_String_. Evaluates to itself, cannot be applied. Implemented on top of
+ `java.lang.String`.
+
+>_Environment_. Environment is used to evaluate objects of type
+ _symbol_. Specifically, each environment contains _bindings_ from symbols to
+ objects. Binding can be thought of as a pair `(s, o)`, where `s` is a symbol,
+ and `o` is an object `s` is bound to. Environment, therefore, is a partial
+ function from symbols to objects. New bindings can be installed and value
+ symbol is bound to can be changed.
+
+>Environments are arranged into tree-like hierarchy: each environment (except
+ the root of the tree) has parent environment, and if symbol binding is not
+ found in the environment, search is repeated in the parent
+ recursively. Environment is said to extend its parent. At the top of the tree
+ is _global environment_ that contains bindings for standard LISP
+ symbols. Interactive interpreter maintains its own environment where user adds
+ new or modifies existing symbol bindings. There is second environment
+ hierarchy, not affected by LAMBDA evaluation, used to implement traditional
+ LISP dynamic scoping, but it is not current used in the language. Dynamic
+ parent environment can be accessed through `(env-dynamic env)` built-in
+ function.
+
+>During computation there always is a so-called current environment. Initially
+ it is environment of interactive interpreter, later it can be replaced when
+ applying LAMBDA functions (see below) or evaluating `(eval-in env o)` built-in
+ function (see below). Evaluation is always performed in the current
+ environment, and, therefore, there is no need to explicitly mention evaluation
+ environment.
+
+>Environments have no read syntax.
+
+>_Symbol_. Symbol is a LISP object with unique name. Name is the only identity
+ and state that symbol has. Symbols are used to point to other objects. It has
+ to be stressed that while superficially similar to variables in other
+ languages, symbols are quite different:
+
+>>symbol has _NO_ value attached to it. It can be used as a key to look up value
+  in environment, but in different environments it can have different
+  values.
+
+>>symbol is first-class object itself: it can be stored in data-structures
+  including environments (so that value of symbol can be another symbol).
+
+>>Symbols cannot be applied and their evaluation was described above (see
+  _Environment_).
+
+>Read syntax for a symbol is just its name. If unknown yet valid identifier is
+ read, new symbol is created.
+
+>Symbols, integers, and strings are collectively known as _atoms_.
+
+>_Cons cell_. Cons cell is a pair of references to other LISP objects. First and
+seconds references are idiosyncratically known as CAR and CDR, and are accessed
+through `(car c)` and `(cdr c)` built-in functions respectively. Cons cells are
+used to build linked lists: CAR of the first cell in a list points to the first
+object in the list, CDR point to the second cell in the list, whose CAR points
+to the second object in the list, and CDR points to... List it terminated by the
+pointer to NIL (see below).
+
+>Obviously, much more general possibly cyclic data-structures, can be built from
+cons cells. We shall call NIL terminated lists described above _well-formed
+lists_. If list is terminated by reference to an object that is neither cons
+cell nor NIL, it will be called _dotted list_, otherwise data-structure rooted
+at the cons cell is called _improper list_.
+
+>>read syntax for well-formed lists
+
+; code
+>>(1 2 3)
+(1 (1 2 "foo") "bar")
+
+>>read syntax for dotted lists
+
+; code
+>>(1 2 . 3)
+
+>Note that dotted list notation can be used to represent any cons cell whose CAR
+and CDR have read syntax: `(A . B)` builds cons cell with A as CAR, and B as
+CDR.
+
+>Cons cell cannot be applied, and has peculiar and very important evaluation
+rule. To evaluate cons cell following is done in order:
+
+>>if CDR of cell it not well-formed list, abort evaluation;
+
+>>cell's CAR is evaluated, let's call resulting object `F`;
+
+>>create copy of CDR list, i.e., create new well-formed list containing pointers
+ to the same objects and in the same order as CDR of cell being evaluated. Call
+ first cons cell of resulting list `A0`;
+
+>>if F is built-in function or LAMBDA function, evaluate all objects in `A0` and
+ create a list of evaluation results called `A1`. Otherwise let `A1` be `A0`;
+
+>>apply `F` to `A1`.
+
+>This obviously accounts for neither concurrency nor re-entrancy issues (i.e.,
+structure of argument list could change while evaluated, either as result of
+said evaluation, or due to some concurrent activity).
+
+>Basically, to evaluate well-formed list, its CAR is evaluated and applied to the
+remaining elements of list as arguments. Arguments are evaluated if CAR
+evaluates to function (either built-in or LAMBDA), and are not evaluated
+otherwise (which leaves us with CAR evaluating to special form).
+
+>NIL. NIL is a special object the denotes empty list. It is used to define
+ well-formed lists above. NIL object is bound to symbol "`nil`" in the global
+ environment. Cannot be applied, evaluates to itself. As a special exception,
+ built-in functions `(car)` and `(cdr)` can be applied to NIL and return NIL in
+ this case.
+
+>>read syntax for NIL
+; code
+>>nil
+
+>LAMBDA. LAMBDA a is LISP object (special form) used to create
+ lambda-functions. First, the notion of lambda-form is needed. Lambda form is a
+ cons cell at which following well-formed list is rooted:
+
+>LAMBDA form
+
+; code
+>(lambda (P1 ... PM) E1 ... EN)
+
+>First element of lambda form can be anything that evaluates to LAMBDA (e.g.,
+ "lambda" symbol). Note that this makes notion of lambda-form dependent on the
+ environment in which form is evaluated.
+
+>Second element of lambda-form is well-formed list called _list of
+ parameters_. Elements of this list are called _parameters_. In traditional
+ LISP, parameters have to be symbols. Purelisp has some extension (to be
+ described later.) Parameters list may be empty.
+
+>Remaining elements of lambda-form are said to constitute its _body_. Body may
+ be empty.
+
+>>LAMBDA form examples
+
+; code
+>>>(lambda (x y) y)
+(lambda (f) ((lambda (x) (f (x x))) (lambda (y) (f (y y)))))
+(lambda nil 3)
+
+>Lambda-form is not treated in any special way by the interpreter. Instead its
+ evaluation is done as for any cons cell (see above), and results in application
+ of LAMBDA to the list `((P1 ... PM) E1 ... EN)`. As LAMBDA is special form,
+ elements of this list are not evaluated. Result of this application is new LISP
+ object: lambda-function.
+
+>_Lambda-function_. Lambda-function can be thought as a pair `(ENV, ((P1 ... PM)
+ E1 ... EN))`, where `env` is an environment in which lambda-form was
+ evaluated. Lambda-function evaluates to itself. Its importance stems from its
+ application rule. To apply lambda-function `(ENV, ((P1 ... PM) E1 ... EN))` to
+ the list of arguments `(A1 ... AK)` do the following:
+
+>>if `K != M` abort application;
+
+>>create new environment `ELOCAL` extending `ENV`;
+
+>>for each `i`: `1 <= i <= M`, bind `Pi` to `Ai` in `ELOCAL`;
+
+>>for each `i`: `1 <= i <= N`, evaluate `Ei` in `ELOCAL`;
+
+>>result of application is the result of EN evaluation, or NIL if body is empty.
+
+Again, this doesn't account for pathological cases where structure of
+lambda-form recorded in lambda-function changes during evaluation.
+
+As one can see lambda-functions allow programmer to construct objects with
+arbitrary application rules, and, therefore (through lists of the form
+`(lambda-function A1 ... AM)`), objects with arbitrary evaluation
+rules. Lambda-functions are main computation-structuring mechanism in LISP.
