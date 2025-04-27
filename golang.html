@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Why Go is Not My Favorite Programming Language</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="golang"></a><div class="column"><header>Why Go is Not My Favorite Programming Language</header>
+<a name="golang-00000"></a><p><i>Disclaimer</i>: this article shares very little except the title with the classical <a href="https://www.lysator.liu.se/c/bwk-on-pascal.html">Why Pascal is Not My Favorite Programming Language</a>. No attempt is made to analyse Go in any systematic fashion. To the contrary, the focus is on one particular, if grave, issue. Moreover, the author happily admits that his experience with Go programming is very limited.</p>
+<a name="golang-00001"></a><p>Go is a system programming language and a large fraction of system software is processing of incoming <i>requests</i> of some sort, for example:</p>
+<a name="golang-00002"></a><p style="margin-left: 3em;">[KERNEL] an OS kernel processes system calls;</p>
+<a name="golang-00003"></a><p style="margin-left: 3em;">[SERVER] a server processes requests received over network or IPC;</p>
+<a name="golang-00004"></a><p style="margin-left: 3em;">[LIB] a library processes invocations of its entry points.</p>
+<a name="golang-00005"></a><p>A distinguishing feature of system software is that it should be resilient against abnormal conditions it the environment such as network communication failures, storage failure, <i>etc</i>. Of course, there are practical limits to such resilience and it is very difficult to construct a software that would operate correctly in the face on undetected processor or memory failures (albeit, such systems <a href="https://en.wikipedia.org/wiki/Tandem_Computers">were built</a> in the past), but it is generally agreed that system software should handle a certain class of failures to be usable as a foundation of software stack. We argue that Go is not suitable for system programming because it cannot deal with one of the most important failures in this class: memory allocation errors.</p>
+<a name="golang-00006"></a><p>Out of many existing designs of failure handling (exceptions, <a href="https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/">recovery </a><a href="https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/">blocks</a>, <i>etc</i>.) Go exclusively selects explicit error checking with a simple <a href="https://golang.org/ref/spec#Handling_panics">panic-<a href="https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/">recovery </a></a>mechanism. This makes sense, because this is the only design that works in all the use-cases mentioned above. However, memory allocation errors do not produce checkable errors in Go. The language specification does not even <a href="https://golang.org/ref/spec#Allocation">mention a possibility of allocation failure</a> and in the discussions of these issues (see <i>e.g.</i>, <a href="https://github.com/golang/go/issues/243">here</a> and <a href="https://github.com/golang/go/issues/14162">here</a>) Google engineers adamantly refuse considering a possibility of adding an interface to intercept memory allocation errors. Instead, various methods to warn the application that memory is &quot;about to be exhausted&quot; as proposed. These methods, of course, only reduce the probability of running out of memory, but never eliminate it (thus making bugs in the error handling code more difficult to test). As one can easily check by running a simple program that allocates all available memory, memory allocation error results in unconditional program termination, rather than a recoverable panic.</p>
+<a name="golang-00007"></a><p>But even if a way to check for allocation errors or recover from them were added, it would not help, because Go often allocates memory behind the scenes, so that there is no point in the program source, where a check could be made. For example, memory is allocated whenever a struct is used as an interface:</p>
+<a name="golang-00008"></a><pre><code>package main
+type foo interface {
+        f() int
+}
+
+type bar struct {
+        v int
+}
+
+func out(s foo) int {
+        return s.f() - 1
+}
+
+func (self bar) f() int {
+        return self.v + 1
+}
+
+func main() {
+        for {
+                out(bar{})
+        }
+}</code></pre>
+<a name="golang-00009"></a><p>The program above contains no explicit memory allocations, still, it allocates a lot of memory. The assembly output (use <a href="https://go.godbolt.org/">godbolt.org</a> for example) for <code class="inline">out(bar{})</code> contains a call to <code class="inline">runtime.convT64()</code> (see the <a href="https://github.com/golang/go/blob/master/src/runtime/iface.go">source</a>) that calls <a href="https://github.com/golang/go/blob/master/src/runtime/malloc.go">mallocgc</a>.</p>
+<a name="golang-00010"></a><pre><code>func convT64(val uint64) (x unsafe.Pointer) {
+	if val == 0 {
+		x = unsafe.Pointer(&amp;amp;zeroVal[0])
+	} else {
+		x = mallocgc(8, uint64Type, false)
+		*(*uint64)(x) = val
+	}
+	return
+}</code></pre>
+<a name="golang-00011"></a><p>To summarise, the combination of the following reasons makes Go unsuitable for construction of reliable system software:</p>
+<a name="golang-00012"></a><p style="margin-left: 3em;">it is not, in general, possible to guarantee that memory allocation would  always succeed. For example, in the [LIBRARY] case, other parts of the process  or other processes can exhaust all the available memory. Pre-allocating memory  for the worst case is impractical except in the simplest cases;</p>
+<a name="golang-00013"></a><p style="margin-left: 3em;">due to the design of Go runtime and the implementation of the fundamental  language features like interfaces, it is not possible to reliably check for  memory allocation errors;</p>
+<a name="golang-00014"></a><p style="margin-left: 3em;">software that can neither prevent nor resolve memory allocation errors is  unreliable. For example, a library that when called crashes the entire process,  because some other process allocated all available memory cannot be used to  build reliable software on top of it.</p><footer><a href="gdb.html#gdb">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="greenway.html#greenway">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="3-iamb.html#3-iamb">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="iso.html#iso">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

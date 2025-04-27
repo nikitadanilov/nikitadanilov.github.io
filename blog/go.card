@@ -1,0 +1,119 @@
+// name Why Go is Not My Favorite Programming Language
+// id golang
+// +# blog golang
+// +# timeline 2019/01/27
+// +tags programming
+
+_Disclaimer_: this article shares very little except the title with the
+classical Why Pascal is Not My Favorite Programming Language. No attempt is made
+to analyse Go in any systematic fashion. To the contrary, the focus is on one
+particular, if grave, issue. Moreover, the author happily admits that his
+experience with Go programming is very limited.
+/ += . "Why Pascal is Not My Favorite Programming Language" -> https://www.lysator.liu.se/c/bwk-on-pascal.html
+
+Go is a system programming language and a large fraction of system software is processing of incoming _requests_ of some sort, for example:
+
+>[KERNEL] an OS kernel processes system calls;
+
+>[SERVER] a server processes requests received over network or IPC;
+
+>[LIB] a library processes invocations of its entry points.
+
+A distinguishing feature of system software is that it should be resilient
+against abnormal conditions it the environment such as network communication
+failures, storage failure, etc. Of course, there are practical limits to such
+resilience and it is very difficult to construct a software that would operate
+correctly in the face on undetected processor or memory failures (albeit, such
+systems were built in the past), but it is generally agreed that system software
+should handle a certain class of failures to be usable as a foundation of
+software stack. We argue that Go is not suitable for system programming because
+it cannot deal with one of the most important failures in this class: memory
+allocation errors.
+/ += . "were built" -> https://en.wikipedia.org/wiki/Tandem_Computers
+
+Out of many existing designs of failure handling (exceptions, recovery blocks,
+etc.) Go exclusively selects explicit error checking with a simple
+panic-recovery mechanism. This makes sense, because this is the only design that
+works in all the use-cases mentioned above. However, memory allocation errors do
+not produce checkable errors in Go. The language specification does not even
+mention a possibility of allocation failure and in the discussions of these
+issues (see e.g., here and here) Google engineers adamantly refuse considering a
+possibility of adding an interface to intercept memory allocation
+errors. Instead, various methods to warn the application that memory is "about
+to be exhausted" as proposed. These methods, of course, only reduce the
+probability of running out of memory, but never eliminate it (thus making bugs
+in the error handling code more difficult to test). As one can easily check by
+running a simple program that allocates all available memory, memory allocation
+error results in unconditional program termination, rather than a recoverable
+panic.
+/ += . "recovery " -> https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/
+/ += . "blocks" -> https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/
+/ += . "panic-recovery " -> https://golang.org/ref/spec#Handling_panics
+/ += . "mention a possibility of allocation failure" -> https://golang.org/ref/spec#Allocation
+/ += . "here(?= and)" -> https://github.com/golang/go/issues/243
+/ += . "here(?=\))" -> https://github.com/golang/go/issues/14162
+
+But even if a way to check for allocation errors or recover from them were
+added, it would not help, because Go often allocates memory behind the scenes,
+so that there is no point in the program source, where a check could be
+made. For example, memory is allocated whenever a struct is used as an
+interface:
+
+; code
+package main
+type foo interface {
+        f() int
+}
+|
+type bar struct {
+        v int
+}
+|
+func out(s foo) int {
+        return s.f() - 1
+}
+|
+func (self bar) f() int {
+        return self.v + 1
+}
+|
+func main() {
+        for {
+                out(bar{})
+        }
+}
+  
+The program above contains no explicit memory allocations, still, it allocates a
+lot of memory. The assembly output (use godbolt.org for example) for
+`out(bar{})` contains a call to runtime.convT64() (see the source) that calls
+mallocgc.
+/ += . "godbolt.org" -> https://go.godbolt.org/
+/ += . "source" -> https://github.com/golang/go/blob/master/src/runtime/iface.go
+/ += . "mallocgc" -> https://github.com/golang/go/blob/master/src/runtime/malloc.go
+
+; code
+func convT64(val uint64) (x unsafe.Pointer) {
+	if val == 0 {
+		x = unsafe.Pointer(&amp;zeroVal[0])
+	} else {
+		x = mallocgc(8, uint64Type, false)
+		*(*uint64)(x) = val
+	}
+	return
+}
+
+To summarise, the combination of the following reasons makes Go unsuitable for construction of reliable system software:
+
+>it is not, in general, possible to guarantee that memory allocation would
+ always succeed. For example, in the [LIBRARY] case, other parts of the process
+ or other processes can exhaust all the available memory. Pre-allocating memory
+ for the worst case is impractical except in the simplest cases;
+
+>due to the design of Go runtime and the implementation of the fundamental
+ language features like interfaces, it is not possible to reliably check for
+ memory allocation errors;
+
+>software that can neither prevent nor resolve memory allocation errors is
+ unreliable. For example, a library that when called crashes the entire process,
+ because some other process allocated all available memory cannot be used to
+ build reliable software on top of it.
