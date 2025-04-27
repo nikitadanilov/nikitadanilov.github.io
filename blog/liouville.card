@@ -1,0 +1,49 @@
+// name Publish or Perish in style.
+// id liouville
+// +# blog liouville
+// +# timeline 2025/03/03
+// +tags math
+
+Joseph Liouville, a famous French mathematician, whom multiple important
+theorems are named after, was also the founder and the editor of _Journal de
+Mathématiques Pures et Appliquées_, universally known as _Liouville's journal_
+(still in print, still very prestigious, two centuries later!).
+/ += . "Joseph Liouville" -> https://en.wikipedia.org/wiki/Joseph_Liouville
+/ += . "Journal de Mathématiques Pures et Appliquées" -> https://en.wikipedia.org/wiki/Journal_de_Math%C3%A9matiques_Pures_et_Appliqu%C3%A9es
+
+Here is the list of the articles Liouville published in his own journal in 1861:
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/liouville/1861.png
+/ width 630
+
+And then some more:
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/liouville/1862.png
+/ width 630
+
+... and more ...
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/liouville/1863.png
+/ width 630
+
+...
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/nikitadanilov.github.io/refs/heads/master/liouville/1864.png
+/ width 630
+
+Look somewhat... similar don't they? The truth is, Liouville proved a certain
+general result about quadratic forms, but chose to keep it secret. Instead, he
+published almost _two hundred_ papers with special cases, easily obtainable from
+his general theorem, but rather mysterious otherwise.
+  
+This was the bulk of his scientific output in the early 1860s.
+
+; head
+References
+/ level 3
+
+>[0] Lützen, Jesper, Joseph Liouville, 1809-1882: Master of Pure and Applied Mathematics. Springer New York, 1990.
