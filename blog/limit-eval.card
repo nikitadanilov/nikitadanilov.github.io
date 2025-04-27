@@ -1,0 +1,30 @@
+// name limit and evaluation
+// id limit-eval
+// +# blog limit-eval
+// +# timeline 2005/07/24
+// +tags math
+
+// +TeX \( \def\Lim{\operatorname{Lim}} \)
+// +TeX \( \def\EV{\operatorname{EV}} \)
+// +TeX \( \def\Cat{\operatorname{Cat}} \)
+
+Let \(D\) be a category with functorial limits of functors from some category
+\(C\). That is, there is a functor
+
+; math
+\lim : \Cat(C, D) \to D.
+
+For each object \(x\) from \(C\), there is a functor
+
+; math
+ev_x : \Cat(C, D) \to D,
+
+sending a functor \(F : C \to D\) to \(F(x)\), and sending a natural
+transformation \(r : F \to G : C \to D\) to its component at \(x\) (\(r_x : F(x)
+\to G(x)\)). By mapping \(x\) to \(ev_x\) and morphism \(f : x \to y\) to an
+obvious natural transformation from \(ev_x\) to \(ev_y\) we obtain a functor
+\(\EV : C \to \Cat(\Cat(C, D), D)\).
+
+Amusing and trivially checkable fact is that \(\lim = \Lim \EV\). That is,
+limits are _always_ point-wise.
+/ +* "point-wise" Alternatively, any meaningful generic diagram commutes.
