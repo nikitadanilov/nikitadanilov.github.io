@@ -1,0 +1,91 @@
+// name Vale of tears.
+// id vale
+// +# blog vale
+// +# timeline 2013/01/17
+// +tags programming
+
+Consider a system describing possible computations (e.g., a programming
+language or a state machine formalism) including interactions with the external
+world, that is, input and output facilities.
+
+A pair of dual sub-classes of computational elements (values, objects,
+functions, _&c_.) can be defined:
+
+>_finitary_ elements that are known to not depend on input and
+
+>_ideal_ elements that output is known to not depend on.
+
+The rest of elements may depend on input and may affect output. Let's call such
+elements _laic_ ("temporal" might be a better word).
+
+The class of finitary elements is well-known: because they can be computed
+without input, they can be computed before the program starts, i.e., they
+correspond to various constants, including static entities like types (in
+statically typed languages), classes, function bodies and so on. Some languages
+have powerful finitary computations, for example, C++ template specialisation is
+Turing complete.
+
+Laic elements are the most usual things like variables and objects.
+
+Ideal elements are less known. They have a long history of use in the area of
+formal program verification where they are called _ghost_ or _auxiliary_
+variables.
+/ += . "ghost" -> http://www-sop.inria.fr/everest/personnel/Mariela.Pavlova/ghost.pdf
+
+There is an obvious restriction of data and control flow between various types of elements:
+
+>finitary element may depend only on finitary elements;
+
+>laic element may depend on laic and finitary elements (e.g., normal function
+ can take a constant as a parameter, but constant cannot be initialised with the
+ value of a variable or function call);
+
+>ideal element may depend on any element (e.g., ideal variable can be assigned
+ the value of a laic variable, but not other way around).
+
+The most important property of ideal elements is that, because they don't affect
+observable program behaviour, there is no need to actually compute them! Yet,
+they are useful exactly because of this property: ideal elements are not
+computed and, hence, are not constrained by the limitations of actual
+computational environments. For example, an ideal variable can represent an
+infinite (even uncountable) collection or a real number (real real number, not
+approximation); an ideal function can be defined by the transfinite induction or
+by a formula involving quantifiers.
+
+To use ideal elements, one assumes that they follow normal rules of the language
+(for example, axiomatic or denotational semantics). This assumption doesn't
+burden the implementors of the language precisely because the ideal elements are
+not computed. Under that assumption, one can reason about properties of ideal
+elements.
+/ += . "semantics" -> <a href="http://en.wikipedia.org/wiki/Semantics_(computer_science)
+
+As a simplest example, an ideal variable can be used to record the sequence of
+calls to a certain function:
+
+
+; code
+ideal f_seq = {};
+function f(arg) {
+        f_seq := f_seq ++ arg;
+        ...
+};
+
+and then reason about `f_seq` using whatever method is used to reason about laic
+elements (e.g., weakest preconditions, Hoare triples or usual hand-waving), for
+example, to prove that messages delivered to a receiver were sent by the sender
+(that is, `deliver_seq` is a sub-sequence of `send_seq`).
+/ += . "weakest preconditions" -> http://en.wikipedia.org/wiki/Predicate_transformer_semantics
+/ += . "Hoare triples" -> http://en.wikipedia.org/wiki/Hoare_triple
+
+It is interesting that both finitary elements (specifically, static types) and
+ideal elements help to reason about the behaviour of the laic world sandwiched
+between them.
+
+Nothing in this short article is new, except for the (obvious) duality between
+ideal and finitary elements.
+
+_Exercise_ 0: implement linear types by casting laic elements to ideal.
+/ += . "linear types" -> http://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems
+
+_Exercise_ 1: implement garbage collection similarly.
+
