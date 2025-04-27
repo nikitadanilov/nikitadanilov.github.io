@@ -1,0 +1,72 @@
+// name Generating Catalan numbers.
+// id catalan
+// +# blog catalan
+// +# timeline 2022/10/07
+// +tags programming
+
+Enumerate all binary trees with N nodes, C++20 way:
+
+; code
+#include <memory>
+#include <string>
+#include <cassert>
+#include <iostream>
+#include <coroutine>
+#include <cppcoro/generator.hpp>
+|
+struct tnode;
+using tree = std::shared_ptr<tnode>;
+struct tnode {
+	tree left;
+	tree right;
+	tnode() {};
+	tnode(tree l, tree r) : left(l), right(r) {}
+};
+|
+auto print(tree t) -> std::string {
+	return  t ? (std::string{"["} + print(t->left) + " "
+		     + print(t->right) + "]") : "*";
+}
+|
+cppcoro::generator<tree> gen(int n) {
+	if (n == 0) {
+		co_yield nullptr;
+	} else {
+		for (int i = 0; i < n; ++i) {
+			for (auto left : gen(i)) {
+				for (auto right : gen(n - i - 1)) {
+					co_yield tree(new tnode(left, right));
+				}
+			}
+		}
+	}
+}
+|
+int main(int argc, char **argv) {
+	for (auto t : gen(std::atoi(argv[1]))) {
+		std::cout << print(t) << std::endl;
+	}
+}
+
+Source: gen.cpp.
+/ += . "gen.cpp" -> https://github.com/nikitadanilov/bits/blob/master/gen.cpp
+
+To generate Catalan numbers, do:
+/ += . "Catalan numbers" -> https://en.wikipedia.org/wiki/Catalan_number
+
+; code
+$ for i in $(seq 0 1000000) ;do ./gen $i | wc -l ;done
+       1
+       1
+       2
+       5
+      14
+      42
+     132
+     429
+    1430
+    4862
+   16796
+   58786
+  208012
+  742900

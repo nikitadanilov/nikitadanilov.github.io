@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Generating Catalan numbers.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="catalan"></a><div class="column"><header>Generating Catalan numbers.</header>
+<a name="catalan-00000"></a><p>Enumerate all binary trees with N nodes, C++20 way:</p>
+<a name="catalan-00001"></a><pre><code>#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+#include &lt;coroutine&gt;
+#include &lt;cppcoro/generator.hpp&gt;
+
+struct tnode;
+using tree = std::shared_ptr&lt;tnode&gt;;
+struct tnode {
+	tree left;
+	tree right;
+	tnode() {};
+	tnode(tree l, tree r) : left(l), right(r) {}
+};
+
+auto print(tree t) -&gt; std::string {
+	return  t ? (std::string{&quot;[&quot;} + print(t-&gt;left) + &quot; &quot;
+		     + print(t-&gt;right) + &quot;]&quot;) : &quot;*&quot;;
+}
+
+cppcoro::generator&lt;tree&gt; gen(int n) {
+	if (n == 0) {
+		co_yield nullptr;
+	} else {
+		for (int i = 0; i &lt; n; ++i) {
+			for (auto left : gen(i)) {
+				for (auto right : gen(n - i - 1)) {
+					co_yield tree(new tnode(left, right));
+				}
+			}
+		}
+	}
+}
+
+int main(int argc, char **argv) {
+	for (auto t : gen(std::atoi(argv[1]))) {
+		std::cout &lt;&lt; print(t) &lt;&lt; std::endl;
+	}
+}</code></pre>
+<a name="catalan-00002"></a><p>Source: <a href="https://github.com/nikitadanilov/bits/blob/master/gen.cpp">gen.cpp</a>.</p>
+<a name="catalan-00003"></a><p>To generate <a href="https://en.wikipedia.org/wiki/Catalan_number">Catalan numbers</a>, do:</p>
+<a name="catalan-00004"></a><pre><code>$ for i in $(seq 0 1000000) ;do ./gen $i | wc -l ;done
+       1
+       1
+       2
+       5
+      14
+      42
+     132
+     429
+    1430
+    4862
+   16796
+   58786
+  208012
+  742900</code></pre><footer><a href="aodt.html#aodt">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="commutativity.html#commutativity">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="3-lisp.html#3-lisp">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="qm.html#qm">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
