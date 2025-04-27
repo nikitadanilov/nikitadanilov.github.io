@@ -1,0 +1,15 @@
+// name The Cook, The Thief, His Wife and Her Lover go to the masses.
+// id greenway
+// +# blog greenway
+// +# timeline 2005/04/22
+// +tags cinema
+
+Yesterday, Russian nation-wide TV Channel Россия, broadcast Peter Greenway's
+_The Cook, The Thief, His Wife and Her Lover_. Isn't there is something very
+Greenwayish in the image of 40 million people turning their TV sets on to relax
+after a hard day only to be confronted with what can be only viewed, but not
+described?
+/ += . "Yesterday" -> http://tv.rambler.ru/event.html?id=1716391
+/ += . "The Cook, The Thief, His Wife and Her Lover" -> https://en.wikipedia.org/wiki/The_Cook,_the_Thief,_His_Wife_%26_Her_Lover
+/ +* "Yesterday" The URL is stale.
+/ +* "The Cook, The Thief, His Wife and Her Lover" The URL was stale, fixed to point to Wikipedia.
