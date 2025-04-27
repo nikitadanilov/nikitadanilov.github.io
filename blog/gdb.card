@@ -1,0 +1,50 @@
+// name the power of gdb
+// id gdb
+// +# blog gdb
+// +# timeline 2005/03/31
+// +tags programming
+// +tags osx
+// +tags hacking
+
+Yesterday I was running long file system stress test (fsx if you want to know)
+when X server on my workstation locked up completely (because it ran on a
+heavily patched kernel as turned out later). One consequence of this was that
+xterm which fsx output was going to, went, together with X server, to the land
+of Eternal GoodDrawable and stopped caring about silly clients sending frantic
+write(2)s to it.
+/ += . "fsx(?= if)" -> http://www.codemonkey.org.uk/cruft/fsx-linux.c
+
+fsx stopped which was unfortunate. So I logged to the test box and did
+
+; head
+Session
+/ level 3
+
+; code
+$ gdb fsx $(pgrep fsx) # attach to the fsx
+(gdb) bt
+#0  0x90010760 in write ()
+#1  0x90026104 in _swrite ()
+#2  0x90020c80 in __sflush ()
+#3  0x90031e00 in __fflush ()
+#4  0x90006e4c in __sfvwrite ()
+#5  0x90006ef0 in __sprint ()
+#6  0x90006a48 in __vfprintf ()
+#7  0x9000c76c in vfprintf ()
+#8  0x000025a0 in prt ()
+#9  0x00004a0c in dotruncate ()
+#10 0x000051c0 in test ()
+#11 0x0000659c in main ()
+#12 0x0000220c in _start (argc=2, argv=0xbffffa14, envp=0xbffffa20) at /SourceCache/Csu/Csu-46/crt.c:267
+#13 0x00002080 in start ()
+(gdb) # yes it really stuck doing write to the stdout. And yes, this is Mac OS X.
+(gdb) # now fun part begins
+(gdb) call (int)close(1) # close standard output
+$1 = 0
+(gdb) # it worked! Leave fsx in piece...
+(gdb) detach
+(gdb) quit
+
+and test was running further happily. 
+
+The moral: gdb can save your day.

@@ -64,8 +64,8 @@ span[data-uid="3"] { border-color: green; }
 span[data-uid="4"] { border-color: purple; }
 span[data-uid="5"] { border-color: violet; }
 p         { text-align: justify; }
-p         { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco; }
-table     { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Menlo, Consolas, Monaco; }
+p         { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Baskerville, Menlo, Consolas, Monaco; }
+table     { font-size: 20px; font-family: "F1785 GLC Baskerville Normal", Baskerville, Menlo, Consolas, Monaco; }
 a         { color: #2288bb; text-decoration:underline; }
 a:visited { color: #888888; }
 a:hover   { color: white; background-color: #33aaff; text-decoration:underline; }
