@@ -1,0 +1,15 @@
+// name Side with effete.
+// id side-effete
+// +# blog side-effete
+// +# timeline 2012/11/09
+// +tags programming
+
+More of „I know C better than you!“ stuff.
+
+I just discovered (the verb is deeply characteristic) how to write a
+`HAS_SIDE_EFFECTS(expr)` macro that doesn't evaluate `expr` and returns true iff
+expr has side-effects.
+
+The macro essentially depends on a GCC extension. It is useful, for example, as
+a sanity check in conditionally compiled code, e.g., in `assert(expr)`.
+
