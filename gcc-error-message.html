@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>gcc error message</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="gcc-error-message"></a><div class="column"><header>gcc error message</header>
+<a name="gcc-error-message-00000"></a><p>Quite some time ago (in the previous century), gcc greeted me with the following self-explanatory message (My feelings toward C++ only increased since then.):</p>
+<a name="gcc-error-message-00001"></a><pre><code style="margin-left: 3em;">src/algorithms/parse/GrammarNode.cpp:114: `((new QR::ObjectWrapper(((new QR::Concatenation(&quot;barNo&quot;,
+new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;)) !=
+0) ? new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;
+QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((
+new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new QR::Stri
+ng(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Ob
+ject::_vb.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), ((n
+ew QR::ObjectWrapper(((new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR::Termin
+al(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb
+.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal(&quot;&lt;
+&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;))-&gt;QR
+::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top :
+0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWrapper((
+(new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new QR::St
+ring(&quot;NumericLiteral&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;Q
+R::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal(&quot;no&quot;, new QR::Strin
+g(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Terminal
+::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0))-&gt;QR::O
+bjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), 0)) != 0) ? new QR::Concatenation(&quot;
+barNo&quot;, new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_b
+ar&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11Gram
+marNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectW
+rapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new
+QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object
+-&gt;QR::Object::_vb.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top :
+0), ((new QR::ObjectWrapper(((new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR:
+:Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNo
+de::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Termi
+nal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace
+&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR
+3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWr
+apper(((new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new
+QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Obj
+ect-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal(&quot;no&quot;, new QR:
+:String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Te
+rminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0))-
+QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), 0))-&gt;QR::GrammarNode::_vb.Q22
+QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Concatenation(&quot;b
+arNo&quot;, new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_ba
+r&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11Gramm
+arNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWr
+apper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new
+QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object
+-&gt;QR::Object::_vb.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top :
+0), ((new QR::ObjectWrapper(((new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR:
+:Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNo
+de::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Termi
+nal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace
+&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR
+3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWr
+apper(((new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new
+QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Obj
+ect-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal(&quot;no&quot;, new QR:
+:String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Te
+rminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0))-
+QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), 0)) != 0) ? new QR::Concatena
+tion(&quot;barNo&quot;, new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;key
+word_bar&quot;)) != 0) ? new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR
+11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::O
+bjectWrapper(((new QR::Terminal(&quot;bar&quot;, new QR::String(&quot;keyword_bar&quot;)) != 0) ? new QR::Terminal(&quot;bar
+&quot;, new QR::String(&quot;keyword_bar&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR
+6Object-&gt;QR::Object::_vb.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22Q
+R3Top : 0), ((new QR::ObjectWrapper(((new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ?
+new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::Gr
+ammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR
+::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whitespace&quot;)) != 0) ? new QR::Terminal(&quot;&lt; &gt;&quot;, new QR::String(&quot;Whi
+tespace&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_v
+b.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), ((new QR::O
+bjectWrapper(((new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;n
+o&quot;, new QR::String(&quot;NumericLiteral&quot;))-&gt;QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q
+22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal(&quot;no&quot;,
+new QR::String(&quot;NumericLiteral&quot;)) != 0) ? new QR::Terminal(&quot;no&quot;, new QR::String(&quot;NumericLiteral&quot;))-
+QR::Terminal::_vb.Q22QR11GrammarNode-&gt;QR::GrammarNode::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top
+: 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0), 0))-&gt;QR::GrammarNode::_
+vb.Q22QR6Object-&gt;QR::Object::_vb.Q22QR3Top : 0))-&gt;QR::ObjectWrapper::_vb.Q22QR6Object-&gt;QR::Object::
+_vb.Q22QR3Top : 0)&#x27; cannot be used as a function</code></pre><footer><a href="feminisn.html#feminisn">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="gdb.html#gdb">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="inaccessible-cardinals.html#inaccessible-cardinals">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="exercise.html#exercise">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

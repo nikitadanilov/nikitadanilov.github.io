@@ -1,0 +1,90 @@
+// name gcc error message
+// id gcc-error-message
+// +# blog gcc-error-message
+// +# timeline 2005/04/12.11:58
+// +tags programming
+// +tags c++
+
+Quite some time ago (in the previous century), gcc greeted me with the following
+self-explanatory message (My feelings toward C++ only increased since then.):
+
+; code
+src/algorithms/parse/GrammarNode.cpp:114: `((new QR::ObjectWrapper(((new QR::Concatenation("barNo",
+new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal("bar", new QR::String("keyword_bar")) !=
+0) ? new QR::Terminal("bar", new QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11GrammarNode->
+QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((
+new QR::Terminal("bar", new QR::String("keyword_bar")) != 0) ? new QR::Terminal("bar", new QR::Stri
+ng("keyword_bar"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Ob
+ject::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), ((n
+ew QR::ObjectWrapper(((new QR::Terminal("< >", new QR::String("Whitespace")) != 0) ? new QR::Termin
+al("< >", new QR::String("Whitespace"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb
+.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("<
+>", new QR::String("Whitespace")) != 0) ? new QR::Terminal("< >", new QR::String("Whitespace"))->QR
+::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top :
+0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWrapper((
+(new QR::Terminal("no", new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::St
+ring("NumericLiteral"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->Q
+R::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("no", new QR::Strin
+g("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::String("NumericLiteral"))->QR::Terminal
+::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0))->QR::O
+bjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0)) != 0) ? new QR::Concatenation("
+barNo", new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal("bar", new QR::String("keyword_b
+ar")) != 0) ? new QR::Terminal("bar", new QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11Gram
+marNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectW
+rapper(((new QR::Terminal("bar", new QR::String("keyword_bar")) != 0) ? new QR::Terminal("bar", new
+QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object
+->QR::Object::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top :
+0), ((new QR::ObjectWrapper(((new QR::Terminal("< >", new QR::String("Whitespace")) != 0) ? new QR:
+:Terminal("< >", new QR::String("Whitespace"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNo
+de::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Termi
+nal("< >", new QR::String("Whitespace")) != 0) ? new QR::Terminal("< >", new QR::String("Whitespace
+"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR
+3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWr
+apper(((new QR::Terminal("no", new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("no", new
+QR::String("NumericLiteral"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Obj
+ect->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("no", new QR:
+:String("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::String("NumericLiteral"))->QR::Te
+rminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0))-
+>QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0))->QR::GrammarNode::_vb.Q22
+QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Concatenation("b
+arNo", new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal("bar", new QR::String("keyword_ba
+r")) != 0) ? new QR::Terminal("bar", new QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11Gramm
+arNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWr
+apper(((new QR::Terminal("bar", new QR::String("keyword_bar")) != 0) ? new QR::Terminal("bar", new
+QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object
+->QR::Object::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top :
+0), ((new QR::ObjectWrapper(((new QR::Terminal("< >", new QR::String("Whitespace")) != 0) ? new QR:
+:Terminal("< >", new QR::String("Whitespace"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNo
+de::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Termi
+nal("< >", new QR::String("Whitespace")) != 0) ? new QR::Terminal("< >", new QR::String("Whitespace
+"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR
+3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), ((new QR::ObjectWr
+apper(((new QR::Terminal("no", new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("no", new
+QR::String("NumericLiteral"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Obj
+ect->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("no", new QR:
+:String("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::String("NumericLiteral"))->QR::Te
+rminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0))-
+>QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0)) != 0) ? new QR::Concatena
+tion("barNo", new QR::List(2, ((new QR::ObjectWrapper(((new QR::Terminal("bar", new QR::String("key
+word_bar")) != 0) ? new QR::Terminal("bar", new QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR
+11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::O
+bjectWrapper(((new QR::Terminal("bar", new QR::String("keyword_bar")) != 0) ? new QR::Terminal("bar
+", new QR::String("keyword_bar"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR
+6Object->QR::Object::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22Q
+R3Top : 0), ((new QR::ObjectWrapper(((new QR::Terminal("< >", new QR::String("Whitespace")) != 0) ?
+new QR::Terminal("< >", new QR::String("Whitespace"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::Gr
+ammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR
+::Terminal("< >", new QR::String("Whitespace")) != 0) ? new QR::Terminal("< >", new QR::String("Whi
+tespace"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_v
+b.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), ((new QR::O
+bjectWrapper(((new QR::Terminal("no", new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("n
+o", new QR::String("NumericLiteral"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q
+22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("no",
+new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::String("NumericLiteral"))-
+>QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top
+: 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0))->QR::GrammarNode::_
+vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::
+_vb.Q22QR3Top : 0)' cannot be used as a function
+
+
+
