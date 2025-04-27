@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Zero is overrated</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="zero-overrated"></a>
+<div class="column"><header>Zero is overrated</header>
+<a name="zero-overrated-00000"></a><p>Define a sequence of functions \(P_i:\mathbb{R}^+\rightarrow\mathbb{R}\), \(i\in\mathbb{N}\)</p>
+<a name="zero-overrated-00001"></a>$$P_0(x) = \ln(x)$$
+<a name="zero-overrated-00002"></a>$$P_{n+1}(x) = \int P_{n}(x)\cdot dx$$
+<a name="zero-overrated-00003"></a><p>I found a beautiful closed formula for \(P_i\), that I haven&#x27;t seen before.</p>
+<a name="zero-overrated-00004"></a><p>Integrating by parts, it&#x27;s easy to calculate first few \(P_i\):</p>
+<a name="zero-overrated-00005"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}}
+P_1(x) &amp;\;=\;&amp; x\cdot\ln x - x \\
+P_2(x) &amp;\;=\;&amp; \frac{x^2}{2}\cdot\ln x - \frac{3}{4}\cdot x^2 \\
+P_3(x) &amp;\;=\;&amp; \frac{x^6}{6}\cdot\ln x - \frac{11}{36}\cdot x^3
+\end{array}$$
+<a name="zero-overrated-00006"></a><p>which leads to a hypothesis, that</p>
+<a name="zero-overrated-00007"></a>$$P_n = \frac{x^n}{n!}\cdot\ln x - K_n\cdot x^n$$
+<a name="zero-overrated-00008"></a><p>for certain constants \(K_i\), \(K_1 = 1\).</p>
+<a name="zero-overrated-00009"></a><p>Again integrating by parts, obtain:</p>
+<a name="zero-overrated-00010"></a>$$K_{n+1} = \frac{1}{n+1}\cdot\Bigg(K_n + \frac{1}{(n+1)!}\Bigg)$$
+<a name="zero-overrated-00011"></a><p>from where</p>
+<a name="zero-overrated-00012"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}}
+K_n &amp;\;=\;&amp;  \frac{1}{n}\cdot\Bigg(K_{n-1} + \frac{1}{n!}\Bigg) \\
+    &amp;\;=\;&amp;  \frac{1}{n}\cdot\Bigg(\frac{1}{n!} + \frac{1}{n-1}\cdot\big(K_{n-2} + \frac{1}{(n-1)!}\big)\Bigg) \\
+    &amp;\;=\;&amp;  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n-1}\Bigg) + \frac{1}{n\cdot(n - 1)}\cdot K_{n-2} \\
+    &amp;\;=\;&amp;  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n - 1} + \frac{1}{n - 2}\Bigg) + \frac{1}{n\cdot(n-1)\cdot(n - 2)}\cdot K_{n-3} \\
+    &amp;\;=\;&amp;  \cdots \\
+    &amp;\;=\;&amp;  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n - 1} + \cdots +\frac{1}{n - p + 1}\Bigg) + \frac{1}{n\cdot(n-1)\cdot\cdots\cdot(n - p +1)}\cdot K_{n-p}
+\end{array}$$
+<a name="zero-overrated-00013"></a><p>Substitute \(p = n - 1\):</p>
+<a name="zero-overrated-00014"></a>$$K_n = \frac{1}{n!}\cdot\Bigg(1 + \frac{1}{2} + \cdots + \frac{1}{n}\Bigg)$$
+<a name="zero-overrated-00015"></a><p>Substitute this in the hypothesis:</p>
+<a name="zero-overrated-00016"></a>$$P_n = \frac{x^n}{n!}\cdot\Bigg(\ln x - \big(1 + \frac{1}{2} + \cdots + \frac{1}{n}\big)\Bigg)$$
+<a name="zero-overrated-00017"></a><p>This nicely contains fragments of exponent, nth-<a href="http://en.wikipedia.org/wiki/Harmonic_number">harmonic number</a> and, after a diagonalisation, the <a href="http://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant">Euler constant</a>:</p>
+<a name="zero-overrated-00018"></a>$$\lim_{n\to +\infty}\frac{n!}{n^n}\cdot P_n(n) = -\gamma$$
+<a name="zero-overrated-00019"></a><p>Why \(P_i\) are interesting at all? Because if one completes them for negative indices as</p>
+<a name="zero-overrated-00020"></a>$$P_n = (-1)^{n-1}\cdot(-n-1)!\cdot x^n$$
+<a name="zero-overrated-00021"></a><p>then mth-derivative of \(P_n\) is \(P_{n-m}\) for all non-negative \(m\):</p>
+<a name="zero-overrated-00022"></a>$$(\forall n\in\mathbb{Z})(\forall m\in\mathbb{N})\partial^m P_n = P_{n - m}$$
+<a name="zero-overrated-00023"></a><p>and similarly</p>
+<a name="zero-overrated-00024"></a>$$(\forall n\in\mathbb{Z})(\forall m\in\mathbb{N})\int_m P_n\cdot dx = P_{n + m}$$
+<a name="zero-overrated-00025"></a><p>where \(\int_m\) is <a href="http://mathworld.wolfram.com/RepeatedIntegral.html">repeated integral</a>.</p>
+<a name="zero-overrated-00026"></a><p>This is in contrast with powers \(x^n\), \(n \ge 0\), which, under repeated derivation, eventually pathetically collapse to a constant and then to 0, so that negative powers are not reachable from positive and other way around.</p>
+<a name="zero-overrated-00027"></a><p>It&#x27;s interesting, which other families \((\phi_i)_{i\in\mathbb{Z}}\) are there such that</p>
+<a name="zero-overrated-00028"></a>$$(\forall m\in\mathbb{N})\partial^m\phi_n = \phi_{n - m}$$
+<a name="zero-overrated-00029"></a>$$(\forall m\in\mathbb{N})\int_m \phi_n\cdot dx = \phi_{n + m}$$
+<a name="zero-overrated-00030"></a><p>and</p>
+<a name="zero-overrated-00031"></a>$$(\forall n\neq m)\phi_n \neq const\cdot\phi_m$$
+<a name="zero-overrated-00032"></a><p>(the latter condition is to avoid degenerate cases)?</p><footer><a href="zero.html#zero">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="side-effete.html#side-effete">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

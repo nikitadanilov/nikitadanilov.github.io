@@ -1,0 +1,106 @@
+// name Zero is overrated
+// id zero-overrated
+// +# blog zero-overrated
+// +# timeline 2012/11/03
+// +tags math
+
+Define a sequence of functions \(P_i:\mathbb{R}^+\rightarrow\mathbb{R}\), \(i\in\mathbb{N}\)
+
+; math
+P_0(x) = \ln(x)
+
+; math
+P_{n+1}(x) = \int P_{n}(x)\cdot dx
+
+I found a beautiful closed formula for \(P_i\), that I haven't seen before.
+
+Integrating by parts, it's easy to calculate first few \(P_i\):
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+P_1(x) &\;=\;& x\cdot\ln x - x \\
+P_2(x) &\;=\;& \frac{x^2}{2}\cdot\ln x - \frac{3}{4}\cdot x^2 \\
+P_3(x) &\;=\;& \frac{x^6}{6}\cdot\ln x - \frac{11}{36}\cdot x^3
+\end{array}
+
+which leads to a hypothesis, that
+
+; math
+P_n = \frac{x^n}{n!}\cdot\ln x - K_n\cdot x^n
+
+for certain constants \(K_i\), \(K_1 = 1\).
+
+Again integrating by parts, obtain:
+
+; math
+K_{n+1} = \frac{1}{n+1}\cdot\Bigg(K_n + \frac{1}{(n+1)!}\Bigg)
+
+from where
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+K_n &\;=\;&  \frac{1}{n}\cdot\Bigg(K_{n-1} + \frac{1}{n!}\Bigg) \\
+    &\;=\;&  \frac{1}{n}\cdot\Bigg(\frac{1}{n!} + \frac{1}{n-1}\cdot\big(K_{n-2} + \frac{1}{(n-1)!}\big)\Bigg) \\
+    &\;=\;&  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n-1}\Bigg) + \frac{1}{n\cdot(n - 1)}\cdot K_{n-2} \\
+    &\;=\;&  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n - 1} + \frac{1}{n - 2}\Bigg) + \frac{1}{n\cdot(n-1)\cdot(n - 2)}\cdot K_{n-3} \\
+    &\;=\;&  \cdots \\
+    &\;=\;&  \frac{1}{n!}\cdot\Bigg(\frac{1}{n} + \frac{1}{n - 1} + \cdots +\frac{1}{n - p + 1}\Bigg) + \frac{1}{n\cdot(n-1)\cdot\cdots\cdot(n - p +1)}\cdot K_{n-p}
+\end{array}
+
+Substitute \(p = n - 1\):
+
+; math
+K_n = \frac{1}{n!}\cdot\Bigg(1 + \frac{1}{2} + \cdots + \frac{1}{n}\Bigg)
+
+Substitute this in the hypothesis:
+
+
+; math
+P_n = \frac{x^n}{n!}\cdot\Bigg(\ln x - \big(1 + \frac{1}{2} + \cdots + \frac{1}{n}\big)\Bigg)
+
+
+This nicely contains fragments of exponent, nth-harmonic number and, after a
+diagonalisation, the Euler constant:
+/ += . "harmonic number" -> http://en.wikipedia.org/wiki/Harmonic_number
+/ += . "Euler constant" -> http://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant
+
+; math
+\lim_{n\to +\infty}\frac{n!}{n^n}\cdot P_n(n) = -\gamma
+
+Why \(P_i\) are interesting at all? Because if one completes them for negative indices as
+
+; math
+P_n = (-1)^{n-1}\cdot(-n-1)!\cdot x^n
+
+then mth-derivative of \(P_n\) is \(P_{n-m}\) for all non-negative \(m\):
+
+; math
+(\forall n\in\mathbb{Z})(\forall m\in\mathbb{N})\partial^m P_n = P_{n - m}
+
+and similarly
+
+; math
+(\forall n\in\mathbb{Z})(\forall m\in\mathbb{N})\int_m P_n\cdot dx = P_{n + m}
+
+where \(\int_m\) is repeated integral.
+/ += . "repeated integral" -> http://mathworld.wolfram.com/RepeatedIntegral.html
+
+This is in contrast with powers \(x^n\), \(n \ge 0\), which, under repeated
+derivation, eventually pathetically collapse to a constant and then to 0, so
+that negative powers are not reachable from positive and other way around.
+
+It's interesting, which other families \((\phi_i)_{i\in\mathbb{Z}}\) are there such that
+
+; math
+(\forall m\in\mathbb{N})\partial^m\phi_n = \phi_{n - m}
+
+; math
+(\forall m\in\mathbb{N})\int_m \phi_n\cdot dx = \phi_{n + m}
+
+and
+
+; math
+(\forall n\neq m)\phi_n \neq const\cdot\phi_m
+
+(the latter condition is to avoid degenerate cases)?
+
