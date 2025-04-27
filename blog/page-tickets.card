@@ -1,0 +1,24 @@
+// name page tickets
+// id page-tickets
+// +# blog page-tickets
+// +# timeline 2005/04/05
+// +tags programming
+// +tags kernel
+
+Mach VM had (or still has if Mac OS X counts) an interesting detail in its VM
+scanner implementation (`osfmk/vm/vm_page.h`, PS: [2025/04/26] The comment is no
+longer there.):
+
+; code
+/* 
+ * Each page entered on the inactive queue obtains a ticket from a
+ * particular ticket roll.  Pages granted tickets from a particular 
+ * roll  generally flow through the queue as a group.  In this way when a
+ * page with a ticket from a particular roll is pulled from the top of the
+ * queue it is extremely likely that the pages near the top will have tickets
+ * from the same or adjacent rolls.  In this way the proximity to the top
+ * of the queue can be loosely ascertained by determining the identity of
+ * the roll the pages ticket came from. 
+ */
+
+
