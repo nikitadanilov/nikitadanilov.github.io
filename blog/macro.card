@@ -1,0 +1,22 @@
+// name A macro.
+// id macro
+// +# blog macro
+// +# timeline 2012/05/11
+// +tags programming
+
+C language is wonderfully profound. After almost 20 years, I still find new ways
+to (ab-)use it. Here is a little problem:
+/ += . "C language" -> http://en.wikipedia.org/wiki/C_language
+
+>Define a macro `IN(x, set)`, called as
+
+>>`IN(x, (v0, v1, ..., vn))`
+
+>that expands into an expression
+
+>>`((x) == (v0) || (x) == (v1) || ... (x) == (vn))`
+
+which evaluates to true iff `x` is a member of set `{v0, ..., vn }`,
+where the type of `x` and all `v`s is the same. Alternatively, define a macro
+`IN1(x, ...)` that expands to the same expression as `IN(x, (...))`.
+/ += . "iff" -> http://en.wikipedia.org/wiki/Iff
