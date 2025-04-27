@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Weekend affinity.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+<script>
+window.MathJax = {
+  loader: {load: ['[tex]/amscd']},
+  tex:    {packages: {'[+]': ['amscd']}}
+};
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="affinity"></a>
+<div class="column"><header>Weekend affinity.</header>
+<a name="affinity-00000"></a><p>Groups usually come with <a href="http://en.wikipedia.org/wiki/Group_(mathematics)">homomorphisms</a>, defined as mappings preserving multiplication:</p>
+<a name="affinity-00001"></a>$$f(a\cdot b) = f(a)\cdot f(b)$$
+<a name="affinity-00002"></a><p>From this definition, notions of subgroup (monomorphism), <a href="http://en.wikipedia.org/wiki/Quotient_group">quotient group</a> (epimorphism, <a href="http://en.wikipedia.org/wiki/Normal_subgroup">normal subgroup</a>) and the famous <a href="http://en.wikipedia.org/wiki/Isomorphism_theorem#First_isomorphism_theorem">isomorphism theorem</a> follow naturally. The <a href="http://en.wikipedia.org/wiki/Category_of_groups">category of groups</a> with homomorphisms as arrows has products and sums, equalizers and coequalizers all well-known and with nice properties.</p>
+<a name="affinity-00003"></a><p>Consider, instead, <i>affine morphism</i>, that can be defined by the following equivalent conditions:</p>
+<a name="affinity-00004"></a><p style="margin-left: 3em;">1. \(f(a \cdot b^{-1} \cdot c) = f(a) \cdot f^{-1}(b) \cdot f(c)\)</p>
+<a name="affinity-00005"></a><p style="margin-left: 3em;">2. \(f(a \cdot b) = f(a) \cdot f^{-1}(e) \cdot f(b)\)</p>
+<a name="affinity-00006"></a><p style="margin-left: 3em;">3. \(\exists t. f(a \cdot b) = f(a) \cdot t \cdot f(b)\)</p>
+<a name="affinity-00007"></a><p>The motivation for this definition is slightly roundabout.</p>
+<a name="affinity-00008"></a><p>The difference between homomorphism and affine morphism is similar to the difference between a <a href="http://en.wikipedia.org/wiki/Vector_subspace">vector subspace</a> and an <a href="http://en.wikipedia.org/wiki/Affine_space#Affine_subspaces">affine subspace</a> of a vector space. A <a href="http://en.wikipedia.org/wiki/Vector_subspace">vector subspace</a> always goes through the origin (for a homomorphism \(f\), \(f(e) = e\)), whereas an <a href="http://en.wikipedia.org/wiki/Affine_space#Affine_subspaces">affine subspace</a> is translated from the origin (\(f(e) \neq e\) is possible for an affine morphism).</p>
+<a name="affinity-00009"></a><p>Take points \(f(a)\) and \(f(b)\) in the image of an affine morphism, translate them back to the corresponding &quot;vector subspace&quot; to obtain \(f(a) \cdot f^{-1}(e)\) and \(f(b) \cdot f^{-1}(e)\). If translated points are multiplied and the result is translated back to the affine image, the resulting point should be the same as \(f(a \cdot b)\):</p>
+<a name="affinity-00010"></a>$$f(a \cdot b) = (f(a) \cdot f^{-1}(e)) \cdot (f(b) \cdot f^{-1}(e)) \cdot f(e) = f(a) \cdot f^{-1}(e) \cdot f(b)$$
+<a name="affinity-00011"></a><p>which gives the definition (2).</p>
+<a name="affinity-00012"></a><p>(1) =&gt; (2) immediately follows by substituting \(e\) for \(b\).</p>
+<a name="affinity-00013"></a><p>(2) =&gt; (3) by substituting \(f^{-1}(e)\) for \(t\).</p>
+<a name="affinity-00014"></a><p>(3) =&gt; (2) by substituting \(e\) for \(a\) and \(b\).</p>
+<a name="affinity-00015"></a><p>(2) =&gt; (1)</p>
+<a name="affinity-00016"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}l@{\quad}}
+f(a \cdot b^{-1} \cdot c) &amp;\;=\;&amp;                                              &amp; \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(e) \cdot f(b^{-1} \cdot c) &amp; \text{\{(2) for \(a \cdot (b^{-1} \cdot c)\)\}} \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(e) \cdot f(b^{-1}) \cdot f^{-1}(e) \cdot f(c) &amp; \text{\{(2) for \(b^{-1} \cdot c\)\}} \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(e) \cdot f(b^{-1}) \cdot f^{-1}(e) \cdot f(b) \cdot f^{-1}(b) \cdot f(c) &amp; \text{\{\(e = f(b) \cdot f^{-1}(b)\), working toward } \\
+                          &amp;     &amp;                                  &amp; \text{creating a sub-expression that can be collapsed by (2)\}} \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(e) \cdot f(b^{-1} \cdot b) \cdot f^{-1}(b) \cdot f(c) &amp; \text{\{collapsing \(f(b^{-1}) \cdot f^{-1}(e) \cdot f(b)\) by (2)\}} \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(e) \cdot f(e) \cdot f^{-1}(b) \cdot f(c) &amp; \text{\{\(b^{-1} \cdot b = e\)\}} \\
+                          &amp;\;=\;&amp; f(a) \cdot f^{-1}(b) \cdot f(c) &amp; \text{\{\(f^{-1}(e) \cdot f(e) = e\)\}}
+\end{array}$$
+<a name="affinity-00017"></a><p>It is easy to check that each homomorphism is an affine morphism (specifically, homomorphisms are exactly affine morphisms with \(f(e) = e\)).</p>
+<a name="affinity-00018"></a><p>Composition of affine morphisms is affine and hence groups with affine morphisms form a category \(\mathbb{Aff}\).</p>
+<a name="affinity-00019"></a><p>A subset of a group \(G\) is called an <i>affine subgroup</i> of \(G\) if one of the following equivalent conditions holds:</p>
+<a name="affinity-00020"></a><p style="margin-left: 3em;">1. \(\exists h \in G:\forall p, q \in H \rightarrow (p \cdot h^{-1} \cdot q \in H \wedge h \cdot p^{-1} \cdot h \in H)\)</p>
+<a name="affinity-00021"></a><p style="margin-left: 3em;">2. \(\forall p, q, h \in H \rightarrow (p \cdot h^{-1} \cdot q \in H \wedge h \cdot p^{-1} \cdot h \in H)\)</p>
+<a name="affinity-00022"></a><p>The equivalence (with a proof left as an exercise) means that if any \(h\) &quot;translating&quot; affine subgroup to a subgroup exists, then any member of the affine subgroup can be used for translation. In fact, any \(h\) that satisfies (1) belongs to \(H\) (prove). This matches the situation with affine and vector subspaces: any vector from an affine subspace translates this subspace to the subspace passing through the origin.</p>
+<a name="affinity-00023"></a><p>Finally for to-day, consider an affine morphism \(f:G_0\rightarrow G_1\). For \(t\in G_0\) define <i>kernel</i>:</p>
+<a name="affinity-00024"></a>$$ker_t f = \{g\in G_0 | f(g) = f(t)\}$$
+<a name="affinity-00025"></a><p>It&#x27;s easy to check that a kernel is affine subgroup (take \(t\) as \(h\)). Note that in \(\mathbb{Aff}\) a whole family of subobjects corresponds to a morphism, whereas there is <i>the</i> kernel in \(\mathbb{Grp}\).</p>
+<a name="affinity-00026"></a><p>To be continued: affine quotients, products, sums, free affine groups.</p><footer><a href="adaptive-replacement.html#adaptive-replacement">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="aodt.html#aodt">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="parmigianino.html#parmigianino">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

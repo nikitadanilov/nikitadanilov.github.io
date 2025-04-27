@@ -1,0 +1,102 @@
+// name Weekend affinity.
+// id affinity
+// +# blog affinity
+// +# timeline 2013/01/19
+// +tags math
+
+Groups usually come with homomorphisms, defined as mappings preserving
+multiplication:
+/ += . "homomorphisms" -> http://en.wikipedia.org/wiki/Group_(mathematics)
+
+; math
+f(a\cdot b) = f(a)\cdot f(b)
+
+From this definition, notions of subgroup (monomorphism), quotient group
+(epimorphism, normal subgroup) and the famous isomorphism theorem follow
+naturally. The category of groups with homomorphisms as arrows has products and
+sums, equalizers and coequalizers all well-known and with nice properties.
+/ += . "quotient group" -> http://en.wikipedia.org/wiki/Quotient_group
+/ += . "normal subgroup" -> http://en.wikipedia.org/wiki/Normal_subgroup
+/ += . "isomorphism theorem" -> http://en.wikipedia.org/wiki/Isomorphism_theorem#First_isomorphism_theorem
+/ += . "category of groups" -> http://en.wikipedia.org/wiki/Category_of_groups
+
+Consider, instead, _affine morphism_, that can be defined by the following
+equivalent conditions:
+
+>1. \(f(a \cdot b^{-1} \cdot c) = f(a) \cdot f^{-1}(b) \cdot f(c)\)
+
+>2. \(f(a \cdot b) = f(a) \cdot f^{-1}(e) \cdot f(b)\)
+
+>3. \(\exists t. f(a \cdot b) = f(a) \cdot t \cdot f(b)\)
+
+The motivation for this definition is slightly roundabout.
+
+The difference between homomorphism and affine morphism is similar to the
+difference between a vector subspace and an affine subspace of a vector space. A
+vector subspace always goes through the origin (for a homomorphism \(f\), \(f(e)
+= e\)), whereas an affine subspace is translated from the origin (\(f(e) \neq
+e\) is possible for an affine morphism).
+/ += . "vector subspace" -> http://en.wikipedia.org/wiki/Vector_subspace
+/ += . "affine subspace" -> http://en.wikipedia.org/wiki/Affine_space#Affine_subspaces
+
+Take points \(f(a)\) and \(f(b)\) in the image of an affine morphism, translate
+them back to the corresponding "vector subspace" to obtain \(f(a) \cdot
+f^{-1}(e)\) and \(f(b) \cdot f^{-1}(e)\). If translated points are multiplied
+and the result is translated back to the affine image, the resulting point
+should be the same as \(f(a \cdot b)\):
+
+; math
+f(a \cdot b) = (f(a) \cdot f^{-1}(e)) \cdot (f(b) \cdot f^{-1}(e)) \cdot f(e) = f(a) \cdot f^{-1}(e) \cdot f(b)
+
+which gives the definition (2).
+
+(1) => (2) immediately follows by substituting \(e\) for \(b\).
+
+(2) => (3) by substituting \(f^{-1}(e)\) for \(t\).
+
+(3) => (2) by substituting \(e\) for \(a\) and \(b\).
+
+(2) => (1)
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}l@{\quad}}
+f(a \cdot b^{-1} \cdot c) &\;=\;&                                              & \\
+                          &\;=\;& f(a) \cdot f^{-1}(e) \cdot f(b^{-1} \cdot c) & \text{\{(2) for \(a \cdot (b^{-1} \cdot c)\)\}} \\
+                          &\;=\;& f(a) \cdot f^{-1}(e) \cdot f(b^{-1}) \cdot f^{-1}(e) \cdot f(c) & \text{\{(2) for \(b^{-1} \cdot c\)\}} \\
+                          &\;=\;& f(a) \cdot f^{-1}(e) \cdot f(b^{-1}) \cdot f^{-1}(e) \cdot f(b) \cdot f^{-1}(b) \cdot f(c) & \text{\{\(e = f(b) \cdot f^{-1}(b)\), working toward } \\
+                          &     &                                  & \text{creating a sub-expression that can be collapsed by (2)\}} \\
+                          &\;=\;& f(a) \cdot f^{-1}(e) \cdot f(b^{-1} \cdot b) \cdot f^{-1}(b) \cdot f(c) & \text{\{collapsing \(f(b^{-1}) \cdot f^{-1}(e) \cdot f(b)\) by (2)\}} \\
+                          &\;=\;& f(a) \cdot f^{-1}(e) \cdot f(e) \cdot f^{-1}(b) \cdot f(c) & \text{\{\(b^{-1} \cdot b = e\)\}} \\
+                          &\;=\;& f(a) \cdot f^{-1}(b) \cdot f(c) & \text{\{\(f^{-1}(e) \cdot f(e) = e\)\}}
+\end{array}
+
+It is easy to check that each homomorphism is an affine morphism (specifically,
+homomorphisms are exactly affine morphisms with \(f(e) = e\)).
+
+Composition of affine morphisms is affine and hence groups with affine morphisms
+form a category \(\mathbb{Aff}\).
+
+A subset of a group \(G\) is called an _affine subgroup_ of \(G\) if one of the
+following equivalent conditions holds:
+
+>1. \(\exists h \in G:\forall p, q \in H \rightarrow (p \cdot h^{-1} \cdot q \in H \wedge h \cdot p^{-1} \cdot h \in H)\)
+
+>2. \(\forall p, q, h \in H \rightarrow (p \cdot h^{-1} \cdot q \in H \wedge h \cdot p^{-1} \cdot h \in H)\)
+
+The equivalence (with a proof left as an exercise) means that if any \(h\)
+"translating" affine subgroup to a subgroup exists, then any member of the
+affine subgroup can be used for translation. In fact, any \(h\) that satisfies
+(1) belongs to \(H\) (prove). This matches the situation with affine and vector
+subspaces: any vector from an affine subspace translates this subspace to the
+subspace passing through the origin.
+
+Finally for to-day, consider an affine morphism \(f:G_0\rightarrow G_1\). For \(t\in G_0\) define _kernel_:
+
+; math
+ker_t f = \{g\in G_0 | f(g) = f(t)\}
+
+It's easy to check that a kernel is affine subgroup (take \(t\) as \(h\)). Note
+that in \(\mathbb{Aff}\) a whole family of subobjects corresponds to a morphism,
+whereas there is _the_ kernel in \(\mathbb{Grp}\).
+
+To be continued: affine quotients, products, sums, free affine groups.

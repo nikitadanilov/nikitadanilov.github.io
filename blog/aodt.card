@@ -5,6 +5,26 @@
 // +tags programming
 // +tags math
 
+// +TeX \( \def\List{\operatorname{List}} \)
+// +TeX \( \def\integer{\operatorname{integer}} \)
+// +TeX \( \def\nat{\operatorname{nat}} \)
+// +TeX \( \def\Bool{\operatorname{Bool}} \)
+// +TeX \( \def\Punct{\operatorname{Punct}} \)
+// +TeX \( \def\BT{\operatorname{BT}} \)
+// +TeX \( \def\B{\operatorname{B}} \)
+// +TeX \( \def\T{\operatorname{T}} \)
+// +TeX \( \def\R{\operatorname{R}} \)
+// +TeX \( \def\Set{\operatorname{Set}} \)
+// +TeX \( \def\Bag{\operatorname{Bag}} \)
+// +TeX \( \def\Ring{\operatorname{Ring}} \)
+// +TeX \( \def\plug{\operatorname{plug}} \)
+// +TeX \( \def\Zipper{\operatorname{Zipper}} \)
+// +TeX \( \def\cosh{\operatorname{cosh}} \)
+// +TeX \( \def\sinh{\operatorname{sinh}} \)
+// +TeX \( \def\ch{\operatorname{ch}} \)
+// +TeX \( \def\sh{\operatorname{sh}} \)
+// +TeX \( \def\d{\partial} \)
+
 There is that curious idea that you can think of a type in a programming
 language as a kind of algebraic object. Take (homogeneous) lists for example. A
 list of integers is either an empty list (i.e., `nil`) or a pair of an integer

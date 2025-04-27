@@ -6,33 +6,21 @@
    <link rel="stylesheet" href="style.css">
    <style></style>
    
+<script>
+window.MathJax = {
+  loader: {load: ['[tex]/amscd']},
+  tex:    {packages: {'[+]': ['amscd']}}
+};
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
  </head>
  <body>
-   <a name="cographs"></a>\( \def\List{\operatorname{List}} \)
-\( \def\integer{\operatorname{integer}} \)
-\( \def\nat{\operatorname{nat}} \)
-\( \def\Bool{\operatorname{Bool}} \)
-\( \def\Punct{\operatorname{Punct}} \)
-\( \def\BT{\operatorname{BT}} \)
-\( \def\B{\operatorname{B}} \)
-\( \def\T{\operatorname{T}} \)
-\( \def\R{\operatorname{R}} \)
-\( \def\Set{\operatorname{Set}} \)
-\( \def\Bag{\operatorname{Bag}} \)
-\( \def\Ring{\operatorname{Ring}} \)
-\( \def\plug{\operatorname{plug}} \)
-\( \def\Zipper{\operatorname{Zipper}} \)
-\( \def\cosh{\operatorname{cosh}} \)
-\( \def\sinh{\operatorname{sinh}} \)
-\( \def\ch{\operatorname{ch}} \)
-\( \def\sh{\operatorname{sh}} \)
-\( \def\d{\partial} \)
+   <a name="cographs"></a>
 <div class="column"><header>Cographs, cocounts and coconuts.</header>
-<a name="cographs-00000"></a><p style="margin-left: 3em;"><i>Abstract</i>: Dual of the familiar construction of the graph of a function is considered. The symmetry between graphs and cographs can be extended to a suprising degree.</p>
+<a name="cographs-00000"></a><p style="margin-left: 3em;"><i>Abstract</i>: Dual of the familiar construction of the graph of a function is  considered. The symmetry between graphs and cographs can be extended to a  suprising degree.</p>
 <a name="cographs-00001"></a><p>Given a function \(f : A \rightarrow B\), the <i>graph of f</i> is defined as</p>
 <a name="cographs-00002"></a>$$f^* = \{(x, f(x)) \mid x \in A\}.$$
-<a name="cographs-00003"></a><p>In fact, within <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a> framework, functions are <i>defined</i> as graphs. A graph is a subset of the Cartesian product \(A \times B\). One might want to associate to \(f\) a dual <i>cograph</i> object: a certain quotient set of the disjoint sum \(A \sqcup B\), which would uniquely identify the function. To understand the structure of the cograph, define the graph of a morphism \(f : A \rightarrow B\) in a <a href="https://en.wikipedia.org/wiki/Category_(mathematics)">category</a> with suitable products as a fibred product: \(\require{AMScd}\)</p>
+<a name="cographs-00003"></a><p>In fact, within <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a> framework, functions are <i>defined</i> as graphs. A graph is a subset of the Cartesian product \(A \times B\). One might want to associate to \(f\) a dual <i>cograph</i> object: a certain quotient set of the disjoint sum \(A \sqcup B\), which would uniquely identify the function. To understand the structure of the cograph, define the graph of a morphism \(f : A \rightarrow B\) in a <a href="https://en.wikipedia.org/wiki/Category_(mathematics)">category</a> with suitable products as a fibred product:</p>
 <a name="cographs-00004"></a>$$\begin{CD}
 f^* @&gt;\pi_2&gt;&gt; B\\
 @V \pi_1 V V  @VV 1_B V\\

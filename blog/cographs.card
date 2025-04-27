@@ -4,7 +4,9 @@
 // +# timeline 2018/03/09
 // +tags math
 
->_Abstract_: Dual of the familiar construction of the graph of a function is considered. The symmetry between graphs and cographs can be extended to a suprising degree.
+>_Abstract_: Dual of the familiar construction of the graph of a function is
+ considered. The symmetry between graphs and cographs can be extended to a
+ suprising degree.
 
 Given a function \(f : A \rightarrow B\), the _graph of f_ is defined as
 
@@ -16,7 +18,7 @@ subset of the Cartesian product \(A \times B\). One might want to associate to
 \(f\) a dual _cograph_ object: a certain quotient set of the disjoint sum \(A
 \sqcup B\), which would uniquely identify the function. To understand the
 structure of the cograph, define the graph of a morphism \(f : A \rightarrow B\)
-in a category with suitable products as a fibred product: \(\require{AMScd}\)
+in a category with suitable products as a fibred product:
 / += . "graph of f" -> https://en.wikipedia.org/wiki/Graph_of_a_function
 / += . "ZFC" -> https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory
 / += . "category" -> https://en.wikipedia.org/wiki/Category_(mathematics)
