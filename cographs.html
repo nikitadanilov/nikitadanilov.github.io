@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Cographs, cocounts and coconuts.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="cographs"></a>\( \def\List{\operatorname{List}} \)
+\( \def\integer{\operatorname{integer}} \)
+\( \def\nat{\operatorname{nat}} \)
+\( \def\Bool{\operatorname{Bool}} \)
+\( \def\Punct{\operatorname{Punct}} \)
+\( \def\BT{\operatorname{BT}} \)
+\( \def\B{\operatorname{B}} \)
+\( \def\T{\operatorname{T}} \)
+\( \def\R{\operatorname{R}} \)
+\( \def\Set{\operatorname{Set}} \)
+\( \def\Bag{\operatorname{Bag}} \)
+\( \def\Ring{\operatorname{Ring}} \)
+\( \def\plug{\operatorname{plug}} \)
+\( \def\Zipper{\operatorname{Zipper}} \)
+\( \def\cosh{\operatorname{cosh}} \)
+\( \def\sinh{\operatorname{sinh}} \)
+\( \def\ch{\operatorname{ch}} \)
+\( \def\sh{\operatorname{sh}} \)
+\( \def\d{\partial} \)
+<div class="column"><header>Cographs, cocounts and coconuts.</header>
+<a name="cographs-00000"></a><p style="margin-left: 3em;"><i>Abstract</i>: Dual of the familiar construction of the graph of a function is considered. The symmetry between graphs and cographs can be extended to a suprising degree.</p>
+<a name="cographs-00001"></a><p>Given a function \(f : A \rightarrow B\), the <i>graph of f</i> is defined as</p>
+<a name="cographs-00002"></a>$$f^* = \{(x, f(x)) \mid x \in A\}.$$
+<a name="cographs-00003"></a><p>In fact, within <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a> framework, functions are <i>defined</i> as graphs. A graph is a subset of the Cartesian product \(A \times B\). One might want to associate to \(f\) a dual <i>cograph</i> object: a certain quotient set of the disjoint sum \(A \sqcup B\), which would uniquely identify the function. To understand the structure of the cograph, define the graph of a morphism \(f : A \rightarrow B\) in a <a href="https://en.wikipedia.org/wiki/Category_(mathematics)">category</a> with suitable products as a fibred product: \(\require{AMScd}\)</p>
+<a name="cographs-00004"></a>$$\begin{CD}
+f^* @&gt;\pi_2&gt;&gt; B\\
+@V \pi_1 V V  @VV 1_B V\\
+A @&gt;&gt;f&gt; B
+\end{CD}$$
+<a name="cographs-00005"></a><p>In the category of sets this gives the standard definition. The cograph can be defined by a dual construction as a push-out:</p>
+<a name="cographs-00006"></a>$$\begin{CD}
+A @&gt;1_A&gt;&gt; A\\
+@V f V V  @VV j_1 V\\
+B @&gt;&gt;j_2&gt; f_*
+\end{CD}$$
+<a name="cographs-00007"></a><p>Expanding this in the category of sets gives the following definition:</p>
+<a name="cographs-00008"></a>$$f_* = (A \sqcup B) / \pi_f,$$
+<a name="cographs-00009"></a><p>where \(\pi_f\) is the reflexive transitive closure of a relation \(\theta_f\) given by (assuming in the following, without loss of generality, that \(A\) and \(B\) are disjoint)</p>
+<a name="cographs-00010"></a>$$x\overset{\theta_f}{\sim} y \equiv y = f(x)$$
+<a name="cographs-00011"></a><p>That is, \(A\) is partitioned by \(\pi_f\) into subsets which are inverse images of elements of \(B\) and to each such subset the element of \(B\) which is its image is glued. This is somewhat similar to the <a href="https://en.wikipedia.org/wiki/Mapping_cylinder">mapping cylinder</a> construction in topology. Some similarities between graphs and cographs are immediately obvious. For graphs:</p>
+<a name="cographs-00012"></a>$$\forall x\in A\; \exists! y\in B\; (x, y)\in f^*$$
+<a name="cographs-00013"></a>$$f(x) = \pi_2((\{x\}\times B) \cap f^*)$$
+<a name="cographs-00014"></a>$$f(U) = \{y \mid y = f(x) \wedge x\in U \} = \pi_2((U\times B)\cap f^*)$$
+<a name="cographs-00015"></a><p>where \(x\in A\) and \(U\subseteq A\). Similarly, for cographs:</p>
+<a name="cographs-00016"></a>$$\forall x\in A\; \exists! y\in B\; [x] = [y]$$
+<a name="cographs-00017"></a>$$f(x) = [x] \cap B$$
+<a name="cographs-00018"></a>$$f(U) = (\bigcup [U])\cap B$$
+<a name="cographs-00019"></a><p>where \([x]\) is the equivalance set of \(x\) w.r.t. \(\pi_f\) and \([U] = \{[x] \mid x \in U\}\). For inverse images:</p>
+<a name="cographs-00020"></a>$$f^{-1}(y) = \pi_1((A \times \{y\}) \cap f^*) = [y] \cap A$$
+<a name="cographs-00021"></a>$$f^{-1}(S) = \pi_1((A \times S) \cap f^*) = (\bigcup [S])\cap A$$
+<a name="cographs-00022"></a><p>where \(y\in B\) and \(S\subseteq B\).</p>
+<a name="cographs-00023"></a><p>A graph can be expressed as</p>
+<a name="cographs-00024"></a>$$f^* = \bigcup_{x \in A}(x, f(x))$$
+<a name="cographs-00025"></a><p>To write out a similar representation of a cograph, we have to recall some elementary facts about <a href="https://en.wikipedia.org/wiki/Equivalence_relation">equivalence relations</a>.</p>
+<a name="cographs-00026"></a><p>Given a set \(A\), let \(Eq(A) \subseteq Rel(A) = P(A \times A)\) be the set of equivalence relations on \(A\). For a relation \(\pi \subseteq A \times A\), we have</p>
+<a name="cographs-00027"></a>$$\pi \in Eq(A) \;\; \equiv \;\; \pi^0 = \Delta \subseteq \pi \; \wedge \; \pi^n = \pi, n \in \mathbb{Z}, n \neq 0.$$
+<a name="cographs-00028"></a><p>To each \(\pi\) corresponds a surjection \(A \twoheadrightarrow A/\pi\). Assuming axiom of choice (in the form &quot;<a href="https://math.stackexchange.com/questions/1206013/every-epimorphism-in-sets-is-split-why-is-it-equivalent-to-axiom-of-choice">all epics split</a>&quot;), an endomorphism \(A \twoheadrightarrow A/\pi \rightarrowtail A\) can be assigned (non-uniquely) to \(\pi\). It is easy to check, that this gives \(Eq(A) = End(A) / Aut(A)\), where \(End(A)\) and \(Aut(A)\) are the monoid and the group of set endomorphisms and automorphisms respectively, with composition as the operation (\(Aut(A)\) is not, in general, normal in \(End(A)\), so \(Eq(A)\) does not inherit any useful operation from this quotient set representation.). In addition to the monoid structure (w.r.t. composition) that \(Eq(A)\) inherits from \(Rel(A)\), it is also a <a href="https://en.wikipedia.org/wiki/Lattice_(order)">lattice</a> with infimum and supremum given by</p>
+<a name="cographs-00029"></a>$$\pi \wedge \rho = \pi \cap \rho$$
+<a name="cographs-00030"></a>$$\pi \vee \rho = \mathtt{tr}(\pi \cup \rho) = \bigcup_{n \in \mathbb{N}}(\pi \cup \rho)^n$$
+<a name="cographs-00031"></a><p>For a subset \(X\subseteq A\) define an equivalence relation \(e(X) = \Delta_A \cup (X\times X)\), so that</p>
+<a name="cographs-00032"></a>$$x\overset{e(X)}{\sim} y \equiv x = y \vee \{x, y\} \subseteq X$$
+<a name="cographs-00033"></a><p>(Intuitively, \(e(X)\) collapses \(X\) to one point.) It is easy to check that</p>
+<a name="cographs-00034"></a>$$f_* = \bigvee_{x \in A}e(\{x, f(x)\})$$
+<a name="cographs-00035"></a><p>which is the desired dual of the graph representation above.</p><footer><a href="catalan.html#catalan">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="commutativity.html#commutativity">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="3-iamb.html#3-iamb">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="golang.html#golang">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

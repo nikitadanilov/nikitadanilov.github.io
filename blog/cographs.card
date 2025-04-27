@@ -1,0 +1,137 @@
+// name Cographs, cocounts and coconuts.
+// id cographs
+// +# blog cographs
+// +# timeline 2018/03/09
+// +tags math
+
+>_Abstract_: Dual of the familiar construction of the graph of a function is considered. The symmetry between graphs and cographs can be extended to a suprising degree.
+
+Given a function \(f : A \rightarrow B\), the _graph of f_ is defined as
+
+; math
+f^* = \{(x, f(x)) \mid x \in A\}.
+
+In fact, within ZFC framework, functions are _defined_ as graphs. A graph is a
+subset of the Cartesian product \(A \times B\). One might want to associate to
+\(f\) a dual _cograph_ object: a certain quotient set of the disjoint sum \(A
+\sqcup B\), which would uniquely identify the function. To understand the
+structure of the cograph, define the graph of a morphism \(f : A \rightarrow B\)
+in a category with suitable products as a fibred product: \(\require{AMScd}\)
+/ += . "graph of f" -> https://en.wikipedia.org/wiki/Graph_of_a_function
+/ += . "ZFC" -> https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory
+/ += . "category" -> https://en.wikipedia.org/wiki/Category_(mathematics)
+
+; math
+\begin{CD}
+f^* @>\pi_2>> B\\
+@V \pi_1 V V  @VV 1_B V\\
+A @>>f> B
+\end{CD}
+
+In the category of sets this gives the standard definition. The cograph can be
+defined by a dual construction as a push-out:
+
+; math
+\begin{CD}
+A @>1_A>> A\\
+@V f V V  @VV j_1 V\\
+B @>>j_2> f_*
+\end{CD}
+
+Expanding this in the category of sets gives the following definition:
+
+; math
+f_* = (A \sqcup B) / \pi_f,
+
+where \(\pi_f\) is the reflexive transitive closure of a relation \(\theta_f\)
+given by (assuming in the following, without loss of generality, that \(A\) and
+\(B\) are disjoint)
+
+; math
+x\overset{\theta_f}{\sim} y \equiv y = f(x)
+
+That is, \(A\) is partitioned by \(\pi_f\) into subsets which are inverse images
+of elements of \(B\) and to each such subset the element of \(B\) which is its
+image is glued. This is somewhat similar to the mapping cylinder construction in
+topology. Some similarities between graphs and cographs are immediately
+obvious. For graphs:
+/ += . "mapping cylinder" -> https://en.wikipedia.org/wiki/Mapping_cylinder
+
+; math
+\forall x\in A\; \exists! y\in B\; (x, y)\in f^*
+
+; math
+f(x) = \pi_2((\{x\}\times B) \cap f^*)
+
+; math
+f(U) = \{y \mid y = f(x) \wedge x\in U \} = \pi_2((U\times B)\cap f^*)
+
+where \(x\in A\) and \(U\subseteq A\). Similarly, for cographs:
+
+; math
+\forall x\in A\; \exists! y\in B\; [x] = [y]
+
+; math
+f(x) = [x] \cap B
+
+; math
+f(U) = (\bigcup [U])\cap B
+
+where \([x]\) is the equivalance set of \(x\) w.r.t. \(\pi_f\) and \([U] = \{[x] \mid x \in U\}\). For inverse images:
+
+; math
+f^{-1}(y) = \pi_1((A \times \{y\}) \cap f^*) = [y] \cap A
+
+; math
+f^{-1}(S) = \pi_1((A \times S) \cap f^*) = (\bigcup [S])\cap A
+
+where \(y\in B\) and \(S\subseteq B\).
+
+A graph can be expressed as
+
+; math
+f^* = \bigcup_{x \in A}(x, f(x))
+
+To write out a similar representation of a cograph, we have to recall some
+elementary facts about equivalence relations.
+/ += . "equivalence relations" -> https://en.wikipedia.org/wiki/Equivalence_relation
+
+Given a set \(A\), let \(Eq(A) \subseteq Rel(A) = P(A \times A)\) be the set of
+equivalence relations on \(A\). For a relation \(\pi \subseteq A \times A\), we
+have
+
+; math
+\pi \in Eq(A) \;\; \equiv \;\; \pi^0 = \Delta \subseteq \pi \; \wedge \; \pi^n = \pi, n \in \mathbb{Z}, n \neq 0.
+
+To each \(\pi\) corresponds a surjection \(A \twoheadrightarrow
+A/\pi\). Assuming axiom of choice (in the form "all epics split"), an
+endomorphism \(A \twoheadrightarrow A/\pi \rightarrowtail A\) can be assigned
+(non-uniquely) to \(\pi\). It is easy to check, that this gives \(Eq(A) = End(A) / Aut(A)\),
+where \(End(A)\) and \(Aut(A)\) are the monoid and the group of set
+endomorphisms and automorphisms respectively, with composition as the operation
+(\(Aut(A)\) is not, in general, normal in \(End(A)\), so \(Eq(A)\) does not
+inherit any useful operation from this quotient set representation.). In
+addition to the monoid structure (w.r.t. composition) that \(Eq(A)\) inherits
+from \(Rel(A)\), it is also a lattice with infimum and supremum given by
+/ += . "all epics split" -> https://math.stackexchange.com/questions/1206013/every-epimorphism-in-sets-is-split-why-is-it-equivalent-to-axiom-of-choice
+/ += . "lattice" -> https://en.wikipedia.org/wiki/Lattice_(order)
+
+; math
+\pi \wedge \rho = \pi \cap \rho
+
+; math
+\pi \vee \rho = \mathtt{tr}(\pi \cup \rho) = \bigcup_{n \in \mathbb{N}}(\pi \cup \rho)^n
+
+For a subset \(X\subseteq A\) define an equivalence relation \(e(X) = \Delta_A
+\cup (X\times X)\), so that
+
+; math
+x\overset{e(X)}{\sim} y \equiv x = y \vee \{x, y\} \subseteq X
+
+(Intuitively, \(e(X)\) collapses \(X\) to one point.) It is easy to check that
+
+; math
+f_* = \bigvee_{x \in A}e(\{x, f(x)\})
+
+which is the desired dual of the graph representation above.
+
