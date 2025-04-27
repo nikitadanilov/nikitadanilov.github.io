@@ -6,8 +6,8 @@
 // +tags kernel
 
 Mach VM had (or still has if Mac OS X counts) an interesting detail in its VM
-scanner implementation (`osfmk/vm/vm_page.h`, PS: [2025/04/26] The comment is no
-longer there.):
+scanner implementation (`osfmk/vm/vm_page.h`):
+/ +* "still has" [2025/04/26] The comment is no longer there.
 
 ; code
 /* 
