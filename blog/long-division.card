@@ -671,7 +671,7 @@ random barrage of bizarre formal spasms in haphazard directions. It is
 practically impossible to construct such a sequence of assertions in a
 top-to-bottom fashion, unless one spends an unhealthy amount of time interacting
 with Hoare triples in dark alleys.
-/ +* "Hoare triples in dark alleys" It takes a specific English dialect to give justise to this sentence.
+/ +* "Hoare triples in dark alleys" It takes a specific English dialect to do justice to this sentence.
   
 And this is why nobody is doing it this way (among humans that is, automated
 provers are only too happy to try insane numbers of possible dead-ends). Early
