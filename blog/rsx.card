@@ -1,0 +1,183 @@
+// name RSX
+// id rsx
+// +# blog rsx
+// +# timeline 2005/03/24
+// +tags programming
+// +tags kernel
+
+
+[expanded. 2004.03.25]
+
+Lately, I looked through sources of RSX _executive_ at bitsavers.org. RSX (which
+stands for Realtime System eXecutive or Resource Sharing eXecitive)
+is a collective name for the series of operating systems `DEC` developed for its
+`PDP` processors. Initial version was RSX-15 developed for PDP-15 processor (a
+member of 18b family of DEC processors---poorer and ultimately abandoned cousins
+of another branch that got us PDP-11) by Sam Reese, Dan Brevik, Hank Krejci and
+Bernard LaCroute. See: a bit of history, original design, official DEC reference
+manual. Later on, RSX was ported to PDP-11 (yes, version numbers can very well
+go down), resulting in succession of RSX-11A, RSX-11B, RSX-11C, and RSX-11D, the
+latter being full-blown operating system, multi-user and multi-tasking. You
+think it's quite an achievement for a platform with 32K bytes of primary
+storage? Obviously David Cutler wasn't impressed, as he re-wrote it from scratch
+to consume less resources giving birth to RSX-11M (and later to VAX/VMS, and
+Windows NT). Unfortunately, no RSX-11 kernel sources seem available (neither
+A-D, nor M and beyond versions), except for little witty pieces here and there
+(bitsavers, however sports materials from DEC's classes on RSX-11
+internals). XVM/RSX-15 sources are available at bitsavers:
+/ += . "bitsavers.org" -> http://www.bitsavers.org
+/ += . "Dan Brevik" -> http://www.demillar.com/RSX/
+/ += . "a bit of history" -> http://groups-beta.google.com/group/comp.os.vms/msg/51870e4fc2d88da5?output=gplain
+/ += . "original design" -> http://www.demillar.com/RSX/RSXdocument.pdf
+/ += . "reference manual" -> http://www.bitsavers.org/pdf/dec/pdp15/DEC-15-GRQA-D_RSX15_1971.pdf
+/ += . " here" -> http://article.gmane.org/gmane.os.netbsd.ports.vax/1479
+/ += . "there" -> http://www.omlettesoft.com/listquotes.php3?index=394
+/ += . "materials" -> http://www.bitsavers.org/pdf/dec/pdp11/rsx11/OS_internalsCourse_1983/
+
+>Executive proper: P1 and P2, and
+/ += . "P1" -> http://www.bitsavers.org/bits/DEC/pdp15/dectape/XVM_RSX/_textfiles/DEC-XV-IXRAA-A-UA4_02-28-77/RSX.P1_160.txt
+/ += . "P2" -> http://www.bitsavers.org/bits/DEC/pdp15/dectape/XVM_RSX/_textfiles/DEC-XV-IXRAA-A-UC1_02-28-77/RSX.P2_161.txt
+
+> MCR (Monitor Console Routine)
+/ += . "MCR" -> http://www.bitsavers.org/bits/DEC/pdp15/dectape/XVM_RSX/_textfiles/DEC-XV-IXRAA-A-UA5_02-28-77/
+
+Why would one waste time looking through the obscure non-portable kernel that
+ran on a hardware decommissioned quarter of century ago? A lot of reasons:
+
+>It is radically different from UNIX, which is, basically, the only publicly
+ available kernel source base to-day.
+
+>It was written at the times when computing was still young and engineers didn't
+ take a lot of things for granted, so one can see how and why they come to their
+ designs.
+    
+>It's rather small by nowadays standards and easy to understand.
+
+>It has surprisingly good comments.
+
+>It was one of the first and probably (for quite a long time) largest
+ open-source projects: hundreds of megabytes of software for RSX were available
+ in the source form (DECUS tapes)
+/ += . "DECUS tapes" -> http://www.trailing-edge.com/~shoppa/freewareFAQ.html
+
+>I agree with the sentiments R. Pike, _esq._ expressed in Systems Software
+ Research is Irrelevant article (also see Rik van Riel's note): modern operating
+ system research revolves around (or, rather, inside of) a cluster of well-known
+ old ideas. By looking at the roots of operating system development, one sees
+ that these ideas are but _choices_.
+/ += . "Systems Software Research is Irrelevant" -> http://www.cs.bell-labs.com/who/rob/utah2000.pdf
+/ += . "note" -> http://surriel.com/research_wanted/
+
+>Nostalgia, of course. At the end of 80s I worked on some PDP clones:
+ Электроника-100/25, СМ-4.
+/ += . "clones" -> http://www.village.org/pdp-11/faq
+
+At the center of RSX-15 is its executive, also known as monitor or kernel. This
+is small program written in PDP-15 assembly language, that maintains following
+abstractions:
+
+>memory partitioning
+
+>>rudimentary memory management scheme. Memory is partitioned during system
+  generation into _partitions_ and _common blocks_.
+
+>task and scheduling.
+
+>>Task is a machine code that can be executed under control of executive. Task
+  is _installed_ when it is known to the executive (specifically, registered in
+  STL---global System Task List). Tasks are created by _task builder_---special
+  task that builds task by linking relocatable code with libraries and storing
+  task on disk in the same format it will be stored in the primary storage
+  (i.e., task loading is just copying it from disk to the core, which is
+  important for _real-time_ operating system). Some tasks are resident, which
+  means they are always in core. Installed task may be requested for execution
+  (placed into ATL---Active Task List), and get its share of processor cycles
+  subject to priority and memory constraints. Simple fixed priority scheme is
+  used. Memory is managed on partition granularity: each task has a partition
+  assigned to it during build, and will be loaded into core when said partition
+  is free. Partition can be used for one task only.
+
+>interrupt management
+
+>>executive itself handles clock interrupt only. All other interrupts are
+  handled by special IO Handler Tasks (IOHTs), any installed task may become
+  IOHT by _connecting_ to interrupt line.
+
+>device management.
+
+>>list of physical devices and mapping between physical and logical
+  units (LUNs). Per-device prioritized IO queues. Asynchronous IO as a default
+  mechanism. LUNs are global.
+
+>interface to space management for disks
+
+>>bitmap of free blocks. Implemented by IO handler task, not executive.
+
+>interface to simple flat file system.
+
+>>Implemented by IO handler task.
+
+*[...To be continued...]*
+
+Here are some interesting features:
+
+>usage of API (Automatic Priority Interrupts) to implement concurrency control.
+
+>In RSX-11M this was replaced with FORK processing: interrupts never directly
+ access kernel tables, hence, no synchronization is required on the
+ uniprocessor. Similar to soft interrupts.
+
+>separation of STL (system task list) and ATL (active task list)---a form of two
+   level scheduling: long level scheduling decisions are made by installing task
+   into STL, and assigning resources (devices and core partitions) to it. Short
+   term scheduling is done by scanning ATL which is sorted by task priority.
+
+>interrupt is viewed (and used) more like asynchronous goto, rather than
+   asynchronous procedure call. For example, there is a procedure that scans ATL
+   (active task list, sorted by task priority). Interrupt may add task to the
+   ATL, and so scan has to be restarted if interrupt happens during it. To
+   achieve this, interrupt handlers do a jump to the address stored in L6TV
+   ("Level Six Transfer Vector"). When normal task runs, L6TV points to the
+   routine that saves registers in the task's "core partition". When ATL scan is
+   started, L6TV is modified to point to the ATL scan procedure itself. As a
+   result, if interrupt happens, scan will be restarted automatically. Note,
+   that interrupt handlers do _not_ save registers in the stack (they do not
+   create stack frame).
+
+>"pseudo partitions" that overlay IO memory used to control devices from
+   non-privileged tasks.
+
+>RSX is a _radical_ micro-kernel: the only thing executive handles is processor
+   scheduling. Everything else (including processing of interrupts other than
+   clock) is handled by tasks. One consequence of this is that executive
+   interface is fundamentally asynchronous: most calls take _event variable_ as
+   an argument, and calling task may wait for call completion by doing
+   `WAITFOR eventvar` This is impossible to do in UNIX where system calls are served on
+   the kernel stack permanently attached to the process. In UNIX, kernel is a
+   _library_ executing in protected mode, while RSX is a collection of
+   autonomous tasks each running with its own stack (this architecture, of
+   course, requires very fast context switches).
+
+>file system as special device driver layered on top of driver for underlying
+   stable storage device: _file oriented device_. Note, that this also unifies
+   the notion of file and device, but... other way around.
+
+>`SEEK` call is used to open particular file on a devcie. After that LUN is
+   effectively _narrowed_ (in EMACS sense) to mean opened file.
+
+>all executables are known to the executive (listed in STL).
+
+>system image can be stored on the permanent storage (by `SAVE`) and booted from
+ (warm start), like in Smalltalk or LISP system.
+   
+>instead of having separate run-queues and wait-queues, tasks are kept in single
+ ATL. As the only synchronization mechanism available is event variable,
+ "scheduler" simply checks whether waiting tasks can be run while scanning
+ ATL.
+
+>tasks are so light-weight that clock queue (_callouts_ in UNIX terms) is a list
+ of tasks rather than functions.
+
+>each task provides its own procedure to save its context on preempt
+
+>no security of any sort. Give them enough rope.
