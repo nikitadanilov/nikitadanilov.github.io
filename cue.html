@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Cue a key</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="cue"></a><div class="column"><header>Cue a key</header>
+<a name="cue-00000"></a><p>There is a typical problem with <a href="http://en.wikipedia.org/wiki/Emacs">Emacs</a> experienced by people frequently switching between different keyboard mappings, for example, to work with non ASCII languages: fundamental Emacs keyboard shortcuts (and one has to invoke them <i>a lot</i> to use Emacs efficiently) all use ASCII keys. For example, when I want to save my work, while entering some Russian text, I have to do something like <code class="inline">Alt-Space</code> (switch to the US keyboard layout) <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Save-Commands.html#index-C_002dx-s-845"><code class="inline">Control-x-s</code></a> (a Emacs shortcut to save buffers) <code class="inline">Alt-Space</code> (shift back to the Cyrillic keyboard layout). Switching out and back to a keyboard layout only to tap a short key sequence is really annoying.</p>
+<a name="cue-00001"></a><p>Two solutions are usually proposed:</p>
+<a name="cue-00002"></a><p style="margin-left: 3em;">Duplicate standard key sequences in other keyboard layouts. For example,</p>
+<a name="cue-00003"></a><pre><code style="margin-left: 3em;">(global-set-key [(control ?ч ?ы)] &#x27;save-some-buffers)</code></pre>
+<a name="cue-00004"></a><p style="margin-left: 3em;">expression in <code class="inline">.emacs</code> binds <code class="inline">Control-ч-ы</code> to the same command as <code class="inline">Control-x-s</code> is usually bound. This eliminates the need to switch layout, because <code class="inline">ч</code>-`x` (and <code class="inline">ы</code>-`s`) symbols are located on the same key (in <a href="http://en.wikipedia.org/wiki/QWERTY">QWERTY</a> and <a href="http://en.wikipedia.org/wiki/JCUKEN">JCUKEN</a> layouts respectively).</p>
+<a name="cue-00005"></a><p style="margin-left: 3em;">Another solution employs the fact that Emacs is <a href="https://www.google.com/search?q=Emacs+is+a+great+operating+system.+If+only+it+had+a+decent+text+editor">a complete operating system</a>  and, therefore, has its own keyboard layout switching mechanism (bound to  <code class="inline">Control-\</code> by default). When this mechanism is used, Emacs re-interprets  normals keys according to its internal layout, so that typing <code class="inline">s</code> inserts <code class="inline">ы</code>  when in internal Russian mode, while all command sequences continue to work  independently of layout. The mere idea of having <i>two</i> independent layout  switching mechanisms and two associated keyboard state indicators is clearly  ugly beyond words (except for people who use Emacs as their <code class="inline">/sbin/init</code>).</p>
+<a name="cue-00006"></a><p>Fortunately, there is another way:</p>
+<a name="cue-00007"></a><pre><code>; Map Modifier-CyrillicLetter to the underlying Modifier-LatinLetter, so that
+; control sequences can be used when keyboard mapping is changed outside of
+; Emacs.
+;
+; For this to work correctly, .emacs must be encoded in the default coding
+; system.
+;
+(mapcar* 
+ (lambda (r e) ; R and E are matching Russian and English keysyms
+   ; iterate over modifiers
+   (mapc (lambda (mod)
+    (define-key input-decode-map 
+      (vector (list mod r)) (vector (list mod e))))
+  &#x27;(control meta super hyper))
+   ; finally, if Russian key maps nowhere, remap it to the English key without
+   ; any modifiers
+   (define-key local-function-key-map (vector r) (vector e)))
+   &quot;йцукенгшщзхъфывапролджэячсмитьбю&quot;
+   &quot;qwertyuiop[]asdfghjkl;&#x27;zxcvbnm,.&quot;)</code></pre>
+<a name="cue-00008"></a><p>(Inspired by a cryptic remark about &quot;Translation Keymaps&quot; in <a href="http://vorotylo.livejournal.com/">vvv</a>&#x27;s <a href="https://github.com/vvv/dotfiles/blob/master/.emacs">.emacs</a>.)</p><footer><a href="commutativity.html#commutativity">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="donne.html#donne">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="riemann.html#riemann">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

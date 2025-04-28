@@ -1,0 +1,67 @@
+// name Cue a key
+// id cue
+// +# blog cue
+// +# timeline 2011/12/24
+// +tags programming
+
+There is a typical problem with Emacs experienced by people frequently switching
+between different keyboard mappings, for example, to work with non ASCII
+languages: fundamental Emacs keyboard shortcuts (and one has to invoke them _a
+lot_ to use Emacs efficiently) all use ASCII keys. For example, when I want to
+save my work, while entering some Russian text, I have to do something like
+`Alt-Space` (switch to the US keyboard layout) `Control-x-s` (a Emacs shortcut
+to save buffers) `Alt-Space` (shift back to the Cyrillic keyboard
+layout). Switching out and back to a keyboard layout only to tap a short key
+sequence is really annoying.
+/ += . "Emacs(?= experienced)" -> http://en.wikipedia.org/wiki/Emacs
+/ += . "Control-x-s" -> http://www.gnu.org/software/emacs/manual/html_node/emacs/Save-Commands.html#index-C_002dx-s-845
+
+Two solutions are usually proposed:
+
+>Duplicate standard key sequences in other keyboard layouts. For example,
+
+; code
+>(global-set-key [(control ?ч ?ы)] 'save-some-buffers)
+
+>expression in `.emacs` binds `Control-ч-ы` to the same command as `Control-x-s`
+is usually bound. This eliminates the need to switch layout, because `ч`-`x`
+(and `ы`-`s`) symbols are located on the same key (in QWERTY and JCUKEN layouts respectively).
+/ += . "QWERTY" -> http://en.wikipedia.org/wiki/QWERTY
+/ += . "JCUKEN" -> http://en.wikipedia.org/wiki/JCUKEN
+
+>Another solution employs the fact that Emacs is a complete operating system
+ and, therefore, has its own keyboard layout switching mechanism (bound to
+ `Control-\` by default). When this mechanism is used, Emacs re-interprets
+ normals keys according to its internal layout, so that typing `s` inserts `ы`
+ when in internal Russian mode, while all command sequences continue to work
+ independently of layout. The mere idea of having _two_ independent layout
+ switching mechanisms and two associated keyboard state indicators is clearly
+ ugly beyond words (except for people who use Emacs as their `/sbin/init`).
+/ += . "a complete operating system" -> https://www.google.com/search?q=Emacs+is+a+great+operating+system.+If+only+it+had+a+decent+text+editor
+
+Fortunately, there is another way:
+
+; code
+|; Map Modifier-CyrillicLetter to the underlying Modifier-LatinLetter, so that
+|; control sequences can be used when keyboard mapping is changed outside of
+|; Emacs.
+|;
+|; For this to work correctly, .emacs must be encoded in the default coding
+|; system.
+|;
+|(mapcar* 
+| (lambda (r e) ; R and E are matching Russian and English keysyms
+|   ; iterate over modifiers
+|   (mapc (lambda (mod)
+|    (define-key input-decode-map 
+|      (vector (list mod r)) (vector (list mod e))))
+|  '(control meta super hyper))
+|   ; finally, if Russian key maps nowhere, remap it to the English key without
+|   ; any modifiers
+|   (define-key local-function-key-map (vector r) (vector e)))
+|   "йцукенгшщзхъфывапролджэячсмитьбю"
+|   "qwertyuiop[]asdfghjkl;'zxcvbnm,.")
+
+(Inspired by a cryptic remark about "Translation Keymaps" in vvv's .emacs.)
+/ += . "vvv" -> http://vorotylo.livejournal.com/
+/ += . ".emacs" -> https://github.com/vvv/dotfiles/blob/master/.emacs
