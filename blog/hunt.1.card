@@ -175,6 +175,7 @@ irrationals. The function \(d : x \mapsto x \cdot D(x)\) is identity (and hence
 linear) when restricted to rationals and is constant zero (again linear) when
 restricted to irrationals. Looks promising? Unfortunately,
 / += . "Dirichlet function" -> http://en.wikipedia.org/wiki/Nowhere_continuous_function
+/ id attempt
 
 ; math
 0 = d(1 + \pi) \neq d(1) + d(\pi) = 1 + 0 = 1

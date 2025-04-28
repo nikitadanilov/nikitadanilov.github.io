@@ -32,7 +32,7 @@ non-zero (so that the sum is defined) and (ii) that such representation is
 unique. Then one can select arbitrary values on elements of \(B\) and take
 moster's value on \(q_1\cdot r_1 + q_2\cdot r_2 + \ldots\) to be \(q_1\cdot
 f(r_1) + q_2\cdot f(r_2) + \ldots\), which is well-defined thanks to (ii).
-/ += . "our attempt" -> http://www.cofault.com/2010/01/hunt-for-addictive-monster.html#construction-0
+/ += . "our attempt" -> !hunt.1-attempt "^."
 
 Looks familiar? It should be: the definition of \(B\) is exactly the definition
 of a basis of a vector space. Real numbers can be added to each other and
