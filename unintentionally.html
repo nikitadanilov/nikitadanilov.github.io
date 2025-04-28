@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Unintentionally yours.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="unintentionally"></a>
+<div class="column"><header>Unintentionally yours.</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="riemann.html#riemann-00002"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
+<a name="unintentionally-start"></a><h2><span class="linktarget" data-uid="0">E</span>xtension.</h2>
+<a name="unintentionally-00001"></a><p>This post is about <a href="http://en.wikipedia.org/wiki/Set_theory">set theory</a>, which is a framework to reason about collections, elements and membership.</p>
+<a name="unintentionally-00002"></a><p>We start with a informal and naïve outline, which is (very loosely) based on a <a href="http://en.wikipedia.org/wiki/Von_Neumann-Bernays-G%C3%B6del_set_theory">Godel-Bernays</a> version of set theory. This theory is about sets (collections) which contain elements, which can in turn be sets. When a set \(X\) contains an element \(t\), it is written \(t\in X\).</p>
+<a name="unintentionally-00003"></a><p>First, set equality has to be defined:</p>
+<a name="unintentionally-00004"></a><p style="margin-left: 3em;">E0 <a href="http://en.wikipedia.org/wiki/Axiom_of_extensionality"><i>Axiom of extensionality</i></a></p>
+<a name="unintentionally-00005"></a>$$X = Y \equiv (t \in X \equiv t \in Y)$$
+<a name="unintentionally-00006"></a><p>(Here \(\equiv\) is a logical equivalence, pronounced &quot;<a href="http://en.wikipedia.org/wiki/Iff">if and only if</a>&quot;.) This axiom means that sets are equal exactly when they have the same elements. (In this and following formulae, free variables are implicitly <a href="http://en.wikipedia.org/wiki/Universal_quantification">universally quantified</a>.)</p>
+<a name="unintentionally-00007"></a><p>Subsets are defined by \(X \subseteq Y \equiv (t\in X \Rightarrow t\in Y)\), that is, X is a subset of Y when every element of X is also an element of Y. It&#x27;s easy to check that \(X = Y \equiv (X\subseteq Y \wedge Y\subseteq X)\), where \(\wedge\) means &quot;and&quot;.</p>
+<a name="unintentionally-00008"></a><p>Next, a way to build new sets is needed:</p>
+<a name="unintentionally-00009"></a><p style="margin-left: 3em;">E1 <a href="http://en.wikipedia.org/wiki/Set-builder_notation"><i>Axiom of (extensional) comprehension</i></a></p>
+<a name="unintentionally-00010"></a>$$t \in \{u \mid P(u)\} \equiv P(t)$$
+<a name="unintentionally-00011"></a><p>This axiom introduces a &quot;set-builder notation&quot; \(\{u \mid P(u) \}\) and states that \(\{u \mid P(u) \}\) is exactly the set of all \(t\) such that \(P(t)\) holds.</p>
+<a name="unintentionally-00012"></a><p>Now, there is already enough machinery for two famous collections to be immediately constructed: <a href="http://en.wikipedia.org/wiki/Empty_set"><i>empty set</i></a>, \(\varnothing = \{t \mid false \}\), which contains no elements, and <a href="http://en.wikipedia.org/wiki/Universe_(mathematics)">the collection of all sets</a>: \(U = \{t \mid true \}\), which contains all possible elements.</p>
+<a name="unintentionally-00013"></a><p>With these axioms, conventional set operations can be defined:</p>
+<a name="unintentionally-00014"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Singleton_(mathematics)">singleton</a>: \(\{t\} = \{u\mid u = t\}\), for each \(t\) a <a href="http://en.wikipedia.org/wiki/Singleton_(mathematics)">singleton</a> set \(\{t\}\) can be constructed that contains \(t\) as its only element. Note that \(t\in\{t\}\)</p>
+<a name="unintentionally-00015"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Union_(set_theory)">union</a>: \(X\cup Y = \{t\mid t \in X \vee t \in Y\}\) (\(\vee\) means &quot;or&quot;)</p>
+<a name="unintentionally-00016"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Intersection_(set_theory)">intersection</a>: \(X\cap Y = \{t\mid t\in X \wedge t\in Y\}\)</p>
+<a name="unintentionally-00017"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Complement_(set_theory)">complement</a>: \(\complement X = \{t \mid t \notin X\}\)</p>
+<a name="unintentionally-00018"></a><p style="margin-left: 3em;">(unordered) <a href="http://en.wikipedia.org/wiki/Unordered_pair">pair</a>: \(\{t,u\} = \{t\}\cup\{u\}\)</p>
+<a name="unintentionally-00019"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Ordered_pair">ordered pair</a>: \((t,u) = \{t, \{t, u\}\}\)</p>
+<a name="unintentionally-00020"></a><p style="margin-left: 3em;"><a href="http://en.wikipedia.org/wiki/Power_set">power set</a>: \(\mathfrak{P}(X) = \{t \mid t \subseteq X\}\)</p>
+<a name="unintentionally-00021"></a><p>From here, one can build hierarchical sets, representing all traditional mathematical structures, starting with natural numbers:</p>
+<a name="unintentionally-00022"></a>$$0 = \varnothing,\quad 1 = \{0\},\quad 2 = \{0, 1\},\quad \ldots,\quad  n + 1 = \{0, \ldots, n\}, \quad \ldots$$
+<a name="unintentionally-00023"></a><p>then integers, rationals, reals, <i>&amp;c.</i>, adding more axioms (of <a href="http://en.wikipedia.org/wiki/Axiom_of_infinity">infinity</a>, of <a href="http://en.wikipedia.org/wiki/Axiom_of_regularity">foundation</a>, of <a href="http://en.wikipedia.org/wiki/Axiom_schema_of_replacement">replacement</a>, <i>&amp;c</i>.) along the way.</p>
+<a name="unintentionally-00024"></a><p>It was discovered quite early that this system is not entirely satisfactory. First defect is that it is impossible to have elements which are not sets themselves. For example, one would like to talk about a &quot;set of all inhabited planets in the Solar system&quot;. Elements of this set (planets) are not sets, they are called <a href="http://en.wikipedia.org/wiki/Urelement"><i>ur-elements</i></a>. Unfortunately, the axiom of extensionality makes all <a href="http://en.wikipedia.org/wiki/Urelement">ur-elements</a> equal to the empty set. Note, that this indicates that the axiom of extensionality doesn&#x27;t work well with sets that have very few (none) elements. This was never considered a problem, because all sets of interest to mathematics can be constructed without <a href="http://en.wikipedia.org/wiki/Urelement">ur-elements</a>.</p>
+<a name="unintentionally-00025"></a><p>Another, more serious drawback, arises in the area of very large sets: existence of a set \(\{t\mid t\notin t\}\) directly leads to a contradiction known as <a href="http://en.wikipedia.org/wiki/Russell's_paradox">Russel&#x27;s paradox</a>.</p>
+<a name="unintentionally-00026"></a><p>Among several possible methods to deal with this, Godel-Bernays version is to separate sets into two types: &quot;smaller&quot; collections which are continued to be called &quot;sets&quot; and &quot;proper classes&quot;, which are collections so large that they cannot be a member of any collection. Axiom of comprehension is carefully modified so that set-builder never produces a collection having some class as its element. In this setup Russel&#x27;s paradox becomes a theorem: \(\{t\mid t\notin t\}\) is a proper class.</p>
+<a name="unintentionally-00027"></a><h2>Intention.</h2>
+<a name="unintentionally-00028"></a><p>The axiom of extensionality states that sets are equal when they <i>contain</i> the same elements. What would happen, if set theory were based on a dual notion of <i>intentional equality</i> (which will be denoted by \(\sim\) to tell it from extensional one), where sets are equal when they are <i>contained</i> in the same collections?</p>
+<a name="unintentionally-00029"></a><p style="margin-left: 3em;">I0 <i>Axiom of intensionality</i>:</p>
+<a name="unintentionally-00030"></a>$$X \sim Y \equiv (X \in t \equiv Y\in t)$$
+<a name="unintentionally-00031"></a><p>This looks bizarre: for any &quot;normal&quot; set \(X\) a collection of all sets containing \(X\) as element is unmanageably huge. But as a matter of fact, intentional equality is much older than extensional, it is variously known as <i>Leibniz&#x27;s law</i>, <a href="http://en.wikipedia.org/wiki/Identity_of_indiscernibles">identity of indiscernibles</a> and, in less enlightened age, as <a href="http://en.wikipedia.org/wiki/Duck_typing">duck typing</a>.</p>
+<a name="unintentionally-00032"></a><p>There is a nice symmetry: while extensional equality myopically confuses small sets (ur-elements), intensional equality cannot tell very large collections (proper classes) from each other, because they are not members of anything and, therefore, intentionally equal.</p>
+<a name="unintentionally-00033"></a><p>The whole extensional theory buildup can be mirrored easily by moving things around \(\in\) sign:</p>
+<a name="unintentionally-00034"></a><p>Intensional subsets: \(X \unlhd Y \equiv (X\in t \Rightarrow Y\in t)\)</p>
+<a name="unintentionally-00035"></a><p style="margin-left: 3em;">I1 <i>Axiom of intensional comprehension (incomprehension)</i>:</p>
+<a name="unintentionally-00036"></a>$$[u \mid P(u)]\in t \equiv P(t)$$
+<a name="unintentionally-00037"></a><p>And associated operations:</p>
+<a name="unintentionally-00038"></a><p style="margin-left: 3em;">uniqum (or should it have been &quot;s-ex-gleton?): \([t] = [u\mid u \sim t]\), note that \([t]\in t\).</p>
+<a name="unintentionally-00039"></a><p style="margin-left: 3em;">intentional union: \(X\triangledown Y = [t\mid X \in t \vee Y \in t]\)</p>
+<a name="unintentionally-00040"></a><p style="margin-left: 3em;">intentional intersection: \(X\triangle Y = [t\mid X \in t \wedge Y \in t]\)</p>
+<a name="unintentionally-00041"></a><p style="margin-left: 3em;">intentional complement: \(\Game X = [t \mid X \notin t]\)</p>
+<a name="unintentionally-00042"></a><p style="margin-left: 3em;">intentional pair: \([t,u] = [t]\triangledown [u]\)</p>
+<a name="unintentionally-00043"></a><p style="margin-left: 3em;">intentional ordered pair: \(&lt;t,u&gt; = [t, [t, u]]\)</p>
+<a name="unintentionally-00044"></a><p style="margin-left: 3em;">intentional power set: \(\mathfrak{J}(X) = [t \mid X \unlhd t\}\)</p>
+<a name="unintentionally-00045"></a><p>What do all these things <i>mean</i>? In extensional world, a set is a container, where elements are stored. In intensional world, a set is a <i>property</i>, which other sets might or might not enjoy. If \(t\) has property \(P\), it is written as \(t\in P\). In the traditional notation, \(P\) is called a <i>predicate</i> and \(t\in P\) is written as \(P(t)\). The axiom of intentional equality claims that sets are equal when they have exactly the same properties (quite natural, right?). \(X\) is an intentional subset of \(Y\) when \(Y\) has all properties of \(X\) and perhaps some more (this looks like a nice way to express <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">LSP</a>). Intentional comprehension \([u \mid P(u)]\) is a set having exactly all properties \(t\) for which \(P(t)\) holds and no other properties. Intentional union of two sets is a set having properties of either and their intentional intersection is a set having properties of both, <i>&amp;c</i>. Uniqum \([P]\) is <i>the</i> set that has property \(P\) and no other properties.</p>
+<a name="unintentionally-00046"></a><p>Because intensional theory is a perfect dual of extensional nothing interesting is obtained by repeating extensional construction, for example, by building &quot;intensional natural numbers&quot; as</p>
+<a name="unintentionally-00047"></a>$$0&#x27; = U, 1&#x27; = [0&#x27;], 2&#x27; = [0&#x27;, 1&#x27;], \ldots (n + 1)&#x27; = [0&#x27;, \ldots, n&#x27;], \ldots$$
+<a name="unintentionally-00048"></a><p>What is more interesting, is how intensional and extensional twins meet. With some filial affection it seems:</p>
+<a name="unintentionally-00049"></a><p style="margin-left: 3em;">by uniqum property \([\varnothing] \in\varnothing\), which contradicts the definition of \(\varnothing\), also</p>
+<a name="unintentionally-00050"></a><p style="margin-left: 3em;">set \([t\mid false]\) is not a member of any set (perhaps it&#x27;s a proper class) and set \([t\mid true]\) is a member of every set, which is strange;</p>
+<a name="unintentionally-00051"></a><p style="margin-left: 3em;">a set of which a singleton can be formed has very shallow intentional structure. Indeed:</p>
+<a name="unintentionally-00052"></a>$$\begin{array}{r@{\;}l@{\quad}}
+                 &amp;    x \unlhd y \\
+        \equiv   &amp;    \text{ \{ definition of intensional subset \} } \\
+                 &amp;    x\in t \Rightarrow y\in t \\
+   \Rightarrow   &amp;    \text{ \{ substitute \(\{x\}\) for \(t\) \} } \\
+                 &amp;    x\in \{x\} \Rightarrow y\in \{x\} \\
+        \equiv   &amp;    \text{ \{ \(x\in \{x\}\) is true by the singleton property, modus ponens \} } \\
+                 &amp;    y\in \{x\} \\
+        \equiv   &amp;    \text{ \{ the singleton property, again \} } \\
+                 &amp;    x = y
+\end{array}$$<p class="margin-right"><span class="annotation" data-uid="0"> Like comprehension had to be limited to avoid paradoxes.</span>&nbsp;<br></p>
+<a name="unintentionally-00053"></a><p>To get rid of contradictions and to allow intensional and extensional sets to co-exist peacefully, domains on which singleton and uniqum operations are defined <span class="annotation" data-uid="0">must be narrowed</span>. To be continued.</p><footer><a href="treadmill.html#treadmill">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="vale.html#vale">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="cue.html#cue">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

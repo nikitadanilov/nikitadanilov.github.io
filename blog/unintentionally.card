@@ -1,0 +1,220 @@
+// name Unintentionally yours.
+// id unintentionally
+// +# blog unintentionally
+// +# timeline 2011/12/08
+// +tags math
+
+; head
+Extension.
+/ level 2
+/ id start
+
+This post is about set theory, which is a framework to reason about collections,
+elements and membership.
+/ += . "set theory" -> http://en.wikipedia.org/wiki/Set_theory
+
+We start with a informal and naïve outline, which is (very loosely) based on a
+Godel-Bernays version of set theory. This theory is about sets (collections)
+which contain elements, which can in turn be sets. When a set \(X\) contains an
+element \(t\), it is written \(t\in X\).
+/ += . "Godel-Bernays" -> http://en.wikipedia.org/wiki/Von_Neumann-Bernays-G%C3%B6del_set_theory
+
+First, set equality has to be defined:
+
+>E0 _Axiom of extensionality_
+/ += . "Axiom of extensionality" -> http://en.wikipedia.org/wiki/Axiom_of_extensionality
+
+; math
+>X = Y \equiv (t \in X \equiv t \in Y)
+
+(Here \(\equiv\) is a logical equivalence, pronounced "if and only if".) This
+axiom means that sets are equal exactly when they have the same elements. (In
+this and following formulae, free variables are implicitly universally
+quantified.)
+/ += . "if and only if" -> http://en.wikipedia.org/wiki/Iff
+/ += . "universally quantified" -> http://en.wikipedia.org/wiki/Universal_quantification
+
+Subsets are defined by \(X \subseteq Y \equiv (t\in X \Rightarrow t\in Y)\),
+that is, X is a subset of Y when every element of X is also an element of
+Y. It's easy to check that \(X = Y \equiv (X\subseteq Y \wedge Y\subseteq X)\),
+where \(\wedge\) means "and".
+
+Next, a way to build new sets is needed:
+
+>E1 _Axiom of (extensional) comprehension_
+/ += . "Axiom of \(extensional\) comprehension" -> http://en.wikipedia.org/wiki/Set-builder_notation
+
+; math
+>t \in \{u \mid P(u)\} \equiv P(t)
+
+This axiom introduces a "set-builder notation" \(\{u \mid P(u) \}\) and states
+that \(\{u \mid P(u) \}\) is exactly the set of all \(t\) such that \(P(t)\)
+holds.
+
+Now, there is already enough machinery for two famous collections to be
+immediately constructed: _empty set_, \(\varnothing = \{t \mid false \}\), which
+contains no elements, and the collection of all sets: \(U = \{t \mid true \}\),
+which contains all possible elements.
+/ += . "empty set" -> http://en.wikipedia.org/wiki/Empty_set
+/ += . "the collection of all sets" -> http://en.wikipedia.org/wiki/Universe_(mathematics)
+
+With these axioms, conventional set operations can be defined:
+
+>singleton: \(\{t\} = \{u\mid u = t\}\), for each \(t\) a singleton set \(\{t\}\) can be constructed that contains \(t\) as its only element. Note that \(t\in\{t\}\)
+/ += . "singleton" -> http://en.wikipedia.org/wiki/Singleton_(mathematics)
+
+>union: \(X\cup Y = \{t\mid t \in X \vee t \in Y\}\) (\(\vee\) means "or")
+/ += . "union" -> http://en.wikipedia.org/wiki/Union_(set_theory)
+
+>intersection: \(X\cap Y = \{t\mid t\in X \wedge t\in Y\}\)
+/ += . "intersection" -> http://en.wikipedia.org/wiki/Intersection_(set_theory)
+
+>complement: \(\complement X = \{t \mid t \notin X\}\)
+/ += . "complement(?=:)" -> http://en.wikipedia.org/wiki/Complement_(set_theory)
+
+>(unordered) pair: \(\{t,u\} = \{t\}\cup\{u\}\)
+/ += . "pair" -> http://en.wikipedia.org/wiki/Unordered_pair
+
+>ordered pair: \((t,u) = \{t, \{t, u\}\}\)
+/ += . "ordered pair" -> http://en.wikipedia.org/wiki/Ordered_pair
+
+>power set: \(\mathfrak{P}(X) = \{t \mid t \subseteq X\}\)
+/ += . "power set" -> http://en.wikipedia.org/wiki/Power_set
+
+From here, one can build hierarchical sets, representing all traditional
+mathematical structures, starting with natural numbers:
+
+; math
+0 = \varnothing,\quad 1 = \{0\},\quad 2 = \{0, 1\},\quad \ldots,\quad  n + 1 = \{0, \ldots, n\}, \quad \ldots
+
+then integers, rationals, reals, _&c._, adding more axioms (of infinity, of
+foundation, of replacement, _&c_.) along the way.
+/ += . "infinity" -> http://en.wikipedia.org/wiki/Axiom_of_infinity
+/ += . "foundation" -> http://en.wikipedia.org/wiki/Axiom_of_regularity
+/ += . "replacement" -> http://en.wikipedia.org/wiki/Axiom_schema_of_replacement
+
+It was discovered quite early that this system is not entirely
+satisfactory. First defect is that it is impossible to have elements which are
+not sets themselves. For example, one would like to talk about a "set of all
+inhabited planets in the Solar system". Elements of this set (planets) are not
+sets, they are called _ur-elements_. Unfortunately, the axiom of extensionality
+makes all ur-elements equal to the empty set. Note, that this indicates that the
+axiom of extensionality doesn't work well with sets that have very few (none)
+elements. This was never considered a problem, because all sets of interest to
+mathematics can be constructed without ur-elements.
+/ += . "ur-elements" -> http://en.wikipedia.org/wiki/Urelement
+
+Another, more serious drawback, arises in the area of very large sets: existence
+of a set \(\{t\mid t\notin t\}\) directly leads to a contradiction known as
+Russel's paradox.
+/ += . "Russel's paradox" -> http://en.wikipedia.org/wiki/Russell's_paradox
+
+Among several possible methods to deal with this, Godel-Bernays version is to
+separate sets into two types: "smaller" collections which are continued to be
+called "sets" and "proper classes", which are collections so large that they
+cannot be a member of any collection. Axiom of comprehension is carefully
+modified so that set-builder never produces a collection having some class as
+its element. In this setup Russel's paradox becomes a theorem: \(\{t\mid t\notin
+t\}\) is a proper class.
+
+; head
+Intention.
+/ level 2
+
+The axiom of extensionality states that sets are equal when they _contain_ the
+same elements. What would happen, if set theory were based on a dual notion of
+_intentional equality_ (which will be denoted by \(\sim\) to tell it from
+extensional one), where sets are equal when they are _contained_ in the same
+collections?
+
+>I0 _Axiom of intensionality_:
+
+; math
+>X \sim Y \equiv (X \in t \equiv Y\in t)
+
+This looks bizarre: for any "normal" set \(X\) a collection of all sets
+containing \(X\) as element is unmanageably huge. But as a matter of fact,
+intentional equality is much older than extensional, it is variously known as
+_Leibniz's law_, identity of indiscernibles and, in less enlightened age, as duck typing.
+/ += . "identity of indiscernibles" -> http://en.wikipedia.org/wiki/Identity_of_indiscernibles
+/ += . "duck typing" -> http://en.wikipedia.org/wiki/Duck_typing
+
+There is a nice symmetry: while extensional equality myopically confuses small
+sets (ur-elements), intensional equality cannot tell very large collections
+(proper classes) from each other, because they are not members of anything and,
+therefore, intentionally equal.
+
+The whole extensional theory buildup can be mirrored easily by moving things
+around \(\in\) sign:
+
+Intensional subsets: \(X \unlhd Y \equiv (X\in t \Rightarrow Y\in t)\)
+
+>I1 _Axiom of intensional comprehension (incomprehension)_:
+
+; math
+[u \mid P(u)]\in t \equiv P(t)
+
+And associated operations:
+
+>uniqum (or should it have been "s-ex-gleton?): \([t] = [u\mid u \sim t]\), note that \([t]\in t\).
+
+>intentional union: \(X\triangledown Y = [t\mid X \in t \vee Y \in t]\)
+
+>intentional intersection: \(X\triangle Y = [t\mid X \in t \wedge Y \in t]\)
+
+>intentional complement: \(\Game X = [t \mid X \notin t]\)
+
+>intentional pair: \([t,u] = [t]\triangledown [u]\)
+
+>intentional ordered pair: \(<t,u> = [t, [t, u]]\)
+
+>intentional power set: \(\mathfrak{J}(X) = [t \mid X \unlhd t\}\)
+
+What do all these things _mean_? In extensional world, a set is a container,
+where elements are stored. In intensional world, a set is a _property_, which
+other sets might or might not enjoy. If \(t\) has property \(P\), it is written
+as \(t\in P\). In the traditional notation, \(P\) is called a _predicate_ and
+\(t\in P\) is written as \(P(t)\). The axiom of intentional equality claims that
+sets are equal when they have exactly the same properties (quite natural,
+right?). \(X\) is an intentional subset of \(Y\) when \(Y\) has all properties
+of \(X\) and perhaps some more (this looks like a nice way to express
+LSP). Intentional comprehension \([u \mid P(u)]\) is a set having exactly all
+properties \(t\) for which \(P(t)\) holds and no other properties. Intentional
+union of two sets is a set having properties of either and their intentional
+intersection is a set having properties of both, _&c_. Uniqum \([P]\) is _the_
+set that has property \(P\) and no other properties.
+/ += . "LSP" -> http://en.wikipedia.org/wiki/Liskov_substitution_principle
+
+Because intensional theory is a perfect dual of extensional nothing interesting
+is obtained by repeating extensional construction, for example, by building
+"intensional natural numbers" as
+
+; math
+0' = U, 1' = [0'], 2' = [0', 1'], \ldots (n + 1)' = [0', \ldots, n'], \ldots
+
+What is more interesting, is how intensional and extensional twins meet. With
+some filial affection it seems:
+
+>by uniqum property \([\varnothing] \in\varnothing\), which contradicts the definition of \(\varnothing\), also
+
+>set \([t\mid false]\) is not a member of any set (perhaps it's a proper class) and set \([t\mid true]\) is a member of every set, which is strange;
+
+>a set of which a singleton can be formed has very shallow intentional structure. Indeed:
+
+; math
+\begin{array}{r@{\;}l@{\quad}}
+                 &    x \unlhd y \\
+        \equiv   &    \text{ \{ definition of intensional subset \} } \\
+                 &    x\in t \Rightarrow y\in t \\
+   \Rightarrow   &    \text{ \{ substitute \(\{x\}\) for \(t\) \} } \\
+                 &    x\in \{x\} \Rightarrow y\in \{x\} \\
+        \equiv   &    \text{ \{ \(x\in \{x\}\) is true by the singleton property, modus ponens \} } \\
+                 &    y\in \{x\} \\
+        \equiv   &    \text{ \{ the singleton property, again \} } \\
+                 &    x = y
+\end{array}
+
+To get rid of contradictions and to allow intensional and extensional sets to
+co-exist peacefully, domains on which singleton and uniqum operations are
+defined must be narrowed. To be continued.
+/ +* "must be narrowed" Like comprehension had to be limited to avoid paradoxes.

@@ -23,7 +23,7 @@ the recent posts) to define 'pr' as those elements of the infinite list `[2, 3,
 very inefficient, quadratic way to build the list of all primes.
 / += . "list comprehension" -> http://en.wikipedia.org/wiki/List_comprehension
 / += . "set comprehension" -> http://en.wikipedia.org/wiki/Set-builder_notation
-/ += . "one of the recent posts" -> !exercise-start "TODO"
+/ += . "one of the recent posts" -> !unintentionally-start "^."
 
 In addition, define a list of all twin primes:
 / += . "twin primes" -> http://en.wikipedia.org/wiki/Twin_prime
@@ -40,9 +40,9 @@ determine whether `x` belongs to it is by linear search, which might never
 terminate. In our case, `pr` is strictly ascending and hence the search can be
 limited to some finite prefix of the list (`(take n s)` returns first n elements
 of s). Perhaps there is a way to specify list properties that `elem` can rely
-on, I don't know, I opened the Haskell specification an only hour ago.  / +=
-. "iff" -> http://en.wikipedia.org/wiki/Iff / += . "the Haskell specification"
--> http://www.haskell.org/onlinereport/haskell2010/haskell.html#haskellpa1.html
+on, I don't know, I opened the Haskell specification an only hour ago.
+/ += . "iff" -> http://en.wikipedia.org/wiki/Iff
+/ += . "the Haskell specification" -> http://www.haskell.org/onlinereport/haskell2010/haskell.html#haskellpa1.html
 
 Let's do some "visualisation":
 
