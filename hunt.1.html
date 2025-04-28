@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>The Hunt for Addi(c)tive Monster</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="hunt.1"></a>\( \def\R{\mathbb{R}} \)
+\( \def\Q{\mathbb{Q}} \)
+\( \def\N{\mathbb{N}} \)
+\( \def\Add{\operatorname{Add}} \)
+<div class="column"><header>The Hunt for Addi(c)tive Monster</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="hunt.2.html#hunt.2-start"><span style="color: orange">0</span></a>]</span>&nbsp;</p><p class="margin-right"><span class="annotation" data-uid="1"> With thanks to archive.org for allowing me to recover lost LaTex math on this page.</span>&nbsp;<br></p>
+<a name="hunt.1-start"></a><p><span class="linktarget" data-uid="0">T</span>his is <span class="annotation" data-uid="1">another spurious post</span> about mathematics that happened instead of something more useful. Let&#x27;s talk about one of the most common mathematical objects: a <a href="http://en.wikipedia.org/wiki/Function_%28mathematics%29">function</a> that maps <a href="http://en.wikipedia.org/wiki/Real_number">real numbers</a> (\(\R\)) to <a href="http://en.wikipedia.org/wiki/Real_number">real numbers</a>. We shall call such a <a href="http://en.wikipedia.org/wiki/Function_%28mathematics%29">function</a> \(f : \R \rightarrow \R\) <i>additive</i> <a href="http://en.wikipedia.org/wiki/Iff">iff</a> for any real \(x\) and \(y\)</p>
+<a name="hunt.1-00001"></a>$$f(a + b) = f(a) + f(b)$$
+<a name="hunt.1-00002"></a><p>This is a natural and simple condition. Well-known examples of additive functions are provided by <i>linear</i> functions \(f : x \mapsto k \cdot x\), where \(k\) is called <i>a slope</i>.</p>
+<a name="hunt.1-00003"></a><p>Are there other, non-linear additive functions? And if so, how do they look like? A bit of thinking convinces one that a non-linear additive function is not trivial to find. In fact, as we shall show below, should such a function exist, it would exhibit extremely weird features. Hence, we shall call a non-linear additive function <i>a monster</i>.  In the following, some properties that a monster function has to possess are investigated, until a monster is cornered either out of existence or into an example. Out of misplaced spite we shall use \(\epsilon-\delta\) <a href="http://en.wikipedia.org/wiki/%28%CE%B5,_%CE%B4%29-definition_of_limit">technique</a> in some proofs.</p>
+<a name="hunt.1-00004"></a><p>First, some trivial remarks about the collection of all additive functions (which will be denoted \(\Add\)).</p>
+<a name="hunt.1-00005"></a><p>If \(f : \R \rightarrow \R\), \(g : \R \rightarrow \R\) are two additive functions and \(\alpha \in \R\) — an arbitrary real number, then \(f + g\), \(-f\) and \(\alpha \cdot f\) are additive. This means that additive functions form a <a href="http://en.wikipedia.org/wiki/Vector_space">vector space</a> over field \(\R\) with constant zero additive function as a <a href="http://en.wikipedia.org/wiki/Zero_vector">zero vector</a>. This vector space is a sub-space of a vector space of all functions from \(\R\) to \(\R\). Product of two additive functions is not in general additive (when it is?), but their composition is:</p>
+<a name="hunt.1-00006"></a>$$(f \circ g)(x + y) = f(g(x + y)) = f(g(x) + g(y)) = f(g(x)) + f(g(y)) = (f \circ g)(x) + (f \circ g)(y)$$
+<a name="hunt.1-00007"></a><p>Unfortunately, composition is not compatible with scalars (<i>i.e.</i>, \((\alpha\cdot f)\circ(\beta\cdot g)\neq (\alpha\cdot\beta)\cdot(f\circ g)\)), and additive functions are not an <a href="http://en.wikipedia.org/wiki/Algebra_over_a_field">algebra over a field</a> \(\R\), but see below.</p>
+<a name="hunt.1-00008"></a><p>Looking at an individual additive function \(f : \R \rightarrow \R\), it&#x27;s easy to see that even it is not clear that it must be linear everywhere, there are some subsets of \(\R\) on which is obviously has to be linear:</p>
+<a name="hunt.1-00009"></a><p>For any real number \(x\) and for any natural number \(n\),</p>
+<a name="hunt.1-00010"></a>$$f(n\cdot x) = f(x + \cdots x) = f(x) + \cdots + f(x) = n\cdot f(x)$$
+<a name="hunt.1-00011"></a><p>that is, restriction of \(f\) to any subset \(x \cdot \N \subset \R\) is linear and in particular, \(f\) is linear when restricted to the natural numbers. Specifically, \(f(0) = f(2\cdot 0) = 2\cdot f(0) = 0\), from this</p>
+<a name="hunt.1-00012"></a>$$f(-x) = f(-x) + f(x) - f(x) = f(-x + x) - f(x) = f(0) - f(x) = 0 - f(x) = -f(x)$$
+<a name="hunt.1-00013"></a><p>Similarly,</p>
+<a name="hunt.1-00014"></a>$$f(\frac{1}{n}\cdot x) = \frac{1}{n}\cdot n\cdot f(\frac{1}{n}\cdot x) = \frac{1}{n}\cdot f(n\cdot \frac{1}{n}\cdot x) = \frac{1}{n}\cdot f(x)$$
+<a name="hunt.1-00015"></a><p>Combining these results, for any rational number \(q = \frac{n}{m} \in \Q\),</p>
+<a name="hunt.1-00016"></a>$$f(q\cdot x) = f(\frac{n}{m}\cdot x) = n\cdot f(\frac{1}{m}\cdot x) = \frac{n}{m}\cdot f(x) = q\cdot f(x)$$
+<a name="hunt.1-00017"></a><p>That is, \(f\) is linear when restricted to any subset of the form \(x \cdot \Q \subset \R\). We shall call such subset <i>a \(\Q\)-set</i>.</p>
+<a name="hunt.1-00018"></a><p>Notice that we just proved that composition of linear functions is compatible with multiplication on rational scalars (see above), so that \(\Add\) is an algebra over \(\Q\).</p>
+<a name="hunt.1-00019"></a><p>Having briefly looked over the landscape of \(\Add\), let&#x27;s start converging on our prey. How bad a monster function must be?  A linear function has all the good qualities one might wish for: it is <a href="http://en.wikipedia.org/wiki/Monotonic_function">monotonic</a>, <a href="http://en.wikipedia.org/wiki/Continuous_function">continuous</a>, <a href="http://en.wikipedia.org/wiki/Differentiable_function">differentiable</a>, <a href="http://en.wikipedia.org/wiki/Smooth_function">smooth</a>, it&#x27;s even... linear. Which of these it enjoys together with a monster? It&#x27;s intuitively very unlikely that an additive, but non-linearfunction might happen to be <a href="http://en.wikipedia.org/wiki/Differentiable_function">differentiable</a>, so let&#x27;s start with checking continuity.</p>
+<a name="hunt.1-00020"></a><p style="margin-left: 3em;"><i>Statement 0</i>. If an additive function \(f : \R \rightarrow \R\) is continuous at point \(x\), then \(f(x) = x \cdot f(1)\).</p>
+<a name="hunt.1-00021"></a><p style="margin-left: 3em;">Indeed,</p>
+<a name="hunt.1-00022"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}}
+  f(x)                                  &amp;\;=\;&amp; \text{take a sequence of rationals converging to \(x\)} \\
+  f(\displaystyle\lim_{n\to\infty, q_n\in\Q}q_n)     &amp;\;=\;&amp; \text{by definition of continuity} \\
+  \displaystyle\lim_{q_n}f(q_n)                      &amp;\;=\;&amp; \text{by linearity on rationals} \\
+  \displaystyle\lim_{q_n}(q_n\cdot f(1))             &amp;\;=\;&amp; \text{by property of limits} \\
+  (\displaystyle\lim_{q_n}q_n)\cdot f(1)             &amp;\;=\;&amp; \text{by definition of \(q_n\)} \\
+  f(x)\cdot 1                           &amp;     &amp; 
+\end{array}$$
+<a name="hunt.1-00023"></a><p>That is, an additive function is linear everywhere it is continuous.  This means that a monster must be discontinuous at least in one point. Note that linear functions are precisely everywhere continuous additive functions. Can a monster function be discontinuous in a single point? Or, even, can it be continuous <i>somewhere</i>? It is easy to show that property of additivity constrains structure of sets on which function is continuous severely:</p>
+<a name="hunt.1-00024"></a><p style="margin-left: 3em;"><i>Statement 1</i>. If an additive function \(f : \R \rightarrow \R\) is continuous  at point \(x\), it is linear.</p>
+<a name="hunt.1-00025"></a><p style="margin-left: 3em;">Take an arbitrary non-zero point \(y\). By statement 0, \(f(x) = x \cdot f(1)\). By definition of continuity at \(x\),</p>
+<a name="hunt.1-00026"></a>$$\forall \epsilon &gt; 0 \to \exists \delta &gt; 0 : \forall x&#x27; : |x&#x27; - x| &lt; \delta \to |f(x&#x27;) - f(x)| &lt; \epsilon$$
+<a name="hunt.1-00027"></a><p style="margin-left: 3em;">For any natural \(n\), take \(\epsilon = \frac{1}{n} &gt; 0\) and find a rational number \(q_n\), such that \(|q_n\cdot y - x| &lt; \min(\delta, \frac{1}{n})\). Such \(q_n\) always exists due to density of rationals. By choice of \(q_n\) we have:</p>
+<a name="hunt.1-00028"></a>$$-\frac{1}{n} &lt; q_n\cdot y - x &lt; \frac{1}{n}$$
+<a name="hunt.1-00029"></a><p style="margin-left: 3em;">and by the <a href="http://en.wikipedia.org/wiki/Squeeze_theorem">sandwich theorem</a>, \(q_n\) converges: \(\displaystyle\lim_{n\to\infty}q_n = \frac{x}{y}\). Now, again, by choice of \(q_n\): \(|q_n\cdot y - x| &lt; \delta\), so \(y\cdot q_n\) satisfies the condition on \(x&#x27;\) above and</p>
+<a name="hunt.1-00030"></a>$$\epsilon = \frac{1}{n} &gt; |f(q_n \cdot y) - f(x)| = |q_n \cdot f(y) - x \cdot f(1)|$$
+<a name="hunt.1-00031"></a><p style="margin-left: 3em;">Taking the (obviously existing) limits of both sides of this inequality, one gets</p>
+<a name="hunt.1-00032"></a>$$f(y) = \frac{x \cdot f(1)}{\displaystyle\lim_{n\to\infty}q_n} = \frac{x \cdot f(1)}{x/y} = y \cdot f(1)$$
+<a name="hunt.1-00033"></a><p style="margin-left: 3em;">The case of y being 0 is trivial.</p>
+<a name="hunt.1-00034"></a><p>Oh. A monster function cannot be continuous even at a single point—it is discontinuous everywhere. Additive functions are divided into two separated classes: nice, everywhere continuous linear functions and unseemly, everywhere discontinuous monsters. (We still don&#x27;t know whether the latter class is populated, though.) Our expectations of capturing a monster and placing a trophy in a hall must be adjusted: even if we prove that a monster exists and construct it, an idea of drawing its <a href="http://en.wikipedia.org/wiki/Graph_of_a_function">graph</a> must be abandoned—it&#x27;s too ugly to be depicted.</p>
+<a name="hunt.1-00035"></a><p>Let&#x27;s think for a moment how a monster might look like. Every additive function is linear on any \(\Q\)-set. If it is linear with the same slope on all \(\Q\)-sets—it is linear. A monster must have different slopes for at least some of \(\Q\)-sets. In the simplest case there is a single \(\Q\)-set with a slope different from the others. There is a famous function (a freshman nightmare and examiner delight) immediately coming into a mind: the <a href="http://en.wikipedia.org/wiki/Nowhere_continuous_function">Dirichlet function</a>, \(D : \R \rightarrow \mathbb{Z_2}\), equal \(1\) on rationals and \(0\) on irrationals. The function \(d : x \mapsto x \cdot D(x)\) is identity (and hence linear) when restricted to rationals and is constant zero (again linear) when restricted to irrationals. Looks promising? Unfortunately,</p>
+<a name="hunt.1-00036"></a>$$0 = d(1 + \pi) \neq d(1) + d(\pi) = 1 + 0 = 1$$
+<a name="hunt.1-00037"></a><p>Also, \(d\) is continuous at \(0\) and thus disqualified from monstrousness by statement 1. This shot into darkness missed. At at least we now see that not only monster must have different slopes at different \(\Q\)-sets, but these slopes must be selected to be consistent with addition.</p>
+<a name="hunt.1-00038"></a><p>Let&#x27;s return to monster properties. A monster function is discontinuous everywhere, but how badly is it discontinuous? E.g., a function is <a href="http://en.wikipedia.org/wiki/Local_boundedness">locally bounded</a> at every point where it is continuous. A monster is continuous nowhere, but is it still locally bounded anywhere or somewhere? In a way similar to statement 1 it&#x27;s easy to prove the</p>
+<a name="hunt.1-00039"></a><p style="margin-left: 3em;"><i>Statement 2</i>. If an additive function \(f : \R \rightarrow \R\) is bounded on  any segment \([a, b]\), \(a &lt; b\), then it is linear.</p>
+<a name="hunt.1-00040"></a><p style="margin-left: 3em;">First, by using that \(f(-x) = -f(x)\), and restricting segment if necessary,  one can assume that \(0 &lt; a &lt; b\), and \(\forall x\in[a, b] \to |f(x)| &lt; C\)</p>
+<a name="hunt.1-00041"></a><p style="margin-left: 3em;">Let&#x27;s prove that \(f\) is continuous at \(0\), then it will be linear by the  statement 1. For arbitrary \(\epsilon &gt; 0\), let&#x27;s select \(\delta\), such that  \(0 &lt; \delta &lt; \frac{a}{C}\cdot\epsilon\) (this choice is a typical magician hat  trick of \(\epsilon-\delta\) proofs). For arbitrary \(x\) from the  \(\delta\)-vicinity of \(0\) there is always a rational \(q\), such that \(a &lt;  q\cdot x &lt; b\). For such \(q\) we have:</p>
+<a name="hunt.1-00042"></a>$$|q| &gt; \frac{a}{|x|} &gt; \frac{a}{\delta} &gt; \frac{a}{a}\cdot\frac{C}{\epsilon} = \frac{C}{\epsilon}$$
+<a name="hunt.1-00043"></a><p style="margin-left: 3em;">on the other hand, we have:</p>
+<a name="hunt.1-00044"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}}
+  |f(x)|                                &amp;\;=\;&amp; \\
+  |f(\frac{q\cdot x}{q})|               &amp;\;=\;&amp; \text{by linearity on rationals} \\
+  \frac{1}{|q|}\cdot|f(q\cdot x)|       &amp;\;&lt;\;&amp; \text{by boundness} \\
+  \frac{1}{|q|}\cdot C                  &amp;\;=\;&amp; \text{by inequality on \(q\)} \\
+  \frac{\epsilon\cdot C}{C}             &amp;\;=\;&amp; \epsilon
+\end{array}$$
+<a name="hunt.1-00045"></a><p style="margin-left: 3em;">establishing that \(f\) is continuous at 0.</p>
+<a name="hunt.1-00046"></a><p>This indicates that a monster is not just a bad function, it&#x27;s a very bad function, that takes arbitrarily large absolute values in arbitrarily small segments. Too bad. As a byproduct, a monster cannot be monotonic on any segment, because a function monotonic on \([a, b]\) is bounded there: \(f(a) \leq f(x) \leq f(b)\) (for increasing function, similarly for decreasing).</p>
+<a name="hunt.1-00047"></a><p>Continued <a href="hunt.2.html#hunt.2-start">here</a>.</p><footer><a href="greenway.html#greenway">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="hunt.2.html#hunt.2">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="hunt.2.html#hunt.2">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

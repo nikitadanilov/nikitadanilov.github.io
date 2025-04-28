@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>The Hunt for Addi(c)tive Monster 2.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="hunt.2"></a>\( \def\R{\mathbb{R}} \)
+\( \def\Q{\mathbb{Q}} \)
+<div class="column"><header>The Hunt for Addi(c)tive Monster 2.</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="hunt.1.html#hunt.1-00047"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
+<a name="hunt.2-start"></a><p><span class="linktarget" data-uid="0">I</span>n the <a href="hunt.1.html#hunt.1-start">previous post</a>, we were looking for <i>a monster</i>—a nonlinear additive function. We found that such a function is extremely pathological: it is nowhere locally monotone, nowhere continuous and nowhere locally bounded. Worse than that, it&#x27;s easy to prove that the graph of a monster is <a href="http://en.wikipedia.org/wiki/Dense_set">dense</a> in \(\R \times \R\), that is, for every \(x\) and \(y\), an arbitrary neighborhood of \(x\) contains a point that monster sends arbitrarily close to \(y\).</p>
+<a name="hunt.2-00001"></a><p>Recall <a href="http://www.cofault.com/2010/01/hunt-for-addictive-monster.html#construction-0">our attempt</a> to construct a monster. Any additive function is linear on any \(\Q\)-set and is fully determined on this set by a value it has in any single of its points. Our Direchlet function derived monster failed (or rather fell) because the slopes an additive function has on different \(\Q\)-sets are not independent. Indeed, given that \(f\) has a slope \(k_1\) on a \(\Q\)-set \(\Q\cdot\alpha_1\) and a slope \(k_2\) on a \(\Q\)-set \(\Q\cdot\alpha_2\), it has to have a slope \(k_1 + k_2\) on a \(\Q\)-set \(\Q\cdot(\alpha_1 + \alpha_2)\). This shows a way to construct a monster: one has to find a collection \(B\) of real numbers \(r_1, r_2, \ldots\) such that (i) every real number can be represented as a sum \(q_1\cdot r_1 + q_2\cdot r_2 + \ldots\), with rational coefficients \(q_1, q_2, \ldots\) of which only finite number is non-zero (so that the sum is defined) and (ii) that such representation is unique. Then one can select arbitrary values on elements of \(B\) and take moster&#x27;s value on \(q_1\cdot r_1 + q_2\cdot r_2 + \ldots\) to be \(q_1\cdot f(r_1) + q_2\cdot f(r_2) + \ldots\), which is well-defined thanks to (ii).</p>
+<a name="hunt.2-00002"></a><p>Looks familiar? It should be: the definition of \(B\) is exactly the definition of <a href="http://en.wikipedia.org/wiki/Basis_(linear_algebra)">a basis</a> of a vector space. Real numbers can be added to each other and multiplied by rationals and, therefore, form a vector space over \(\Q\). This space is very different from a usual one-dimensional vector space real numbers form over \(\R\) (<i>i.e.</i>, over themselves).</p>
+<a name="hunt.2-00003"></a><p>After a streak of bad and unlikely properties that a monster has, we now got something positive: a monster exists if and only if \(\R\) as a vector space over \(\Q\) has a basis. Does it?</p>
+<a name="hunt.2-00004"></a><p>But of course. Any vector space has a basis—this is a general theorem almost immediately following from the <a href="http://en.wikipedia.org/wiki/Zorn's_lemma">Zorn&#x27;s lemma</a>. The basis we are looking for even got a name of its own: <a href="http://mathworld.wolfram.com/HamelBasis.html"><i>Hamel basis</i></a>.</p>
+<a name="hunt.2-00005"></a><p>At last we stumbled across the whole family on monsters. Specifically, there exists a set \(B \subset \mathbb{R}\) and a function \(q : \mathbb{R}\times B \rightarrow \Q\) such that every real number r can be uniquely represented as</p>
+<a name="hunt.2-00006"></a>$$r = \displaystyle\sum_{b\in B}q(r, b)\cdot b$$
+<a name="hunt.2-00007"></a><p>where only finite number of \(q(r, b)\) are non-zero for a given \(r\). From this it immediately follows that \(q(r_1 + r_2, b) = q(r_1, b) + q(r_2, b)\).</p>
+<a name="hunt.2-00008"></a><p>Take an arbitrary function \(f_0 : B \rightarrow \mathbb{R}\), and define</p>
+<a name="hunt.2-00009"></a>$$f(r) = \displaystyle\sum_{b\in B} f_0(b)\cdot q(r, b)\cdot b$$
+<a name="hunt.2-00010"></a>$$\begin{array}{r@{\;}c@{\;}l@{\quad}}
+        f(r_1) + f(r_2) &amp;\;=\;&amp; \\
+                        &amp;\;=\;&amp; \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_1, b)\cdot b + \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_2, b)\cdot b \\
+                        &amp;\;=\;&amp; \displaystyle\sum_{b\in B} f_0(b)\cdot\left(q(r_1, b) + q(r_2, b)\right)\cdot b \\
+                        &amp;\;=\;&amp; \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_1 + r_2, b) \cdot b \\
+                        &amp;\;=\;&amp; f(r_1 + r_2)
+\end{array}$$
+<a name="hunt.2-00011"></a><p>that is, \(f\) is additive. Intuitively, \(f_0(b)\) is a slope \(f\) has at the \(\Q\)-set \(\Q\cdot b\). \(f\) is linear if and only if \(f_0\) is a constant function, in all other cases \(f\) is a monster. If one takes \(f_0 : b \mapsto 1/b\), then</p>
+<a name="hunt.2-00012"></a>$$f(r) = \displaystyle\sum_{b\in B} q(r, b)$$
+<a name="hunt.2-00013"></a><p>is an especially weird monster function: it takes only rational values!</p>
+<a name="hunt.2-00014"></a><p>Note that almost all additive functions are, after all, monsters—only very small sub-set of them is linear.</p><footer><a href="hunt.1.html#hunt.1">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="inaccessible-cardinals.html#inaccessible-cardinals">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="hunt.1.html#hunt.1">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="unintentionally.html#unintentionally">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

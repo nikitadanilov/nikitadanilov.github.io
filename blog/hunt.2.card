@@ -1,0 +1,89 @@
+// name The Hunt for Addi(c)tive Monster 2.
+// id hunt.2
+// +# blog hunt.2
+// +# timeline 2010/02/04
+// +tags math
+
+// +TeX \( \def\R{\mathbb{R}} \)
+// +TeX \( \def\Q{\mathbb{Q}} \)
+
+In the previous post, we were looking for _a monster_—a nonlinear additive
+function. We found that such a function is extremely pathological: it is nowhere
+locally monotone, nowhere continuous and nowhere locally bounded. Worse than
+that, it's easy to prove that the graph of a monster is dense in \(\R \times
+\R\), that is, for every \(x\) and \(y\), an arbitrary neighborhood of \(x\)
+contains a point that monster sends arbitrarily close to \(y\).
+/ += . "previous post" -> !hunt.1-start "^."
+/ += . "dense" -> http://en.wikipedia.org/wiki/Dense_set
+/ id start
+
+Recall our attempt to construct a monster. Any additive function is linear on
+any \(\Q\)-set and is fully determined on this set by a value it has in any
+single of its points. Our Direchlet function derived monster failed (or rather
+fell) because the slopes an additive function has on different \(\Q\)-sets are
+not independent. Indeed, given that \(f\) has a slope \(k_1\) on a \(\Q\)-set
+\(\Q\cdot\alpha_1\) and a slope \(k_2\) on a \(\Q\)-set \(\Q\cdot\alpha_2\), it
+has to have a slope \(k_1 + k_2\) on a \(\Q\)-set \(\Q\cdot(\alpha_1 +
+\alpha_2)\). This shows a way to construct a monster: one has to find a
+collection \(B\) of real numbers \(r_1, r_2, \ldots\) such that (i) every real
+number can be represented as a sum \(q_1\cdot r_1 + q_2\cdot r_2 + \ldots\),
+with rational coefficients \(q_1, q_2, \ldots\) of which only finite number is
+non-zero (so that the sum is defined) and (ii) that such representation is
+unique. Then one can select arbitrary values on elements of \(B\) and take
+moster's value on \(q_1\cdot r_1 + q_2\cdot r_2 + \ldots\) to be \(q_1\cdot
+f(r_1) + q_2\cdot f(r_2) + \ldots\), which is well-defined thanks to (ii).
+/ += . "our attempt" -> http://www.cofault.com/2010/01/hunt-for-addictive-monster.html#construction-0
+
+Looks familiar? It should be: the definition of \(B\) is exactly the definition
+of a basis of a vector space. Real numbers can be added to each other and
+multiplied by rationals and, therefore, form a vector space over \(\Q\). This
+space is very different from a usual one-dimensional vector space real numbers
+form over \(\R\) (i.e., over themselves).
+/ += . "a basis" -> http://en.wikipedia.org/wiki/Basis_(linear_algebra)
+
+After a streak of bad and unlikely properties that a monster has, we now got
+something positive: a monster exists if and only if \(\R\) as a vector space
+over \(\Q\) has a basis. Does it?
+
+But of course. Any vector space has a basis—this is a general theorem almost
+immediately following from the Zorn's lemma. The basis we are looking for even got a name of its own: _Hamel basis_.
+/ += . "Zorn's lemma" -> http://en.wikipedia.org/wiki/Zorn's_lemma
+/ += . "Hamel basis" -> http://mathworld.wolfram.com/HamelBasis.html
+
+At last we stumbled across the whole family on monsters. Specifically, there
+exists a set \(B \subset \mathbb{R}\) and a function \(q : \mathbb{R}\times B
+\rightarrow \Q\) such that every real number r can be uniquely represented as
+
+; math
+r = \displaystyle\sum_{b\in B}q(r, b)\cdot b
+
+where only finite number of \(q(r, b)\) are non-zero for a given \(r\). From
+this it immediately follows that \(q(r_1 + r_2, b) = q(r_1, b) + q(r_2, b)\).
+
+Take an arbitrary function \(f_0 : B \rightarrow \mathbb{R}\), and define
+
+; math
+f(r) = \displaystyle\sum_{b\in B} f_0(b)\cdot q(r, b)\cdot b
+
+; math
+\begin{array}{r@{\;}c@{\;}l@{\quad}}
+        f(r_1) + f(r_2) &\;=\;& \\
+                        &\;=\;& \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_1, b)\cdot b + \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_2, b)\cdot b \\
+                        &\;=\;& \displaystyle\sum_{b\in B} f_0(b)\cdot\left(q(r_1, b) + q(r_2, b)\right)\cdot b \\
+                        &\;=\;& \displaystyle\sum_{b\in B} f_0(b)\cdot q(r_1 + r_2, b) \cdot b \\
+                        &\;=\;& f(r_1 + r_2)
+\end{array}
+
+that is, \(f\) is additive. Intuitively, \(f_0(b)\) is a slope \(f\) has at the
+\(\Q\)-set \(\Q\cdot b\). \(f\) is linear if and only if \(f_0\) is a constant
+function, in all other cases \(f\) is a monster. If one takes \(f_0 : b \mapsto
+1/b\), then
+
+; math
+f(r) = \displaystyle\sum_{b\in B} q(r, b)
+
+is an especially weird monster function: it takes only rational values!
+
+Note that almost all additive functions are, after all, monsters—only very small
+sub-set of them is linear.
+
