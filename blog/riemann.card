@@ -1,0 +1,208 @@
+// name Riemann hypothesis, DIY
+// id riemann
+// +# blog riemann
+// +# timeline 2012/03/03
+// +tags math
+// +tags programming
+
+Continuing with useless exercises, let's look at prime numbers. We shall use Haskell this time.
+/ += . "useless exercises" -> !exercise-start "Let's"
+/ += . "prime numbers" -> http://en.wikipedia.org/wiki/Prime_number
+/ += . "Haskell" -> http://en.wikipedia.org/wiki/Haskell_(programming_language)
+
+; code
+-- prime numbers: [2,3,5,7,11,13,17,19, ...]
+pr :: [Int]
+pr = [p | p <- [2 .. ], maximum [d | d <- [1 .. p - 1], p `mod` d == 0] == 1]
+
+The first line, starting with `--` is a comment. The second line declares `pr`
+to have type "list of Int". Typings are optional in Haskell. The last line, uses
+"list comprehension" (yes, it is related to "set comprehension" used in one of
+the recent posts) to define 'pr' as those elements of the infinite list `[2, 3,
+4, 5, ...]` (denoted `[2 ...]`), whose maximal proper divisor is `1`. This is a
+very inefficient, quadratic way to build the list of all primes.
+/ += . "list comprehension" -> http://en.wikipedia.org/wiki/List_comprehension
+/ += . "set comprehension" -> http://en.wikipedia.org/wiki/Set-builder_notation
+/ += . "one of the recent posts" -> !exercise-start "TODO"
+
+In addition, define a list of all twin primes:
+/ += . "twin primes" -> http://en.wikipedia.org/wiki/Twin_prime
+
+; code
+-- twin primes, primes whose difference is 2
+twinp :: [Int]
+twinp = [n | n <- pr, (n + 2) `elem` (take (n + 4) pr)]
+
+`elem` is true iff `x` is en element of list `s`. Ugly `(take (n + 4) pr)` is
+needed because for an infinite `s`, `elem` either returns `True` or never
+returns: without some additional knowledge about the list, the only way to
+determine whether `x` belongs to it is by linear search, which might never
+terminate. In our case, `pr` is strictly ascending and hence the search can be
+limited to some finite prefix of the list (`(take n s)` returns first n elements
+of s). Perhaps there is a way to specify list properties that `elem` can rely
+on, I don't know, I opened the Haskell specification an only hour ago.  / +=
+. "iff" -> http://en.wikipedia.org/wiki/Iff / += . "the Haskell specification"
+-> http://www.haskell.org/onlinereport/haskell2010/haskell.html#haskellpa1.html
+
+Let's do some "visualisation":
+
+; code
+-- an (infinite) string containing a '+' for each element of s and '.' for each
+-- element not in s, assuming that s is ascending and s !! n > n.
+-- dot pr == "..++.+.+...+.+.. ..."
+dot :: [Int] -> [Char]
+dot s = [ if (x `elem` (take (x + 2) s)) then '+' else '.' | x <- [0 ..]]
+
+For example, `(dot pr)` is an infinite string containing `+` for each prime
+number and `.` for each composite.
+
+By printing `(dot s)` in rows, `k` columns each, some hopefully interesting
+information about distribution of elements of s can be obtained. First, split
+`s` into sub-lists of length `k`:
+
+; code
+-- (dot s), sliced into sub-strings of length k, separated by newlines
+sl :: [Int] -> Int -> [[Char]]
+sl s k = ['\n' : [ (dot s) !! i | i <- [j*k .. (j+1)*k - 1]] | j <- [0 ..]]
+
+then, concatenate them all:
+
+; code
+-- concatenation of slices
+outp :: [Int] -> Int -> [Char]
+outp s k = concat (sl s k)
+
+A few examples:
+
+; code
+putStr (outp pr 6)
+|
+..++.+
+.+...+
+.+...+
+.+...+
+.....+
+.+....
+.+...+
+.+...+
+.....+
+.....+
+.+....
+.+...+
+
+immediately one sees that, with the exception \(2\) and \(3\), prime numbers
+have remainder \(1\) or \(5\) when divided by \(6\). For \(7\), the picture is
+
+; code
+putStr (outp pr 7)
+|
+..++.+.
++...+.+
+...+.+.
+..+....
+.+.+...
+..+...+
+.+...+.
+....+..
+...+.+.
+....+..
+.+.+...
+..+...+
+.....+.
+......+
+...+.+.
+..+.+..
+.+.....
+.......
+.+...+.
+....+.+
+.......
+..+.+..
+...+...
+..+...+
+
+it's easy to see that "vertical" lines of `+`, corresponding to a particular
+remainder are now (unsurprisingly) replaced with slopes. By changing the width
+of the picture, one can see how regular pattern changes its shape periodically
+
+; code
+putStr (outp pr 23)
+|
+..++.+.+...+.+...+.+...
++.....+.+.....+...+.+..
+.+.....+.....+.+.....+.
+..+.+.....+...+.....+..
+.....+...+.+...+.+...+.
+............+...+.....+
+.+.........+.+.....+...
+..+...+.....+.....+.+..
+.......+.+...+.+.......
+....+...........+...+.+
+...+.....+.+.........+.
+....+.....+.....+.+....
+.+...+.+.........+.....
+........+...+.+...+....
+.........+.....+.......
+..+.+...+.....+.......+
+.....+.....+...+.....+.
+......+...+.......+....
+.....+.+.........+.+...
+..+...+.....+.......+..
+.+.+...+...........+...
+
+; code
+putStr (outp pr 24)
+|
+..++.+.+...+.+...+.+...+
+.....+.+.....+...+.+...+
+.....+.....+.+.....+...+
+.+.....+...+.....+......
+.+...+.+...+.+...+......
+.......+...+.....+.+....
+.....+.+.....+.....+...+
+.....+.....+.+.........+
+.+...+.+...........+....
+.......+...+.+...+.....+
+.+.........+.....+.....+
+.....+.+.....+...+.+....
+.....+.............+...+
+.+...+.............+....
+.+.........+.+...+.....+
+.......+.....+.....+...+
+.....+.......+...+......
+.+.........+.+.........+
+.+.....+...+.....+......
+.+...+.+...+...........+
+.......+...+.......+...+
+
+One of the more striking examples is with twin primes:
+
+; code
+putStr (outp twinp 6)
+|
+...+.+
+.....+
+.....+
+......
+.....+
+......
+.....+
+......
+......
+.....+
+......
+.....+
+......
+......
+......
+......
+.....+
+.....+
+......
+......
+
+Every pair of twin primes except for \((3, 5)\) has a form \((6 \cdot n - 1,\; 6 \cdot n + 1)\).
+
+As Gauss reportedly quipped (when refusing to work on the last Fermat's
+theorem): "number theory is full of problems whose difficulty is only surpassed
+by their uselessness".

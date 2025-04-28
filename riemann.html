@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Riemann hypothesis, DIY</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="riemann"></a>
+<div class="column"><header>Riemann hypothesis, DIY</header>
+<a name="riemann-00000"></a><p>Continuing with <a href="exercise.html#exercise-start">useless exercises</a>, let&#x27;s look at <a href="http://en.wikipedia.org/wiki/Prime_number">prime numbers</a>. We shall use <a href="http://en.wikipedia.org/wiki/Haskell_(programming_language)">Haskell</a> this time.</p>
+<a name="riemann-00001"></a><pre><code>-- prime numbers: [2,3,5,7,11,13,17,19, ...]
+pr :: [Int]
+pr = [p | p &lt;- [2 .. ], maximum [d | d &lt;- [1 .. p - 1], p `mod` d == 0] == 1]</code></pre>
+<a name="riemann-00002"></a><p>The first line, starting with <code class="inline">--</code> is a comment. The second line declares <code class="inline">pr</code> to have type &quot;list of Int&quot;. Typings are optional in Haskell. The last line, uses &quot;<a href="http://en.wikipedia.org/wiki/List_comprehension">list comprehension</a>&quot; (yes, it is related to &quot;<a href="http://en.wikipedia.org/wiki/Set-builder_notation">set comprehension</a>&quot; used in <a href="exercise.html#exercise-start">one of the recent posts</a>) to define &#x27;pr&#x27; as those elements of the infinite list <code class="inline">[2, 3, 4, 5, ...]</code> (denoted <code class="inline">[2 ...]</code>), whose maximal proper divisor is <code class="inline">1</code>. This is a very inefficient, quadratic way to build the list of all primes.</p>
+<a name="riemann-00003"></a><p>In addition, define a list of all <a href="http://en.wikipedia.org/wiki/Twin_prime">twin primes</a>:</p>
+<a name="riemann-00004"></a><pre><code>-- twin primes, primes whose difference is 2
+twinp :: [Int]
+twinp = [n | n &lt;- pr, (n + 2) `elem` (take (n + 4) pr)]</code></pre>
+<a name="riemann-00005"></a><p><code class="inline">elem</code> is true iff <code class="inline">x</code> is en element of list <code class="inline">s</code>. Ugly <code class="inline">(take (n + 4) pr)</code> is needed because for an infinite <code class="inline">s</code>, <code class="inline">elem</code> either returns <code class="inline">True</code> or never returns: without some additional knowledge about the list, the only way to determine whether <code class="inline">x</code> belongs to it is by linear search, which might never terminate. In our case, <code class="inline">pr</code> is strictly ascending and hence the search can be limited to some finite prefix of the list (<code class="inline">(take n s)</code> returns first n elements of s). Perhaps there is a way to specify list properties that <code class="inline">elem</code> can rely on, I don&#x27;t know, I opened the Haskell specification an only hour ago.  / += . &quot;iff&quot; -&gt; http://en.wikipedia.org/wiki/Iff / += . &quot;the Haskell specification&quot; -&gt; http://www.haskell.org/onlinereport/haskell2010/haskell.html#haskellpa1.html</p>
+<a name="riemann-00006"></a><p>Let&#x27;s do some &quot;visualisation&quot;:</p>
+<a name="riemann-00007"></a><pre><code>-- an (infinite) string containing a &#x27;+&#x27; for each element of s and &#x27;.&#x27; for each
+-- element not in s, assuming that s is ascending and s !! n &gt; n.
+-- dot pr == &quot;..++.+.+...+.+.. ...&quot;
+dot :: [Int] -&gt; [Char]
+dot s = [ if (x `elem` (take (x + 2) s)) then &#x27;+&#x27; else &#x27;.&#x27; | x &lt;- [0 ..]]</code></pre>
+<a name="riemann-00008"></a><p>For example, <code class="inline">(dot pr)</code> is an infinite string containing <code class="inline">+</code> for each prime number and <code class="inline">.</code> for each composite.</p>
+<a name="riemann-00009"></a><p>By printing <code class="inline">(dot s)</code> in rows, <code class="inline">k</code> columns each, some hopefully interesting information about distribution of elements of s can be obtained. First, split <code class="inline">s</code> into sub-lists of length <code class="inline">k</code>:</p>
+<a name="riemann-00010"></a><pre><code>-- (dot s), sliced into sub-strings of length k, separated by newlines
+sl :: [Int] -&gt; Int -&gt; [[Char]]
+sl s k = [&#x27;\n&#x27; : [ (dot s) !! i | i &lt;- [j*k .. (j+1)*k - 1]] | j &lt;- [0 ..]]</code></pre>
+<a name="riemann-00011"></a><p>then, concatenate them all:</p>
+<a name="riemann-00012"></a><pre><code>-- concatenation of slices
+outp :: [Int] -&gt; Int -&gt; [Char]
+outp s k = concat (sl s k)</code></pre>
+<a name="riemann-00013"></a><p>A few examples:</p>
+<a name="riemann-00014"></a><pre><code>putStr (outp pr 6)
+
+..++.+
+.+...+
+.+...+
+.+...+
+.....+
+.+....
+.+...+
+.+...+
+.....+
+.....+
+.+....
+.+...+</code></pre>
+<a name="riemann-00015"></a><p>immediately one sees that, with the exception \(2\) and \(3\), prime numbers have remainder \(1\) or \(5\) when divided by \(6\). For \(7\), the picture is</p>
+<a name="riemann-00016"></a><pre><code>putStr (outp pr 7)
+
+..++.+.
++...+.+
+...+.+.
+..+....
+.+.+...
+..+...+
+.+...+.
+....+..
+...+.+.
+....+..
+.+.+...
+..+...+
+.....+.
+......+
+...+.+.
+..+.+..
+.+.....
+.......
+.+...+.
+....+.+
+.......
+..+.+..
+...+...
+..+...+</code></pre>
+<a name="riemann-00017"></a><p>it&#x27;s easy to see that &quot;vertical&quot; lines of <code class="inline">+</code>, corresponding to a particular remainder are now (unsurprisingly) replaced with slopes. By changing the width of the picture, one can see how regular pattern changes its shape periodically</p>
+<a name="riemann-00018"></a><pre><code>putStr (outp pr 23)
+
+..++.+.+...+.+...+.+...
++.....+.+.....+...+.+..
+.+.....+.....+.+.....+.
+..+.+.....+...+.....+..
+.....+...+.+...+.+...+.
+............+...+.....+
+.+.........+.+.....+...
+..+...+.....+.....+.+..
+.......+.+...+.+.......
+....+...........+...+.+
+...+.....+.+.........+.
+....+.....+.....+.+....
+.+...+.+.........+.....
+........+...+.+...+....
+.........+.....+.......
+..+.+...+.....+.......+
+.....+.....+...+.....+.
+......+...+.......+....
+.....+.+.........+.+...
+..+...+.....+.......+..
+.+.+...+...........+...</code></pre>
+<a name="riemann-00019"></a><pre><code>putStr (outp pr 24)
+
+..++.+.+...+.+...+.+...+
+.....+.+.....+...+.+...+
+.....+.....+.+.....+...+
+.+.....+...+.....+......
+.+...+.+...+.+...+......
+.......+...+.....+.+....
+.....+.+.....+.....+...+
+.....+.....+.+.........+
+.+...+.+...........+....
+.......+...+.+...+.....+
+.+.........+.....+.....+
+.....+.+.....+...+.+....
+.....+.............+...+
+.+...+.............+....
+.+.........+.+...+.....+
+.......+.....+.....+...+
+.....+.......+...+......
+.+.........+.+.........+
+.+.....+...+.....+......
+.+...+.+...+...........+
+.......+...+.......+...+</code></pre>
+<a name="riemann-00020"></a><p>One of the more striking examples is with twin primes:</p>
+<a name="riemann-00021"></a><pre><code>putStr (outp twinp 6)
+
+...+.+
+.....+
+.....+
+......
+.....+
+......
+.....+
+......
+......
+.....+
+......
+.....+
+......
+......
+......
+......
+.....+
+.....+
+......
+......</code></pre>
+<a name="riemann-00022"></a><p>Every pair of twin primes except for \((3, 5)\) has a form \((6 \cdot n - 1,\; 6 \cdot n + 1)\).</p>
+<a name="riemann-00023"></a><p>As Gauss reportedly quipped (when refusing to work on the last Fermat&#x27;s theorem): &quot;number theory is full of problems whose difficulty is only surpassed by their uselessness&quot;.</p><footer><a href="qm.html#qm">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="rsx.html#rsx">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="exercise.html#exercise">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="macro.html#macro">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

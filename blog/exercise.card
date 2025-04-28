@@ -5,6 +5,7 @@
 // +tags programming
 
 Let's find a sum
+/ id start
 
 ; math
 \sum_{n=1}^\infty {1\over{n(n+2)}}
