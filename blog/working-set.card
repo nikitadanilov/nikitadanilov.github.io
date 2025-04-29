@@ -1,0 +1,45 @@
+// name working set is not relevant
+// id working-set
+// +# blog working-set
+// +# timeline 2005/07/23
+// +tags programming
+// +tags vm
+
+[Updated: 2005.07.24]
+
+The key point of working set algorithm is not _virtual time_ relative to which
+recently used pages are defined. Virtual time is a problem rather than a
+solution. At the time when working set algorithm was designed, there was one to
+one mapping between address spaces and threads. In such setup virtual time based
+scanning ties memory scheduling and processor scheduling and, hence, avoids
+thrashing, which is a situation when one resource (processor) is scheduled to
+achieve its maximal utilization, ignoring constraints imposed by other resource
+(memory) (See Dijkstra papers EWD408 and EWD462 for as always lucid an
+explanation).
+/ += . "EWD408" -> http://www.cs.utexas.edu/users/EWD/ewd04xx/EWD408.PDF
+/ += . "EWD462" -> http://www.cs.utexas.edu/users/EWD/ewd04xx/EWD462.PDF
+
+In modern systems there is no such one to one mapping anymore. There are
+multiple threads executing within the same address space. There are memory
+consumers that are not readily identifiable with any execution context at all:
+file system cache (which is merged with VM in any self-respecting kernel),
+general in-kernel memory allocator, etc. It means that:
+
+>there is no relevant notion of virtual time to be used during scanning;
+ 
+>working set control fails to bind memory and processor scheduling together,
+ which will decrease its effectiveness.
+
+One extreme case is to consider whole system as one entity. Then virtual time
+degenerates into physical one, and working set algorithm into active/inactive
+queue.
+
+Moreover, working set is not _page_ replacement algorithms at all. That is, it
+doesn't answer to the question "System is low on memory, what page should be
+reclaimed?"; Instead it vaguely points to some address space and proposes to
+reclaim some unknown page from it. This made sense for the time-shared server
+running large number of tasks with disjoint address spaces, but for the modern
+system working set algorithm will be most likely finger-pointing to the Mozilla
+(or OpenOffice, or...) on the client and Apache (or Oracle, or...) on the
+server. Which is completely useless, because we still don't know _what_ page is
+to be reclaimed.
