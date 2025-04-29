@@ -1,0 +1,89 @@
+// name An exercise
+// id an-exercise
+// +# blog an-exercise
+// +# timeline 2005/11/12
+// +tags programming
+// +tags math
+
+Here is a little problem. Given an array \(A\) of \(N\) integers, find a
+sub-array (determined by a pair of indices within \(A\)) such that sum of
+elements in that sub-array is maximal among all sub-arrays of \(A\).
+
+Sounds pretty easy? It is, but just to set a little standard for solutions:
+there is a way (shown to me by a 15-year-old boy) to do this in one pass over
+\(A\) and without using any additional storage except for few integer variables.
+
+So much for dynamic programming...
+
+; head
+update
+/ level 2
+
+That exercise is interesting, because while superfluously similar to the
+well-known tasks like finding longest common substring, etc. it can be solved in
+one pass.
+
+Indeed Matti presented exactly the same solution that I had in mind. And it is
+possible (and instructive) to get a rigorous proof that this algorithm solves
+the problem.
+/ += . "presented" -> http://nikitadanilov.blogspot.com/2005/11/exercise.html#113183576990722370
+
+>_Definition 0_. Let \(A = (i, j)\) be a sub-array \((i <= j)\), then \(S(A) =
+ S(i, j)\) denotes a sum of elements in \(A\). \(S(A)\) will be called _sum of
+ \(A\)_.
+
+>_Definition 1_. Let \(A = (i, j)\) be a sub-array \((i <= j)\), then for any
+
+; math
+0 <= p < i < q < j < r < N
+
+>sub-array \((p, i - 1)\) is called left outfix of \(A\), \((i, q)\) --- left
+ infix of \(A\), \((q + 1, j)\) --- right infix of \(A\), and \((j + 1, r)\) ---
+ right outfix of \(A\).
+
+>_Definition 2_. A sub-array is called _optimal_ if all its infixes have
+ positive sums, and all its outfixes have negative sums.
+
+It's easy to prove the following:
+
+>_Statement 0_. A sub-array with the maximal sum is optimal.
+
+>Indeed, any non-optimal sub-array by definition has either negative infix, or
+ positive outfix, and, hence, can be shrunken or expanded to another sub-array
+ that has larger sum.
+
+As an obvious corollary we get:
+
+>_Statement 1_. To find a sub-array with the maximal sum it's enough to find a
+ sub-array with the maximal sum among all optimal sub-arrays.
+
+The key fact that explains why our problem can be solved in one pass is captured in the following:
+
+>_Statement 2_. Optimal sub-arrays are not overlapping.
+
+>Also easily proved by observing that when two sub-arrays \(A\) and \(B\)
+ overlap there always is an sub-array \(C\) that is an infix of \(A\) and an
+ outfix of \(B\).
+
+And, now the only thing left to do is to prove that Matti's algorithm
+calculates sums of (at least) all optimal sub-arrays. Which is easy to do:
+
+>first prove that possibly except for the initial value, `new_start` always
+ points to the index at which at least one (and, therefore, exactly one) optimal
+ array starts. This is easily proved by induction.
+
+>then prove that once particular value of `new_start` has been reached,
+ `new_start` is not modified until `i` reaches upper index of optimal array
+ starting at `new_start`. This follows directly from the definition of optimal
+ sub-array, because all its left infixes have positive sums.
+
+>this means that for any optimal sub-array \((p, q)\) there is an iteration of
+ the loop at which
+
+; math
+new\_start == p \quad\text{and}\quad i == q
+
+>As algorithm finds maximal sum among all \((new\_start, i)\) sub-arrays, it
+ finds maximal sum among all optimal arrays, and, by _Statement 1_, maximal sum
+ among all sub-arrays.
+
