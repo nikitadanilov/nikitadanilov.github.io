@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>named formals</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="named-formals"></a><div class="column"><header>named formals</header>
+<a name="named-formals-00000"></a><p>Another C99 abuse: <i>named formal parameters</i>:</p>
+<a name="named-formals-00001"></a><pre><code>int foo(int a, char b)
+{
+        printf(&quot;foo: a: %i, b: %c (%i)\n&quot;, a, b, b);
+}
+
+#define foo(...) ({                 \
+          struct {                  \
+                   int  a;          \
+                   char b;          \
+          } __fa = { __VA_ARGS__ }; \
+          foo(__fa.a, __fa.b);      \
+})
+
+int main(int argc, char **argv)
+{
+        foo(.b = &#x27;b&#x27;, .a = 42);
+        foo();
+}</code></pre>
+<a name="named-formals-00002"></a><p>This outputs:</p>
+<a name="named-formals-00003"></a><pre><code>foo: a: 42, b: b (98)
+foo: a: 0, b:  (0)</code></pre>
+<a name="named-formals-00004"></a><p>By combining compound literals and <code class="inline">__VA_ARGS__</code> (<a href="compound-literals.html#compound-literals-start">again</a>!) it is possible to explicitly name function arguments, specify them in arbitrary order, and omit some of them (omitted arguments are initialized by corresponding default initializers).</p><footer><a href="modest-proposal.html#modest-proposal">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="opahead-patch.html#opahead-patch">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="compound-literals.html#compound-literals">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="mm-units.html#mm-units">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

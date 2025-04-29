@@ -1,0 +1,40 @@
+// name named formals
+// id named-formals
+// +# blog named formals
+// +# timeline 2005/08/18
+// +tags programming
+
+Another C99 abuse: _named formal parameters_:
+
+; code
+int foo(int a, char b)
+{
+        printf("foo: a: %i, b: %c (%i)\n", a, b, b);
+}
+|
+#define foo(...) ({                 \
+          struct {                  \
+                   int  a;          \
+                   char b;          \
+          } __fa = { __VA_ARGS__ }; \
+          foo(__fa.a, __fa.b);      \
+})
+|
+int main(int argc, char **argv)
+{
+        foo(.b = 'b', .a = 42);
+        foo();
+}
+
+This outputs:
+
+; code
+foo: a: 42, b: b (98)
+foo: a: 0, b:  (0)
+
+By combining compound literals and `__VA_ARGS__` (again!) it is possible to
+explicitly name function arguments, specify them in arbitrary order, and omit
+some of them (omitted arguments are initialized by corresponding default
+initializers).
+/ += . "again" -> !compound-literals-start "^."
+
