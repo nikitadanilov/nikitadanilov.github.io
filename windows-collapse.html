@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Why windows will collapse ultimately</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="windows-collapse"></a><div class="column"><header>Why windows will collapse ultimately</header>
+<a name="windows-collapse-00000"></a><p><code class="inline">Subject: [ntdev] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts</code></p>
+<a name="windows-collapse-00001"></a><p><i>update</i>: Like this wasn&#x27;t enough.</p>
+<a name="windows-collapse-00002"></a><p>Below are excerpts from</p>
+<a name="windows-collapse-00003"></a><pre><code>find . -name \*dll |\
+        xargs strings -- |\
+        grep -i &#x27;^[a-z0-9_]*$&#x27; |\
+        awk &#x27;{ print length($1) &quot;\t&quot; $1 }&#x27; |\
+        sort -n</code></pre>
+<a name="windows-collapse-00004"></a><p>output (executed in WinXP system directory):</p>
+<a name="windows-collapse-00005"></a><pre><code>50      ZwAccessCheckByTypeResultListAndAuditAlarmByHandle
+51      Java_NPDS_npDSJavaPeer_SetSendMouseClickEvents_stub
+51      Java_NPDS_npDSJavaPeer_SetShowPositionControls_stub
+51      JET_errDistributedTransactionNotYetPreparedToCommit
+52      ACTIVATION_CONTEXT_SECTION_COM_INTERFACE_REDIRECTION
+52      ConvertSecurityDescriptorToStringSecurityDescriptorA
+52      ConvertSecurityDescriptorToStringSecurityDescriptorW
+53      ACTIVATION_CONTEXT_SECTION_GLOBAL_OBJECT_RENAME_TABLE
+55      ACTIVATION_CONTEXT_SECTION_COM_TYPE_LIBRARY_REDIRECTION
+55      SxspComProgIdRedirectionStringSectionGenerationCallback
+56      Java_NPDS_npDSJavaPeer_GetSendOpenStateChangeEvents_stub
+56      Java_NPDS_npDSJavaPeer_GetSendPlayStateChangeEvents_stub
+56      SxspComTypeLibRedirectionStringSectionGenerationCallback
+57      SxspComputeInternalAssemblyIdentityAttributeBytesRequired
+57      SxspWindowClassRedirectionStringSectionGenerationCallback
+62      SxspComputeInternalAssemblyIdentityAttributeEncodedTextualSize
+62      SxspGenerateTextuallyEncodedPolicyIdentityFromAssemblyIdentity
+64      RtlpQueryAssemblyInformationActivationContextDetailedInformation
+71      <a href="http://www.openrce.org/reference_library/win32_call_chains/XPSP2/NTDLL/RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation">RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation</a></code></pre>
+<a name="windows-collapse-00006"></a><p>which probably gives us the champion.</p>
+<a name="windows-collapse-00007"></a><p>As a comparison, for linux-2.6.15</p>
+<a name="windows-collapse-00008"></a><pre><code>find . -type f -follow -name &#x27;*.[chS]&#x27; |\
+        xargs grep -hi &#x27;[a-z0-9_]\{70,\}&#x27; -- /dev/null</code></pre>
+<a name="windows-collapse-00009"></a><p>gives:</p>
+<a name="windows-collapse-00010"></a><pre><code>70 ZORRO_PROD_PHASE5_BLIZZARD_1230_II_FASTLANE_Z3_CYBERSCSI_CYBERSTORM060</code></pre>
+<a name="windows-collapse-00011"></a><p>So windows is one character closer to hell than linux.</p><footer><a href="voice.html#voice">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="zero.html#zero">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="reiser4-introduction.html#reiser4-introduction">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="reiser4-internal.html#reiser4-internal">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

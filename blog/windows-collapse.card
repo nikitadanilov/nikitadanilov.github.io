@@ -1,0 +1,57 @@
+// name Why windows will collapse ultimately
+// id windows-collapse
+// +# blog windows-collapse
+// +# timeline 2006/03/03
+// +tags programming
+
+`Subject: [ntdev] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts`
+
+_update_: Like this wasn't enough.
+
+Below are excerpts from
+
+; code
+find . -name \*dll |\
+        xargs strings -- |\
+        grep -i '^[a-z0-9_]*$' |\
+        awk '{ print length($1) "\t" $1 }' |\
+        sort -n
+
+output (executed in WinXP system directory):
+
+; code
+50      ZwAccessCheckByTypeResultListAndAuditAlarmByHandle
+51      Java_NPDS_npDSJavaPeer_SetSendMouseClickEvents_stub
+51      Java_NPDS_npDSJavaPeer_SetShowPositionControls_stub
+51      JET_errDistributedTransactionNotYetPreparedToCommit
+52      ACTIVATION_CONTEXT_SECTION_COM_INTERFACE_REDIRECTION
+52      ConvertSecurityDescriptorToStringSecurityDescriptorA
+52      ConvertSecurityDescriptorToStringSecurityDescriptorW
+53      ACTIVATION_CONTEXT_SECTION_GLOBAL_OBJECT_RENAME_TABLE
+55      ACTIVATION_CONTEXT_SECTION_COM_TYPE_LIBRARY_REDIRECTION
+55      SxspComProgIdRedirectionStringSectionGenerationCallback
+56      Java_NPDS_npDSJavaPeer_GetSendOpenStateChangeEvents_stub
+56      Java_NPDS_npDSJavaPeer_GetSendPlayStateChangeEvents_stub
+56      SxspComTypeLibRedirectionStringSectionGenerationCallback
+57      SxspComputeInternalAssemblyIdentityAttributeBytesRequired
+57      SxspWindowClassRedirectionStringSectionGenerationCallback
+62      SxspComputeInternalAssemblyIdentityAttributeEncodedTextualSize
+62      SxspGenerateTextuallyEncodedPolicyIdentityFromAssemblyIdentity
+64      RtlpQueryAssemblyInformationActivationContextDetailedInformation
+71      RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation
+/ += . "RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation" -> http://www.openrce.org/reference_library/win32_call_chains/XPSP2/NTDLL/RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation
+
+which probably gives us the champion. 
+
+As a comparison, for linux-2.6.15
+
+; code
+find . -type f -follow -name '*.[chS]' |\
+        xargs grep -hi '[a-z0-9_]\{70,\}' -- /dev/null
+
+gives:
+
+; code
+70 ZORRO_PROD_PHASE5_BLIZZARD_1230_II_FASTLANE_Z3_CYBERSCSI_CYBERSTORM060
+
+So windows is one character closer to hell than linux.
