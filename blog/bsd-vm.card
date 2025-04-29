@@ -1,0 +1,30 @@
+// name BSD VM scanner
+// id bsd-vm
+// +# blog bsd-vm
+// +# timeline 2005/07/25:15:57
+// +tags programming
+// +tags kernel
+// +tags vm
+
+
+BSD vm analyzes object reference counter in page scanner
+(vm_pageout.c:vm_pageout_scan()):
+
+; code
+/*
+ * If the object is not being used, we ignore previous 
+ * references.
+ */
+if (m->object->ref_count == 0) {
+        vm_page_flag_clear(m, PG_REFERENCED);
+        pmap_clear_reference(m);
+}
+....
+/*
+ * Only if an object is currently being used, do we use the
+ * page activation count stats.
+ */
+if (actcount && (m->object->ref_count != 0)) {
+        vm_pageq_requeue(m);
+}
+....
