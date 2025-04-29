@@ -1,0 +1,172 @@
+// name kernel patches for 2.6.12-rc6
+// id patches-2.6.12
+// +# blog patches-2.6.12
+// +# timeline 2005/06/11
+// +tags programming
+// +tags kernel
+
+After long delay I updated my kernel patches to 2.6.12-rc6. This required
+installing git and cogito, but it turned out that time wasn't wasted: these
+tools beat bitkeeper hands down CPU-wise. 
+/ += . "git" -> http://kernel.org/git/
+/ += . "cogito" -> http://lwn.net/Articles/133938/
+/ += . "bitkeeper" -> http://bitmover.com
+
+New version of patches is uploaded here.
+/ += . "here" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11
+ 
+
+This series include:
+
+`vm_01-zoneinfo.patch`
+/ += . "vm_01-zoneinfo.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_01-zoneinfo.patch
+
+>Add /proc/zoneinfo file to display information about memory zones. Useful to
+ analyze VM behaviour. This was merged into -mm.
+
+`vm_02-skip-writepage.patch`
+/ += . "vm_02-skip-writepage.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_02-skip-writepage.patch
+
+>Don't call `->writepage` from VM scanner when page is met for the first time
+ during scan.
+
+>New page flag `PG_skipped` is used for this. This flag is `TestSet`-ed just
+ before calling `->writepage` and is cleaned when page enters inactive list.
+
+>One can see this as "second chance" algorithm for the dirty pages on the
+ inactive list.
+
+>BSD does the same: `src/sys/vm/`vm_pageout.c:vm_pageout_scan(), `PG_WINATCFLS`
+ flag.
+
+>Reason behind this is that ->writepages() will perform more efficient writeout
+than ->writepage(). Skipping of page can be conditioned on zone->pressure.
+
+>On the other hand, avoiding ->writepage() increases amount of scanning
+ performed by kswapd.
+
+>(Possible drawback: executable text pages are evicted earlier.)
+
+`vm_03-dont-rotate-active-list.patch`
+/ += . "vm_03-dont-rotate-active-list.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_03-dont-rotate-active-list.patch
+
+>Currently, if zone is short on free pages, refill_inactive_zone() starts moving
+ pages from active_list to inactive_list, rotating active_list as it goes. That
+ is, pages from the tail of active_list are transferred to its head, thus
+ destroying lru ordering, exactly when we need it most --- when system is low on
+ free memory and page replacement has to be performed.
+
+>This patch modifies refill_inactive_zone() so that it scans active_list without
+ rotating it. To achieve this, special dummy page `zone->scan_page` is
+ maintained for each zone. This page marks a place in the active_list reached
+ during scanning.
+
+>As an additional bonus, if memory pressure is not so big as to start swapping
+mapped pages (`reclaim_mapped == 0` in refill_inactive_zone()), then not
+referenced mapped pages can be left behind `zone->scan_page` instead of moving
+them to the head of `active_list`. When reclaim_mapped mode is activated,
+`zone->scan_page` is reset back to the tail of `active_list` so that these pages
+can be re-scanned.
+
+`vm_04-__alloc_pages-inject-failure.patch`
+/ += . "vm_04-__alloc_pages-inject-failure.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_04-__alloc_pages-inject-failure.patch
+
+>Force artificial failures in page allocator. I used this to harden some kernel
+ code.
+
+`vm_05-page_referenced-move-dirty.patch`
+/ += . "vm_05-page_referenced-move-dirty.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_05-page_referenced-move-dirty.patch
+
+>transfer dirtiness from pte to the struct page in page_referenced(). This makes
+ pages dirtied through mmap "visible" to the file system, that can write them
+ out through ->writepages() (otherwise pages are written from ->writepage() from
+ tail of the inactive list).
+
+`vm_06-cluster-pageout.patch`
+/ += . "vm_06-cluster-pageout.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_06-cluster-pageout.patch
+
+>Implement pageout clustering at the VM level.
+
+>With this patch VM scanner calls pageout_cluster() instead of
+ ->writepage(). pageout_cluster() tries to find a group of dirty pages around
+ target page, called _pivot_ page of the cluster. If group of suitable size
+ is found, ->writepages() is called for it, otherwise, page_cluster() falls back
+ to ->writepage().
+
+>This is supposed to help in work-loads with significant page-out of file-system
+ pages from tail of the inactive list (for example, heavy dirtying through
+ mmap), because file system usually writes multiple pages more
+ efficiently. Should also be advantageous for file-systems doing delayed
+ allocation, as in this case they will allocate whole extents at once.
+
+>Few points:
+
+
+>> swap-cache pages are not clustered (although they can be, but by
+   `page->private` rather than `page->index`) 
+
+>> only kswapd do clustering, because direct reclaim path should be low
+   latency.
+
+>> this patch adds new fields to struct writeback_control and expects
+   ->writepages() to interpret them. This is needed, because pageout_cluster()
+   calls ->writepages() with pivot page already locked, so that ->writepages() is
+   allowed to only trylock other pages in the cluster.
+
+>> Besides, rather rough plumbing (`wbc->pivot_ret` field) is added to check
+   whether ->writepages() failed to write pivot page for any reason (in latter
+   case page_cluster() falls back to ->writepage()).
+
+>> Only mpage_writepages() was updated to honor these new fields, but all
+   in-tree ->writepages() implementations seem to call
+   mpage_writepages(). (Except reiser4, of course, for which I'll send a
+   (trivial) patch, if necessary).
+
+>`vm_07-proc-stack.patch`
+/ += . "vm_07-proc-stack.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_07-proc-stack.patch
+
+>Export kernel backtrace in `/proc/<pid>/task/<tid>/stack`. Useful when
+ debugging deadlocks.
+
+>This somewhat duplicates functionality of SysRq-T, but is less intrusive to
+ the system operation and can be used in the scripts.
+
+>Exporting kernel stack of a thread is probably unsound security-wise. Use with
+ care.
+
+>Instead of adding yet another architecture specific function to output thread
+ stack through `seq_file` API, it introduces _iterator_;
+
+; code
+>void do_with_stack(struct task_struct *tsk, 
+     int (*actor)(int, void *, void *, void *), void *opaque)
+
+>that has to be implemented by each architecture, so that generic code can
+ iterate over stack frames in architecture-independent way.
+
+>`lib/do_with_stack.c` is provided for archituctures that don't implement their
+ own. It is based on `__builtin_{frame,return}`_address().
+
+`vm_08-proc-sleep.patch`
+/ += . "vm_08-proc-sleep.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_08-proc-sleep.patch
+
+>export per-process blocking statistics in `/proc/<pid>/task/<tid>/sleep` and
+ global sleeping statistics in `/proc/sleep`. Statistics collection for given
+ file is activated on the first read of corresponding `/proc` file. When
+ statistics collection is on on each context switch current back-trace is built
+ (through `__`builtin_return_address()). For each monitored process there is a LRU
+ list of such back-traces. Useful when trying to understand where elapsed time
+ is spent.
+
+`vm_09-ll_merge_requests_fn-cleanup.patch`
+/ += . "vm_09-ll_merge_requests_fn-cleanup.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_09-ll_merge_requests_fn-cleanup.patch
+
+>ll_merge_requests_fn() assigns `total_{phys,hw}_segments` twice. Fix this and a
+typo. Merged into -mm.
+
+`vm_0a-deadline-iosched.c-cleanup.patch`
+/ += . "vm_0a-deadline-iosched.c-cleanup.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.12-rc6/2005.06.11/vm_0a-deadline-iosched.c-cleanup.patch
+
+>Small cleanup.
+
+`rmap-cleanup.patch` and `WRITEPAGE_ACTIVATE-doc-fix.patch` were merged into Linus tree.

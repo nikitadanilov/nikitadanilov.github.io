@@ -92,15 +92,15 @@ inactive list.
 
 >Few points:
 
->swap-cache pages are not clustered (although they can be, but by page->private
+>>swap-cache pages are not clustered (although they can be, but by page->private
  rather than page->index)
 
->only kswapd do clustering, because direct reclaim path should be low latency.
+>>only kswapd do clustering, because direct reclaim path should be low latency.
 
->Original version of this patch added new fields to `struct writeback_control`
- and expected ->writepages() to interpret them. This led to hard-to-fix races
- against inode reclamation. Current version simply calls ->writepage() in the
- "correct" order, i.e., in the order of increasing page indices..
+>>Original version of this patch added new fields to `struct writeback_control`
+  and expected ->writepages() to interpret them. This led to hard-to-fix races
+  against inode reclamation. Current version simply calls ->writepage() in the
+  "correct" order, i.e., in the order of increasing page indices..
 
 `vm_07-proc-stack.patch`
 / += . "vm_07-proc-stack.patch" -> http://linuxhacker.ru/~nikita/patches/2.6.14-rc5/06-proc-stack.patch
