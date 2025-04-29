@@ -1,0 +1,13 @@
+// name Wikipedia
+// id wikipedia
+// +# blog wikipediac
+// +# timeline 2005/07/31
+// +tags programming
+
+
+I added a bit of material to the Wikipedia entry on Page replacement algorithms:
+a bit of history, precleaning, global vs. local replacement, description of LRU
+degradation for cyclic access patterns, random replacement, links to the modern
+algorithms, unification of VM with file system cache, etc. Original entry was
+more or less re-hash of a section from Tannenbaum's "Operating Systems".
+/ += . "Page replacement algorithms" -> http://en.wikipedia.org/wiki/Page_replacement_algorithms
