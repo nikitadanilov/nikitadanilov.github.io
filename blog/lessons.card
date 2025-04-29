@@ -1,0 +1,19 @@
+// name A bit of out-of-context quoting
+// id lessons
+// +# blog lessons
+// +# timeline 2006/01/11
+// +tags programming
+
+Lessons Learned
+/ += . "Lessons Learned" -> http://blogs.sun.com/roller/resources/esaxe/recruiting-preso-v2.pdf
+/ +* "Lessons Learned" The quoted document is lost.
+
+>Solaris has been functioning, essentially, by accident, for over one year.
+
+>_We realize this again and again, every so often..._
+         
+>It is amazing that anything works at all
+
+>It's all broken
+
+>...
