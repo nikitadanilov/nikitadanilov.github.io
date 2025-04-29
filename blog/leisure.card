@@ -1,0 +1,41 @@
+// name Leisure pace of progress
+// id leisure
+// +# blog leisure
+// +# timeline 2007/08/08
+// +tags programming
+
+Recently I found a paper in ACM Library describing two distributed file systems
+with the following features:
+/ += . "ACM Library" -> http://acm.org
+
+>distributed read-write locking at the byte granularity;
+
+>user visible distributed transactions with isolation and roll-back;
+
+>capability based authentication;
+
+>files implemented as B-trees;
+
+>distributed garbage collection of unreferenced objects;
+
+>atomicity through COW (aka _shadow writes_, aka _wandering logs_);
+
+>intent logging of file system updates (hello, ZFS);
+/ += . "ZFS" -> http://en.wikipedia.org/wiki/Zfs
+
+>storage failure resilience methods, similar to ones in TileFS;
+/ += . "TileFS" -> http://marc.info/?l=linux-fsdevel&amp;m=117779868908188&amp;w=2
+
+>directories implemented as separate service, using the same interface as usual clients.
+
+Quite impressive and obviously matched by nothing publicly available
+currently. How it happened that these marvels are not trumpeted about on every
+corner? Very simple: these systems were put in production _before 1981_. AD,
+that is. Funny enough, one of them is even named CFS.
+/ += . "CFS" -> http://clusterfs.com
+
+[0] James G. Mitchell, Jeremy Dion _A comparison of two network-based file servers_
+/ += . "A comparison of two network-based file servers" -> http://portal.acm.org/citation.cfm?id=358475&amp;dl=ACM&amp;coll=portal
+
+[1] Jeremy Dion _The Cambridge File Server_
+/ += . "The Cambridge File Server" -> http://portal.acm.org/citation.cfm?id=850710&amp;dl=ACM&amp;coll=portal
