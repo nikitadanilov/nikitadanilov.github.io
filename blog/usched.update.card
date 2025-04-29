@@ -1,0 +1,50 @@
+// name usched: update
+// id usched.update
+// +# blog usched.update
+// +# timeline 2022/10/11
+// +# usched update
+// +tags programming
+
+_Update_ for the previous post about stackswap coroutine implementation usched.
+/ += . "the previous post" -> !usched-start "^."
+/ += . "usched" -> https://github.com/nikitadanilov/usched
+/ id start
+
+To recap, usched is an experimental (and _very_ simple, 120LOC) coroutine
+implementation different from stackful and stackless models: coroutines are
+executed on the native stack of the caller and when the coroutine is about to
+block its stack is copied into a separately allocated (e.g., in the heap)
+buffer. The buffer is copied back onto the native stack when the coroutine is
+ready to resume.
+
+I added a new scheduler ll.c that distributes coroutines across multiple native
+threads and then does lockless scheduling within each thread. In the benchmark
+(the same as in the previous post), each coroutine in the communicating _cycle_
+belongs to the same thread.
+/ += . "ll\.c" -> https://github.com/nikitadanilov/usched/blob/master/ll.c
+
+Results are amazing: usched actually beats compiler-assisted C++ coroutines by a
+large margin. The horizontal axis is the number of coroutines in the test
+(logarithmic) and the vertical axis is coroutine wakeup-wait operations per
+second (1 == 1e8 op/sec).
+
+; img
+/ url https://raw.githubusercontent.com/nikitadanilov/usched/master/c8-darwin.png
+/ width 100%
+
+; math
+\begin{array}{|l|r|r|r|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+           &    16 & 32 & 64 & 400 & 800 & 4000 & 8000 & 40000 & 80000 & 400000 & 800000 & 4M & 8M \\ \hline
+\text{GO}  & 0.077 & 0.127 & 0.199 & 0.326 & 0.323 & 0.285 & 0.228 & 0.142 & 0.199 & 0.305 & 0.303 & 0.286 & 0.268  \\ \hline
+\text{C++} & 1.089 & 1.234 & 1.344 & 1.262 & 1.201 & 1.159 & 1.141 & 1.135 & 1.163 & 1.168 & 1.138 & 1.076 & 1.051 \\ \hline
+\text{UL}  & 0.560 & 0.955 & 1.515 & 2.047 & 2.095 & 2.127 & 2.148 & 2.160 & 2.154 & 2.020 & 1.932 & 1.819 & 1.811 \\ \hline
+\end{array}
+
+I only kept the most efficient implementation from every competing class: C++
+for stackless, GO for stackful and usched for stackswap. See the full results in
+results.darwin
+/ += . "results\.darwin" -> https://github.com/nikitadanilov/usched/blob/master/results.darwin
+
+
+

@@ -10,6 +10,7 @@ shocking as it is, over time we learn to live with it, because the bijections
 between continua of different dimensions are extremely discontinuous and we
 assume that if we limit ourselves to any reasonably well-behaving class of maps
 the isomorphisms will disappear. Will they?
+/ id start
 
 >_Theorem_. Additive groups \(\mathbb{R}^n\) are isomorphic for all \(n >0\)
  (and, therefore, isomorphic to the additive group of the complex numbers).

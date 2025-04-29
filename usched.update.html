@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>usched: update</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="usched.update"></a>
+<div class="column"><header>usched: update</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="usched.html#usched-start"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
+<a name="usched.update-start"></a><p><span class="linktarget" data-uid="0"></span><i>Update</i> for <a href="usched.html#usched-start">the previous post</a> about stackswap coroutine implementation <a href="https://github.com/nikitadanilov/usched">usched</a>.</p>
+<a name="usched.update-00001"></a><p>To recap, usched is an experimental (and <i>very</i> simple, 120LOC) coroutine implementation different from stackful and stackless models: coroutines are executed on the native stack of the caller and when the coroutine is about to block its stack is copied into a separately allocated (<i>e.g.</i>, in the heap) buffer. The buffer is copied back onto the native stack when the coroutine is ready to resume.</p>
+<a name="usched.update-00002"></a><p>I added a new scheduler <a href="https://github.com/nikitadanilov/usched/blob/master/ll.c">ll.c</a> that distributes coroutines across multiple native threads and then does lockless scheduling within each thread. In the benchmark (the same as in the previous post), each coroutine in the communicating <i>cycle</i> belongs to the same thread.</p>
+<a name="usched.update-00003"></a><p>Results are amazing: usched actually beats compiler-assisted C++ coroutines by a large margin. The horizontal axis is the number of coroutines in the test (logarithmic) and the vertical axis is coroutine wakeup-wait operations per second (1 == 1e8 op/sec).</p>
+<a name="usched.update-00004"></a><p><center>
+<img src="https://raw.githubusercontent.com/nikitadanilov/usched/master/c8-darwin.png" border="0" width="100%"></center></p>
+<a name="usched.update-00005"></a>$$\begin{array}{|l|r|r|r|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+           &amp;    16 &amp; 32 &amp; 64 &amp; 400 &amp; 800 &amp; 4000 &amp; 8000 &amp; 40000 &amp; 80000 &amp; 400000 &amp; 800000 &amp; 4M &amp; 8M \\ \hline
+\text{GO}  &amp; 0.077 &amp; 0.127 &amp; 0.199 &amp; 0.326 &amp; 0.323 &amp; 0.285 &amp; 0.228 &amp; 0.142 &amp; 0.199 &amp; 0.305 &amp; 0.303 &amp; 0.286 &amp; 0.268  \\ \hline
+\text{C++} &amp; 1.089 &amp; 1.234 &amp; 1.344 &amp; 1.262 &amp; 1.201 &amp; 1.159 &amp; 1.141 &amp; 1.135 &amp; 1.163 &amp; 1.168 &amp; 1.138 &amp; 1.076 &amp; 1.051 \\ \hline
+\text{UL}  &amp; 0.560 &amp; 0.955 &amp; 1.515 &amp; 2.047 &amp; 2.095 &amp; 2.127 &amp; 2.148 &amp; 2.160 &amp; 2.154 &amp; 2.020 &amp; 1.932 &amp; 1.819 &amp; 1.811 \\ \hline
+\end{array}$$
+<a name="usched.update-00006"></a><p>I only kept the most efficient implementation from every competing class: C++ for stackless, GO for stackful and usched for stackswap. See the full results in <a href="https://github.com/nikitadanilov/usched/blob/master/results.darwin">results.darwin</a></p><footer><a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="vale.html#vale">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="python-dict.html#python-dict">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="qm.html#qm">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_usched.html">usched</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

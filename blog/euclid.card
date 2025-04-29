@@ -141,8 +141,8 @@ is, \(\Delta(n/m \cdot X) = n/m \cdot \Delta(X)\). This corresponds to the
 _not_ necessarily linear. To obtain linearity, an additional condition
 is needed. The traditional proof uses continuity: a continuous (at least at one
 point) additive function is necessarily linear.
-/ += . "Unexpected isomorphism" -> https://www.cofault.com/2020/10/unexpected-isomorphism.html
-/ += . "The Hunt for Addi\(c\)tive Monster" -> https://www.cofault.com/2010/02/hunt-for-addictive-monster-2.html
+/ += . "Unexpected isomorphism" -> !iso-start "^."
+/ += . "The Hunt for Addi\(c\)tive Monster" -> !hunt.1-start "^."
 
 Legendre's proof uses monotonicity: a monotonic additive function is always
 linear. This is clever, because monotonicity is not an additional assumption: it
