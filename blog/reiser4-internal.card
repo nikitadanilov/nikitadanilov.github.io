@@ -1,0 +1,189 @@
+// name reiser4: 1. internal tree
+// id reiser4-internal
+// +# blog reiser4-internal
+// +# timeline 2006/03/26
+// +# reiser4 1.internal-tree
+// +tags programming
+// +tags fs
+// +tags reiser4
+
+This continues previous entry: introduction
+/ += . "introduction" -> !reiser4-introduction-start "^."
+
+; head
+0. B-trees overview
+/ level 2
+
+B-tree is am umbrella term for a variety of similar algorithms used to implement
+dictionary abstraction suitable in a form suitable for external storage. Reiser4
+version of this algorithms, officially known as a dancing tree is closest to the
+B+-tree. Basically, in B+-tree user-supplied data records are stored in leaf
+nodes. Each leaf node keeps records from some particular key range (adjusted
+dynamically). Each leaf node is referenced from its parent: this reference is a
+pointer to the child (block number usually) and the smallest key in the key
+range covered by this leaf. Parent node contains multiple references to its
+children nodes, again from some particular key range. Parent node may have its
+own parent and so on until whole key space is covered.
+/ += . "B-tree" -> http://en.wikipedia.org/wiki/B-tree
+/ += . "dictionary" -> http://en.wikipedia.org/wiki/Associative_array
+/ += . "dancing tree" -> http://en.wikipedia.org/wiki/Dancing_tree
+/ += . "B\+-tree(?=\.)" -> http://en.wikipedia.org/wiki/B%2B_tree
+/ id start
+
+Compare this with B-trees proper, where data records are stored at the levels
+other than leaf one. Also compare this with radix tree (aka PATRICIA) where key
+range covered by given node is uniquely determined by its level rather than
+adjusted dynamically as in B-trees.
+/ += . "radix tree" -> http://en.wikipedia.org/wiki/PATRICIA
+
+Contents of reiser4 internal tree are initially stored on the disk. As file
+system operations go on, some blocks from the tree are read into memory and
+cached there. When new node is added to the tree, it first exists as a
+block-size buffer in memory. Under some conditions portions of tree are written
+out from memory back to the stable storage. During write-out, nodes that were
+marked dirty (either as a result of a modification, or because they are newly
+created), are written to the appropriate disk block and marked clean. Clean
+nodes can be discarded from memory.
+
+; head
+1. lookup and modification
+/ level 2
+
+Lookup operation locates a record with a given key in a tree, or locates a place
+where such record will be inserted (this place is uniquely identified by a key)
+if it doesn't exist yet. All other tree operations start with lookup, because
+they have to find a place in a tree identified by given key.
+/ id lookup-and-modification
+
+Roughly speaking, lookup starts from the top of the tree, searches through index
+node to find it which of its children given key falls, loads that child node and
+repeats until it gets to the leaf level. One can say that lookup is
+top-to-bottom tree operation.
+
+This poses two questions:
+
+>What is the top of a tree and how to find it?
+
+>How to find out which child node to proceed with?
+
+First question seems trivial, because every tree has a root node, right? The
+problem is that, as will be explained below, concurrent tree modification
+operation may grow the tree by adding new root to it (so that old root becomes
+child of a new one), or shrink it by killing existing root. To avoid this,
+reiser4 tree has special imaginary node, existing only in memory that logically
+hangs just above root node. First of all, lookup locks this node and learns
+location of root node from it. After this, it loads root node in memory and
+releases the lock. This imaginary node is called uber-node. Curiously enough,
+Sun ZFS uses exactly the same term for the very similar thing. They even have
+`0x00babl0c` magic number in their disk format, that is supposed to be as close
+as possible to the pronunciation of "uber block" (even more funny, "bablo" is
+Russian slang word for money, bucks).
+/ += . "uber(?=-)" -> http://en.wiktionary.org/wiki/%C3%BCber
+
+To make search for a child node containing given key efficient, keys in the
+parent node are stored in an ordered array, so that binary search can be
+used. That binary search is (under many workloads) the single most critical CPU
+operation.
+
+Now we known enough to code reiser4 lookup algorithm (search.c:traverse_tree()):
+
+; code
+traverse_tree(key) {
+        node     *parent; /* parent node */
+        node     *child;  /* child node */
+        position  ptr;    /* position of record within node */
+|
+        child = ubernode;
+        ptr   = ubernode.root; /* put root block number in ptr */
+|
+        while (!node_is_leaf(child)) {
+                parent = child;
+                /* load node, stored at the given block, into memory */
+                child = node_at(ptr);
+                lock(child);
+                ptr = binary_search(child, key);
+                unlock(parent);
+        }
+        return ptr;
+}
+
+Few comments:
+
+>`position` identifies a record within node. For leaf level this is actual
+ record with user data, for non-leaf levels, record contains pointers to the
+ child node.
+
+>note that lock on the child node is acquired before lock on the parent is
+ released, that is, two locks are held at some moment. This is traditional tree
+ traversal technique called lock coupling or lock crabbing.
+
+>traverse_tree() returns with ptr positioned at the record with required key
+ (or at the place where such record would be inserted) and with appropriate leaf
+ node locked.
+
+As was already mentioned above, tree lookup is comparatively expensive
+(computationally, if nothing more) operation. At the same time, almost
+everything in reiser4 uses it extensively. As a result, significant effort has
+been put into making tree lookup more efficient. Algorithm itself doesn't leave
+much to be desired: its core is binary search and it can be optimized only that
+far. Instead, multiple mechanisms were developed that allows to bypass full tree
+lookup under some conditions. These mechanisms are:
+
+
+>seals
+/ += . "seals" -> !reiser4-internal-seals "^."
+
+>vroot
+/ += . "vroot" -> !reiser4-internal-vroot "^."
+
+>look-aside cache (cbk cache)
+/ += . "look-aside cache" -> !reiser4-internal-look-aside-cache "^."
+
+; head
+1.1. seals
+/ level 3
+
+A seal is a weak pointer to a record in the tree. Every node in a tree maintains
+version counter, that is incremented on each node modification. After lookup for
+a given key was performed, seal can be created that remembers block number of
+found leaf node and its version counter at the moment of lookup. Seal
+verification process checks that node recorded in the seal is still in the tree
+and that its version counter is still the same as recorded. If both conditions
+are met, pointer to the record returned by lookup can still be used, and
+additional lookup for the same key can be avoided.
+/ id seals
+
+; head
+1.2. vroot
+/ level 3
+
+Higher-level file system object such as regular files and directories is
+represented as a set of tree records. Keys of these records are usually confined
+in some key range, and, due to the nature of B-trees, are all stored in the
+nodes having common ancestor node that is not necessary root. That is, records
+constituting given object are located in some subtree of reiser4 internal
+tree. Idea of vroot (virtual root) optimization is to track root of that
+sub-tree and to start lookups for object records from vroot rather than from
+real tree root. vroot is updated lazily: when lookup finds that tree was
+modified so that object subtree is no longer rooted at vroot, tree traversal
+restarts from real tree root and vroot is determined during descent.
+/ id vroot
+
+Additional important advantage of vroot is that is decreases lock contention for the root node.
+
+; head
+1.3. look-aside cache
+/ level 3
+
+Look-aside cache is simply a list of last N leaf nodes returned by tree
+lookup. This list is consulted before embarking into full-blown top-to-bottom
+traversal. This simple mechanism works due to locality of reference for tree
+accesses.
+/ += . "locality of reference" -> http://en.wikipedia.org/wiki/Locality_of_reference
+/ id look-aside-cache
+
+  To be continued:
+
+>2. concurrency control: lock ordering, hi-lo ordering
+>3. eottl
+>4. node format

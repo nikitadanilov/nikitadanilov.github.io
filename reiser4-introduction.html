@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>reiser4: 0. introduction</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="reiser4-introduction"></a><div class="column"><header>reiser4: 0. introduction</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="reiser4-internal.html#reiser4-internal-00000"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
+<a name="reiser4-introduction-start"></a><p><span class="linktarget" data-uid="0">T</span>his is an introduction to the series of entries I am going to write about reiser4 file system. The plan, for the time being, goes like this:</p>
+<a name="reiser4-introduction-00001"></a><p style="margin-left: 3em;">0. introduction</p>
+<a name="reiser4-introduction-00002"></a><p style="margin-left: 6em;">0. <a href="#reiser4-introduction-trivia">trivia</a></p>
+<a name="reiser4-introduction-00003"></a><p style="margin-left: 6em;">1. <a href="#reiser4-introduction-strong-points">reiser4 strong points</a></p>
+<a name="reiser4-introduction-00004"></a><p style="margin-left: 6em;">2. <a href="#reiser4-introduction-architecture-overview">architecture overview</a></p>
+<a name="reiser4-introduction-00005"></a><p style="margin-left: 3em;">1. <a href="reiser4-internal.html#reiser4-internal-start">internal tree</a></p>
+<a name="reiser4-introduction-00006"></a><p style="margin-left: 6em;">0. <a href="reiser4-internal.html#reiser4-internal-start">B-trees overview</a></p>
+<a name="reiser4-introduction-00007"></a><p style="margin-left: 6em;">1. <a href="reiser4-internal.html#reiser4-internal-lookup-and-modification">lookup and modification</a></p>
+<a name="reiser4-introduction-00008"></a><p style="margin-left: 6em;">2. concurrency control: lock ordering, hi-lo ordering</p>
+<a name="reiser4-introduction-00009"></a><p style="margin-left: 6em;">3. eottl</p>
+<a name="reiser4-introduction-00010"></a><p style="margin-left: 6em;">4. node format</p>
+<a name="reiser4-introduction-00011"></a><p style="margin-left: 3em;">2. tree clients</p>
+<a name="reiser4-introduction-00012"></a><p style="margin-left: 6em;">0. regular file</p>
+<a name="reiser4-introduction-00013"></a><p style="margin-left: 6em;">1. tail to extent conversion</p>
+<a name="reiser4-introduction-00014"></a><p style="margin-left: 3em;">3. transaction engine</p>
+<a name="reiser4-introduction-00015"></a><p style="margin-left: 6em;">0. goals: atomicity, no isolation, durability</p>
+<a name="reiser4-introduction-00016"></a><p style="margin-left: 6em;">1. log structure</p>
+<a name="reiser4-introduction-00017"></a><p style="margin-left: 6em;">2. shadow updates</p>
+<a name="reiser4-introduction-00018"></a><p style="margin-left: 3em;">4. directory code</p>
+<a name="reiser4-introduction-00019"></a><p style="margin-left: 6em;">0. overview of hashed directories</p>
+<a name="reiser4-introduction-00020"></a><p style="margin-left: 6em;">1. key structure and its motivation</p>
+<a name="reiser4-introduction-00021"></a><p style="margin-left: 6em;">2. lookup readdir</p>
+<a name="reiser4-introduction-00022"></a><p style="margin-left: 6em;">3. NFS?</p>
+<a name="reiser4-introduction-00023"></a><p style="margin-left: 3em;">5. delayed allocation and the flush algorithm</p>
+<a name="reiser4-introduction-00024"></a><p style="margin-left: 6em;">0. delayed allocation motivation</p>
+<a name="reiser4-introduction-00025"></a><p style="margin-left: 6em;">1. flush algorithm</p>
+<a name="reiser4-introduction-00026"></a><p style="margin-left: 6em;">2. overview of interaction with VM</p>
+<a name="reiser4-introduction-00027"></a><p style="margin-left: 6em;">3. emergency flush</p>
+<a name="reiser4-introduction-00028"></a><p style="margin-left: 3em;">6. round up</p>
+<a name="reiser4-introduction-00029"></a><h2>0. trivia</h2><p class="margin-left"><span class="annotation" data-uid="0">[<a href="#reiser4-introduction-00002"><span style="color: orange">1</span></a>]</span>&nbsp;</p>
+<a name="reiser4-introduction-trivia"></a><p><span class="linktarget" data-uid="0"><a href="http://namesys.com/v4/v4.html">R</span>eiser4</a> is a relatively new file system for Linux developed by <a href="http://namesys.com">namesys</a>. Its development started early in 2001, and currently reiser4 is included into <a href="ftp://ftp.kernel.org/pub/linux/kernel/people/akpm/patches/2.6"><code class="inline">-mm</code></a> patch series. <a href="http://namesys.com/v4/v4.html">Reiser4</a> is a next version of well-known reiserfs v3 file system (also known as simply reiserfs) that was first and for a long time the only journalled file system for Linux. While reiser4 is based on the same basic architectural ideas as reiserfs v3 it was written completely from scratch and its on-disk format is not compatible with reiserfs. Note on naming: <a href="http://namesys.com">namesys</a> insists that file system is referred to as reiser4 and not reiserfs v4, or reiser4fs, or reiserfs4, or r4fs. Development of reiser4 was sponsored by <a href="http://darpa.mil">DARPA</a>, take a look at the <a href="http://namesys.com">namesys</a> front page for a legal statement, and a list of other sponsors.</p>
+<a name="reiser4-introduction-00031"></a><p>Technically speaking reiser4 can be briefly discussed as a file system using</p>
+<a name="reiser4-introduction-00032"></a><p style="margin-left: 3em;">global shared balanced lazily compacted tree to store all data and meta-data</p>
+<a name="reiser4-introduction-00033"></a><p style="margin-left: 3em;">bitmaps for block allocation</p>
+<a name="reiser4-introduction-00034"></a><p style="margin-left: 3em;">redo-only WAL (write ahead logging) with shadows updates (called &quot;wandered logs&quot; in reiser4)</p>
+<a name="reiser4-introduction-00035"></a><p style="margin-left: 3em;">delayed allocation in parent-first tree ordering</p>
+<a name="reiser4-introduction-00036"></a><p>I shall (hopefully) describe these topics in more details in the future entries.</p>
+<a name="reiser4-introduction-00037"></a><p>One last trivia point: I was amongst reiser4 <a href="http://namesys.com/devels.html">developers</a> from the very beginning of this project. At the mid-2004 I left namesys, at that point reiser4 was in more or less debugged state, and no significant design changes occurred since.</p>
+<a name="reiser4-introduction-00038"></a><h2>1. reiser4 strong points</h2><p class="margin-left"><span class="annotation" data-uid="0">[<a href="#reiser4-introduction-00003"><span style="color: orange">2</span></a>]</span>&nbsp;</p>
+<a name="reiser4-introduction-strong-points"></a><p><span class="linktarget" data-uid="0">T</span>ogether with the unique design, reiser4 inherited reiserfs&#x27; strengths and weaknesses:</p>
+<a name="reiser4-introduction-00040"></a><p style="margin-left: 3em;">efficient support for very small files: multiple small files can be stored in  the same disk block. This saves disk space, and <i>much more importantly</i> IO  traffic between secondary and primary storage;</p>
+<a name="reiser4-introduction-00041"></a><p style="margin-left: 3em;">support for very large directories: due to balanced tree (to be described  later), file system can handle directories with hundreds of million of  files. The utility of this (and small files support) is often questioned,  because &quot;nobody uses file system in that way&quot;. Reiser4 design is based on the  assumption, that cause-and-effect goes in the opposite direction here:  applications do not use large directories and small files precisely because  existing file system didn&#x27;t provide efficient means for this. Instead,  application developers had to resort to various hacks from configuration files  (that have obvious hierarchical structure asking for being mapped onto file  system), to artificially splitting large directory into smaller ones (look at  <a href="file:///usr/share/terminfo/"><code class="inline">/usr/share/terminfo/</code></a> directory as an example);</p>
+<a name="reiser4-introduction-00042"></a><p style="margin-left: 3em;">no hard limit on the number of objects on the file system. Traditional UNIX  file systems (s5fs,ffs,ufs,ext2,ext3) fix total number of objects that can  exist on a file system during file system creation. Correct estimation of this  number is a tricky business. Reiser4, on the other hand, creates on-disk inodes  (called &quot;stat data&quot; for historical reasons) dynamically;</p>
+<a name="reiser4-introduction-00043"></a><p style="margin-left: 3em;">previous item can be seen as a weakness, because it means that reiser4 on-disk  format is more complex than that of its brethren. Other advanced reiser4  features also come not without an increase of format complexity. As a result,  reiser4 can be corrupted in much more complicated ways than other file systems,  requiring quite sophisticated fsck.</p>
+<a name="reiser4-introduction-00044"></a><h2>2. architecture overview</h2><p class="margin-left"><span class="annotation" data-uid="0">[<a href="#reiser4-introduction-00004"><span style="color: orange">3</span></a>]</span>&nbsp;</p>
+<a name="reiser4-introduction-architecture-overview"></a><p><span class="linktarget" data-uid="0">A</span>s was already hinted above reiser4 is quite different from other file systems architecturally. The most important difference, perhaps, is that reiser4 introduces another layer (&quot;storage layer&quot;) between file system and block device. This layer provides an abstraction of persistent &quot;container&quot; into which pieces of data (called &quot;units&quot;) can be placed and later retrieved. Units are identified by &quot;keys&quot;: when unit is placed into container a key is given, and unit can later be retrieved by providing its key. Unit key is just a fixed-length sequence of bits.</p>
+<a name="reiser4-introduction-00046"></a><p>In reiser4 this container abstraction is implemented in a form of special flavor of <a href="http://en.wikipedia.org/wiki/B_tree">B-tree</a>. There is one instance of such tree (referred to as &quot;internal tree&quot;) per file system.</p>
+<a name="reiser4-introduction-00047"></a><p>Entities from which file system is composed (regular files, directories, symlinks, on-disk inodes, <i>etc</i>.) are stored in the internal tree as sequences of units.</p>
+<a name="reiser4-introduction-00048"></a><p>In addition to presenting container abstraction, storage layer is responsible for block allocation. That is, as units are inserted and deleted, tree grows and shrinks, taking blocks from block allocator and returning them back. Block allocation policy implemented by storage layer is very simple:</p>
+<a name="reiser4-introduction-00049"></a><p style="margin-left: 3em;">units with close keys are kept as close on disk as possible, and</p>
+<a name="reiser4-introduction-00050"></a><p style="margin-left: 3em;">units should be placed in the disk blocks so that key ordering corresponds to  the block ordering on disk.</p>
+<a name="reiser4-introduction-00051"></a><p>This allows higher layers of the system to influence location of units on disk by selecting unit keys appropriately.</p>
+<a name="reiser4-introduction-00052"></a><p>While this doesn&#x27;t sound especially exciting, key-based block allocation allows reiser4 to implement one extremely important feature: global block allocation policies. For example, by assigning to units of all objects in a given directory keys with the same prefix, higher layer code can assure that all objects located in this directory will be located close to each other on the disk. Moreover, by selecting next few bits of key based on --say-- file name it is possible to arrange all objects in the directory in the same order as readdir returns their names, so that commands like</p>
+<a name="reiser4-introduction-00053"></a><pre><code>$ cp -a * /somewhere</code></pre>
+<a name="reiser4-introduction-00054"></a><p>will not cause a single seek during read. More on this in the section on &quot;delayed allocation and the flush algorithm&quot;.</p>
+<a name="reiser4-introduction-00055"></a><p>So the highest layer in reiser4 implements file system semantics using storage layer as a container. Storage layer uses block allocator to manage disk space and transaction engine to keep file system consistent in case of a crash. Transaction layer talks to block device layer to send data to the storage.</p>
+<a name="reiser4-introduction-00056"></a><p>To Be Continued by: <a href="reiser4-internal.html#reiser4-internal-start">internal tree</a>.</p><footer><a href="reiser4-internal.html#reiser4-internal">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="riemann.html#riemann">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="limit-eval.html#limit-eval">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="reiser4-internal.html#reiser4-internal">&gt;</a>&nbsp;&nbsp;&nbsp;&lt;&nbsp;<a href="series_reiser4.html">reiser4</a>&nbsp;<a href="reiser4-internal.html#reiser4-internal">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
