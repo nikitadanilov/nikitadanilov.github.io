@@ -1,0 +1,48 @@
+// name A look at several memory management units...
+// id mm-units
+// +# blog mm-units
+// +# timeline 2005/08/24
+// +tags programming
+// +tags kernel
+// +tags vm
+
+
+
+An interesting paper (via Muli Ben-Yehuda) that describes, in particular, VM
+organization of several platforms. A bit I didn't knew: ULTRIX uses two level
+page tables that are traversed _bottom-up_: leaf level of the tree lives in the
+virtual space and is contiguous in it. As a result, to handle TLB miss at the
+virtual address A it's enough to do:
+/ += . "paper" -> http://www.engr.umd.edu/~blj/papers/asplos98.pdf
+/ += . "Muli Ben-Yehuda" -> http://www.livejournal.com/users/mulix/157621.html
+
+ULTRIX page-fault handler. V0
+
+; code
+>phys_address = LEAF_TABLE[A >> PTABLE_SHIFT_LEAF];
+
+Obviously it is somewhat more involved in reality, because appropriate portion
+of `LEAF_TABLE[]` can be not in the TLB itself. In the latter case, root node of
+the tree is consulted:
+
+ULTRIX page-fault handler. V1
+
+; code
+        if (tlb_miss(LEAF_TABLE + (A >> PTABLE_SHIFT_LEAF))
+                tlb_load(ROOT_NODE[A >> PTABLE_SHIFT_ROOT],
+                         LEAF_TABLE + (A >> PTABLE_SHIFT_LEAF));
+        phys_address = LEAF_TABLE[A >> PTABLE_SHIFT_LEAF];
+
+Root node is wired down into unmapped (physical) memory.
+
+This design provides following advantages:
+
+>TLB miss handling requires one memory access in the best case, and two in the
+ worst. In top-to-bottom page tables _a la_ Intel, two (or three) accesses are
+ necessary for every TLB refill;
+
+>This integrates nicely with virtually indexed processor caches;
+
+>This allows parts of page tables to be paged out easily.
+
+Unfortunately Digital screwed this design by using slow software filled TLB.
