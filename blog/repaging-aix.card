@@ -1,0 +1,19 @@
+// name Repaging in AIX VM
+// id repaging-aix
+// +# blog repaging-aix
+// +# timeline 2005/07/25
+// +tags programming
+// +tags kernel
+// +tags vm
+
+_Repaging_ was mentioned to me by Rik van Riel long time ago. How this can be
+implemented in Linux? E.g., add `->repage_tree` radix-tree to `struct
+address_space`. (We get 32 bits per-page this way, while we need only one!)
+Insert entry into this tree on each page fault. Do _not_ remove entry when page
+is reclaimed. As a result, `->repage_tree` keeps history of page faults. Check
+it on page fault. If there is an entry for page being faulted in---we have
+"repage". Maintain global counter of elements in `->repage_tree`'s. When it's
+higher than some threshold (AIX uses total number of frames in the primary
+storage), start removing `->repage_tree` elements on reclaim. Disadvantage:
+history is lost when `struct address_space` is destroyed.
+/ += . "_Repaging_" -> http://www.unet.univie.ac.at/aix/aixbman/prftungd/vmmov.htm

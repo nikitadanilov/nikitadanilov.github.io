@@ -1,9 +1,8 @@
 // name Wikipedia
 // id wikipedia
-// +# blog wikipediac
+// +# blog wikipedia
 // +# timeline 2005/07/31
 // +tags programming
-
 
 I added a bit of material to the Wikipedia entry on Page replacement algorithms:
 a bit of history, precleaning, global vs. local replacement, description of LRU
