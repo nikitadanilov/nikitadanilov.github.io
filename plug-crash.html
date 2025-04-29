@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>plug and crash</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="plug-crash"></a><div class="column"><header>plug and crash</header><p class="margin-right"><span class="annotation" data-uid="0"> when I&#x27;ll have a time, I&#x27;ll also record a true story that happened during reiserfs debugging: how saving file in emacs made all processes in the system invisible to ps(1) and top(1).</span>&nbsp;<br></p>
+<a name="plug-crash-00000"></a><p>I had some problems in my local network to-day, so I had to turn off the switch. <i>Bang!</i> My workstation hang immediately as power cord was unplugged from the <code class="inline">D-Link</code>. Initially I thought that something is wrong with the grounding, but a series of painful experiments proved that electricity has nothing to do with this: workstation hung whenever Ethernet cable was pulled off the socket. This looks like complete <a href="http://catb.org/jargon/html/magic-story.html">magic</a> <span class="annotation" data-uid="0">[1]</span> isn&#x27;t it?  Fortunately I was advised to boot kernel with <code class="inline">nmi_watchdog=1</code> (before I went insane, that is), and with the first stack-trace problem became obvious:</p>
+<a name="plug-crash-00001"></a><p style="margin-left: 3em;">when cable is pulled, rtl8139 driver receives an interrupt and the first thing  it does is grabbing of spin-lock, protecting struct rtl8139_private...</p>
+<a name="plug-crash-00002"></a><p style="margin-left: 3em;">after that it goes to print &quot;link-down&quot; message to the console...</p><p class="margin-right"><span class="annotation" data-uid="0"> a console driver that sends kernel messages over network in UDP packets---very useful for debugging.</span>&nbsp;<br></p>
+<a name="plug-crash-00003"></a><p style="margin-left: 3em;">but I am using <span class="annotation" data-uid="0">netconsole</span>, and to print that message netconsole calls back into  rtl8139 driver...</p>
+<a name="plug-crash-00004"></a><p style="margin-left: 3em;">and the first thing it does is grabbing of spin-lock... which is already  grabbed by that very thread---deadlock.</p>
+<a name="plug-crash-00005"></a><p>PS: This is stright <a href="https://www.usenix.org/system/files/1311_05-08_mickens.pdf">from The Night Watch</a>.</p><footer><a href="patches-update.html#patches-update">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="purelisp.introduction.html#purelisp.introduction">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="limit-eval.html#limit-eval">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="грозный.html#грозный">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

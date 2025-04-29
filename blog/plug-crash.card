@@ -1,0 +1,32 @@
+// name plug and crash
+// id plug-crash
+// +# blog plug-crash
+// +# timeline 2005/09/13
+// +tags programming
+// +tags kernel
+
+I had some problems in my local network to-day, so I had to turn off the
+switch. _Bang!_ My workstation hang immediately as power cord was unplugged from
+the `D-Link`. Initially I thought that something is wrong with the grounding,
+but a series of painful experiments proved that electricity has nothing to do
+with this: workstation hung whenever Ethernet cable was pulled off the
+socket. This looks like complete magic [1] isn't it?  Fortunately I was advised
+to boot kernel with `nmi_watchdog=1` (before I went insane, that is), and with
+the first stack-trace problem became obvious:
+/ += . "magic" -> http://catb.org/jargon/html/magic-story.html
+/ +* "\[1\]" when I'll have a time, I'll also record a true story that happened during reiserfs debugging: how saving file in emacs made all processes in the system invisible to ps(1) and top(1).
+
+>when cable is pulled, rtl8139 driver receives an interrupt and the first thing
+ it does is grabbing of spin-lock, protecting struct rtl8139_private...
+    
+>after that it goes to print "link-down" message to the console...
+
+>but I am using netconsole, and to print that message netconsole calls back into
+ rtl8139 driver...
+/ +* "netconsole(?=,)" a console driver that sends kernel messages over network in UDP packets---very useful for debugging.
+    
+>and the first thing it does is grabbing of spin-lock... which is already
+ grabbed by that very thread---deadlock.
+
+PS: This is stright from The Night Watch.
+/ += . "from The Night Watch" -> https://www.usenix.org/system/files/1311_05-08_mickens.pdf
