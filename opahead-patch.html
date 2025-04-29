@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>opahead patch</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="opahead-patch"></a><div class="column"><header>opahead patch</header>
+<a name="opahead-patch-00000"></a><p><a href="http://linuxhacker.ru/~nikita/patches/2.6.15-rc1/0b-opahead.patch">Here</a> is a 2.6.15-rc1 version of <i>opahead</i> patch that was sleeping in my <a href="http://www.zip.com.au/~akpm/linux/patches/patch-scripts-0.20/">patch-scripts</a> series file for some time.</p>
+<a name="opahead-patch-00001"></a><p><i>opahead</i> stands for <i>operation-ahead</i> by analogy with read-ahead. An inspiration for this patch was a <a href="http://www.usenix.org/events/usenix01/kroeger.html">USENIX paper</a> that discusses a smarter than usual read-ahead algorithm. Kroeger and Long implemented a sub-system that kept track of read accesses to files and, according to certain stochastic model uses collected information to try to predict future accesses.</p>
+<a name="opahead-patch-00002"></a><p>opahead uses much simpler model known as <i>Shannon Oracle</i>. (Unfortunately, I failed to find any online reference. I read a description of this algorithm many years ago in a book I no longer have.) It basically maintains enough data to answer following question: for a given sequence of <code class="inline">N</code> reads, what reads have been seen to follow this sequence in the past and how many times? Read that followed the sequence most, is assumed to be most likely to happen, and appropriate read-ahead is issued.</p>
+<a name="opahead-patch-00003"></a><p>If <code class="inline">N</code> equals <code class="inline">1</code> we get familiar <a href="http://en.wikipedia.org/wiki/Markov_Chain">Markov Chain</a> model. This is why the patch is sometimes called <i>Markov read-ahead</i>. But Markov chains have one fundamental disadvantage that makes them unsuitable for the read-ahead implementation: to make efficient read-ahead it&#x27;s necessary to saturate IO layer and for this one has to look <i>more than one</i> event ahead in the future. That is, we have to predict next read, then assume that it did happen, and made new prediction based on that assumption. Obviously, the reliability of consecutive predictions deteriorates quickly, so it&#x27;s very important to make initial prediction as reliable as possible. To this end, predictions are made on the basis of N previous reads, rather than on the basis of single one as in Markov model.</p>
+<a name="opahead-patch-00004"></a><p>Another observation is that this algorithm doesn&#x27;t depend on the nature of the events that are tracked and predicted. It can be generalized to the module that tracks and predicts abstract events that can be compared for equality (and it is that generalized form that is implemented in the patch).</p>
+<a name="opahead-patch-00005"></a><p>That module can be used to do read-ahead at the different layers: VFS, file system, VM (page cache read-ahead), block layer (physical read-ahead); or it can be used for things completely unrelated to the read-ahead like, god forbid... predicting scheduling activity..</p>
+<a name="opahead-patch-00006"></a><p>This patch was used to drive read-ahead at the file system layer (by plugging calls to <code class="inline">opahead_{happens,predict}()</code> into <code class="inline">ext2_file_read()</code>), but even though speed up of kernel compilation was measurable, this turned out to be dead-end, because to read a page from file one has to bring inode it memory first, but currently there is no an API for asynchronous inode loading.</p>
+<a name="opahead-patch-00007"></a><p>Below is a top-level comment from <code class="inline">opahead.h</code> header with the general description of API (at least my effort of typing it in wouldn&#x27;t be wasted).</p>
+<a name="opahead-patch-00008"></a><pre><code>/*
+ * This file is an interface to the op-ahead: a generic prediction engine.
+ *
+ * op-ahead implementation is in lib/opahead.c
+ *
+ * General description.
+ *
+ * op-ahead makes predictions in a certain domain consisting of events. Events
+ * happen sequentially. op-head clients notify engine about events that
+ * happen, and engine keeps track of event patterns. Engine then can be asked
+ * a question: &quot;Given a sequence of N last events, what is the next event to
+ * happen most likely?&quot;
+ *
+ * To answer this question, op-ahead keeps track of all sequences of N events
+ * ever observed in the domain. N is called domain depth, and said sequences
+ * are called paths. For each path op-ahead maintains a list of events that
+ * were observed to follow this path (that is, to happen immediately after
+ * events in the path happened in order). These following events (called
+ * guesses) are weighted: the weight is a guess is a number of times it was
+ * observed to follow this path.
+ *
+ * op-ahead operation is quite simple: when event E happens, op-ahead finds a
+ * path corresponding to last happened events, and increases the weight of
+ * guess corresponding to E (creating new guess if necessary).
+ *
+ * When asked to predict what event will follow given N events, op-ahead finds
+ * path corresponding to these events and returns the guess with the largest
+ * weight. If there are multiple guesses with the equal weight---random one is
+ * selected.
+ *
+ * When domain depth is 1, paths degenerate into events and op-ahead into
+ * modeling Markov chains.
+ *
+ * op-ahead algorithm is known as &quot;Shannon Oracle&quot;. It is reported that in the
+ * domain of two events &quot;tail&quot; and &quot;head&quot;, and with the depth of 5, Shannon
+ * Oracle robustly beats human player in the game of head and tails (that is,
+ * after some period of learning it&#x27;s able to predict next move with the
+ * probability higher than 0.5). You are hereby requested to spend at least 10
+ * percent of proceeds obtained from playing head and tails with the help of
+ * this kernel code to buy hardware and to provide it to Linux kernel
+ * developers.
+ *
+ * Usage.
+ *
+ * To use op-ahead client creates an instance of struct opa_domain with
+ * methods appropriate for its events.
+ *
+ * Predictions are made in the &quot;context&quot; which is an array of domain-&gt;depth
+ * pointers to events. This context is created by client (initialized by NULL
+ * pointers) and is passed to opa_{predict,happen}(). It is used to record
+ * latest events. When context is no longer needed, client calls
+ * opa_context_put().
+ *
+ * When new event happens, client calls opa_happens() to record it. To predict
+ * future events opa_predict() is used.
+ *
+ * Related work.
+ *
+ * In http://www.usenix.org/events/usenix01/kroeger.html a similar (albeit
+ * more mathematically sophisticated) model is used to predict future file
+ * accesses and to drive inter-file read-ahead.
+ *
+ * TODO:
+ *
+ * Helper functions for reference-counted events.
+ *
+ */</code></pre><footer><a href="modest-proposal.html#modest-proposal">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="page-tickets.html#page-tickets">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="limit-eval.html#limit-eval">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="reiser4-introduction.html#reiser4-introduction">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
