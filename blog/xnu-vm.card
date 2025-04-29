@@ -1,0 +1,27 @@
+// name XNU VM
+// id xnu-vm
+// +# blog xnu-vm
+// +# timeline 2005/07/25:16:02
+// +tags programming
+// +tags kernel
+// +tags vm
+
+XNU (OSX kernel) VM scanner marks vnodes as `(vp->v_flag &
+VHASBEENPAGED)`. `write(2)` path checks for this and sends all dirty pages for
+this vnode down the pipe if this flags is set. Reason:
+
+; code
+/*
+ * this vnode had pages cleaned to it by
+ * the pager which indicates that either
+ * it's not very 'hot', or the system is
+ * being overwhelmed by a lot of dirty
+ * data being delayed in the VM cache...
+ * in either event, we'll push our remaining
+ * delayed data at this point...  this will
+ * be more efficient than paging out 1 page at
+ * a time, and will also act as a throttle
+ * by delaying this client from writing any
+ * more data until all his delayed data has
+ * at least been queued to the uderlying driver.
+ */

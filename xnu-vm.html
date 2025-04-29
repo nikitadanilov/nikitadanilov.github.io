@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>XNU VM</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="xnu-vm"></a><div class="column"><header>XNU VM</header>
+<a name="xnu-vm-00000"></a><p>XNU (OSX kernel) VM scanner marks vnodes as <code class="inline">(vp-&gt;v_flag &amp; VHASBEENPAGED)</code>. <code class="inline">write(2)</code> path checks for this and sends all dirty pages for this vnode down the pipe if this flags is set. Reason:</p>
+<a name="xnu-vm-00001"></a><pre><code>/*
+ * this vnode had pages cleaned to it by
+ * the pager which indicates that either
+ * it&#x27;s not very &#x27;hot&#x27;, or the system is
+ * being overwhelmed by a lot of dirty
+ * data being delayed in the VM cache...
+ * in either event, we&#x27;ll push our remaining
+ * delayed data at this point...  this will
+ * be more efficient than paging out 1 page at
+ * a time, and will also act as a throttle
+ * by delaying this client from writing any
+ * more data until all his delayed data has
+ * at least been queued to the uderlying driver.
+ */</code></pre><footer><a href="windows-collapse.html#windows-collapse">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="zero.html#zero">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="repaging-aix.html#repaging-aix">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="inactive-dirty.html#inactive-dirty">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
