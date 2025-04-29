@@ -1,0 +1,28 @@
+// name Confessions of Microsoft developer
+// id confessions-microsoft
+// +# blog confessions-microsoft
+// +# timeline 2005/08/02
+// +tags programming
+
+>As a simple example, when Windows started up, it increased the size of msdos's
+ internal file table (the `SFT`, that's the table that was created by the
+ `FILES=` line in `config.sys`).  It did that to allow more than 20 files to be
+ opened on the windows system (a highly desirable goal for a multi-tasking
+ operating system).  But it did that by using an undocumented API call, which
+ returned a pointer to a set of “interesting” pointers in msdos. It then indexed
+ a known offset relative to that pointer, and replaced the value of the master
+ `SFT` table with its own version of the `SFT`.  When I was working on msdos
+ 4.0, we needed to support Windows.  Well, it was relatively easy to guarantee
+ that our SFT was at the location that Windows was expecting.  But the problem
+ was that the msdos 4.0 `SFT` was 2 bytes larger than the msdos 3.1 `SFT`.  In
+ order to get Windows to work, I had to change the DOS loader to detect when
+ win.com was being loaded, and if it was being loaded, I looked at the code at
+ an offset relative to the base code segment, and if it was a `MOV` instruction,
+ and the amount being moved was the old size of the `SFT`, I patched the
+ instruction in memory to reflect the new size of the `SFT`!  Yup, msdos 4.0
+ patched the running windows binary to make sure Windows would still continue to
+ work. 
+/ += . "As a simple example, when Windows started up" -> http://blogs.msdn.com/larryosterman/archive/2004/08/12/213681.aspx
+
+And these are the people who _design_ and implement most widely used software in
+the world. Which is a scary place indeed.
