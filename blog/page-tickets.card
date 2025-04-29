@@ -4,6 +4,7 @@
 // +# timeline 2005/04/05
 // +tags programming
 // +tags kernel
+// +tags vm
 
 Mach VM had (or still has if Mac OS X counts) an interesting detail in its VM
 scanner implementation (`osfmk/vm/vm_page.h`):

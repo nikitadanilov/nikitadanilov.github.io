@@ -4,6 +4,7 @@
 // +# timeline 2003/12/23
 // +tags programming
 // +tags kernel
+// +tags vm
 
 „adaptive replacement better than Working Set?“ has (an implicit) idea: VM page
 replacement should keep a _spectrum_ of accesses to a given page. Too high and
