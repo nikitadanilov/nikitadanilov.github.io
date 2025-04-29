@@ -1,0 +1,47 @@
+// name Concurrency Control and Recovery in Database Systems
+// id concurrency-and-recovery
+// +# blog concurrency-and-recovery
+// +# timeline 2005/07/25:15:40
+// +tags programming
+
+Concurrency Control and Recovery in Database Systems by Philip A. Bernstein, Vassos Hadzilacos, and Nathan Goodman.
+/ += . "Concurrency Control and Recovery in Database Systems" -> http://research.microsoft.com/pubs/ccontrol/
+
+Delayed commit as an alternative to keeping "commit-time" locks: when
+transaction T1 is accessing a resource modified by active transaction T2, it
+just proceeds hoping that T2 will commit. If T1 tries to commit while T2 is
+still active, its commit is delayed until T2 commits or aborts. If T2 aborts, T1
+has to abort too (and can be restarted). One can imagine "abort-rate" tracked
+for each resource, and delayed commits are used only if it is low enough.
+
+>       Pragmatically, this means that read locks can be released when the
+        transaction terminates (i.e., when the scheduler receives the
+        transaction's Commit or Abort), but write locks must be held until
+        after the transaction commits or aborts (i.e., after the DM processes
+        the transaction's Commit or Abort).
+
+
+This strategy ("Static 2PL scheduler") generates strict histories. How it
+generalizes to other types of locks?
+
+Interesting section on thrashing:
+
+>pure restart policy (abort transaction when it tries to acquire already held
+   lock) works well when data contention is high.
+
+>a measure of thrashing:
+
+; math
+W = k \cdot k \cdot N / D,
+
+where
+
+>   \(N\) - multiprogramming level,
+
+>   \(k\) - number of locks required by transaction,
+
+>   \(D\) - number of lockable entities.
+
+thrashing starts when \(W >= 1.5\).
+
+Can be applied to resource (memory) trashing too.

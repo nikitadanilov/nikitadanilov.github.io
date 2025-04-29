@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>Concurrency Control and Recovery in Database Systems</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="concurrency-and-recovery"></a>
+<div class="column"><header>Concurrency Control and Recovery in Database Systems</header>
+<a name="concurrency-and-recovery-00000"></a><p><a href="http://research.microsoft.com/pubs/ccontrol/">Concurrency Control and Recovery in Database Systems</a> by Philip A. Bernstein, Vassos Hadzilacos, and Nathan Goodman.</p>
+<a name="concurrency-and-recovery-00001"></a><p>Delayed commit as an alternative to keeping &quot;commit-time&quot; locks: when transaction T1 is accessing a resource modified by active transaction T2, it just proceeds hoping that T2 will commit. If T1 tries to commit while T2 is still active, its commit is delayed until T2 commits or aborts. If T2 aborts, T1 has to abort too (and can be restarted). One can imagine &quot;abort-rate&quot; tracked for each resource, and delayed commits are used only if it is low enough.</p>
+<a name="concurrency-and-recovery-00002"></a><p style="margin-left: 3em;">Pragmatically, this means that read locks can be released when the         transaction terminates (<i>i.e.</i>, when the scheduler receives the         transaction&#x27;s Commit or Abort), but write locks must be held until         after the transaction commits or aborts (<i>i.e.</i>, after the DM processes         the transaction&#x27;s Commit or Abort).</p>
+<a name="concurrency-and-recovery-00003"></a><p>This strategy (&quot;Static 2PL scheduler&quot;) generates strict histories. How it generalizes to other types of locks?</p>
+<a name="concurrency-and-recovery-00004"></a><p>Interesting section on thrashing:</p>
+<a name="concurrency-and-recovery-00005"></a><p style="margin-left: 3em;">pure restart policy (abort transaction when it tries to acquire already held    lock) works well when data contention is high.</p>
+<a name="concurrency-and-recovery-00006"></a><p style="margin-left: 3em;">a measure of thrashing:</p>
+<a name="concurrency-and-recovery-00007"></a>$$W = k \cdot k \cdot N / D,$$
+<a name="concurrency-and-recovery-00008"></a><p>where</p>
+<a name="concurrency-and-recovery-00009"></a><p style="margin-left: 3em;">\(N\) - multiprogramming level,</p>
+<a name="concurrency-and-recovery-00010"></a><p style="margin-left: 3em;">\(k\) - number of locks required by transaction,</p>
+<a name="concurrency-and-recovery-00011"></a><p style="margin-left: 3em;">\(D\) - number of lockable entities.</p>
+<a name="concurrency-and-recovery-00012"></a><p>thrashing starts when \(W &gt;= 1.5\).</p>
+<a name="concurrency-and-recovery-00013"></a><p>Can be applied to resource (memory) trashing too.</p><footer><a href="compound-literals.html#compound-literals">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="confessions-microsoft.html#confessions-microsoft">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="repaging-aix.html#repaging-aix">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="bsd-vm.html#bsd-vm">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
