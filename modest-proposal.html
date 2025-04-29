@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="modest-proposal"></a><div class="column"><header>A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.</header>
+<a name="modest-proposal-00000"></a><p>[This is an old and never finished draft. HTML produced by <a href="http://www.methods.co.nz/asciidoc/">asciidoc</a>.]</p>
+<a name="modest-proposal-00001"></a><h1>A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.</h1>
+<a name="modest-proposal-00002"></a><p>2009.04.22</p>
+<a name="modest-proposal-00003"></a><p>Nikita Danilov &lt;danilov@gmail.com&gt;      v0.1, September 2007</p>
+<a name="modest-proposal-00004"></a><h2>Abstract</h2>
+<a name="modest-proposal-00005"></a><p>A proposal is made to modify C language to make      accessing <code class="inline">struct</code> and <code class="inline">union</code> fields      (<code class="inline">s.f</code> and <code class="inline">p-&gt;f</code>) more flexible. To that end,      instead of considering <code class="inline">.f</code> and <code class="inline">-&gt;f</code> as      families of unary postfix operators applicable to the values      of <code class="inline">struct</code> and <code class="inline">union</code> types and pointers,      respectively, fields are treated as values or special <i>member      designator types</i> introduced for this purpose,      while <code class="inline">.</code> and <code class="inline">-&gt;</code> become binary      operators. Typing rules for the field types and examples of      their usage are proposed.      References in square brackets are to the ISO/IEC C standard.</p>
+<a name="modest-proposal-00006"></a><h2>Overview</h2>
+<a name="modest-proposal-00007"></a><p>One of the important advantages of C language is the (relative)      simplicity and cleanness of its memory model: data structures      eventually boil down to the “objects” [3.15],      addressable by pointers and contiguous in address space. This is      most evident in the case of array subscription [6.5.2.1], that      is <i>defined</i> through the pointer arithmetic:</p>
+<a name="modest-proposal-00008"></a><p style="margin-left: 3em;">[6.5.2.1] International Standard ISO/IEC 9899</p>
+<a name="modest-proposal-00009"></a><pre><code style="margin-left: 3em;">       Semantics
+
+        [#2] A postfix expression followed by an expression in square
+        brackets [] is a subscripted designation of an element of an
+        array object.  The definition of the subscript operator [] is
+        that E1[E2] is identical to (*((E1)+(E2))).  Because of the
+        conversion rules that apply to the binary + operator, if E1 is
+        an array object (equivalently, a pointer to the initial element
+        of an array object) and E2 is an integer, E1[E2] designates the
+        E2-th element of E1 (counting from zero).</code></pre>
+<a name="modest-proposal-00010"></a><p>Not only array subscription thus defined makes arrays and pointers      mostly equivalent, but it also inherits all the good properties of      addition (commutativity, associativity), and automatically defines the      meaning of multidimensional arrays.</p>
+<a name="modest-proposal-00011"></a><p>Another fundamental operation, structure and union member      de-reference [6.5.2.3] is not, however, similarly reduced to the      pointer manipulations. Instead, the “Types” [6.2.5]      section defines types of a sequential (structure) and overlapping      (union) sets of member objects, and operations are later described      abstractly as accessing member objects:</p>
+<a name="modest-proposal-00012"></a><p style="margin-left: 3em;">[6.5.2.3] International Standard ISO/IEC 9899</p>
+<a name="modest-proposal-00013"></a><pre><code style="margin-left: 3em;">       Semantics
+
+ [#3] A postfix expression followed by the . operator and  an
+ identifier  designates  a  member  of  a  structure or union
+ object.  The value is that of the named member,  and  is  an
+ lvalue  if  the first expression is an lvalue.</code></pre>
+<a name="modest-proposal-00014"></a><p>The inflexibility of this definition is clear when compared      with what one can do with the arrays: C permits nothing similar      to <code class="inline">foo(a0,a1)[bar(b0.b1)]</code> for structure and union      member access. Standard <code class="inline">offsetof()</code> macro [7.17]      converts member designator to an integer constant, equal to the      member byte offset within the structure of union, but no support      at the syntax level exists.</p>
+<a name="modest-proposal-00015"></a><p>We propose to introduce a family of scalar types representing      member designators and to define <code class="inline">.</code> and <code class="inline">-&gt;</code>      operations in terms of values of these types, in fact, in the      way very similar to how array subscription is defined.</p>
+<a name="modest-proposal-00016"></a><p>The perceived advantages of this are:</p>
+<a name="modest-proposal-00017"></a><p style="margin-left: 3em;">array and structure operations become similar;</p>
+<a name="modest-proposal-00018"></a><p style="margin-left: 3em;">structure and union operations are reduced to (already defined)  pointer manipulations, improving orthogonality of the language;</p>
+<a name="modest-proposal-00019"></a><p style="margin-left: 3em;">more generic structure-like data types are introduced for free, see  below.</p>
+<a name="modest-proposal-00020"></a><p>Note that in some sense this is not a new development. Vintage C code      fragments sport usage like</p>
+<a name="modest-proposal-00021"></a><pre><code>v6root/usr/sys/ken/iget.c
+   
+iupdat(p, tm)
+  int *p;
+  int *tm;
+  {
+        register *ip1, *ip2, *rp;
+        int *bp, i;
+
+        rp = p;
+        if((rp-&gt;i_flag&amp;(IUPD|IACC)) != 0) {
+        ...</code></pre>
+<a name="modest-proposal-00022"></a><p>indicating that member designators (<code class="inline">i_flag</code> in this      case, look at the <i>interesting</i> declaration of <code class="inline">rp</code>) weren&#x27;t originally tied to a specific structure or union      type. They were, in fact, existing by themselves in a special      global namespace—a property that led to the custom of      prefixing field names with a unique prefix.</p>
+<a name="modest-proposal-00023"></a><h2>Informal proposal</h2>
+<a name="modest-proposal-00024"></a><p>A new derived type constructor <code class="inline">-&gt;</code> is introduced. A    declarator</p>
+<a name="modest-proposal-00025"></a><pre><code>       TYPE0 -&gt; TYPE1</code></pre>
+<a name="modest-proposal-00026"></a><p>specifies a type of a member designator for a member object with a      type <code class="inline">TYPE1</code> in a type <code class="inline">TYPE0</code>.</p>
+<a name="modest-proposal-00027"></a><p>A declarator</p>
+<a name="modest-proposal-00028"></a><pre><code>       TYPE0 -&gt; TYPE1 :N:M</code></pre>
+<a name="modest-proposal-00029"></a><p>where <code class="inline">N</code> and <code class="inline">M</code> are integer constants, specifies a type of a      member designator for a bit-field of a member object starting at      <code class="inline">N</code>th bit and containing <code class="inline">M</code> bits.</p>
+<a name="modest-proposal-00030"></a><p>Values of any member designator type can be cast to int and      back without loss of information, passed to and returned from      the functions, <i>etc</i>. A declaration of the form</p>
+<a name="modest-proposal-00031"></a><pre><code>       STRUCT-OR-UNION IDENTIFIER {
+               TYPE0 FIELD0;
+               TYPE1 FIELD1;
+               ...
+       };</code></pre>
+<a name="modest-proposal-00032"></a><p>implicitly defines constants of the corresponding member designator      types for all members of <code class="inline">STRUCT-OR-UNION IDENTIFIER</code> type. Defined      constants have values designating their eponymous structure of union      members. For example,</p>
+<a name="modest-proposal-00033"></a><pre><code> struct F {
+               int              F_x;
+               float            F_y[10];
+               void          *(*F_f)(int, struct F *);
+               unsigned char    F_b:1;
+ };</code></pre>
+<a name="modest-proposal-00034"></a><p>implicitly defines</p>
+<a name="modest-proposal-00035"></a><pre><code>       const struct F -&gt; int                        F_x;
+       const struct F -&gt; float[10]                  F_y;
+       const struct F -&gt; void *(*)(int, struct F *) F_f;
+       const struct F -&gt; unsigned char :X:1         F_b; /* for some X */</code></pre>
+<a name="modest-proposal-00036"></a><p>For any non bit-field member <code class="inline">FIELD</code> it holds that</p>
+<a name="modest-proposal-00037"></a><pre><code>       offsetof(STRUCT-OR-UNION IDENTIFIER, FIELD) == (int)FIELD</code></pre>
+<a name="modest-proposal-00038"></a><p>Following operations are defined on values of member designator    types:</p>
+<a name="modest-proposal-00039"></a><p>given an expression <code class="inline">E0</code> of type “pointer    to <code class="inline">T0</code>”, and an expression <code class="inline">E1</code> of    type <code class="inline">T0 -&gt; T1</code>, <code class="inline">E0-&gt;E1</code> is equivalent to</p>
+<a name="modest-proposal-00040"></a><pre><code>           *(T1 *)(((char *)E0) + E1)</code></pre>
+<a name="modest-proposal-00041"></a><p>where <code class="inline">E1</code> is implicitly converted to an integer type;</p>
+<a name="modest-proposal-00042"></a><p>given an expression <code class="inline">E0</code> of type <code class="inline">A -&gt; B</code>    and an expression <code class="inline">E1</code> of type <code class="inline">B -&gt; C</code>,    expression <code class="inline">E0.E1</code> has type <code class="inline">A -&gt; C</code>, and    corresponds to the member of <code class="inline">B</code>, viewed as a member of <code class="inline">A</code>;</p>
+<a name="modest-proposal-00043"></a><p>given an expression <code class="inline">E</code> of type <code class="inline">A -&gt; B</code>, a    unary expression <code class="inline">-E</code> has type <code class="inline">B -&gt; A</code>,    and designates an instance of <code class="inline">A</code> in which an    instance of <code class="inline">B</code> designated by <code class="inline">E</code> is embedded;</p>
+<a name="modest-proposal-00044"></a><p>a compound assignment <code class="inline">E0 -&gt;= E1</code> is defined as an    abbreviation for <code class="inline">E0 = E0-&gt;E1</code>, with <code class="inline">E0</code> evaluated    only once.</p>
+<a name="modest-proposal-00045"></a><h2>Examples</h2>
+<a name="modest-proposal-00046"></a><p>Example: Basic usage</p>
+<a name="modest-proposal-00047"></a><pre><code>struct F {
+       int F_x;
+};
+
+struct G {
+       int      G_y;
+       struct F G_f;
+};
+
+void foo() {
+       struct G  g;
+       struct F *nested;
+
+       printf(&quot;designators: %i %i %i\n&quot;, F_x, G_y, G_f);
+       g.G_y = 1;     /* defined as *(g + G_y) = 1; */
+       g.G_f.F_x = 2; /* defined as *(g + G_f.F_x) = 2; */
+       nested = &amp;g.G_f;
+       /* nested-&gt;(-G_f) is g */
+       assert(nested-&gt;(-G_f).G_y == 1);
+       /* or... */
+       assert(nested-&gt;(-G_f.G_y) == 1);
+}</code></pre>
+<a name="modest-proposal-00048"></a><p>Example: Searching for an item in a linked    list</p>
+<a name="modest-proposal-00049"></a><pre><code>struct list_link {
+       struct list_link *ll_next;
+}
+
+struct list_item {
+       struct list_link li_next;
+       int              li_value;
+};
+
+struct list_link *search(struct list_link *s, int key) {
+       for (; s &amp;&amp; s-&gt;-li_next.li_value != key; s -&gt;= li_next) {
+              ;
+       }
+       return s;
+}</code></pre>
+<a name="modest-proposal-00050"></a><p>Note that <code class="inline">foo-&gt;-bar</code> subsumes <code class="inline">container_of()</code> macro (as used in the      Linux kernel).</p>
+<a name="modest-proposal-00051"></a><p>C is traditionally used as a language for the system      programming—a domain where one has often to deal with      formatted data on the storage or network. As a typical example      let&#x27;s imagine a system that keeps formatted meta-data, <i>e.g.</i>, a      list of directory entries for a file system or index entries for      a data-base in a block device block. Different devices have      different block sizes, which means that in general case format      of a device block cannot be described by a C structure      type. With member designator types, however, something similar      to the following can be done:</p>
+<a name="modest-proposal-00052"></a><pre><code>/* variable sized device block */
+typedef char * block_contents_t;
+
+struct block_format {
+       /* magic number at the beginning of the block */
+       block_contents_t -&gt; uint32_t bf_start_magic;
+       /* array of keys in the index block, growing to the right */
+       block_contents_t -&gt; key_t[]  bf_keys;
+       /* array of values, corresponding to the keys, growing to the left */
+       block_contents_t -&gt; val_t[]  bf_values;
+       /* magic number at the end of the block */
+       block_contents_t -&gt; uint32_t bf_end_magic;
+};
+
+struct system_descriptor {
+      ...
+      struct block_format sd_format;
+      ...
+};
+
+void init(struct system_descriptor *desc, int block_size) {
+      switch (block_size) {
+             case 512:
+                    desc-&gt;sd_format.bf_keys      = ...;
+                    desc-&gt;sd_format.bf_values    = ...;
+                    desc-&gt;sd_format.bf_end_magic = ...;
+                    break;
+             case 1024:
+                    ...
+      }
+}
+
+int block_search(struct system_descriptor *desc, block_contents_t block,
+                key_t *key) {
+       int i;
+
+       assert(block-&gt;(desc-&gt;bf_start_magic) == START_MAGIC);
+       assert(block-&gt;(desc-&gt;sd_format.bf_end_magic) == END_MAGIC);
+
+       for (i = 0; i &lt; NUM_KEYS; ++i) {
+               if (key_cmp(&amp;(block-&gt;(desc-&gt;sd_format.bf_keys))[i], key) {
+                       ...
+}</code></pre>
+<a name="modest-proposal-00053"></a><p>Clearly, quite generic yet type-safe data structures can be    built this way.</p>
+<a name="modest-proposal-00054"></a><h2>Problems</h2>
+<a name="modest-proposal-00055"></a><p>Backward compatibility is broken because field names must be      unique within a compilation unit now (as they have constants      declared for them). This is “safe” violation of      compatibility in that it doesn&#x27;t change the semantics of an      existing code silently.</p>
+<a name="modest-proposal-00056"></a><p>Meaning of <code class="inline">E0.E1</code> for a non-lvalue E0 is awkward to      define.</p><footer><a href="macro.html#macro">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="page-tickets.html#page-tickets">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="limit-eval.html#limit-eval">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="exercise.html#exercise">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

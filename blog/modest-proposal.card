@@ -1,0 +1,351 @@
+// name A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.
+// id modest-proposal
+// +# blog modest-proposal
+// +# timeline 2009/04/23
+// +tags programming
+
+[This is an old and never finished draft. HTML produced by asciidoc.]
+/ += . "asciidoc" -> http://www.methods.co.nz/asciidoc/
+
+   
+; head
+A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.
+/ level 1
+
+2009.04.22
+
+   Nikita Danilov <danilov@gmail.com>
+     v0.1, September 2007
+   
+; head
+Abstract
+/ level 2
+
+     A proposal is made to modify C language to make
+     accessing `struct` and `union` fields
+     (`s.f` and `p->f`) more flexible. To that end,
+     instead of considering `.f` and `->f` as
+     families of unary postfix operators applicable to the values
+     of `struct` and `union` types and pointers,
+     respectively, fields are treated as values or special _member
+     designator types_ introduced for this purpose,
+     while `.` and `->` become binary
+     operators. Typing rules for the field types and examples of
+     their usage are proposed.
+     References in square brackets are to the ISO/IEC C standard.
+   
+; head
+Overview
+/ level 2
+
+    One of the important advantages of C language is the (relative)
+     simplicity and cleanness of its memory model: data structures
+     eventually boil down to the “objects” [3.15],
+     addressable by pointers and contiguous in address space. This is
+     most evident in the case of array subscription [6.5.2.1], that
+     is _defined_ through the pointer arithmetic:
+
+> [6.5.2.1] International Standard ISO/IEC 9899
+   
+; code
+>       Semantics
+|
+        [#2] A postfix expression followed by an expression in square
+        brackets [] is a subscripted designation of an element of an
+        array object.  The definition of the subscript operator [] is
+        that E1[E2] is identical to (*((E1)+(E2))).  Because of the
+        conversion rules that apply to the binary + operator, if E1 is
+        an array object (equivalently, a pointer to the initial element
+        of an array object) and E2 is an integer, E1[E2] designates the
+        E2-th element of E1 (counting from zero).
+     
+   
+   Not only array subscription thus defined makes arrays and pointers
+     mostly equivalent, but it also inherits all the good properties of
+     addition (commutativity, associativity), and automatically defines the
+     meaning of multidimensional arrays.
+
+Another fundamental operation, structure and union member
+     de-reference [6.5.2.3] is not, however, similarly reduced to the
+     pointer manipulations. Instead, the “Types” [6.2.5]
+     section defines types of a sequential (structure) and overlapping
+     (union) sets of member objects, and operations are later described
+     abstractly as accessing member objects:
+
+>[6.5.2.3] International Standard ISO/IEC 9899
+   
+; code
+>       Semantics
+|
+ [#3] A postfix expression followed by the . operator and  an
+ identifier  designates  a  member  of  a  structure or union
+ object.  The value is that of the named member,  and  is  an
+ lvalue  if  the first expression is an lvalue.
+     
+ 
+   The inflexibility of this definition is clear when compared
+     with what one can do with the arrays: C permits nothing similar
+     to `foo(a0,a1)[bar(b0.b1)]` for structure and union
+     member access. Standard offsetof() macro [7.17]
+     converts member designator to an integer constant, equal to the
+     member byte offset within the structure of union, but no support
+     at the syntax level exists.
+
+We propose to introduce a family of scalar types representing
+     member designators and to define `.` and `->`
+     operations in terms of values of these types, in fact, in the
+     way very similar to how array subscription is defined.
+
+The perceived advantages of this are:
+
+>array and structure operations become similar;
+
+>structure and union operations are reduced to (already defined)
+ pointer manipulations, improving orthogonality of the language;
+
+>more generic structure-like data types are introduced for free, see
+ below.
+
+Note that in some sense this is not a new development. Vintage C code
+     fragments sport usage like
+
+; code
+v6root/usr/sys/ken/iget.c
+|   
+iupdat(p, tm)
+  int *p;
+  int *tm;
+  {
+        register *ip1, *ip2, *rp;
+        int *bp, i;
+|
+        rp = p;
+        if((rp->i_flag&(IUPD|IACC)) != 0) {
+        ...
+     
+   
+   indicating that member designators (`i_flag` in this
+     case, look at the _interesting_ declaration of `rp`) weren't originally tied to a specific structure or union
+     type. They were, in fact, existing by themselves in a special
+     global namespace—a property that led to the custom of
+     prefixing field names with a unique prefix.
+   
+; head
+Informal proposal
+/ level 2
+
+   A new derived type constructor `->` is introduced. A
+   declarator
+   
+; code
+       TYPE0 -> TYPE1
+     
+   
+   specifies a type of a member designator for a member object with a
+     type `TYPE1` in a type `TYPE0`.
+
+A declarator
+   
+; code
+       TYPE0 -> TYPE1 :N:M
+     
+   
+   where `N` and `M` are integer constants, specifies a type of a
+     member designator for a bit-field of a member object starting at
+     `N`th bit and containing `M` bits.
+
+Values of any member designator type can be cast to int and
+     back without loss of information, passed to and returned from
+     the functions, etc. A declaration of the form
+   
+; code
+       STRUCT-OR-UNION IDENTIFIER {
+               TYPE0 FIELD0;
+               TYPE1 FIELD1;
+               ...
+       };
+     
+   
+   implicitly defines constants of the corresponding member designator
+     types for all members of `STRUCT-OR-UNION IDENTIFIER` type. Defined
+     constants have values designating their eponymous structure of union
+     members. For example,
+   
+; code
+ struct F {
+               int              F_x;
+               float            F_y[10];
+               void          *(*F_f)(int, struct F *);
+               unsigned char    F_b:1;
+ };
+     
+   
+   implicitly defines
+   
+; code
+       const struct F -> int                        F_x;
+       const struct F -> float[10]                  F_y;
+       const struct F -> void *(*)(int, struct F *) F_f;
+       const struct F -> unsigned char :X:1         F_b; /* for some X */
+     
+   
+   For any non bit-field member `FIELD` it holds that
+   
+; code
+       offsetof(STRUCT-OR-UNION IDENTIFIER, FIELD) == (int)FIELD
+     
+   
+   Following operations are defined on values of member designator
+   types:
+ 
+   given an expression `E0` of type “pointer
+   to `T0`”, and an expression `E1` of
+   type `T0 -> T1`, `E0->E1` is equivalent to
+ 
+; code
+           *(T1 *)(((char *)E0) + E1)
+   
+ 
+ where `E1` is implicitly converted to an integer type;
+ 
+   given an expression `E0` of type `A -> B`
+   and an expression `E1` of type `B -> C`,
+   expression `E0.E1` has type `A -> C`, and
+   corresponds to the member of `B`, viewed as a member of `A`;
+ 
+   given an expression `E` of type `A -> B`, a
+   unary expression `-E` has type `B -> A`,
+   and designates an instance of `A` in which an
+   instance of `B` designated by `E` is embedded;
+ 
+   a compound assignment `E0 ->= E1` is defined as an
+   abbreviation for `E0 = E0->E1`, with `E0` evaluated
+   only once.
+ 
+; head
+Examples
+/ level 2
+
+   Example: Basic usage
+   
+; code
+struct F {
+       int F_x;
+};
+|
+struct G {
+       int      G_y;
+       struct F G_f;
+};
+|
+void foo() {
+       struct G  g;
+       struct F *nested;
+|
+       printf("designators: %i %i %i\n", F_x, G_y, G_f);
+       g.G_y = 1;     /* defined as *(g + G_y) = 1; */
+       g.G_f.F_x = 2; /* defined as *(g + G_f.F_x) = 2; */
+       nested = &g.G_f;
+       /* nested->(-G_f) is g */
+       assert(nested->(-G_f).G_y == 1);
+       /* or... */
+       assert(nested->(-G_f.G_y) == 1);
+}
+     
+   
+   Example: Searching for an item in a linked
+   list
+   
+; code
+struct list_link {
+       struct list_link *ll_next;
+}
+|
+struct list_item {
+       struct list_link li_next;
+       int              li_value;
+};
+|
+struct list_link *search(struct list_link *s, int key) {
+       for (; s && s->-li_next.li_value != key; s ->= li_next) {
+|              ;
+       }
+       return s;
+}
+
+   
+   Note that `foo->-bar` subsumes container_of() macro (as used in the
+     Linux kernel).
+
+C is traditionally used as a language for the system
+     programming—a domain where one has often to deal with
+     formatted data on the storage or network. As a typical example
+     let's imagine a system that keeps formatted meta-data, e.g., a
+     list of directory entries for a file system or index entries for
+     a data-base in a block device block. Different devices have
+     different block sizes, which means that in general case format
+     of a device block cannot be described by a C structure
+     type. With member designator types, however, something similar
+     to the following can be done:
+   
+; code
+/* variable sized device block */
+typedef char * block_contents_t;
+|
+struct block_format {
+       /* magic number at the beginning of the block */
+       block_contents_t -> uint32_t bf_start_magic;
+       /* array of keys in the index block, growing to the right */
+       block_contents_t -> key_t[]  bf_keys;
+       /* array of values, corresponding to the keys, growing to the left */
+       block_contents_t -> val_t[]  bf_values;
+       /* magic number at the end of the block */
+       block_contents_t -> uint32_t bf_end_magic;
+};
+|
+struct system_descriptor {
+      ...
+      struct block_format sd_format;
+      ...
+};
+|
+void init(struct system_descriptor *desc, int block_size) {
+      switch (block_size) {
+             case 512:
+                    desc->sd_format.bf_keys      = ...;
+                    desc->sd_format.bf_values    = ...;
+                    desc->sd_format.bf_end_magic = ...;
+                    break;
+             case 1024:
+                    ...
+      }
+}
+|
+int block_search(struct system_descriptor *desc, block_contents_t block,
+                key_t *key) {
+       int i;
+|
+       assert(block->(desc->bf_start_magic) == START_MAGIC);
+       assert(block->(desc->sd_format.bf_end_magic) == END_MAGIC);
+|
+       for (i = 0; i < NUM_KEYS; ++i) {
+               if (key_cmp(&(block->(desc->sd_format.bf_keys))[i], key) {
+                       ...
+}
+     
+   
+   Clearly, quite generic yet type-safe data structures can be
+   built this way.
+   
+; head
+Problems
+/ level 2
+
+   Backward compatibility is broken because field names must be
+     unique within a compilation unit now (as they have constants
+     declared for them). This is “safe” violation of
+     compatibility in that it doesn't change the semantics of an
+     existing code silently.
+
+Meaning of `E0.E1` for a non-lvalue E0 is awkward to
+     define.
