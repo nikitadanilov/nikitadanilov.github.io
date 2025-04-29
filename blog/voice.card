@@ -1,0 +1,17 @@
+// name A voice of the reason from the distant past
+// id voice
+// +# blog voice
+// +# timeline 2006/07/22
+// +tags programming
+// +tags kernel
+// +tags vm
+
+Dedicated to VM and file system developers and researches...
+
+>It is immediately apparent from these figures that moving-arm disks should
+ never be used, neither for paging applications nor for any other heavy-traffic
+ auxiliary memory applications.
+
+>[>>>Peter J. Denning -- Virtual Memory.]
+/ += . "Virtual Memory" -> http://portal.acm.org/ft_gateway.cfm?id=356573&type=pdf&coll=portal&dl=ACM&CFID=15151515&CFTOKEN=6184618
+
