@@ -1,0 +1,20 @@
+// name you have a strange forbidding feeling...
+// id forbidden
+// +# blog forbidden
+// +# timeline 2005/06/26
+
+[Updated: 2005.07.24]
+
+A scary thing happened to me: my first thought, while looking at `linux-2.6.5-7.151/lib/vsprintf.c`
+
+; code
+if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L' ||
+    *fmt == 'Z' || *fmt == 'z') {
+    qualifier = *fmt;
+    fmt++;
+}
+
+was something like _Hmm... I should be careful about that master lich
+here..._. I should throttle down.
+/ += . "master lich" -> http://www.cim.mcgill.ca/~simra/nhtohtml/html/master_lich.html
+
