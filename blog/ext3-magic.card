@@ -1,0 +1,78 @@
+// name ext3: magic, more magic.
+// id ext3-magic
+// +# blog ext3-magic
+// +# timeline 2006/02/01
+// +tags programming
+// +tags kernel
+// +tags fs
+
+ext3 htree code in Linux kernel implements peculiar version of balanced tree
+used to efficiently handle large directories.
+/ += . "balanced tree" -> http://www.bluerwhite.org/btree/
+
+htree directory consists of block sized nodes. Some of them (leaf nodes) contain
+directory entries in the same format as ext2. Other nodes contain _index_: they
+are filled with hashes and pointers to other nodes.
+
+When new file is created in a directory, a directory entry is inserted in one of
+leaf nodes. When leaf node has not enough space for new entry, new node is
+appended to the tree, and part of directory entries is moved there. This process
+is known as a _split_. Pointer to new node is then inserted into some index
+node, and new node can overflow at this point, causing another split and so on.
+
+If splits occur whole way up to the root of the tree, new root has to be added
+(tree grows).
+
+It's obvious that in the worst case (extremely rare in practice) insertion of a
+new entry may require a new block on each tree level, plus new root, right? Now,
+looking at the ext3_dx_add_entry() function we see something strange:
+/ += . "ext3_dx_add_entry()" -> http://lxr.linux.no/ident?i=ext3_dx_add_entry
+
+; code
+                 } else {
+                         dxtrace(printk("Creating second level index...\n"));
+                         memcpy((char *) entries2, (char *) entries,
+                                icount * sizeof(struct dx_entry));
+                         dx_set_limit(entries2, dx_node_limit(dir));
+|
+                         /* Set up root */
+                         dx_set_count(entries, 1);
+                         dx_set_block(entries + 0, newblock);
+                         ((struct dx_root *) frames[0].bh->b_data)->info.indirect_levels = 1;
+|
+                         /* Add new access path frame */
+                         frame = frames + 1;
+                         frame->at = at = at - entries + entries2;
+                         frame->entries = entries = entries2;
+                         frame->bh = bh2;
+                         err = ext3_journal_get_write_access(handle,
+                                                              frame->bh);
+                         if (err)
+                                 goto journal_error;
+                 }
+
+At this moment `entries` points to the already existing full node and `entries2`
+to the newly created one. As one can see, contents of `entries` is shifted into
+`entries2`, and `entries` is declared to be new root of the tree. So now tree
+has a root node with a single pointer to the index node that... still has not
+enough free space (remember `entries2` got everything `entries` had). Omitted
+code that follows proceeds with splitting leaf node, assuming that its parent
+has enough space to insert a pointer to the new leaf. So how this is supposed to
+work? Or, does this work at all? That's tricky part and the curious reader is
+invited to try to infer what's going on without looking at the rest of this
+post.
+
+The answer is simple: by ext3 htree design, capacity of the root node is smaller
+than that of non-root index one. This is a byproduct of binary compatibility
+between htree and old ext2 format: root node is always the first block in the
+directory and it always contains dot and dotdot directory entries. As a result,
+when contents of old root is copied into new node, that node ends up having
+enough space for two additional entries.
+
+This is obviously one of the worst hacks _and_ least documented at that. Shame.
+
+
+Thanks to Alex Tomas for clearing this mystery for me. As he says: "_Htree code
+is simple to understand: it only takes to tune yourself to Daniel Phillips
+brain-waves frequency_".
+
