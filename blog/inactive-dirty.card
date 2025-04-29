@@ -1,0 +1,62 @@
+// name inactive_dirty and inactive_clean are considered harmful
+// id inactive-dirty
+// +# blog inactive-dirty
+// +# timeline 2005/07/25:16:06
+// +tags programming
+// +tags kernel
+// +tags vm
+
+Found interesting discussion on linux-mm (Sept. 2002):
+
+AKPM and Rik ("inactive_dirty list")
+
+[AKPM proposed separate inactive_dirty and inactive_clean lists to avoid
+excessive scanning of pages that cannot be reclaimed (due to then-new
+non-blocking VM scanner]:
+
+; code
+    Riel:
+    > AKPM:
+    > > - inactive_dirty holds pages which are dirty or under writeback.
+    > 
+    > > - everywhere where we add a page to the inactive list will now
+    > >   add it to either inactive_clean or inactive_dirty, based on
+    > >   its PageDirty || PageWriteback state.
+    > 
+    > If I had veto power I'd use it here ;)
+    > 
+    > We did this in early 2.4 kernels and it was a disaster. The
+    > reason it was a disaster was that in many workloads we'd
+    > always have some clean pages and we'd end up always reclaiming
+    > those before even starting writeout on any of the dirty pages.
+    > 
+    > It also meant we could have dirty (or formerly dirty) inactive
+    > pages eating up memory and never being recycled for more active
+    > data.
+
+And later in the same thread:
+
+; code
+    AKPM:
+    > You're proposing that we get that IO underway sooner if there
+    > is page reclaim pressure, and that one way to do that is to
+    > write one page for every reclaimed one.  Guess that makes
+    > sense as much as anything else ;)
+
+(decrease dirty cache balancing rules when hitting memory pressure, so that
+balance_dirty_pages() and pdflush do write-out in scanner's stead)
+
+And further more:
+
+; code
+    Daniel Phillips
+    > On Saturday 07 September 2002 01:34, Andrew Morton wrote:
+    > > You're proposing that we get that IO underway sooner if there
+    > > is page reclaim pressure, and that one way to do that is to
+    > > write one page for every reclaimed one.  Guess that makes
+    > > sense as much as anything else ;)
+    > 
+    > Not really.  The correct formula will incorporate the allocation rate
+    > and the inactive dirty/clean balance.  The reclaim rate is not
+    > relevant, it is a time-delayed consequence of the above.  Relying on
+    > it in a control loop is simply asking for oscillation.

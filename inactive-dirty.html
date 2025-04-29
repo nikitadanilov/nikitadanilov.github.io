@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>inactive_dirty and inactive_clean are considered harmful</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   
+ </head>
+ <body>
+   <a name="inactive-dirty"></a><div class="column"><header>inactive_dirty and inactive_clean are considered harmful</header>
+<a name="inactive-dirty-00000"></a><p>Found interesting discussion on linux-mm (Sept. 2002):</p>
+<a name="inactive-dirty-00001"></a><p>AKPM and Rik (&quot;inactive_dirty list&quot;)</p>
+<a name="inactive-dirty-00002"></a><p>[AKPM proposed separate inactive_dirty and inactive_clean lists to avoid excessive scanning of pages that cannot be reclaimed (due to then-new non-blocking VM scanner]:</p>
+<a name="inactive-dirty-00003"></a><pre><code>    Riel:
+    &gt; AKPM:
+    &gt; &gt; - inactive_dirty holds pages which are dirty or under writeback.
+    &gt; 
+    &gt; &gt; - everywhere where we add a page to the inactive list will now
+    &gt; &gt;   add it to either inactive_clean or inactive_dirty, based on
+    &gt; &gt;   its PageDirty || PageWriteback state.
+    &gt; 
+    &gt; If I had veto power I&#x27;d use it here ;)
+    &gt; 
+    &gt; We did this in early 2.4 kernels and it was a disaster. The
+    &gt; reason it was a disaster was that in many workloads we&#x27;d
+    &gt; always have some clean pages and we&#x27;d end up always reclaiming
+    &gt; those before even starting writeout on any of the dirty pages.
+    &gt; 
+    &gt; It also meant we could have dirty (or formerly dirty) inactive
+    &gt; pages eating up memory and never being recycled for more active
+    &gt; data.</code></pre>
+<a name="inactive-dirty-00004"></a><p>And later in the same thread:</p>
+<a name="inactive-dirty-00005"></a><pre><code>    AKPM:
+    &gt; You&#x27;re proposing that we get that IO underway sooner if there
+    &gt; is page reclaim pressure, and that one way to do that is to
+    &gt; write one page for every reclaimed one.  Guess that makes
+    &gt; sense as much as anything else ;)</code></pre>
+<a name="inactive-dirty-00006"></a><p>(decrease dirty cache balancing rules when hitting memory pressure, so that <code class="inline">balance_dirty_pages()</code> and pdflush do write-out in scanner&#x27;s stead)</p>
+<a name="inactive-dirty-00007"></a><p>And further more:</p>
+<a name="inactive-dirty-00008"></a><pre><code>    Daniel Phillips
+    &gt; On Saturday 07 September 2002 01:34, Andrew Morton wrote:
+    &gt; &gt; You&#x27;re proposing that we get that IO underway sooner if there
+    &gt; &gt; is page reclaim pressure, and that one way to do that is to
+    &gt; &gt; write one page for every reclaimed one.  Guess that makes
+    &gt; &gt; sense as much as anything else ;)
+    &gt; 
+    &gt; Not really.  The correct formula will incorporate the allocation rate
+    &gt; and the inactive dirty/clean balance.  The reclaim rate is not
+    &gt; relevant, it is a time-delayed consequence of the above.  Relying on
+    &gt; it in a control loop is simply asking for oscillation.</code></pre><footer><a href="inaccessible-cardinals.html#inaccessible-cardinals">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="iso.html#iso">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="repaging-aix.html#repaging-aix">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;<a href="compound-literals.html#compound-literals">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
