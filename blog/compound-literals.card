@@ -1,0 +1,44 @@
+// name __VA_ARGS__ + C99 compound literals = safe variadic functions
+// id compound-literals
+// +# blog compound-literals
+// +# timeline 2005/07/30
+// +tags programming
+
+It occurred to me that new C features added by C99 standard can be used to
+implement _safe variadic functions_ that is, something syntactically looking
+like normal call of function with variable number of arguments, but in effect
+calling function with all arguments packed into array, and with array size
+explicitly supplied:
+/ id start
+
+; code
+#define sizeof_array(arr) ((sizeof (arr))/(sizeof (arr)[0]))
+|
+#define FOO(a, ...) \
+       foo((a), (char *[]){ __VA_ARGS__, 0 }, sizeof_array(((char *[]){ __VA_ARGS__ })))
+|
+int foo(int x, char **str, int n) {
+        printf("%i %i\n", x, n);
+                while (n--)
+        printf("%s\n", *(str++));
+        printf("last: %s\n", *str);
+}
+|
+int main(int argc, char **argv)
+{
+        FOO(1, "a", "boo", "cooo", "dd", argv[0]);
+}
+
+this outputs
+
+; code
+1 5
+a
+boo
+cooo
+dd
+./a.out
+last: (null)
+
+Expect me to use this shortly somewhere.
+
