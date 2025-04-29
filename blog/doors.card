@@ -1,0 +1,31 @@
+// name threads, contexts and doors.
+// id doors
+// +# blog doors
+// +# timeline 2013/12/16
+// +tags programming
+
+Paul Turner gave a talk about new threading interface, designed by Google, at this year Linux Plumbers Conference:
+/ += . "Paul Turner" -> https://plus.google.com/102766894085961969420/posts
+/ += . "talk" -> http://www.youtube.com/watch?v=KXuZi9aeGTw
+/ += . "Linux Plumbers Conference" -> http://www.linuxplumbersconf.org/2013/
+
+The idea is, very roughly, to implement the ucontext interface with kernel
+support. This gives the benefits of kernel threads (e.g., SMP support), while
+retaining fast context switches of user threads. `switchto_switch(tid)` call
+hands off control to the specified thread without going through the kernel
+scheduler. This is like `swapcontext(3)`, except that kernel stack pointer is
+switched too. Of course, there is still an overhead of the system call and
+return, but it is not as important as it used to be: the cost of normal context
+switch is dominated by the scheduler invocation (with all the associated
+locking), plus, things like TLB flushes drive the difference between user and
+kernel context switching further down.
+/ += . "ucontext" -> http://pubs.opengroup.org/onlinepubs/7908799/xsh/ucontext.h.html
+
+I did something similar (but much more primitive) in 2001. The difference was
+that in that old implementation, one could switch context with a thread running
+in a different address space, so it was possible to make a "continuation call"
+to another process. This was done to implement Solaris doors RPC mechanism on
+Linux. Because this is an RPC mechanism, arguments have to be passed, so each
+context switch also performed a little dance to copy arguments between address
+spaces.
+/ += . "Solaris doors" -> http://en.wikipedia.org/wiki/Doors_(computing)
