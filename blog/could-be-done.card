@@ -1,0 +1,32 @@
+// name It could be done
+// id could-be-done
+// +# blog could-be-done
+// +# timeline 2009/03/25
+// +tags programming
+
+>"The late André Bensoussan worked with me on the Multics .... We were working
+ on a major change to the file system ...
+/ += . "André" -> http://www.multicians.org/andre.html
+
+>André took on the job of design, implementation, and test of the VTOC
+ manager. He started by sitting at his desk and drawing a lot of diagrams. I was
+ the project coordinator, so I used to drop in on him and ask how things were
+ going. "Still designing," he'd say. He wanted the diagrams to look beautiful
+ and symmetrical as well as capturing all the state information. ... I was
+ glad when he finally began writing code. He wrote in pencil, at his desk,
+ instead of using a terminal. ...
+
+>Finally André took his neat final pencil copy to a terminal and typed the whole
+ program in. His first compilation attempt failed; he corrected three typos,
+ tried again, and the code compiled. We bound it into the system and tried it
+ out, and it worked the first time.
+
+>In fact, the VTOC manager worked perfectly from then on. ...
+
+>How did André do this, with no tool but a pencil?
+
+Those people were programming operating system kernel that supported kernel
+level multi-threading and SMP (in 60s!), had most features UNIX kernels have now
+and some that no later operating system has, like transparent HSM. All under
+hardware constraints that would make modern washing machine to look like a
+super-computer. Of course they were thinking, _then_ typing.
