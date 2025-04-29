@@ -1,0 +1,12 @@
+// name A monster desktop
+// id monster-desktop
+// +# blog monster-desktop
+// +# timeline 2005/08/12
+// +tags programming
+
+Screenshot of my desktop while running 5 node UML cluster:
+/ += . "UML" -> http://user-mode-linux.sourceforge.net
+
+; img
+/ url http://photos1.blogger.com/blogger/2329/234/1600/screenshot-uml-cluster-2.jpg
+/ width 100%
