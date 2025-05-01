@@ -2,7 +2,7 @@
 // id usched.update
 // +# blog usched.update
 // +# timeline 2022/10/11
-// +# usched update
+// +# usched 1.update
 // +tags programming
 
 _Update_ for the previous post about stackswap coroutine implementation usched.
