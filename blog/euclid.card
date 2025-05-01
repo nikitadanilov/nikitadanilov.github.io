@@ -101,6 +101,7 @@ Divide \(AB\) into \(n\) equal intervals, each shorter that \(EO\). This
 requires what we now call the Archimedes-Eudoxus axiom and which is implied by
 Definition IV of Book V:
 / += . "Archimedes-Eudoxus axiom" -> https://encyclopediaofmath.org/wiki/Archimedean_axiom
+/ id eudoxus
 
 <λόγον ἔχειν πρὸς ἄλληλα μεγέθη λέγεται, ἃ δύναται πολλαπλασιαζόμενα ἀλλήλων
 ὑπερέχειν. | Magnitudes are said to have a ratio to one another which can, when
