@@ -1,0 +1,39 @@
+// name usched and Algol-68: a connection
+// id usched.algol68
+// +# blog usched.algol68
+// +# timeline 2025/04/30
+// +# usched 2
+// +tags programming
+
+usched is a light-weight cooperative-multitasking-coroutine library that I wrote
+(github.com). To switch between threads, it copies the stack of the outgoing
+thread out to somewhere (e.g., the heap) and copies in the stack of the incoming
+thread, that was similarly copied out on the previous context switch.
+/ += . "usched" -> !usched-start "^."
+/ += . "github\.com" -> https://github.com/nikitadanilov/usched
+
+As usual, whatever you invent, eventually turns out to be known since long time
+ago. In this case, we are talking about something that happened at fabulous
+times, almost at the dawn of history, as far as computing technology is
+concerned: Algol-68. Dr. J.J.F.M. Schlichting's PhD. thesis _Een Vroege
+Implementatie Van Herzien Algol 68_ (_An Early Implementation Of Revised Algol
+68_) describes in detail an implementation of that language by Control Data
+B. Y. and the University of Amsterdam (among others).
+/ += . "Algol-68" -> https://en.wikipedia.org/wiki/ALGOL_68
+/ += . "Control Data B\. Y\." -> https://en.wikipedia.org/wiki/Control_Data_Corporation
+/ += . "Een Vroege Implementatie Van Herzien Algol 68" -> https://ir.cwi.nl/pub/27828/27828.pdf
+/ += . "the University of Amsterdam" -> https://en.wikipedia.org/wiki/University_of_Amsterdam
+
+On p. 4-30 we find:
+
+; img
+/ url usched.algol68/page.png
+
+The term _thread_ is not used (maybe not yet invented, definitely not current),
+but we see a sophisticated compiler-assisted cooperative multitasking with
+fork-join concurrency and cactus stacks:
+/ += . "fork-join concurrency" -> https://en.wikipedia.org/wiki/Fork%E2%80%93join_model
+/ += . "cactus stacks" -> https://wiki.c2.com/?CactusStack
+
+; img
+/ url usched.algol68/diagram.png

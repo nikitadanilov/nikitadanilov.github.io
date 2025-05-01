@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>a very occasional diary @ Nikita Danilov | usched and Algol-68: a connection</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-WEM34DWDR2');
+</script>
+   
+ </head>
+ <body>
+   <a name="usched.algol68"></a><div class="column"><header>usched and Algol-68: a connection</header>
+<a name="usched.algol68-00000"></a><p><a href="usched.html#usched-start">usched</a> is a light-weight cooperative-multitasking-coroutine library that I wrote (<a href="https://github.com/nikitadanilov/usched">github.com</a>). To switch between threads, it copies the stack of the outgoing thread out to somewhere (<i>e.g.</i>, the heap) and copies in the stack of the incoming thread, that was similarly copied out on the previous context switch.</p>
+<a name="usched.algol68-00001"></a><p>As usual, whatever you invent, eventually turns out to be known since long time ago. In this case, we are talking about something that happened at fabulous times, almost at the dawn of history, as far as computing technology is concerned: <a href="https://en.wikipedia.org/wiki/ALGOL_68">Algol-68</a>. Dr. J.J.F.M. Schlichting&#x27;s PhD. thesis <a href="https://ir.cwi.nl/pub/27828/27828.pdf"><i>Een Vroege Implementatie Van Herzien Algol 68</i></a> (<i>An Early Implementation Of Revised Algol 68</i>) describes in detail an implementation of that language by <a href="https://en.wikipedia.org/wiki/Control_Data_Corporation">Control Data B. Y.</a> and <a href="https://en.wikipedia.org/wiki/University_of_Amsterdam">the University of Amsterdam</a> (among others).</p>
+<a name="usched.algol68-00002"></a><p>On p. 4-30 we find:</p>
+<a name="usched.algol68-00003"></a><p><center>
+<img src="usched.algol68/page.png" border="0" width="50%"></center></p>
+<a name="usched.algol68-00004"></a><p>The term <i>thread</i> is not used (maybe not yet invented, definitely not current), but we see a sophisticated compiler-assisted cooperative multitasking with <a href="https://en.wikipedia.org/wiki/Fork%E2%80%93join_model">fork-join concurrency</a> and <a href="https://wiki.c2.com/?CactusStack">cactus stacks</a>:</p>
+<a name="usched.algol68-00005"></a><p><center>
+<img src="usched.algol68/diagram.png" border="0" width="50%"></center></p><footer><a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="usched.update.html#usched.update">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="aodt.html#aodt">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;<a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_usched.html">usched</a>&nbsp;<a href="usched.update.html#usched.update">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
