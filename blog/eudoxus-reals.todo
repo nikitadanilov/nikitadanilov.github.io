@@ -1,0 +1,23 @@
+// name Eudoxus reals
+// id eudoxus-reals
+// +# eudoxus-reals
+// +# timeline 2025/05/02
+// +tags math
+
+
+https://ncatlab.org/nlab/show/Eudoxus+real+number
+https://arxiv.org/pdf/math/0405454
+
+https://www.sciencedirect.com/science/article/pii/138572587690055X - de Bruijn. https://en.wikipedia.org/wiki/Simon_Stevin -- another Dutch, introduced decimal fractions.
+
+!eculid.eudoxus "^."
+
+https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=rm&paperid=7018&option_lang=eng
+
+Dear Prof. Arthan,
+
+for a long time the direct method of building reals from your paper The Eudoxus Real Numbers (https://arxiv.org/pdf/math/0405454) was at the back of my mind. A couple of days ago I accidentally stumbled on a (1946!) paper by nobody other than Kolmogorov, that gives essentially the same construction: https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=rm&paperid=7018&option_lang=eng . It does not seem it was ever translated, hopefully the formula density in the text is sufficient to make it understandable. Instead of dealing with the quotient group, Kolmogorov, in effect, selects a unique representative in each coset via conditions (1) and (2) in Definition 1 (Определение 1, on the first page). He explicitly mentions Euclidean theory of proportions ("эвклидовской теории отношений") in the opening paragraph.
+
+Regards,
+Nikita Danilov.
+
