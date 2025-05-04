@@ -28,5 +28,5 @@ the first stack-trace problem became obvious:
 >and the first thing it does is grabbing of spin-lock... which is already
  grabbed by that very thread---deadlock.
 
-PS: This is stright from The Night Watch.
+PS: This is straight from The Night Watch.
 / += . "from The Night Watch" -> https://www.usenix.org/system/files/1311_05-08_mickens.pdf
