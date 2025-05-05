@@ -1,36 +1,37 @@
-// name the power of gdb
+// name gcc-13 bug
 // id gcc-13-bug
 // +# blog gcc-13-bug
-// +# timeline 2025/05/21
+// +# timeline 2025/05/04
 // +tags programming
 
-I hit what more and more looks like a bug the standard Ubuntu 24 gcc
+I hit what more and more looks like a bug in the standard Ubuntu 24 gcc
 version. Here is a minimal reproducer that I with great pain extracted from
 12KLOC sources:
+/ +* "a bug" Yes, this turned out to be an instance of https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117287
 
 ; code
-struct rung {
+struct foo {
         int   seq;
         void *data;
 };
-
-struct path {
-        struct rung rung[1];
+|
+struct bar {
+        struct foo rung[1];
 };
-
+|
 static int used;
-
-static char ll(const struct rung *n) {
+|
+static char ll(const struct foo *n) {
         return *(char *)n->data;
 }
-
+|
 int main(int argc, char **argv) {
-        struct path p = {};
+        struct bar p = {};
         int result = 0;
         used = 0;
         __asm__ __volatile__("": : :"memory");
         for (int i = 0; i <= used && result == 0; ++i) {
-                struct rung *r = &p.rung[i];
+                struct foo *r = &p.rung[i];
                 __attribute__((assume(i <= 0 || ll(r) + 1 == ll(r - 1))));
                 if (!(r->seq == 0 && (i <= 0 || ll(r) + 1 == ll(r - 1)))) {
                         result = -1;
@@ -40,8 +41,8 @@ int main(int argc, char **argv) {
 }
 
 Compile as `gcc -O1 gcc-13-bug.c`, it crashes with SIGSEGV. Note that because
-the loop iterates only once, `i == 0` in the body of the loop, so `l(r)` should
-not be called. Yet, `l(r)` and `l(r-1)` are both called.
+the loop iterates only once, `i == 0` in the body of the loop, so `ll(r)` should
+not be called. Yet, `ll(r)` and `ll(r-1)` are both called.
 
 The reproducer is minimal in the sense that it is locally optimal: any small
 random change eliminates the effect. For example,
@@ -50,6 +51,6 @@ random change eliminates the effect. For example,
 
 >Remove `result == 0` from the loop guard.
 
->Replace `struct path p = {}` with `struct rung[1] p = {}` _mutatis
+>Replace `struct bar p = {}` with `struct foo[1] p = {}` _mutatis
  mutandis_. This one is especially surprising.
 

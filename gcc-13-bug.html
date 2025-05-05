@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>a very occasional diary @ Nikita Danilov | gcc-13 bug</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-WEM34DWDR2');
+</script>
+   
+ </head>
+ <body>
+   <a name="gcc-13-bug"></a><div class="column"><header>gcc-13 bug</header><p class="margin-right"><span class="annotation" data-uid="0"> Yes, this turned out to be an instance of https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117287</span>&nbsp;<br></p>
+<a name="gcc-13-bug-00000"></a><p>I hit what more and more looks like <span class="annotation" data-uid="0">a bug</span> in the standard Ubuntu 24 gcc version. Here is a minimal reproducer that I with great pain extracted from 12KLOC sources:</p>
+<a name="gcc-13-bug-00001"></a><pre><code>struct foo {
+        int   seq;
+        void *data;
+};
+
+struct bar {
+        struct foo rung[1];
+};
+
+static int used;
+
+static char ll(const struct foo *n) {
+        return *(char *)n-&gt;data;
+}
+
+int main(int argc, char **argv) {
+        struct bar p = {};
+        int result = 0;
+        used = 0;
+        __asm__ __volatile__(&quot;&quot;: : :&quot;memory&quot;);
+        for (int i = 0; i &lt;= used &amp;&amp; result == 0; ++i) {
+                struct foo *r = &amp;p.rung[i];
+                __attribute__((assume(i &lt;= 0 || ll(r) + 1 == ll(r - 1))));
+                if (!(r-&gt;seq == 0 &amp;&amp; (i &lt;= 0 || ll(r) + 1 == ll(r - 1)))) {
+                        result = -1;
+                }
+        }
+        return 0;
+}</code></pre>
+<a name="gcc-13-bug-00002"></a><p>Compile as <code class="inline">gcc -O1 gcc-13-bug.c</code>, it crashes with SIGSEGV. Note that because the loop iterates only once, <code class="inline">i == 0</code> in the body of the loop, so <code class="inline">ll(r)</code> should not be called. Yet, <code class="inline">ll(r)</code> and <code class="inline">ll(r-1)</code> are both called.</p>
+<a name="gcc-13-bug-00003"></a><p>The reproducer is minimal in the sense that it is locally optimal: any small random change eliminates the effect. For example,</p>
+<a name="gcc-13-bug-00004"></a><p style="margin-left: 3em;">Move <code class="inline">used = 0</code> over the <code class="inline">asm</code>-barrier (or simply remove the barrier).</p>
+<a name="gcc-13-bug-00005"></a><p style="margin-left: 3em;">Remove <code class="inline">result == 0</code> from the loop guard.</p>
+<a name="gcc-13-bug-00006"></a><p style="margin-left: 3em;">Replace <code class="inline">struct bar p = {}</code> with <code class="inline">struct foo[1] p = {}</code> <i>mutatis  mutandis</i>. This one is especially surprising.</p><footer><a href="forbidden.html#forbidden">&lt;</a>&nbsp;<a href="series_blog.html">blog</a>&nbsp;<a href="gcc-error-message.html#gcc-error-message">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="usched.algol68.html#usched.algol68">&lt;</a>&nbsp;<a href="series_timeline.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>
