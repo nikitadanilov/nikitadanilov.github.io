@@ -1,0 +1,3 @@
+#! /bin/sh
+
+$HOME/p/card/card blog/*conf blog/*deck blog/*card

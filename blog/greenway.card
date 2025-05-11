@@ -4,12 +4,17 @@
 // +# timeline 2005/04/22
 // +tags cinema
 
-Yesterday, Russian nation-wide TV Channel Россия, broadcast Peter Greenway's
+Yesterday [2005/04/21], Russian nation-wide TV Channel Россия, broadcast Peter Greenway's
 _The Cook, The Thief, His Wife and Her Lover_. Isn't there is something very
 Greenwayish in the image of 40 million people turning their TV sets on to relax
 after a hard day only to be confronted with what can be only viewed, but not
 described?
-/ += . "Yesterday" -> http://tv.rambler.ru/event.html?id=1716391
+/ += . "Yesterday" -> https://www.kommersant.ru/doc/572221?query=%D0%9F%D0%BE%D0%B2%D0%B0%D1%80
 / += . "The Cook, The Thief, His Wife and Her Lover" -> https://en.wikipedia.org/wiki/The_Cook,_the_Thief,_His_Wife_%26_Her_Lover
-/ +* "Yesterday" The URL is stale.
-/ +* "The Cook, The Thief, His Wife and Her Lover" The URL was stale, fixed to point to Wikipedia.
+
+PS: I just [2025/05/11] noticed that the TV program above hilariously lists the
+movie as „Киноакадемия "Повар, вор, его жена и ее любовник". Режиссер
+О. Стоун. В ролях: Т. Круз, У. Дефо (США)“ (Film Academy: The Cook, the Thief,
+His Wife & Her Lover, directed by O. Stone, starring: T. Cruz, W. Dafoe
+(USA)). Imagine mixing Greenway's movie with Born on the Fourth of July.
+/ += . "Born on the Fourth of July" -> https://en.wikipedia.org/wiki/Born_on_the_Fourth_of_July_(film)
