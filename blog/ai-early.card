@@ -1,0 +1,11 @@
+// name How the tables have turned.
+// id ai-early
+// +# blog ai-early
+// +# timeline 2025/05/22
+
+>>Already in 1956 it was clear that one had to work with symbolic expressions to
+reach the goal of artifical intelligence. As the researchers already understood
+numerical computation would not have much importance.
+
+[>>>-- Early LISP History (1956 - 1959)]
+/ += . "Early LISP History" -> https://dl.acm.org/doi/pdf/10.1145/800055.802047
