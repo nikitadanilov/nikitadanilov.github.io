@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>a very occasional diary @ Nikita Danilov | Series usched</title>
+   <link rel="stylesheet" href="style.css">
+   <style></style>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-WEM34DWDR2');
+</script>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name=""></a><table class="no-borders"><tr><td><a href="series_usched_compact_flat.html">reverse</a></td><td><a href="series_usched_reverse_flat.html">expand</a></td><td><a href="series_usched_compact_reverse.html">indexed</a></td></tr></table><table class="no-borders"><div class="column"><header>usched and Algol-68: a connection</header>
+<a name="usched.algol68-00000"></a><p><a href="usched.html#usched-start">usched</a> is a light-weight cooperative-multitasking-coroutine library that I wrote (<a href="https://github.com/nikitadanilov/usched">github.com</a>). To switch between threads, it copies the stack of the outgoing thread out to somewhere (<i>e.g.</i>, the heap) and copies in the stack of the incoming thread, that was similarly copied out on the previous context switch.</p>
+<a name="usched.algol68-00001"></a><p>As usual, whatever you invent, eventually turns out to be known since long time ago. In this case, we are talking about something that happened at fabulous times, almost at the dawn of history, as far as computing technology is concerned: <a href="https://en.wikipedia.org/wiki/ALGOL_68">Algol-68</a>. Dr. J.J.F.M. Schlichting&#x27;s PhD. thesis <a href="https://ir.cwi.nl/pub/27828/27828.pdf"><i>Een Vroege Implementatie Van Herzien Algol 68</i></a> (<i>An Early Implementation Of Revised Algol 68</i>) describes in detail an implementation of that language by <a href="https://en.wikipedia.org/wiki/Control_Data_Corporation">Control Data B. Y.</a> and <a href="https://en.wikipedia.org/wiki/University_of_Amsterdam">the University of Amsterdam</a> (among others).</p>
+<a name="usched.algol68-00002"></a><p>On p. 4-30 we find:</p>
+<a name="usched.algol68-00003"></a><p><center>
+<img src="usched.algol68/page.png" border="0" width="50%"></center></p>
+<a name="usched.algol68-00004"></a><p>The term <i>thread</i> is not used (maybe not yet invented, definitely not current), but we see a sophisticated compiler-assisted cooperative multitasking with <a href="https://en.wikipedia.org/wiki/Fork%E2%80%93join_model">fork-join concurrency</a> and <a href="https://wiki.c2.com/?CactusStack">cactus stacks</a>:</p>
+<a name="usched.algol68-00005"></a><p><center>
+<img src="usched.algol68/diagram.png" border="0" width="50%"></center></p><footer><a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="usched.update.html#usched.update">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="aodt.html#aodt">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="gcc-13-bug.html#gcc-13-bug">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="usched.update.html#usched.update">&lt;</a>&nbsp;<a href="series_usched_compact_reverse_flat.html">usched</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
+<div class="column"><header>usched: update</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="usched.html#usched-start"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
+<a name="usched.update-start"></a><p><span class="linktarget" data-uid="0"></span><i>Update</i> for <a href="usched.html#usched-start">the previous post</a> about stackswap coroutine implementation <a href="https://github.com/nikitadanilov/usched">usched</a>.</p>
+<a name="usched.update-00001"></a><p>To recap, usched is an experimental (and <i>very</i> simple, 120LOC) coroutine implementation different from stackful and stackless models: coroutines are executed on the native stack of the caller and when the coroutine is about to block its stack is copied into a separately allocated (<i>e.g.</i>, in the heap) buffer. The buffer is copied back onto the native stack when the coroutine is ready to resume.</p>
+<a name="usched.update-00002"></a><p>I added a new scheduler <a href="https://github.com/nikitadanilov/usched/blob/master/ll.c">ll.c</a> that distributes coroutines across multiple native threads and then does lockless scheduling within each thread. In the benchmark (the same as in the previous post), each coroutine in the communicating <i>cycle</i> belongs to the same thread.</p>
+<a name="usched.update-00003"></a><p>Results are amazing: usched actually beats compiler-assisted C++ coroutines by a large margin. The horizontal axis is the number of coroutines in the test (logarithmic) and the vertical axis is coroutine wakeup-wait operations per second (1 == 1e8 op/sec).</p>
+<a name="usched.update-00004"></a><p><center>
+<img src="https://raw.githubusercontent.com/nikitadanilov/usched/master/c8-darwin.png" border="0" width="100%"></center></p>
+<a name="usched.update-00005"></a>$$\begin{array}{|l|r|r|r|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+           &amp;    16 &amp; 32 &amp; 64 &amp; 400 &amp; 800 &amp; 4000 &amp; 8000 &amp; 40000 &amp; 80000 &amp; 400000 &amp; 800000 &amp; 4M &amp; 8M \\ \hline
+\text{GO}  &amp; 0.077 &amp; 0.127 &amp; 0.199 &amp; 0.326 &amp; 0.323 &amp; 0.285 &amp; 0.228 &amp; 0.142 &amp; 0.199 &amp; 0.305 &amp; 0.303 &amp; 0.286 &amp; 0.268  \\ \hline
+\text{C++} &amp; 1.089 &amp; 1.234 &amp; 1.344 &amp; 1.262 &amp; 1.201 &amp; 1.159 &amp; 1.141 &amp; 1.135 &amp; 1.163 &amp; 1.168 &amp; 1.138 &amp; 1.076 &amp; 1.051 \\ \hline
+\text{UL}  &amp; 0.560 &amp; 0.955 &amp; 1.515 &amp; 2.047 &amp; 2.095 &amp; 2.127 &amp; 2.148 &amp; 2.160 &amp; 2.154 &amp; 2.020 &amp; 1.932 &amp; 1.819 &amp; 1.811 \\ \hline
+\end{array}$$
+<a name="usched.update-00006"></a><p>I only kept the most efficient implementation from every competing class: C++ for stackless, GO for stackful and usched for stackswap. See the full results in <a href="https://github.com/nikitadanilov/usched/blob/master/results.darwin">results.darwin</a></p><footer><a href="usched.algol68.html#usched.algol68">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="vale.html#vale">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="python-dict.html#python-dict">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="qm.html#qm">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="usched.html#usched">&lt;</a>&nbsp;<a href="series_usched_compact_reverse_flat.html">usched</a>&nbsp;<a href="usched.algol68.html#usched.algol68">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
+<div class="column"><header>usched: stackswap coroutines, neither stackful nor stackless</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="usched.algol68.html#usched.algol68-00000"><span style="color: orange">0</span></a>]</span>&nbsp;<span class="annotation" data-uid="1">[<a href="usched.update.html#usched.update-start"><span style="color: blue">1</span></a>]</span>&nbsp;</p>
+<a name="usched-start"></a><p><span class="linktarget" data-uid="0"><span class="linktarget" data-uid="1">[</span></span>Please read the <a href="usched.update.html#usched.update-start"><i>update</i></a>.]</p>
+<a name="usched-00001"></a><p>This repository (<a href="https://github.com/nikitadanilov/usched">https://github.com/nikitadanilov/usched</a>) contains a simple experimental implementation of <a href="https://en.wikipedia.org/wiki/Coroutine">coroutines</a> alternative to well-known &quot;stackless&quot; and &quot;stackful&quot; methods.</p>
+<a name="usched-00002"></a><p>The term &quot;coroutine&quot; gradually grew to mean a mechanism where a computation, which in this context means a chain of nested function calls, can &quot;block&quot; or &quot;yield&quot; so that the top-most caller can proceed and the computation can later be resumed at the blocking point with the chain of intermediate function activation frames preserved.</p>
+<a name="usched-00003"></a><p>Prototypical uses of coroutines are lightweight support for potentially blocking operations (user interaction, IO, networking) and <a href="https://en.wikipedia.org/wiki/Generator_(computer_programming)"><i>generators</i></a> which produce multiple values (see <a href="https://wiki.c2.com/?SameFringeProblem">same fringe problem</a>).</p>
+<a name="usched-00004"></a><p>There are two common coroutine implementation methods:</p>
+<a name="usched-00005"></a><p style="margin-left: 3em;">a <i>stackful</i> coroutine runs on a separate stack. When a stackful coroutine  blocks, it performs a usual context switch. Historically &quot;coroutines&quot; meant  stackful coroutines. Stackful coroutines are basically little more than usual  threads, and so they can be <i>kernel</i> (supported by the operating system)  or <i>user-space</i> (implemented by a user-space library, also known as  <i>green threads</i>), preemptive or cooperative.</p>
+<a name="usched-00006"></a><p style="margin-left: 3em;">a <i>stackless</i> coroutine does not use any stack when blocked. In a typical  implementation instead of using a normal function activation frame on the  stack, the coroutine uses a special activation frame allocated in the heap so  that it can outlive its caller. Using heap-allocated frame to store all local  variable lends itself naturally to compiler support, but some people are known  to implement stackless coroutines manually via a combination of pre-processing,  library and tricks much worse than <a href="https://en.wikipedia.org/wiki/Protothread">Duff&#x27;s device</a>.</p>
+<a name="usched-00007"></a><p>Stackful and stateless are by no means the only possibilities. One of the earliest languages to feature generators <a href="https://en.wikipedia.org/wiki/CLU_(programming_language)">CLU</a> (<a href="https://pmg.csail.mit.edu/ftp.lcs.mit.edu/pub/pclu/CLU/">distribution</a>) ran generators on the caller&#x27;s stack.</p>
+<a name="usched-00008"></a><p>usched is in some sense intermediate between stackful and stackless: its coroutines do not use stack when blocked, nor do they allocate individual activation frames in the heap.</p>
+<a name="usched-00009"></a><p>The following is copied with some abbreviations from <a href="https://github.com/nikitadanilov/usched/blob/master/usched.c">usched.c</a>.</p>
+<a name="usched-00010"></a><h2>Overview</h2>
+<a name="usched-00011"></a><p>usched: A simple dispatcher for cooperative user-space threads.</p>
+<a name="usched-00012"></a><p>A typical implementation of user-space threads allocates a separate stack for each thread when the thread is created and then dispatches threads (as decided by the scheduler) through some context switching mechanism, for example, <code class="inline">longjmp()</code>.</p>
+<a name="usched-00013"></a><p>In usched all threads (represented by struct ustack) are executed on the same &quot;native&quot; stack. When a thread is about to block (<code class="inline">usched_block()</code>), a memory buffer for the stack used by this thread is allocated and the stack is copied to the buffer. After that the part of the stack used by the blocking thread is discarded (by <code class="inline">longjmp()</code>-ing to the base of the stack) and a new thread is selected. The stack of the selected thread is restored from its buffer and the thread is resumed by <code class="inline">longjmp()</code>-ing to the <code class="inline">usched_block()</code> that blocked it.</p>
+<a name="usched-00014"></a><p>The focus of this implementation is simplicity: the total size of <code class="inline">usched.[ch]</code> is less than 120LOC, as measured by SLOCCount.</p>
+<a name="usched-00015"></a><p>Advantages:</p>
+<a name="usched-00016"></a><p style="margin-left: 3em;">no need to allocate maximal possible stack at thread initialisation: stack  buffer is allocated as needed. It is also possible to free the buffer when the  thread is resumed (not currently implemented);</p>
+<a name="usched-00017"></a><p style="margin-left: 3em;">a thread that doesn&#x27;t block has 0 overhead: it is executed as a native function  call (through a function pointer) without any context switching;</p>
+<a name="usched-00018"></a><p style="margin-left: 3em;">because the threads are executed on the stack of the same native underlying  thread, native synchronisation primitives (mutices, <i>etc</i>.)  work, although the  threads share underlying TLS. Of course one cannot use native primitives to  synchronise between usched threads running on the same native thread.</p>
+<a name="usched-00019"></a><p>Disadvantages:</p>
+<a name="usched-00020"></a><p style="margin-left: 3em;">stack copying introduces overhead (<code class="inline">memcpy()</code>) in each context  switch;</p>
+<a name="usched-00021"></a><p style="margin-left: 3em;">because stacks are moved around, addresses on a thread stack are only valid  while the thread is running. This invalidates certain common programming  idioms: other threads and heap cannot store pointers to the stacks, at least to  the stacks of the blocked threads. Note that Go language, and probably other  run-times, maintains a similar invariant.</p>
+<a name="usched-00022"></a><h2>Usage</h2>
+<a name="usched-00023"></a><p>usched is only a dispatcher and not a scheduler: it blocks and resumes threads but</p>
+<a name="usched-00024"></a><p style="margin-left: 3em;">it does not keep track of threads (specifically allocation and freeing of  struct ustack instances is done elsewhere),</p>
+<a name="usched-00025"></a><p style="margin-left: 3em;">it implements no scheduling policies.</p>
+<a name="usched-00026"></a><p>These things are left to the user, together with stack buffers allocation and freeing. The user supplies 3 call-backs:</p>
+<a name="usched-00027"></a><p style="margin-left: 3em;"><code class="inline">usched::s_next()</code>: the scheduling function. This call-backs returns the next thread to execute. This can be either a new (never before executed) thread initialised with <code class="inline">ustack_init()</code>, or it can be a blocked thread. The user must keep track of blocked and runnable threads, presumably by providing wrappers to <code class="inline">ustack_init()</code> and <code class="inline">ustack_block()</code> that would record thread state changes. It is up to <code class="inline">usched::s_next()</code> to block and wait for events if there are no runnable threads and all threads are waiting for something;</p>
+<a name="usched-00028"></a><p style="margin-left: 3em;"><code class="inline">usched::s_alloc()</code>: allocates new stack buffer of at least the specified size. The user have full control over stack buffer allocation. It is possible to pre-allocate the buffer when the thread is initialised (reducing the cost of <code class="inline">usched_block()</code>), it is possible to cache buffers, <i>etc</i>.;</p>
+<a name="usched-00029"></a><p style="margin-left: 3em;"><code class="inline">usched::s_free()</code>: frees the previously allocated stack buffer.</p>
+<a name="usched-00030"></a><p><a href="https://github.com/nikitadanilov/usched/blob/master/rr.h">rr.h</a> and <a href="https://github.com/nikitadanilov/usched/blob/master/rr.c">rr.c</a> provide a simple &quot;round-robin&quot; scheduler implementing all the call-backs. Use it carefully, it was only tested with <a href="https://github.com/nikitadanilov/usched/blob/master/rmain.c">rmain.c</a> benchmark.</p>
+<a name="usched-00031"></a><h2>Pictures!</h2>
+<a name="usched-00032"></a><p>The following diagrams show stack management by usched. The stack grows from right to left.</p>
+<a name="usched-00033"></a><p>At the entrance to the dispatcher loop. <code class="inline">usched_run(S)</code>:</p>
+<a name="usched-00034"></a><pre><code>                                                usched_run()
+----------------------------------------------+--------------+-------+
+                                              | buf | anchor |  ...  |
+----------------------------------------------+--------------+-------+
+                                              ^
+                                              |
+                                              sp = S-&gt;s_buf`</code></pre>
+<a name="usched-00035"></a><p>A new (never before executed) thread <code class="inline">U</code> is selected by <code class="inline">S-&gt;</code><code class="inline">s_next()</code>, <code class="inline">launch()</code> calls the thread startup function <code class="inline">U-&gt;</code><code class="inline">u_f()</code>:</p>
+<a name="usched-00036"></a><pre><code>                               U-&gt;u_f() launch() usched_run()
+ -----------------------------+---------+-----+--------------+-------+
+                              |         | pad | buf | anchor |  ...  |
+ -----------------------------+---------+-----+--------------+-------+
+                              ^         ^
+                              |         |
+                              sp        U-&gt;u_bottom`</code></pre>
+<a name="usched-00037"></a><p>The thread executes as usual on the stack, until it blocks by calling <code class="inline">usched_block()</code>:</p>
+<a name="usched-00038"></a><pre><code>    usched_block()       bar() U-&gt;u_f() launch() usched_run()
+ ----------+------+-----+-----+---------+-----+--------------+-------+
+           | here | ... |     |         | pad | buf | anchor |  ...  |
+ ----------+------+-----+-----+---------+-----+--------------+-------+
+      ^    ^                            ^
+      |    +-- sp = U-&gt;u_cont           |
+      |                                 U-&gt;u_bottom
+      U-&gt;u_top`</code></pre>
+<a name="usched-00039"></a><p>The stack from <code class="inline">U-&gt;u_top</code> to <code class="inline">U-&gt;u_bottom</code> is copied into the stack buffer <code class="inline">U-&gt;u_stack</code>, and control returns to <code class="inline">usched_run()</code> by <code class="inline">longjmp(S-&gt;s_buf)</code>:</p>
+<a name="usched-00040"></a><pre><code>                                                usched_run()
+----------------------------------------------+--------------+-------+
+                                              | buf | anchor |  ...  |
+----------------------------------------------+--------------+-------+
+                                              ^
+                                              |
+                                              sp = S-&gt;s_buf`</code></pre>
+<a name="usched-00041"></a><p>Next, suppose <code class="inline">S-&gt;</code><code class="inline">s_next()</code> selects a previously blocked thread <code class="inline">V</code> ready to be resumed. <code class="inline">usched_run()</code> calls <code class="inline">cont(V)</code>.</p>
+<a name="usched-00042"></a><pre><code>                                        cont()  usched_run()
+----------------------------------------+-----+--------------+-------+
+                                        |     | buf | anchor |  ...  |
+----------------------------------------+-----+--------------+-------+
+                                        ^
+                                        |
+                                        sp`</code></pre>
+<a name="usched-00043"></a><p><code class="inline">cont()</code> copies the stack from the buffer to [<code class="inline">V-&gt;u_top</code>, <code class="inline">V-&gt;u_bottom</code>] range. It&#x27;s important that this <code class="inline">memcpy()</code> operation does not overwrite <code class="inline">cont()</code>&#x27;s own stack frame, this is why <code class="inline">pad[]</code> array is needed in <code class="inline">launch()</code>: it advances <code class="inline">V-&gt;u_bottom</code> and gives <code class="inline">cont()</code> some space to operate.</p>
+<a name="usched-00044"></a><pre><code>  usched_block()       foo() V-&gt;u_f()   cont()  usched_run()
+---------+------+-----+-----+--------+--+-----+--------------+-------+
+         | here | ... |     |        |  |     | buf | anchor |  ...  |
+---------+------+-----+-----+--------+--+-----+--------------+-------+
+    ^    ^                           ^  ^
+    |    +-- V-&gt;u_cont               |  +-- sp
+    |                                |
+    V-&gt;u_top                         V-&gt;u_bottom`</code></pre>
+<a name="usched-00045"></a><p>Then <code class="inline">cont()</code> <code class="inline">longjmp()</code>-s to <code class="inline">V-&gt;</code>u_cont, restoring <code class="inline">V</code> execution context:</p>
+<a name="usched-00046"></a><pre><code>  usched_block()       foo() V-&gt;u_f()   cont()  usched_run()
+---------+------+-----+-----+--------+--+-----+--------------+-------+
+         | here | ... |     |        |  |     | buf | anchor |  ...  |
+---------+------+-----+-----+--------+--+-----+--------------+-------+
+         ^
+         +-- sp = V-&gt;u_cont`</code></pre>
+<a name="usched-00047"></a><p><code class="inline">V</code> continues its execution as if it returned from <code class="inline">usched_block()</code>.</p>
+<a name="usched-00048"></a><h2>Multiprocessing</h2>
+<a name="usched-00049"></a><p>By design, a single instance of <code class="inline">struct usched</code> cannot take advantage of multiple processors, because all its threads are executing within a single native thread. Multiple instances of <code class="inline">struct usched</code> can co-exist within a single process address space, but a ustack thread created for one instance cannot be migrated to another. One possible strategy to add support for multiple processors is to create multiple instances of struct usched and schedule them (that is, schedule the threads running respective <code class="inline">usched_run()</code>-s) to processors via <code class="inline">pthread_setaffinity_np()</code> or similar. See <a href="https://github.com/nikitadanilov/usched/blob/master/rr.c">rr.c</a> for a simplistic implementation.</p>
+<a name="usched-00050"></a><h2>Current limitations</h2>
+<a name="usched-00051"></a><p style="margin-left: 3em;">the stack is assumed to grow toward lower addresses. This is easy to fix, if necessary;</p>
+<a name="usched-00052"></a><p style="margin-left: 3em;">the implementation is not signal-safe. Fixing this can be as easy as replacing <code class="inline">{set,long}</code><code class="inline">jmp()</code> calls with their <code class="inline">sig{set,long}</code><code class="inline">jmp()</code> counterparts. At the moment signal-based code, like gperf <code class="inline">-lprofiler</code> library, would most likely crash usched;</p>
+<a name="usched-00053"></a><p style="margin-left: 3em;"><code class="inline">usched.c</code> must be compiled without optimisations and with <code class="inline">-fno-stack-protector</code> option (gcc);</p>
+<a name="usched-00054"></a><p style="margin-left: 3em;">usched threads are cooperative: a thread will continue to run until it completes of blocks. Adding preemption (via signal-based timers) is relatively easy, the actual preemption decision will be relegated to the external &quot;scheduler&quot; via a new <code class="inline">usched::s_preempt()</code> call-back invoked from a signal handler.</p>
+<a name="usched-00055"></a><h2>Notes</h2>
+<a name="usched-00056"></a><p><a href="https://joeduffyblog.com/2015/11/19/asynchronous-everything/">Midori</a> seems to use a similar method: a coroutine (called <i>activity</i> there) starts on the native stack. If it needs to block, frames are allocated in the heap (this requires compiler support) and filled in from the stack, the coroutine runs in these heap-allocated frames when resumed.</p>
+<a name="usched-00057"></a><h2>Benchmarks</h2>
+<a name="usched-00058"></a><p>usched was benchmarked against a few stackful (go, pthreads) and stackless (rust, c++ coroutines) implementations. A couple of caveats:</p>
+<a name="usched-00059"></a><p style="margin-left: 3em;">all benchmarking in general is subject to the reservations voiced by  Hippocrates and usually translated (with the complete reversal of the meaning)  as <i>ars longa, vita brevis</i>, which means: &quot;the <i>art</i> [of doctor or tester]  takes <i>long</i> time to learn, but the <i>life</i> of a student is <i>brief</i>, symptoms  are vague, chances of success are doubtful&quot;;</p>
+<a name="usched-00060"></a><p style="margin-left: 3em;">the author is much less than fluent with all the languages and frameworks used  in the benchmarking. It is possible that some of the benchmarking code is  inefficient or just outright wrong. Any comments are appreciated.</p>
+<a name="usched-00061"></a><p>The benchmark tries to measure the efficiency of coroutine switching. It creates <code class="inline">R</code> <i>cycles</i>, <code class="inline">N</code> coroutines each. Each cycle performs <code class="inline">M</code> <i>rounds</i>, where each round consists of sending a message across the cycle: a particular coroutine (selected depending on the round number) sends the message to its right neighbour, all other coroutines relay the message received from the left to the right, the round completes when the originator receives the message after it passed through the entire cycle.</p>
+<a name="usched-00062"></a><p>If <code class="inline">N == 2</code>, the benchmark is <code class="inline">R</code> pairs of processes, ping-ponging <code class="inline">M</code> messages within each pair.</p>
+<a name="usched-00063"></a><p>Some benchmarks support two additional parameters: <code class="inline">D</code> (additional space in bytes, artificially consumed by each coroutine in its frame) and <code class="inline">P</code> (the number of native threads used to schedule the coroutines.</p>
+<a name="usched-00064"></a><p>The benchmark creates <code class="inline">N*R</code> coroutines and sends a total of <code class="inline">N*R*M</code> messages, the latter being proportional to the number of coroutine switches.</p>
+<a name="usched-00065"></a><p><a href="https://github.com/nikitadanilov/usched/blob/master/bench.sh">bench.sh</a> runs all implementations with the same <code class="inline">N</code>, <code class="inline">R</code> and <code class="inline">M</code> parameters. <a href="https://github.com/nikitadanilov/usched/blob/master/graph.py">graph.py</a> plots the results.</p>
+<a name="usched-00066"></a><p style="margin-left: 3em;">POSIX. Source: <a href="https://github.com/nikitadanilov/usched/blob/master/pmain.c">pmain.c</a>, binary: pmain. Pthreads-based stackful implementation  in C. Uses default thread attributes. <a href="https://github.com/nikitadanilov/usched/blob/master/pmain.c">pmain.c</a> also contains emulation of  unnamed POSIX semaphores for Darwin. Plot label: &quot;P&quot;. This benchmarks crashes  with &quot;pmain: pthread_create: Resource temporarily unavailable&quot; for large values  of <code class="inline">N*R</code>.</p>
+<a name="usched-00067"></a><p style="margin-left: 3em;">Go. Source: <a href="https://github.com/nikitadanilov/usched/blob/master/gmain.go">gmain.go</a>, binary: gmain. The code is straightforward (it was a pleasure to write). <code class="inline">P</code> is supported via <code class="inline">runtime.GOMAXPROCS()</code>. &quot;GO1T&quot; are the results for a single native thread, &quot;GO&quot; are the results without the restriction on the number of threads.</p>
+<a name="usched-00068"></a><p style="margin-left: 3em;">Rust. Source: <a href="https://github.com/nikitadanilov/usched/blob/master/cycle/src/main.rs">cycle/src/main.rs</a>, binary: cycle/target/release/cycle. Stackless  implementation using Rust builtin <a href="https://rust-lang.github.io/async-book/"><code class="inline">async/.await</code></a>. Label: &quot;R&quot;. It is  single-threaded (I haven&#x27;t figured out how to distribute coroutines to multiple  executors), so should be compared with GO1T, C++1T and U1T. Instead of fighting  with the Rust borrow checker, I used &quot;unsafe&quot; and shared data-structures  between multiple coroutines much like other benchmarks do.</p>
+<a name="usched-00069"></a><p style="margin-left: 3em;">C++. Source: <a href="https://github.com/nikitadanilov/usched/blob/master/c%2B%2Bmain.cpp">c++main.cpp</a>, binary: c++main. The current state of coroutine  support in C++ is unclear. Is everybody supposed to directly use <code class="inline">&lt;coroutine&gt;</code>  interfaces or one of the mutually incompatible libraries that provide easier to  use interfaces on top of <code class="inline">&lt;coroutine&gt;</code>? This benchmark uses <a href="https://lewissbaker.github.io/">Lewis Baker</a>&#x27;s  <a href="https://github.com/lewissbaker/cppcoro">cppcoro</a>, (<a href="https://www.andreasbuhr.de/">Andreas Buhr</a>&#x27;s <a href="https://github.com/andreasbuhr/cppcoro">fork</a>). Labels: &quot;C++&quot; and &quot;C++1T&quot; (for single-threaded  results).</p>
+<a name="usched-00070"></a><p style="margin-left: 3em;">usched. Source: <a href="https://github.com/nikitadanilov/usched/blob/master/rmain.c">rmain.c</a>, binary: rmain. Based on <code class="inline">usched.[ch]</code> and <code class="inline">rr.[ch]</code>  This is our main interest, so we test a few combinations of parameters.</p>
+<a name="usched-00071"></a><p style="margin-left: 6em;">Label: &quot;U&quot;: the default configuration, round-robin scheduler over 16 native threads,</p>
+<a name="usched-00072"></a><p style="margin-left: 6em;">&quot;U1K&quot;: 1000 bytes of additional stack space for each coroutine</p>
+<a name="usched-00073"></a><p style="margin-left: 6em;">&quot;U10K&quot;: 10000 bytes,</p>
+<a name="usched-00074"></a><p style="margin-left: 6em;">&quot;U1T&quot;: round-robin over 1 native thread,</p>
+<a name="usched-00075"></a><p style="margin-left: 6em;">&quot;U1TS&quot;: round-robin over 1 native thread with pthread locking in <a href="https://github.com/nikitadanilov/usched/blob/master/rr.c">rr.c</a> compiled   out (<code class="inline">-DSINGLE_THREAD</code> compilation option, a separate binary rmain.1t).</p>
+<a name="usched-00076"></a><p style="margin-left: 6em;"><i>Update</i> &quot;UL&quot;: uses &quot;local&quot; scheduler <a href="https://github.com/nikitadanilov/usched/blob/master/ll.c">ll.c</a>. All coroutines within a cycle are assigned to the same native thread so that scheduling between them require no locking. This demonstrates very high throughput (comparable to C++), but unfortunately I do not have time right now to re-do all the measurements consistently. Binary: lmain.</p>
+<a name="usched-00077"></a><p><a href="https://github.com/nikitadanilov/usched/blob/master/bench.sh">bench.sh</a> runs all benchmarks with <code class="inline">N == 2</code> (message ping-pong) and <code class="inline">N == 8</code>. Raw results are in <a href="https://github.com/nikitadanilov/usched/blob/master/results.linux">results.linux</a>. In the graphs, the horizontal axis is the number of coroutines (<code class="inline">N*R</code>, logarithmic) and the vertical axis is the operations (<code class="inline">N*R*M</code>) per second.</p>
+<a name="usched-00078"></a><p>Environment: Linux VM, 16 processors, 16GB of memory. Kernel: 4.18.0 (Rocky Linux).</p>
+<a name="usched-00079"></a><p><center>
+<img src="https://raw.githubusercontent.com/nikitadanilov/usched/master/c8.png" border="0" width="100%"></center></p>
+<a name="usched-00080"></a>$$\begin{array}{|l|r|r|r|r|r|r|r|r|r|}
+  \hline
+             &amp; 16    &amp;  32    &amp;  64    &amp;  400    &amp;  800    &amp;  4000    &amp;  8000    &amp;  40000    &amp;  80000    &amp;  400000    &amp;  800000    &amp;  4000000    &amp;  8000000\\ \hline
+    \text{posix}   &amp;  1.76    &amp;  3.46    &amp;  6.39    &amp;  14.58    &amp;  14.85    &amp;  14.70    &amp;  13.63    &amp;  9.87    &amp;  8.02    &amp;  0.00    &amp;  0.00    &amp;  0.00    &amp;  0.01\\ \hline
+    \text{go}   &amp;  4.14    &amp;  5.62    &amp;  7.77    &amp;  36.74    &amp;  41.64    &amp;  49.72    &amp;  48.24    &amp;  37.24    &amp;  43.06    &amp;  46.31    &amp;  46.22    &amp;  46.09    &amp;  45.95\\ \hline
+    \text{go1t}   &amp;  4.38    &amp;  4.30    &amp;  4.27    &amp;  4.11    &amp;  3.81    &amp;  3.53    &amp;  3.40    &amp;  3.33    &amp;  3.43    &amp;  3.99    &amp;  3.98    &amp;  3.95    &amp;  3.86\\ \hline
+    \text{rust}   &amp;  9.48    &amp;  8.71    &amp;  8.69    &amp;  8.64    &amp;  8.53    &amp;  7.85    &amp;  6.59    &amp;  4.32    &amp;  3.80    &amp;  3.63    &amp;  3.63    &amp;  3.83    &amp;  3.90\\ \hline
+    \text{u}   &amp;  17.24    &amp;  17.27    &amp;  17.30    &amp;  25.77    &amp;  29.99    &amp;  71.68    &amp;  77.32    &amp;  78.92    &amp;  77.98    &amp;  80.88    &amp;  82.09    &amp;  83.66    &amp;  82.15\\ \hline
+    \text{u1k}   &amp;  16.21    &amp;  16.29    &amp;  16.35    &amp;  25.38    &amp;  28.41    &amp;  69.92    &amp;  75.76    &amp;  74.31    &amp;  73.65    &amp;  76.69    &amp;  76.75    &amp;  75.84    &amp;  76.56\\ \hline
+    \text{u10k}   &amp;  9.04    &amp;  8.96    &amp;  9.09    &amp;  20.38    &amp;  21.69    &amp;  58.13    &amp;  60.95    &amp;  59.66    &amp;  60.50    &amp;  61.32    &amp;  61.71    &amp;  62.06    &amp;  62.72\\ \hline
+    \text{u1t}   &amp;  17.37    &amp;  17.31    &amp;  17.35    &amp;  17.35    &amp;  17.36    &amp;  17.27    &amp;  17.29    &amp;  17.14    &amp;  17.06    &amp;  16.91    &amp;  16.91    &amp;  16.91    &amp;  16.87\\ \hline
+    \text{c++}   &amp;  49.87    &amp;  67.85    &amp;  74.94    &amp;  73.91    &amp;  73.04    &amp;  62.48    &amp;  59.15    &amp;  57.23    &amp;  56.48    &amp;  55.35    &amp;  55.44    &amp;  54.02    &amp;  53.61\\ \hline
+    \text{c++1t}   &amp;  97.03    &amp;  97.38    &amp;  96.82    &amp;  96.06    &amp;  96.58    &amp;  95.78    &amp;  94.83    &amp;  89.83    &amp;  86.09    &amp;  80.48    &amp;  79.37    &amp;  77.04    &amp;  77.48\\ \hline
+    \text{u1ts}   &amp;  49.53    &amp;  49.76    &amp;  49.83    &amp;  50.16    &amp;  49.93    &amp;  48.88    &amp;  49.75    &amp;  48.75    &amp;  47.99    &amp;  46.48    &amp;  46.25    &amp;  45.99    &amp;  46.12\\ \hline
+    \text{ul}   &amp;  76.03    &amp;  116.63    &amp;  160.72    &amp;  169.74    &amp;  169.99    &amp;  171.57    &amp;  170.32    &amp;  165.82    &amp;  169.43    &amp;  174.32    &amp;  171.55    &amp;  169.48    &amp;  170.04\\ \hline
+\end{array}$$
+<a name="usched-00081"></a><p><code class="inline">(N == 8)</code> A few notes:</p>
+<a name="usched-00082"></a><p style="margin-left: 3em;">As mentioned above, pthreads-based solution crashes with around 50K threads.</p>
+<a name="usched-00083"></a><p style="margin-left: 3em;">Most single-threaded versions (&quot;GO1T&quot;, &quot;R&quot; and &quot;U1T&quot;) are stable as corpse&#x27;s  body temperature. Rust cools off completely at about 500K  coroutines. Single-threaded C++ (&quot;C++1T&quot;) on the other hand is the most  performant solution for almost the entire range of measurement, it is only for  coroutine counts higher than 500K when &quot;U&quot; overtakes it.</p>
+<a name="usched-00084"></a><p style="margin-left: 3em;">It is interesting that a very simple and unoptimised usched fares so well  against heavily optimized C++ and Go run-times. (Again, see the reservations  about the benchmarking.)</p>
+<a name="usched-00085"></a><p style="margin-left: 3em;">Rust is disappointing: one would hope to get better results from a rich type  system combined with compiler support.</p>
+<a name="usched-00086"></a><p><center>
+<img src="https://raw.githubusercontent.com/nikitadanilov/usched/master/c8.png" border="0" width="100%"></center></p>
+<a name="usched-00087"></a>$$\begin{array}{|l|r|r|r|r|r|r|r|r|r|}
+  \hline
+        &amp;  4    &amp;  8    &amp;  16    &amp;  100    &amp;  200    &amp;  1000    &amp;  2000    &amp;  10000    &amp;  20000    &amp;  100000    &amp;  200000    &amp;  1000000    &amp;  2000000\\ \hline
+    \text{posix}   &amp;  0.56    &amp;  0.97    &amp;  1.84    &amp;  6.36    &amp;  6.88    &amp;  7.78    &amp;  7.82    &amp;  7.58    &amp;  7.15    &amp;  5.34    &amp;  0.00    &amp;  0.00    &amp;  0.00\\ \hline
+    \text{go}   &amp;  7.40    &amp;  11.03    &amp;  19.23    &amp;  40.44    &amp;  45.79    &amp;  51.81    &amp;  52.87    &amp;  52.77    &amp;  53.15    &amp;  53.62    &amp;  53.22    &amp;  55.77    &amp;  56.82\\ \hline
+    \text{go1t}   &amp;  4.54    &amp;  4.55    &amp;  4.53    &amp;  4.53    &amp;  4.53    &amp;  4.52    &amp;  4.52    &amp;  4.50    &amp;  4.47    &amp;  4.36    &amp;  4.31    &amp;  4.26    &amp;  4.26\\ \hline
+    \text{rust}   &amp;  5.68    &amp;  5.75    &amp;  5.75    &amp;  4.74    &amp;  4.74    &amp;  4.62    &amp;  4.46    &amp;  4.13    &amp;  3.70    &amp;  2.81    &amp;  2.77    &amp;  2.76    &amp;  2.73\\ \hline
+    \text{u}   &amp;  11.22    &amp;  11.27    &amp;  11.26    &amp;  11.30    &amp;  7.91    &amp;  24.66    &amp;  38.72    &amp;  35.67    &amp;  40.60    &amp;  41.18    &amp;  42.06    &amp;  42.96    &amp;  42.74\\ \hline
+    \text{u1k}   &amp;  9.64    &amp;  9.62    &amp;  9.65    &amp;  9.67    &amp;  7.61    &amp;  22.14    &amp;  34.38    &amp;  31.70    &amp;  34.54    &amp;  34.56    &amp;  34.59    &amp;  35.47    &amp;  35.56\\ \hline
+    \text{u10k}   &amp;  4.43    &amp;  4.62    &amp;  4.50    &amp;  4.25    &amp;  5.02    &amp;  15.79    &amp;  26.18    &amp;  25.33    &amp;  27.60    &amp;  27.62    &amp;  27.63    &amp;  27.72    &amp;  28.16\\ \hline
+    \text{u1t}   &amp;  11.24    &amp;  11.29    &amp;  11.34    &amp;  11.26    &amp;  11.32    &amp;  11.30    &amp;  11.28    &amp;  11.28    &amp;  11.22    &amp;  11.19    &amp;  11.15    &amp;  11.13    &amp;  11.15\\ \hline
+    \text{c++}   &amp;  46.33    &amp;  46.30    &amp;  63.38    &amp;  114.30    &amp;  117.05    &amp;  114.12    &amp;  111.36    &amp;  101.32    &amp;  100.13    &amp;  84.30    &amp;  78.53    &amp;  72.77    &amp;  71.00\\ \hline
+    \text{c++1t}   &amp;  96.56    &amp;  96.03    &amp;  96.37    &amp;  95.97    &amp;  95.49    &amp;  95.68    &amp;  94.94    &amp;  92.95    &amp;  91.23    &amp;  83.55    &amp;  80.33    &amp;  77.22    &amp;  76.22\\ \hline
+    \text{u1ts}   &amp;  19.59    &amp;  19.66    &amp;  19.80    &amp;  19.87    &amp;  19.89    &amp;  19.86    &amp;  19.82    &amp;  19.72    &amp;  19.66    &amp;  19.51    &amp;  19.45    &amp;  19.33    &amp;  19.37\\ \hline
+    \text{ul}   &amp;  12.19    &amp;  23.48    &amp;  50.39    &amp;  65.71    &amp;  67.22    &amp;  69.17    &amp;  70.01    &amp;  70.09    &amp;  69.36    &amp;  69.28    &amp;  69.43    &amp;  68.83    &amp;  68.00\\ \hline
+\end{array}$$
+<a name="usched-00088"></a><p><code class="inline">(N == 2)</code></p>
+<a name="usched-00089"></a><p style="margin-left: 3em;">First, note that the scale is different on the vertical axis.</p>
+<a name="usched-00090"></a><p style="margin-left: 3em;">Single-threaded benchmarks display roughly the same behaviour (exactly the same  in &quot;C++1T&quot; case) as with <code class="inline">N == 8</code>.</p>
+<a name="usched-00091"></a><p style="margin-left: 3em;">Go is somewhat better. Perhaps its scheduler is optimised for message ping-pong  usual in channel-based concurrency models?</p>
+<a name="usched-00092"></a><p style="margin-left: 3em;">usched variants are much worse (50% worse for &quot;U&quot;) than <code class="inline">N == 8</code>.</p>
+<a name="usched-00093"></a><p style="margin-left: 3em;">Rust is disappointing.</p>
+<a name="usched-00094"></a><p>To reproduce:</p>
+<a name="usched-00095"></a><pre><code>$ # install libraries and everything, then...
+$ make
+$ while : ;do ./bench.sh | tee -a results; sleep 5 ;done # collect enough results, this might take long...
+^C
+$ grep -h &#x27;^ *[2N],&#x27; results | python3 graph.py c2.svg &gt; c2-table.md # create plot for N == 2
+$ grep -h &#x27;^ *[8N],&#x27; results | python3 graph.py c8.svg &gt; c8-table.md # create plot for N == 8</code></pre>
+<a name="usched-00096"></a><h2>Conclusion</h2>
+<a name="usched-00097"></a><p>Overall, the results are surprisingly good. The difference between &quot;U1T&quot; and &quot;U1TS&quot; indicates that the locking in <a href="https://github.com/nikitadanilov/usched/blob/master/rr.c">rr.c</a> affects performance significantly, and affects it even more with multiple native threads, when locks are contended across processors. I&#x27;ll try to produce a more efficient (perhaps lockless) version of a scheduler as the next step.</p><footer><a href="unintentionally.html#unintentionally">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="usched.algol68.html#usched.algol68">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="3-lisp.html#3-lisp">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="catalan.html#catalan">&gt;</a>&nbsp;&nbsp;&nbsp;&lt;&nbsp;<a href="series_usched_compact_reverse_flat.html">usched</a>&nbsp;<a href="usched.update.html#usched.update">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p> </body>
+</html>
