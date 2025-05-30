@@ -3,7 +3,7 @@
  <head>
    <meta name="viewport"
          content="width=device-width,
-         initial-scale=1">
+                  initial-scale=1">
    <meta charset="UTF-8">
    <title>a very occasional diary @ Nikita Danilov | usched: update</title>
    <link rel="stylesheet" href="style.css">
@@ -25,8 +25,8 @@ gtag('config', 'G-WEM34DWDR2');
  </head>
  <body>
    <a name="usched.update"></a>
-<div class="column"><header>usched: update</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="usched.html#usched-start"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
-<a name="usched.update-start"></a><p><span class="linktarget" data-uid="0"></span><i>Update</i> for <a href="usched.html#usched-start">the previous post</a> about stackswap coroutine implementation <a href="https://github.com/nikitadanilov/usched">usched</a>.</p>
+<div class="column"><header>usched: update</header><p class="margin-left"><span class="annotation" data-uid="2">[<a href="usched.html#usched-start"><span style="color: red">0</span></a>]</span>&nbsp;</p>
+<a name="usched.update-start"></a><p><span class="linktarget" data-uid="2"></span><i>Update</i> for <a href="usched.html#usched-start">the previous post</a> about stackswap coroutine implementation <a href="https://github.com/nikitadanilov/usched">usched</a>.</p>
 <a name="usched.update-00001"></a><p>To recap, usched is an experimental (and <i>very</i> simple, 120LOC) coroutine implementation different from stackful and stackless models: coroutines are executed on the native stack of the caller and when the coroutine is about to block its stack is copied into a separately allocated (<i>e.g.</i>, in the heap) buffer. The buffer is copied back onto the native stack when the coroutine is ready to resume.</p>
 <a name="usched.update-00002"></a><p>I added a new scheduler <a href="https://github.com/nikitadanilov/usched/blob/master/ll.c">ll.c</a> that distributes coroutines across multiple native threads and then does lockless scheduling within each thread. In the benchmark (the same as in the previous post), each coroutine in the communicating <i>cycle</i> belongs to the same thread.</p>
 <a name="usched.update-00003"></a><p>Results are amazing: usched actually beats compiler-assisted C++ coroutines by a large margin. The horizontal axis is the number of coroutines in the test (logarithmic) and the vertical axis is coroutine wakeup-wait operations per second (1 == 1e8 op/sec).</p>

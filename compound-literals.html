@@ -3,7 +3,7 @@
  <head>
    <meta name="viewport"
          content="width=device-width,
-         initial-scale=1">
+                  initial-scale=1">
    <meta charset="UTF-8">
    <title>a very occasional diary @ Nikita Danilov | __VA_ARGS__ + C99 compound literals = safe variadic functions</title>
    <link rel="stylesheet" href="style.css">
@@ -18,8 +18,8 @@ gtag('config', 'G-WEM34DWDR2');
    
  </head>
  <body>
-   <a name="compound-literals"></a><div class="column"><header>__VA_ARGS__ + C99 compound literals = safe variadic functions</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="named-formals.html#named-formals-00004"><span style="color: orange">0</span></a>]</span>&nbsp;</p>
-<a name="compound-literals-start"></a><p><span class="linktarget" data-uid="0">I</span>t occurred to me that new C features added by C99 standard can be used to implement <i>safe variadic functions</i> that is, something syntactically looking like normal call of function with variable number of arguments, but in effect calling function with all arguments packed into array, and with array size explicitly supplied:</p>
+   <a name="compound-literals"></a><div class="column"><header>__VA_ARGS__ + C99 compound literals = safe variadic functions</header><p class="margin-left"><span class="annotation" data-uid="3">[<a href="named-formals.html#named-formals-00004"><span style="color: green">0</span></a>]</span>&nbsp;</p>
+<a name="compound-literals-start"></a><p><span class="linktarget" data-uid="3">I</span>t occurred to me that new C features added by C99 standard can be used to implement <i>safe variadic functions</i> that is, something syntactically looking like normal call of function with variable number of arguments, but in effect calling function with all arguments packed into array, and with array size explicitly supplied:</p>
 <a name="compound-literals-00001"></a><pre><code>#define sizeof_array(arr) ((sizeof (arr))/(sizeof (arr)[0]))
 
 #define FOO(a, ...) \

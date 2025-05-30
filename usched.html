@@ -3,7 +3,7 @@
  <head>
    <meta name="viewport"
          content="width=device-width,
-         initial-scale=1">
+                  initial-scale=1">
    <meta charset="UTF-8">
    <title>a very occasional diary @ Nikita Danilov | usched: stackswap coroutines, neither stackful nor stackless</title>
    <link rel="stylesheet" href="style.css">
@@ -25,8 +25,8 @@ gtag('config', 'G-WEM34DWDR2');
  </head>
  <body>
    <a name="usched"></a>
-<div class="column"><header>usched: stackswap coroutines, neither stackful nor stackless</header><p class="margin-left"><span class="annotation" data-uid="0">[<a href="usched.algol68.html#usched.algol68-00000"><span style="color: orange">0</span></a>]</span>&nbsp;<span class="annotation" data-uid="1">[<a href="usched.update.html#usched.update-start"><span style="color: blue">1</span></a>]</span>&nbsp;</p>
-<a name="usched-start"></a><p><span class="linktarget" data-uid="0"><span class="linktarget" data-uid="1">[</span></span>Please read the <a href="usched.update.html#usched.update-start"><i>update</i></a>.]</p>
+<div class="column"><header>usched: stackswap coroutines, neither stackful nor stackless</header><p class="margin-left"><span class="annotation" data-uid="1">[<a href="usched.algol68.html#usched.algol68-00000"><span style="color: blue">0</span></a>]</span>&nbsp;<span class="annotation" data-uid="2">[<a href="usched.update.html#usched.update-start"><span style="color: red">1</span></a>]</span>&nbsp;</p>
+<a name="usched-start"></a><p><span class="linktarget" data-uid="1"><span class="linktarget" data-uid="2">[</span></span>Please read the <a href="usched.update.html#usched.update-start"><i>update</i></a>.]</p>
 <a name="usched-00001"></a><p>This repository (<a href="https://github.com/nikitadanilov/usched">https://github.com/nikitadanilov/usched</a>) contains a simple experimental implementation of <a href="https://en.wikipedia.org/wiki/Coroutine">coroutines</a> alternative to well-known &quot;stackless&quot; and &quot;stackful&quot; methods.</p>
 <a name="usched-00002"></a><p>The term &quot;coroutine&quot; gradually grew to mean a mechanism where a computation, which in this context means a chain of nested function calls, can &quot;block&quot; or &quot;yield&quot; so that the top-most caller can proceed and the computation can later be resumed at the blocking point with the chain of intermediate function activation frames preserved.</p>
 <a name="usched-00003"></a><p>Prototypical uses of coroutines are lightweight support for potentially blocking operations (user interaction, IO, networking) and <a href="https://en.wikipedia.org/wiki/Generator_(computer_programming)"><i>generators</i></a> which produce multiple values (see <a href="https://wiki.c2.com/?SameFringeProblem">same fringe problem</a>).</p>
