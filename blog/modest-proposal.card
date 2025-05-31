@@ -5,7 +5,7 @@
 // +tags programming
 
 [This is an old and never finished draft. HTML produced by asciidoc.]
-/ += . "asciidoc" -> http://www.methods.co.nz/asciidoc/
+/ += . "asciidoc" -> https://asciidoc.org/
 
    
 ; head
