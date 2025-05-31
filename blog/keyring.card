@@ -1,0 +1,23 @@
+// name Ineluctable modality of the past, indeed.
+// id keyring
+// +# blog keyring
+// +# timeline 2025/05/31
+
+A lot of history in GPG keyrings...
+
+; code
+|$ gpg -k
+|
+|...
+|
+|pub   dsa1024 2003-08-08 [SCA]
+|      5E69659A734629663FBF04EB166C3B2362DBF2F4
+|uid           [ unknown] Hans Reiser (created on laptop) <reiser@namesys.com>
+|sub   elg2048 2003-08-08 [E]
+|
+|pub   dsa1024 2003-12-01 [SCA]
+|      86EFEB4D2AB605B5E3549F69A3F4319719FEDF80
+|uid           [ unknown] Nina Reiser <ninasha@namesys.com>
+|sub   elg2048 2003-12-01 [E]
+/ += . "Hans Reiser" -> https://en.wikipedia.org/wiki/Hans_Reiser
+/ += . "Nina Reiser" -> https://www.cbsnews.com/news/betrayal-29-12-2008/
