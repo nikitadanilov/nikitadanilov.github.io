@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Occasional diary</title>
+        <link>https://cofault.com</link>
+        <description>Nikita Danilov, Occasional diary</description>
+        <lastBuildDate>Sat, 07 Jun 2025 22:48:31 +0000</lastBuildDate>
+
+        <item>
+            <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
+            <link>https://cofault.com/3-lisp.html#3-lisp</link>
+            <pubDate>2022/08/22</pubDate>
+            <description>3-lisp: an infinite tower of meta-circular interpreters.</description>
+        </item>
+
+        <item>
+            <title>adaptive replacement</title>
+            <link>https://cofault.com/adaptive-replacement.html#adaptive-replacement</link>
+            <pubDate>2003/12/23</pubDate>
+            <description>adaptive replacement</description>
+        </item>
+
+        <item>
+            <title>Weekend affinity.</title>
+            <link>https://cofault.com/affinity.html#affinity</link>
+            <pubDate>2013/01/19</pubDate>
+            <description>Weekend affinity.</description>
+        </item>
+
+        <item>
+            <title>How the tables have turned.</title>
+            <link>https://cofault.com/ai-early.html#ai-early</link>
+            <pubDate>2025/05/22</pubDate>
+            <description>How the tables have turned.</description>
+        </item>
+
+        <item>
+            <title>An exercise</title>
+            <link>https://cofault.com/an-exercise.html#an-exercise</link>
+            <pubDate>2005/11/12</pubDate>
+            <description>An exercise</description>
+        </item>
+
+        <item>
+            <title>What is cosh(List(Bool))? Or beyond algebra: analysis of data types.</title>
+            <link>https://cofault.com/aodt.html#aodt</link>
+            <pubDate>2025/04/16</pubDate>
+            <description>What is cosh(List(Bool))? Or beyond algebra: analysis of data types.</description>
+        </item>
+
+        <item>
+            <title>BSD VM scanner</title>
+            <link>https://cofault.com/bsd-vm.html#bsd-vm</link>
+            <pubDate>2005/07/25:15:57</pubDate>
+            <description>BSD VM scanner</description>
+        </item>
+
+        <item>
+            <title>Generating Catalan numbers.</title>
+            <link>https://cofault.com/catalan.html#catalan</link>
+            <pubDate>2022/10/07</pubDate>
+            <description>Generating Catalan numbers.</description>
+        </item>
+
+        <item>
+            <title>Деревья по кругу.</title>
+            <link>https://cofault.com/деревья.html#деревья</link>
+            <pubDate>2012/09/28</pubDate>
+            <description>Деревья по кругу.</description>
+        </item>
+
+        <item>
+            <title>Cographs, cocounts and coconuts.</title>
+            <link>https://cofault.com/cographs.html#cographs</link>
+            <pubDate>2018/03/09</pubDate>
+            <description>Cographs, cocounts and coconuts.</description>
+        </item>
+
+        <item>
+            <title>Blindsight spot.</title>
+            <link>https://cofault.com/commutativity.html#commutativity</link>
+            <pubDate>2014/10/16</pubDate>
+            <description>Blindsight spot.</description>
+        </item>
+
+        <item>
+            <title>__VA_ARGS__ + C99 compound literals = safe variadic functions</title>
+            <link>https://cofault.com/compound-literals.html#compound-literals</link>
+            <pubDate>2005/07/30</pubDate>
+            <description>__VA_ARGS__ + C99 compound literals = safe variadic functions</description>
+        </item>
+
+        <item>
+            <title>Concurrency Control and Recovery in Database Systems</title>
+            <link>https://cofault.com/concurrency-and-recovery.html#concurrency-and-recovery</link>
+            <pubDate>2005/07/25:15:40</pubDate>
+            <description>Concurrency Control and Recovery in Database Systems</description>
+        </item>
+
+        <item>
+            <title>Confessions of Microsoft developer</title>
+            <link>https://cofault.com/confessions-microsoft.html#confessions-microsoft</link>
+            <pubDate>2005/08/02</pubDate>
+            <description>Confessions of Microsoft developer</description>
+        </item>
+
+        <item>
+            <title>It could be done</title>
+            <link>https://cofault.com/could-be-done.html#could-be-done</link>
+            <pubDate>2009/03/25</pubDate>
+            <description>It could be done</description>
+        </item>
+
+        <item>
+            <title>Cue a key</title>
+            <link>https://cofault.com/cue.html#cue</link>
+            <pubDate>2011/12/24</pubDate>
+            <description>Cue a key</description>
+        </item>
+
+        <item>
+            <title>Translations.</title>
+            <link>https://cofault.com/donne.html#donne</link>
+            <pubDate>2017/09/22</pubDate>
+            <description>Translations.</description>
+        </item>
+
+        <item>
+            <title>threads, contexts and doors.</title>
+            <link>https://cofault.com/doors.html#doors</link>
+            <pubDate>2013/12/16</pubDate>
+            <description>threads, contexts and doors.</description>
+        </item>
+
+        <item>
+            <title>Euclid continuity</title>
+            <link>https://cofault.com/euclid.html#euclid</link>
+            <pubDate>2024/05/07</pubDate>
+            <description>Euclid continuity</description>
+        </item>
+
+        <item>
+            <title>a trivial exercise.</title>
+            <link>https://cofault.com/exercise.html#exercise</link>
+            <pubDate>2009/08/21</pubDate>
+            <description>a trivial exercise.</description>
+        </item>
+
+        <item>
+            <title>ext3: magic, more magic.</title>
+            <link>https://cofault.com/ext3-magic.html#ext3-magic</link>
+            <pubDate>2006/02/01</pubDate>
+            <description>ext3: magic, more magic.</description>
+        </item>
+
+        <item>
+            <title>Review of Feminism, Interrupted: Disrupting Power by L. Olufemi</title>
+            <link>https://cofault.com/feminism.html#feminism</link>
+            <pubDate>2025/03/08</pubDate>
+            <description>Review of Feminism, Interrupted: Disrupting Power by L. Olufemi</description>
+        </item>
+
+        <item>
+            <title>you have a strange forbidding feeling...</title>
+            <link>https://cofault.com/forbidden.html#forbidden</link>
+            <pubDate>2005/06/26</pubDate>
+            <description>you have a strange forbidding feeling...</description>
+        </item>
+
+        <item>
+            <title>gcc-13 bug</title>
+            <link>https://cofault.com/gcc-13-bug.html#gcc-13-bug</link>
+            <pubDate>2025/05/04</pubDate>
+            <description>gcc-13 bug</description>
+        </item>
+
+        <item>
+            <title>gcc error message</title>
+            <link>https://cofault.com/gcc-error-message.html#gcc-error-message</link>
+            <pubDate>2005/04/12.11:58</pubDate>
+            <description>gcc error message</description>
+        </item>
+
+        <item>
+            <title>the power of gdb</title>
+            <link>https://cofault.com/gdb.html#gdb</link>
+            <pubDate>2005/03/31</pubDate>
+            <description>the power of gdb</description>
+        </item>
+
+        <item>
+            <title>Why Go is Not My Favorite Programming Language</title>
+            <link>https://cofault.com/golang.html#golang</link>
+            <pubDate>2019/01/27</pubDate>
+            <description>Why Go is Not My Favorite Programming Language</description>
+        </item>
+
+        <item>
+            <title>The Cook, The Thief, His Wife and Her Lover go to the masses.</title>
+            <link>https://cofault.com/greenway.html#greenway</link>
+            <pubDate>2005/04/22</pubDate>
+            <description>The Cook, The Thief, His Wife and Her Lover go to the masses.</description>
+        </item>
+
+        <item>
+            <title>The Hunt for Addi(c)tive Monster</title>
+            <link>https://cofault.com/hunt.1.html#hunt.1</link>
+            <pubDate>2010/01/12</pubDate>
+            <description>The Hunt for Addi(c)tive Monster</description>
+        </item>
+
+        <item>
+            <title>The Hunt for Addi(c)tive Monster 2.</title>
+            <link>https://cofault.com/hunt.2.html#hunt.2</link>
+            <pubDate>2010/02/04</pubDate>
+            <description>The Hunt for Addi(c)tive Monster 2.</description>
+        </item>
+
+        <item>
+            <title>Inaccessible Cardinals</title>
+            <link>https://cofault.com/inaccessible-cardinals.html#inaccessible-cardinals</link>
+            <pubDate>2005/04/12</pubDate>
+            <description>Inaccessible Cardinals</description>
+        </item>
+
+        <item>
+            <title>inactive_dirty and inactive_clean are considered harmful</title>
+            <link>https://cofault.com/inactive-dirty.html#inactive-dirty</link>
+            <pubDate>2005/07/25:16:06</pubDate>
+            <description>inactive_dirty and inactive_clean are considered harmful</description>
+        </item>
+
+        <item>
+            <title>Unexpected isomorphism.</title>
+            <link>https://cofault.com/iso.html#iso</link>
+            <pubDate>2020/10/15</pubDate>
+            <description>Unexpected isomorphism.</description>
+        </item>
+
+        <item>
+            <title>Ineluctable modality of the past, indeed.</title>
+            <link>https://cofault.com/keyring.html#keyring</link>
+            <pubDate>2025/05/31</pubDate>
+            <description>Ineluctable modality of the past, indeed.</description>
+        </item>
+
+        <item>
+            <title>360 years later or „Скрещенья ног“</title>
+            <link>https://cofault.com/later-360.html#later-360</link>
+            <pubDate>2021/02/13</pubDate>
+            <description>360 years later or „Скрещенья ног“</description>
+        </item>
+
+        <item>
+            <title>Leisure pace of progress</title>
+            <link>https://cofault.com/leisure.html#leisure</link>
+            <pubDate>2007/08/08</pubDate>
+            <description>Leisure pace of progress</description>
+        </item>
+
+        <item>
+            <title>A bit of out-of-context quoting</title>
+            <link>https://cofault.com/lessons.html#lessons</link>
+            <pubDate>2006/01/11</pubDate>
+            <description>A bit of out-of-context quoting</description>
+        </item>
+
+        <item>
+            <title>limit and evaluation</title>
+            <link>https://cofault.com/limit-eval.html#limit-eval</link>
+            <pubDate>2005/07/24</pubDate>
+            <description>limit and evaluation</description>
+        </item>
+
+        <item>
+            <title>Publish or Perish in style.</title>
+            <link>https://cofault.com/liouville.html#liouville</link>
+            <pubDate>2025/03/03</pubDate>
+            <description>Publish or Perish in style.</description>
+        </item>
+
+        <item>
+            <title>Long [story of] division.</title>
+            <link>https://cofault.com/division.html#division</link>
+            <pubDate>2025/02/25</pubDate>
+            <description>Long [story of] division.</description>
+        </item>
+
+        <item>
+            <title>S. MacLane died</title>
+            <link>https://cofault.com/maclane.html#maclane</link>
+            <pubDate>2005/04/17</pubDate>
+            <description>S. MacLane died</description>
+        </item>
+
+        <item>
+            <title>A macro.</title>
+            <link>https://cofault.com/macro.html#macro</link>
+            <pubDate>2012/05/11</pubDate>
+            <description>A macro.</description>
+        </item>
+
+        <item>
+            <title>A look at several memory management units...</title>
+            <link>https://cofault.com/mm-units.html#mm-units</link>
+            <pubDate>2005/08/24</pubDate>
+            <description>A look at several memory management units...</description>
+        </item>
+
+        <item>
+            <title>A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.</title>
+            <link>https://cofault.com/modest-proposal.html#modest-proposal</link>
+            <pubDate>2009/04/23</pubDate>
+            <description>A Modest Proposal: For Generalizing the Field Access in C Programming Language, and for Making It Beneficial to the Public.</description>
+        </item>
+
+        <item>
+            <title>A monster desktop</title>
+            <link>https://cofault.com/monster-desktop.html#monster-desktop</link>
+            <pubDate>2005/08/12</pubDate>
+            <description>A monster desktop</description>
+        </item>
+
+        <item>
+            <title>named formals</title>
+            <link>https://cofault.com/named-formals.html#named-formals</link>
+            <pubDate>2005/08/18</pubDate>
+            <description>named formals</description>
+        </item>
+
+        <item>
+            <title>opahead patch</title>
+            <link>https://cofault.com/opahead-patch.html#opahead-patch</link>
+            <pubDate>2005/11/23</pubDate>
+            <description>opahead patch</description>
+        </item>
+
+        <item>
+            <title>page tickets</title>
+            <link>https://cofault.com/page-tickets.html#page-tickets</link>
+            <pubDate>2005/04/05</pubDate>
+            <description>page tickets</description>
+        </item>
+
+        <item>
+            <title>Parmigianino faces.</title>
+            <link>https://cofault.com/parmigianino.html#parmigianino</link>
+            <pubDate>2014/02/09</pubDate>
+            <description>Parmigianino faces.</description>
+        </item>
+
+        <item>
+            <title>kernel patches for 2.6.12-rc6</title>
+            <link>https://cofault.com/patches-2.6.12.html#patches-2.6.12</link>
+            <pubDate>2005/06/11</pubDate>
+            <description>kernel patches for 2.6.12-rc6</description>
+        </item>
+
+        <item>
+            <title>Update of my kernel patches for 2.6.14-rc5</title>
+            <link>https://cofault.com/patches-update.html#patches-update</link>
+            <pubDate>2005/10/24</pubDate>
+            <description>Update of my kernel patches for 2.6.14-rc5</description>
+        </item>
+
+        <item>
+            <title>plug and crash</title>
+            <link>https://cofault.com/plug-crash.html#plug-crash</link>
+            <pubDate>2005/09/13</pubDate>
+            <description>plug and crash</description>
+        </item>
+
+        <item>
+            <title>purelisp: introduction</title>
+            <link>https://cofault.com/purelisp.introduction.html#purelisp.introduction</link>
+            <pubDate>2005/04/11.09:45</pubDate>
+            <description>purelisp: introduction</description>
+        </item>
+
+        <item>
+            <title>purelisp: object types</title>
+            <link>https://cofault.com/purelisp.object-types.html#purelisp.object-types</link>
+            <pubDate>2005/04/11.10:32</pubDate>
+            <description>purelisp: object types</description>
+        </item>
+
+        <item>
+            <title>A Python: it is dictionaries all the way down.</title>
+            <link>https://cofault.com/python-dict.html#python-dict</link>
+            <pubDate>2022/10/07:00:07</pubDate>
+            <description>A Python: it is dictionaries all the way down.</description>
+        </item>
+
+        <item>
+            <title>When people used to care about the quality of presentation</title>
+            <link>https://cofault.com/qm.html#qm</link>
+            <pubDate>2024/03/04</pubDate>
+            <description>When people used to care about the quality of presentation</description>
+        </item>
+
+        <item>
+            <title>The Question of Life, The Universe, and Everything.</title>
+            <link>https://cofault.com/question.html#question</link>
+            <pubDate>2005/07/31:10:49</pubDate>
+            <description>The Question of Life, The Universe, and Everything.</description>
+        </item>
+
+        <item>
+            <title>reiser4: 1. internal tree</title>
+            <link>https://cofault.com/reiser4-internal.html#reiser4-internal</link>
+            <pubDate>2006/03/26</pubDate>
+            <description>reiser4: 1. internal tree</description>
+        </item>
+
+        <item>
+            <title>reiser4: 0. introduction</title>
+            <link>https://cofault.com/reiser4-introduction.html#reiser4-introduction</link>
+            <pubDate>2005/12/18</pubDate>
+            <description>reiser4: 0. introduction</description>
+        </item>
+
+        <item>
+            <title>Repaging in AIX VM</title>
+            <link>https://cofault.com/repaging-aix.html#repaging-aix</link>
+            <pubDate>2005/07/25</pubDate>
+            <description>Repaging in AIX VM</description>
+        </item>
+
+        <item>
+            <title>Riemann hypothesis, DIY</title>
+            <link>https://cofault.com/riemann.html#riemann</link>
+            <pubDate>2012/03/03</pubDate>
+            <description>Riemann hypothesis, DIY</description>
+        </item>
+
+        <item>
+            <title>RSX</title>
+            <link>https://cofault.com/rsx.html#rsx</link>
+            <pubDate>2005/03/24</pubDate>
+            <description>RSX</description>
+        </item>
+
+        <item>
+            <title>Side with effete.</title>
+            <link>https://cofault.com/side-effete.html#side-effete</link>
+            <pubDate>2012/11/09</pubDate>
+            <description>Side with effete.</description>
+        </item>
+
+        <item>
+            <title>A curious case of stacks and queues.</title>
+            <link>https://cofault.com/stack-queue.html#stack-queue</link>
+            <pubDate>2020/11/11</pubDate>
+            <description>A curious case of stacks and queues.</description>
+        </item>
+
+        <item>
+            <title>Treadmill</title>
+            <link>https://cofault.com/treadmill.html#treadmill</link>
+            <pubDate>2022/07/25</pubDate>
+            <description>Treadmill</description>
+        </item>
+
+        <item>
+            <title>Unintentionally yours.</title>
+            <link>https://cofault.com/unintentionally.html#unintentionally</link>
+            <pubDate>2011/12/08</pubDate>
+            <description>Unintentionally yours.</description>
+        </item>
+
+        <item>
+            <title>usched and Algol-68: a connection</title>
+            <link>https://cofault.com/usched.algol68.html#usched.algol68</link>
+            <pubDate>2025/04/30</pubDate>
+            <description>usched and Algol-68: a connection</description>
+        </item>
+
+        <item>
+            <title>usched: stackswap coroutines, neither stackful nor stackless</title>
+            <link>https://cofault.com/usched.html#usched</link>
+            <pubDate>2022/10/06</pubDate>
+            <description>usched: stackswap coroutines, neither stackful nor stackless</description>
+        </item>
+
+        <item>
+            <title>usched: update</title>
+            <link>https://cofault.com/usched.update.html#usched.update</link>
+            <pubDate>2022/10/11</pubDate>
+            <description>usched: update</description>
+        </item>
+
+        <item>
+            <title>Vale of tears.</title>
+            <link>https://cofault.com/vale.html#vale</link>
+            <pubDate>2013/01/17</pubDate>
+            <description>Vale of tears.</description>
+        </item>
+
+        <item>
+            <title>Conatus trimetro iambico.</title>
+            <link>https://cofault.com/3-iamb.html#3-iamb</link>
+            <pubDate>2017/12/18</pubDate>
+            <description>Conatus trimetro iambico.</description>
+        </item>
+
+        <item>
+            <title>A voice of the reason from the distant past</title>
+            <link>https://cofault.com/voice.html#voice</link>
+            <pubDate>2006/07/22</pubDate>
+            <description>A voice of the reason from the distant past</description>
+        </item>
+
+        <item>
+            <title>Wikipedia</title>
+            <link>https://cofault.com/wikipedia.html#wikipedia</link>
+            <pubDate>2005/07/31</pubDate>
+            <description>Wikipedia</description>
+        </item>
+
+        <item>
+            <title>Why windows will collapse ultimately</title>
+            <link>https://cofault.com/windows-collapse.html#windows-collapse</link>
+            <pubDate>2006/03/03</pubDate>
+            <description>Why windows will collapse ultimately</description>
+        </item>
+
+        <item>
+            <title>working set is not relevant</title>
+            <link>https://cofault.com/working-set.html#working-set</link>
+            <pubDate>2005/07/23</pubDate>
+            <description>working set is not relevant</description>
+        </item>
+
+        <item>
+            <title>XNU VM</title>
+            <link>https://cofault.com/xnu-vm.html#xnu-vm</link>
+            <pubDate>2005/07/25:16:02</pubDate>
+            <description>XNU VM</description>
+        </item>
+
+        <item>
+            <title>Zero is overrated</title>
+            <link>https://cofault.com/zero-overrated.html#zero-overrated</link>
+            <pubDate>2012/11/03</pubDate>
+            <description>Zero is overrated</description>
+        </item>
+
+        <item>
+            <title>Zero everywhere.</title>
+            <link>https://cofault.com/zero.html#zero</link>
+            <pubDate>2014/12/13</pubDate>
+            <description>Zero everywhere.</description>
+        </item>
+
+        <item>
+            <title>Если бы я знал, что такое электричество...</title>
+            <link>https://cofault.com/электричество.html#электричество</link>
+            <pubDate>2005/05/26</pubDate>
+            <description>Если бы я знал, что такое электричество...</description>
+        </item>
+
+        <item>
+            <title>Грозный</title>
+            <link>https://cofault.com/грозный.html#грозный</link>
+            <pubDate>2005/10/16</pubDate>
+            <description>Грозный</description>
+        </item>
+
+</channel></rss>
