@@ -4,7 +4,7 @@
         <title>Occasional diary</title>
         <link>https://cofault.com</link>
         <description>Nikita Danilov, Occasional diary</description>
-        <lastBuildDate>Sat, 07 Jun 2025 22:48:31 +0000</lastBuildDate>
+        <lastBuildDate>Sat, 07 Jun 2025 23:06:18 +0000</lastBuildDate>
 
         <item>
             <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
@@ -51,7 +51,7 @@
         <item>
             <title>BSD VM scanner</title>
             <link>https://cofault.com/bsd-vm.html#bsd-vm</link>
-            <pubDate>2005/07/25:15:57</pubDate>
+            <pubDate>2005/07/25</pubDate>
             <description>BSD VM scanner</description>
         </item>
 
@@ -93,7 +93,7 @@
         <item>
             <title>Concurrency Control and Recovery in Database Systems</title>
             <link>https://cofault.com/concurrency-and-recovery.html#concurrency-and-recovery</link>
-            <pubDate>2005/07/25:15:40</pubDate>
+            <pubDate>2005/07/25</pubDate>
             <description>Concurrency Control and Recovery in Database Systems</description>
         </item>
 
@@ -177,7 +177,7 @@
         <item>
             <title>gcc error message</title>
             <link>https://cofault.com/gcc-error-message.html#gcc-error-message</link>
-            <pubDate>2005/04/12.11:58</pubDate>
+            <pubDate>2005/04/12</pubDate>
             <description>gcc error message</description>
         </item>
 
@@ -226,7 +226,7 @@
         <item>
             <title>inactive_dirty and inactive_clean are considered harmful</title>
             <link>https://cofault.com/inactive-dirty.html#inactive-dirty</link>
-            <pubDate>2005/07/25:16:06</pubDate>
+            <pubDate>2005/07/25</pubDate>
             <description>inactive_dirty and inactive_clean are considered harmful</description>
         </item>
 
@@ -373,21 +373,21 @@
         <item>
             <title>purelisp: introduction</title>
             <link>https://cofault.com/purelisp.introduction.html#purelisp.introduction</link>
-            <pubDate>2005/04/11.09:45</pubDate>
+            <pubDate>2005/04/11</pubDate>
             <description>purelisp: introduction</description>
         </item>
 
         <item>
             <title>purelisp: object types</title>
             <link>https://cofault.com/purelisp.object-types.html#purelisp.object-types</link>
-            <pubDate>2005/04/11.10:32</pubDate>
+            <pubDate>2005/04/11</pubDate>
             <description>purelisp: object types</description>
         </item>
 
         <item>
             <title>A Python: it is dictionaries all the way down.</title>
             <link>https://cofault.com/python-dict.html#python-dict</link>
-            <pubDate>2022/10/07:00:07</pubDate>
+            <pubDate>2022/10/07</pubDate>
             <description>A Python: it is dictionaries all the way down.</description>
         </item>
 
@@ -401,7 +401,7 @@
         <item>
             <title>The Question of Life, The Universe, and Everything.</title>
             <link>https://cofault.com/question.html#question</link>
-            <pubDate>2005/07/31:10:49</pubDate>
+            <pubDate>2005/07/31</pubDate>
             <description>The Question of Life, The Universe, and Everything.</description>
         </item>
 
@@ -534,7 +534,7 @@
         <item>
             <title>XNU VM</title>
             <link>https://cofault.com/xnu-vm.html#xnu-vm</link>
-            <pubDate>2005/07/25:16:02</pubDate>
+            <pubDate>2005/07/25</pubDate>
             <description>XNU VM</description>
         </item>
 

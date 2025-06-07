@@ -1,7 +1,7 @@
 // name inactive_dirty and inactive_clean are considered harmful
 // id inactive-dirty
 // +# blog inactive-dirty
-// +# timeline 2005/07/25:16:06
+// +# timeline 2005/07/25 16:06
 // +tags programming
 // +tags kernel
 // +tags vm

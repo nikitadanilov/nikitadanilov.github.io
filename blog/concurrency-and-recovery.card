@@ -1,7 +1,7 @@
 // name Concurrency Control and Recovery in Database Systems
 // id concurrency-and-recovery
 // +# blog concurrency-and-recovery
-// +# timeline 2005/07/25:15:40
+// +# timeline 2005/07/25 15:40
 // +tags programming
 
 Concurrency Control and Recovery in Database Systems by Philip A. Bernstein, Vassos Hadzilacos, and Nathan Goodman.

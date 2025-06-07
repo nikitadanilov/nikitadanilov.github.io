@@ -1,7 +1,7 @@
 // name XNU VM
 // id xnu-vm
 // +# blog xnu-vm
-// +# timeline 2005/07/25:16:02
+// +# timeline 2005/07/25 16:02
 // +tags programming
 // +tags kernel
 // +tags vm

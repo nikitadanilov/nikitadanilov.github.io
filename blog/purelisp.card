@@ -2,7 +2,7 @@
 // id purelisp.introduction
 // +# blog purelisp.introduction
 // +# purelisp 0.introduction
-// +# timeline 2005/04/11.09:45
+// +# timeline 2005/04/11 09:45
 // +tags programming
 // +tags LISP
 
@@ -80,7 +80,7 @@ corresponding objects and evaluates it in some "_current_" environment.
 // id purelisp.object-types
 // +# blog purelisp.object-types
 // +# purelisp 1.object-types
-// +# timeline 2005/04/11.10:32
+// +# timeline 2005/04/11 10:32
 // +tags programming
 // +tags LISP
 // +cd (^|[ ])(?P<open>)CAR(?P<close>)

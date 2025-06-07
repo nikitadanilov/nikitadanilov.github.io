@@ -1,7 +1,7 @@
 // name BSD VM scanner
 // id bsd-vm
 // +# blog bsd-vm
-// +# timeline 2005/07/25:15:57
+// +# timeline 2005/07/25 15:57
 // +tags programming
 // +tags kernel
 // +tags vm
