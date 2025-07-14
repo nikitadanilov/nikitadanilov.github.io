@@ -4,7 +4,7 @@
         <title>Occasional diary</title>
         <link>https://cofault.com</link>
         <description>Nikita Danilov, Occasional diary</description>
-        <lastBuildDate>Wed, 11 Jun 2025 01:44:33 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 14 Jul 2025 03:46:42 +0000</lastBuildDate>
 
         <item>
             <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
@@ -1928,6 +1928,193 @@ function f(arg) {
  * more data until all his delayed data has
  * at least been queued to the uderlying driver.
  */</content>
+        </item>
+
+        <item>
+            <title>Zero-cost statics in C++</title>
+            <id>zero-cost-static</id>
+            <link>https://cofault.com/zero-cost-static.html#zero-cost-static</link>
+            <pubDate>2025/07/13</pubDate>
+            <content type="html"
+                     xml:base="https://cofault.com/zero-cost-static.html#zero-cost-static">
+                     &lt;span class=&quot;align-right&quot;&gt; &amp;quot;&lt;i&gt;Усердие все превозмогает!&lt;/i&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;align-right&quot;&gt; К. Прутков, &lt;a href=&quot;https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_I_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)&quot;&gt;Мысли и афоризмы, I&lt;/a&gt;, 84&lt;/span&gt;In C and C++ a static variable can be defined in a function scope:int foo() {
+        static int counter = 1;
+        printf(&amp;quot;foo() has been called %i times.\n&amp;quot;, counter++);
+        ...
+}Technically, this defines &lt;code class=&quot;inline&quot;&gt;counter&lt;/code&gt; as an object of &lt;a href=&quot;https://en.cppreference.com/w/cpp/language/storage_duration.html&quot;&gt;static storage duration&lt;/a&gt; that is allocated not within the function activation frame (which is typically on the stack, but can be on the heap for a &lt;a href=&quot;https://en.cppreference.com/w/cpp/language/coroutines.html&quot;&gt;coroutine&lt;/a&gt;), but as a global object. This is often used to shift computational cost out of the hot path, by precomputing some state and storing it in a static object.When exactly a static object is initialised?For C this question is vacuous, because the initialiser must be a &lt;a href=&quot;https://en.cppreference.com/w/c/language/initialization.html&quot;&gt;compile-time constant&lt;/a&gt;, so the actual value of the static object is embedded in the compiled binary and is always valid.C++ has a bizarrely complicated taxonomy of &lt;a href=&quot;https://en.cppreference.com/w/cpp/language/initialization.html&quot;&gt;initialisations&lt;/a&gt;. There is &lt;a href=&quot;https://timsong-cpp.github.io/cppwp/n4861/basic.start.static&quot;&gt;static&lt;/a&gt; initialisation, which roughly corresponds to C initialisation, subdivided into constant-initialisation and zero-initialisation. Then there is &lt;a href=&quot;https://timsong-cpp.github.io/cppwp/n4861/basic.start.dynamic&quot;&gt;dynamic&lt;/a&gt; initialisation, further divided into unordered, partially-ordered and ordered categories. None of these, however, captures our case: for block-local variables, the Standard has a special sub-section in &amp;quot;Declaration statement&amp;quot; [&lt;a href=&quot;https://timsong-cpp.github.io/cppwp/n4861/stmt.dcl#4&quot;&gt;stmt.dcl.4&lt;/a&gt;]:Dynamic initialization of a block-scope variable with static storage duration  or thread storage duration is performed the first time control passes through  its declaration; such a variable is considered initialized upon the completion  of its initialization. If the initialization exits by throwing an exception,  the initialization is not complete, so it will be tried again the next time  control enters the declaration. If control enters the declaration concurrently  while the variable is being initialized, the concurrent execution shall wait  for completion of the initialization. [&lt;a href=&quot;#zero-cost-static-footnote-85&quot;&gt;85&lt;/a&gt;] If control re-enters the declaration  recursively while the variable is being initialized, the behavior is  undefined. [ Example:int foo(int i) {
+  static int s = foo(2*i);      // undefined behavior: recursive call
+  return i+1;
+}— end example ]&lt;span class=&quot;linktarget&quot; data-uid=&quot;1&quot;&gt;8&lt;/span&gt;5) The implementation must not introduce any deadlock around execution of the initializer. Deadlocks might still be caused by the program logic; the implementation need only avoid deadlocks due to its own synchronization operations.For example instruct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+
+int foo(int x) {
+        static Bar b{};
+        return b.var + 1;
+}the constructor for &lt;code class=&quot;inline&quot;&gt;b&lt;/code&gt; should be called exactly once when &lt;code class=&quot;inline&quot;&gt;foo()&lt;/code&gt; is called the first time. This initialisation semantics is very close (sans the exceptions part) to &lt;a href=&quot;https://pubs.opengroup.org/onlinepubs/7908799/xsh/pthread_once.html&quot;&gt;&lt;code class=&quot;inline&quot;&gt;pthread_once&lt;/a&gt;()&lt;/code&gt;. It is clear that the compiler must add some sort of an internal flag to check whether the initialisation has already been performed and some synchronisation object to serialise concurrent calls to &lt;code class=&quot;inline&quot;&gt;foo()&lt;/code&gt; [&lt;a href=&quot;https://gcc.godbolt.org/z/3xKea3MW4&quot;&gt;godbolt&lt;/a&gt;]:foo(int):
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 16
+        mov     DWORD PTR [rbp-4], edi
+        movzx   eax, BYTE PTR guard variable for foo(int)::b[rip]
+        test    al, al
+        sete    al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_acquire
+        test    eax, eax
+        setne   al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:foo(int)::b
+        call    Bar::Bar() [complete object constructor]
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_release
+.L3:
+        mov     eax, DWORD PTR foo(int)::b[rip]
+        add     eax, 1
+        leave
+        retThis corresponds roughly to the following code:int foo(int x) {
+        static Bar b{};
+        static std::atomic&amp;lt;int&amp;gt; __b_guard = 0;
+        if (__cxa_guard_acquire(&amp;amp;__b_guard) != 0) {
+                new (&amp;amp;b) Bar{}; /* Construct b in-place. */
+                __cxa_guard_release(&amp;amp;__b_guard)
+        }
+        return b.var + 1;
+}Here &lt;code class=&quot;inline&quot;&gt;__b_guard&lt;/code&gt; (&lt;code class=&quot;inline&quot;&gt;guard variable for foo(int)::b&lt;/code&gt; in assembly) is the flag variable added by the compiler. &lt;a href=&quot;https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/libsupc%2B%2B/guard.cc#L272&quot;&gt;&lt;code class=&quot;inline&quot;&gt;__cxa_guard_acquire&lt;/a&gt;()&lt;/code&gt; is a suprisingly complex function, which includes its own synchronisation mechanism implemented directly on top of the raw Linux &lt;a href=&quot;https://man7.org/linux/man-pages/man2/futex.2.html&quot;&gt;futex syscall&lt;/a&gt;.Even after the static variable has been initialised, the overhead of accessing it is still considerable: a function call to &lt;code class=&quot;inline&quot;&gt;__cxa_guard_acquire()&lt;/code&gt;, plus &lt;code class=&quot;inline&quot;&gt;atomic_load_explicit(&amp;amp;__b_guard, memory_order::acquire)&lt;/code&gt; in &lt;code class=&quot;inline&quot;&gt;__cxa_guard_acquire()&lt;/code&gt;. On ARM, such atomic load incurs a memory barrier---a fairly expensive operation.Can this additional cost be reduced? Yes, in fact it can be completely eliminated, making block-level static variables exactly as efficient as file-level ones. For this we need a certain old, but little-known feature of UNIX linkers. From GNU binutils &lt;a href=&quot;https://sourceware.org/binutils/docs/ld.html#Input-Section-Example&quot;&gt;documentation&lt;/a&gt; (beware than in the old versions the terminating symbol is mistakenly referred to as &lt;code class=&quot;inline&quot;&gt;__end_SECNAME&lt;/code&gt;):If an output section’s name is the same as the input section’s name and is representable as a C identifier, then the linker will automatically &lt;code class=&quot;inline&quot;&gt;PROVIDE&lt;/code&gt; two symbols: &lt;code class=&quot;inline&quot;&gt;__start_SECNAME&lt;/code&gt; and &lt;code class=&quot;inline&quot;&gt;__stop_SECNAME&lt;/code&gt;, where &lt;code class=&quot;inline&quot;&gt;SECNAME&lt;/code&gt; is the name of the section. These indicate the start address and end address of the output section respectively. Note: most section names are not representable as C identifiers because they contain a ‘.’ character.(Solaris linker calls them &amp;quot;Encapsulation Symbols&amp;quot;, see &lt;a href=&quot;https://docs.oracle.com/en/operating-systems/solaris/oracle-solaris/11.4/linkers-libraries/oracle-solaris-11.4-linkers-and-libraries-guide.pdf&quot;&gt;here&lt;/a&gt;.)The idea is the following: instead of defining a block-level static instance of &lt;code class=&quot;inline&quot;&gt;Bar&lt;/code&gt;, define a trivially-initialisable object of a size sufficient to hold an instance of &lt;code class=&quot;inline&quot;&gt;Bar&lt;/code&gt; in a dedicated section &lt;code class=&quot;inline&quot;&gt;STATIC_Bar&lt;/code&gt;, via (more or less portable) &lt;a href=&quot;https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/Variable-Attributes.html&quot;&gt;&lt;code class=&quot;inline&quot;&gt;__attribute__((section))&lt;/code&gt;&lt;/a&gt;. Only such place-holder objects and nothing else are placed in this section. Then, during global static initialisation, scan the resulting array of place-holder objects from &lt;code class=&quot;inline&quot;&gt;__start_STATIC_Bar&lt;/code&gt; to &lt;code class=&quot;inline&quot;&gt;__stop_STATIC_Bar&lt;/code&gt; and initialise Bar instances in-place. Assuming that functions where static &lt;code class=&quot;inline&quot;&gt;Bar&lt;/code&gt;s are defined are not themselves called during global static initialisation, this would initialise everything correctly: by the time &lt;code class=&quot;inline&quot;&gt;foo()&lt;/code&gt; is called, its &lt;code class=&quot;inline&quot;&gt;b&lt;/code&gt; has already been initialised.Something like this:#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;new&amp;gt; /* For placement new. */
+
+#define FAST_STATIC(T)                                                                    \
+*({                                                                                       \
+        struct placeholder {                                                              \
+            alignas(T) char buf[sizeof(T)];                                               \
+        };                                                                                \
+        static constinit placeholder ph __attribute__((section (&amp;quot;STATIC_&amp;quot; #T))) {{}};     \
+        reinterpret_cast&amp;lt;T *&amp;gt;(ph.buf);                                                    \
+})
+
+template &amp;lt;typename T&amp;gt; static int section_init(T *start, T *stop)
+{
+        for (T *s = start; s &amp;lt; stop; ++s)
+            new (s) T; /* Construct in-place. */
+        return 0;
+}
+
+#define FAST_STATIC_INIT(T)                                     \
+extern &amp;quot;C&amp;quot; T __start_STATIC_ ## T;                              \
+extern &amp;quot;C&amp;quot; T __stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init&amp;lt;T&amp;gt;(&amp;amp;__start_STATIC_ ## T, \
+                                         &amp;amp;__stop_STATIC_ ## T);
+
+struct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+
+int foo(int x) {
+        Bar &amp;amp;b0 = FAST_STATIC(Bar);
+        Bar &amp;amp;b1 = FAST_STATIC(Bar);
+        return b0.var + b1.var + 1;
+}
+
+FAST_STATIC_INIT(Bar);
+
+int main(int argc, char **argv) {
+        return printf(&amp;quot;%i\n&amp;quot;, foo(argc)); /* Prints &amp;quot;3&amp;quot;. */
+}Check the resulting assembly [&lt;a href=&quot;https://gcc.godbolt.org/z/bf3h7hzcz&quot;&gt;godbolt&lt;/a&gt;]:foo(int)::ph:
+        .zero   4
+foo(int)::ph:
+        .zero   4
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:foo(int)::ph
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:foo(int)::ph
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret&lt;i&gt;Voilà&lt;/i&gt;! The calls to &lt;code class=&quot;inline&quot;&gt;__cxa_guard_acquire()&lt;/code&gt; are gone, yet &lt;code class=&quot;inline&quot;&gt;b0&lt;/code&gt; and &lt;code class=&quot;inline&quot;&gt;b1&lt;/code&gt; are initialised before &lt;code class=&quot;inline&quot;&gt;foo()&lt;/code&gt; is called, just as we want. &lt;i&gt;But not so fast&lt;/i&gt;, it&amp;#x27;s C++.Let&amp;#x27;s add another static Bar instance, this time in an inline function:int inline baz(int x) {
+        Bar &amp;amp;b = FAST_STATIC(Bar);
+        return b.var * x;
+}GCC reports [&lt;a href=&quot;https://gcc.godbolt.org/z/Th1ece58b&quot;&gt;godbolt&lt;/a&gt;]:&amp;lt;source&amp;gt;:9:38: error: &amp;#x27;ph&amp;#x27; causes a section type conflict with &amp;#x27;ph&amp;#x27; in section &amp;#x27;STATIC_Bar&amp;#x27;(clang works fine [&lt;a href=&quot;https://gcc.godbolt.org/z/YT9bdG5Ke&quot;&gt;godbolt&lt;/a&gt;], by the way.)The problem is that in addition to name, sections output by the compiler also have attributes. The compiler selects the attributes based on the properties of the scope where the symbol (to which &lt;code class=&quot;inline&quot;&gt;__attribute__((section))&lt;/code&gt; is applied) is defined. Inline functions force a different attribute selection (similarly do template members), and the linker ends up with multiple sections with the same name, but conflicting attributes. See &lt;a href=&quot;https://stackoverflow.com/questions/35091862/inline-static-data-causes-a-section-type-conflict&quot;&gt;stackoverflow&lt;/a&gt; for details.As it is, &lt;code class=&quot;inline&quot;&gt;FAST_STATIC()&lt;/code&gt; is usable, but section attribute conflicts put awkward resrictions on its applicability. Is this the best we can do? For some time I thought that it is, but then I realised that there is another way to specify the section in which the variable is located: the &lt;a href=&quot;https://sourceware.org/binutils/docs/as/PushSection.html&quot;&gt;&lt;code class=&quot;inline&quot;&gt;.pushsection&lt;/code&gt;&lt;/a&gt; directive of the embedded assembler (do not be afraid, we will use only portable part).If you do something like__asm__(&amp;quot;.pushsection STATIC_Bar,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot; \
+        &amp;quot;.quad &amp;quot; symbol &amp;quot;\n&amp;quot;                         \
+        &amp;quot;.popsection\n&amp;quot;)then the address of the &lt;code class=&quot;inline&quot;&gt;symbol&lt;/code&gt; is placed in &lt;code class=&quot;inline&quot;&gt;STATIC_Bar&lt;/code&gt; section with the specified &lt;a href=&quot;https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_117.html&quot;&gt;attributes&lt;/a&gt;.All we need is something like#define FAST_STATIC(T)                                          \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder ph {{}};                   \
+        __asm__(&amp;quot;.pushsection STATIC_&amp;quot; #T &amp;quot;,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot; \
+                &amp;quot;.quad ph\n&amp;quot;                                    \
+                &amp;quot;.popsection\n&amp;quot;);                               \
+        reinterpret_cast&amp;lt;T *&amp;gt;(ph.buf);                          \
+})and we are good (&lt;code class=&quot;inline&quot;&gt;section_init()&lt;/code&gt; needs to be fixed a bit, because &lt;code class=&quot;inline&quot;&gt;STATIC_Bar&lt;/code&gt; now contains pointers, not instances). &lt;i&gt;But not so fast&lt;/i&gt;, it&amp;#x27;s C++. This does not even compile [&lt;a href=&quot;https://gcc.godbolt.org/z/b49974Wfr&quot;&gt;godbolt&lt;/a&gt;]:ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x0): undefined reference to `ph&amp;#x27;
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x8): undefined reference to `ph&amp;#x27;
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x10): undefined reference to `ph&amp;#x27;
+collect2: error: ld returned 1 exit status
+Execution build compiler returned: 1When you define &lt;code class=&quot;inline&quot;&gt;static constinit placeholder ph&lt;/code&gt;, the actual name the compiler uses for the symbol is not &lt;code class=&quot;inline&quot;&gt;ph&lt;/code&gt; it is the mangled version of something like &lt;code class=&quot;inline&quot;&gt;foo(int)::ph&lt;/code&gt; that we saw in the assembly listing above. There is no &lt;code class=&quot;inline&quot;&gt;ph&lt;/code&gt; for &lt;code class=&quot;inline&quot;&gt;.quad ph&lt;/code&gt; to resolve to.OK. Are we stuck &lt;i&gt;now&lt;/i&gt;? In fact not. You can &lt;a href=&quot;https://gcc.gnu.org/onlinedocs/gcc/Asm-Labels.html&quot;&gt;instruct the compiler&lt;/a&gt; to use a particular symbol name, instead of the mangled one. With        int foo asm (&amp;quot;bar&amp;quot;) = 2;the compiler will use &amp;quot;bar&amp;quot; as the symbol name for &lt;code class=&quot;inline&quot;&gt;foo&lt;/code&gt; (both gcc and clang support this).Of course if we just do        static constinit placeholder ph asm(&amp;quot;ph&amp;quot;) {{}};we fall in the opposite trap of having multiple definitions for &amp;quot;ph&amp;quot;. We need to define unique names for our symbols, but there is more or less standard trick for this, based on &lt;a href=&quot;https://www.open-std.org/JTC1/sc22/wg14/www/docs/n3457.htm&quot;&gt;&lt;code class=&quot;inline&quot;&gt;__COUNTER__&lt;/code&gt;&lt;/a&gt; macro. We also need a couple of, again standard, macros for concatenation and stringification. The final version looks like this:#define CAT0(a, b) a ## b
+#define CAT(a, b) CAT0(a, b)
+
+#define STR0(x) # x
+#define STR(x) STR0(x)
+
+#define FAST_STATIC_DO(T, id)                                   \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder id asm(STR(id)) {{}};      \
+        __asm__(&amp;quot;.pushsection STATIC_&amp;quot; #T &amp;quot;,\&amp;quot;aw\&amp;quot;,@progbits\n&amp;quot; \
+                &amp;quot;.quad &amp;quot; STR(id) &amp;quot;\n&amp;quot;                           \
+                &amp;quot;.popsection\n&amp;quot;);                               \
+        reinterpret_cast&amp;lt;T *&amp;gt;(id.buf);                          \
+})
+
+#define FAST_STATIC(T) FAST_STATIC_DO(T, CAT(ph_, __COUNTER__))
+
+template &amp;lt;typename T&amp;gt; static int section_init(T **start, T **stop)
+{
+        for (T **s = start; s &amp;lt; stop; ++s)
+                new (*s) T; /* Construct in-place. */
+        return 0;
+}
+
+#define FAST_STATIC_INIT(T)                                      \
+extern &amp;quot;C&amp;quot; T *__start_STATIC_ ## T;                              \
+extern &amp;quot;C&amp;quot; T *__stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init&amp;lt;T&amp;gt;(&amp;amp;__start_STATIC_ ## T,  \
+                                         &amp;amp;__stop_STATIC_ ## T);The resulting assembly for &lt;code class=&quot;inline&quot;&gt;foo()&lt;/code&gt; and &lt;code class=&quot;inline&quot;&gt;foo_init()&lt;/code&gt; [&lt;a href=&quot;https://gcc.godbolt.org/z/89xrYWhMh&quot;&gt;godbolt&lt;/a&gt;] accesses statics directly:foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_0
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:ph_1
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret
+foo_inline(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_2
+        mov     rax, QWORD PTR [rbp-8]
+        mov     eax, DWORD PTR [rax]
+        imul    eax, DWORD PTR [rbp-20]
+        pop     rbp
+        retFinally we won!&lt;span class=&quot;align-right&quot;&gt; &amp;quot;&lt;i&gt;Бывает, что усердие превозмогает и рассудок&lt;/i&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;align-right&quot;&gt; К. Прутков, &lt;a href=&quot;https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_II_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)&quot;&gt;Мысли и афоризмы, II&lt;/a&gt;, 27&lt;/span&gt;P.S. The actual implementation requires more bells and whistles. Parameters need to be passed to constructors, they can be stored within the placeholder. Typenames are not necessarily valid identifiers (think &lt;code class=&quot;inline&quot;&gt;A::B::foo&amp;lt;T&amp;gt;&lt;/code&gt;), so the section name needs to be a separate parameter, &lt;i&gt;etc&lt;/i&gt;., but the basic idea should be clear.P.P.S. I have a similar story about optimising access to thread-local variables, involving C++20 &lt;a href=&quot;https://en.cppreference.com/w/cpp/language/constinit.html&quot;&gt;&lt;code class=&quot;inline&quot;&gt;constinit&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.ibm.com/docs/en/xl-c-and-cpp-aix/16.1.0?topic=attributes-tls-model-attribute&quot;&gt;&lt;code class=&quot;inline&quot;&gt;__attribute__((tls_model(&amp;quot;initial-exec&amp;quot;)))&lt;/code&gt;&lt;/a&gt;.</content>
         </item>
 
         <item>

@@ -2,6 +2,7 @@ span.annotation { border-bottom: 2px solid; }
 span.annotation span.annotation { padding-bottom:4px; }
 span.annotation span.annotation span.annotation { padding-bottom:6px; }
 span.annotation span.annotation span.annotation span.annotation { padding-bottom:8px; }
+span.frag-id { color: #aaaaaa; font-size: 15px; }
 span.linktarget { border-bottom: 2px solid; }
 
 .column {

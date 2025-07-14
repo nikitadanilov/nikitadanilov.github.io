@@ -184,7 +184,242 @@ K_n &amp;\;=\;&amp;  \frac{1}{n}\cdot\Bigg(K_{n-1} + \frac{1}{n!}\Bigg) \\
 <a name="zero-overrated-00029"></a>$$(\forall m\in\mathbb{N})\int_m \phi_n\cdot dx = \phi_{n + m}$$
 <a name="zero-overrated-00030"></a><p>and</p>
 <a name="zero-overrated-00031"></a>$$(\forall n\neq m)\phi_n \neq const\cdot\phi_m$$
-<a name="zero-overrated-00032"></a><p>(the latter condition is to avoid degenerate cases)?</p><footer><a href="zero.html#zero">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="грозный.html#грозный">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="деревья.html#деревья">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="side-effete.html#side-effete">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
+<a name="zero-overrated-00032"></a><p>(the latter condition is to avoid degenerate cases)?</p><footer><a href="zero-cost-static.html#zero-cost-static">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="грозный.html#грозный">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="деревья.html#деревья">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="side-effete.html#side-effete">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p><div class="column"><header>Zero-cost statics in C++</header>
+<a name="zero-cost-static-00000"></a><p><span class="align-right"> &quot;<i>Усердие все превозмогает!</i>&quot;</span></p>
+<a name="zero-cost-static-00001"></a><p><span class="align-right"> К. Прутков, <a href="https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_I_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)">Мысли и афоризмы, I</a>, 84</span></p>
+<a name="zero-cost-static-00002"></a><p>In C and C++ a static variable can be defined in a function scope:</p>
+<a name="zero-cost-static-00003"></a><pre><code>int foo() {
+        static int counter = 1;
+        printf(&quot;foo() has been called %i times.\n&quot;, counter++);
+        ...
+}</code></pre>
+<a name="zero-cost-static-00004"></a><p>Technically, this defines <code class="inline">counter</code> as an object of <a href="https://en.cppreference.com/w/cpp/language/storage_duration.html">static storage duration</a> that is allocated not within the function activation frame (which is typically on the stack, but can be on the heap for a <a href="https://en.cppreference.com/w/cpp/language/coroutines.html">coroutine</a>), but as a global object. This is often used to shift computational cost out of the hot path, by precomputing some state and storing it in a static object.</p>
+<a name="zero-cost-static-00005"></a><p>When exactly a static object is initialised?</p>
+<a name="zero-cost-static-00006"></a><p>For C this question is vacuous, because the initialiser must be a <a href="https://en.cppreference.com/w/c/language/initialization.html">compile-time constant</a>, so the actual value of the static object is embedded in the compiled binary and is always valid.</p>
+<a name="zero-cost-static-00007"></a><p>C++ has a bizarrely complicated taxonomy of <a href="https://en.cppreference.com/w/cpp/language/initialization.html">initialisations</a>. There is <a href="https://timsong-cpp.github.io/cppwp/n4861/basic.start.static">static</a> initialisation, which roughly corresponds to C initialisation, subdivided into constant-initialisation and zero-initialisation. Then there is <a href="https://timsong-cpp.github.io/cppwp/n4861/basic.start.dynamic">dynamic</a> initialisation, further divided into unordered, partially-ordered and ordered categories. None of these, however, captures our case: for block-local variables, the Standard has a special sub-section in &quot;Declaration statement&quot; [<a href="https://timsong-cpp.github.io/cppwp/n4861/stmt.dcl#4">stmt.dcl.4</a>]:</p>
+<a name="zero-cost-static-00008"></a><p style="margin-left: 3em;">Dynamic initialization of a block-scope variable with static storage duration  or thread storage duration is performed the first time control passes through  its declaration; such a variable is considered initialized upon the completion  of its initialization. If the initialization exits by throwing an exception,  the initialization is not complete, so it will be tried again the next time  control enters the declaration. If control enters the declaration concurrently  while the variable is being initialized, the concurrent execution shall wait  for completion of the initialization. [<a href="#zero-cost-static-footnote-85">85</a>] If control re-enters the declaration  recursively while the variable is being initialized, the behavior is  undefined. [ Example:</p>
+<a name="zero-cost-static-00009"></a><pre><code style="margin-left: 3em;">int foo(int i) {
+  static int s = foo(2*i);      // undefined behavior: recursive call
+  return i+1;
+}</code></pre>
+<a name="zero-cost-static-00010"></a><p style="margin-left: 3em;">— end example ]</p><p class="margin-left"><span class="annotation" data-uid="1">[<a href="#zero-cost-static-00008"><span style="color: blue">0</span></a>]</span>&nbsp;</p>
+<a name="zero-cost-static-footnote-85"></a><p style="margin-left: 3em;"><span class="linktarget" data-uid="1">8</span>5) The implementation must not introduce any deadlock around execution of the initializer. Deadlocks might still be caused by the program logic; the implementation need only avoid deadlocks due to its own synchronization operations.</p>
+<a name="zero-cost-static-00012"></a><p>For example in</p>
+<a name="zero-cost-static-00013"></a><pre><code>struct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+
+int foo(int x) {
+        static Bar b{};
+        return b.var + 1;
+}</code></pre>
+<a name="zero-cost-static-00014"></a><p>the constructor for <code class="inline">b</code> should be called exactly once when <code class="inline">foo()</code> is called the first time. This initialisation semantics is very close (sans the exceptions part) to <a href="https://pubs.opengroup.org/onlinepubs/7908799/xsh/pthread_once.html"><code class="inline">pthread_once</a>()</code>. It is clear that the compiler must add some sort of an internal flag to check whether the initialisation has already been performed and some synchronisation object to serialise concurrent calls to <code class="inline">foo()</code> [<a href="https://gcc.godbolt.org/z/3xKea3MW4">godbolt</a>]:</p>
+<a name="zero-cost-static-00015"></a><pre><code>foo(int):
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 16
+        mov     DWORD PTR [rbp-4], edi
+        movzx   eax, BYTE PTR guard variable for foo(int)::b[rip]
+        test    al, al
+        sete    al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_acquire
+        test    eax, eax
+        setne   al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:foo(int)::b
+        call    Bar::Bar() [complete object constructor]
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_release
+.L3:
+        mov     eax, DWORD PTR foo(int)::b[rip]
+        add     eax, 1
+        leave
+        ret</code></pre>
+<a name="zero-cost-static-00016"></a><p>This corresponds roughly to the following code:</p>
+<a name="zero-cost-static-00017"></a><pre><code>int foo(int x) {
+        static Bar b{};
+        static std::atomic&lt;int&gt; __b_guard = 0;
+        if (__cxa_guard_acquire(&amp;__b_guard) != 0) {
+                new (&amp;b) Bar{}; /* Construct b in-place. */
+                __cxa_guard_release(&amp;__b_guard)
+        }
+        return b.var + 1;
+}</code></pre>
+<a name="zero-cost-static-00018"></a><p>Here <code class="inline">__b_guard</code> (<code class="inline">guard variable for foo(int)::b</code> in assembly) is the flag variable added by the compiler. <a href="https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/libsupc%2B%2B/guard.cc#L272"><code class="inline">__cxa_guard_acquire</a>()</code> is a suprisingly complex function, which includes its own synchronisation mechanism implemented directly on top of the raw Linux <a href="https://man7.org/linux/man-pages/man2/futex.2.html">futex syscall</a>.</p>
+<a name="zero-cost-static-00019"></a><p>Even after the static variable has been initialised, the overhead of accessing it is still considerable: a function call to <code class="inline">__cxa_guard_acquire()</code>, plus <code class="inline">atomic_load_explicit(&amp;__b_guard, memory_order::acquire)</code> in <code class="inline">__cxa_guard_acquire()</code>. On ARM, such atomic load incurs a memory barrier---a fairly expensive operation.</p>
+<a name="zero-cost-static-00020"></a><p>Can this additional cost be reduced? Yes, in fact it can be completely eliminated, making block-level static variables exactly as efficient as file-level ones. For this we need a certain old, but little-known feature of UNIX linkers. From GNU binutils <a href="https://sourceware.org/binutils/docs/ld.html#Input-Section-Example">documentation</a> (beware than in the old versions the terminating symbol is mistakenly referred to as <code class="inline">__end_SECNAME</code>):</p>
+<a name="zero-cost-static-00021"></a><p style="margin-left: 3em;">If an output section’s name is the same as the input section’s name and is representable as a C identifier, then the linker will automatically <code class="inline">PROVIDE</code> two symbols: <code class="inline">__start_SECNAME</code> and <code class="inline">__stop_SECNAME</code>, where <code class="inline">SECNAME</code> is the name of the section. These indicate the start address and end address of the output section respectively. Note: most section names are not representable as C identifiers because they contain a ‘.’ character.</p>
+<a name="zero-cost-static-00022"></a><p>(Solaris linker calls them &quot;Encapsulation Symbols&quot;, see <a href="https://docs.oracle.com/en/operating-systems/solaris/oracle-solaris/11.4/linkers-libraries/oracle-solaris-11.4-linkers-and-libraries-guide.pdf">here</a>.)</p>
+<a name="zero-cost-static-00023"></a><p>The idea is the following: instead of defining a block-level static instance of <code class="inline">Bar</code>, define a trivially-initialisable object of a size sufficient to hold an instance of <code class="inline">Bar</code> in a dedicated section <code class="inline">STATIC_Bar</code>, via (more or less portable) <a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/Variable-Attributes.html"><code class="inline">__attribute__((section))</code></a>. Only such place-holder objects and nothing else are placed in this section. Then, during global static initialisation, scan the resulting array of place-holder objects from <code class="inline">__start_STATIC_Bar</code> to <code class="inline">__stop_STATIC_Bar</code> and initialise Bar instances in-place. Assuming that functions where static <code class="inline">Bar</code>s are defined are not themselves called during global static initialisation, this would initialise everything correctly: by the time <code class="inline">foo()</code> is called, its <code class="inline">b</code> has already been initialised.</p>
+<a name="zero-cost-static-00024"></a><p>Something like this:</p>
+<a name="zero-cost-static-00025"></a><pre><code>#include &lt;stdio.h&gt;
+#include &lt;new&gt; /* For placement new. */
+
+#define FAST_STATIC(T)                                                                    \
+*({                                                                                       \
+        struct placeholder {                                                              \
+            alignas(T) char buf[sizeof(T)];                                               \
+        };                                                                                \
+        static constinit placeholder ph __attribute__((section (&quot;STATIC_&quot; #T))) {{}};     \
+        reinterpret_cast&lt;T *&gt;(ph.buf);                                                    \
+})
+
+template &lt;typename T&gt; static int section_init(T *start, T *stop)
+{
+        for (T *s = start; s &lt; stop; ++s)
+            new (s) T; /* Construct in-place. */
+        return 0;
+}
+
+#define FAST_STATIC_INIT(T)                                     \
+extern &quot;C&quot; T __start_STATIC_ ## T;                              \
+extern &quot;C&quot; T __stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init&lt;T&gt;(&amp;__start_STATIC_ ## T, \
+                                         &amp;__stop_STATIC_ ## T);
+
+struct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+
+int foo(int x) {
+        Bar &amp;b0 = FAST_STATIC(Bar);
+        Bar &amp;b1 = FAST_STATIC(Bar);
+        return b0.var + b1.var + 1;
+}
+
+FAST_STATIC_INIT(Bar);
+
+int main(int argc, char **argv) {
+        return printf(&quot;%i\n&quot;, foo(argc)); /* Prints &quot;3&quot;. */
+}</code></pre>
+<a name="zero-cost-static-00026"></a><p>Check the resulting assembly [<a href="https://gcc.godbolt.org/z/bf3h7hzcz">godbolt</a>]:</p>
+<a name="zero-cost-static-00027"></a><pre><code>foo(int)::ph:
+        .zero   4
+foo(int)::ph:
+        .zero   4
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:foo(int)::ph
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:foo(int)::ph
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret</code></pre>
+<a name="zero-cost-static-00028"></a><p><i>Voilà</i>! The calls to <code class="inline">__cxa_guard_acquire()</code> are gone, yet <code class="inline">b0</code> and <code class="inline">b1</code> are initialised before <code class="inline">foo()</code> is called, just as we want. <i>But not so fast</i>, it&#x27;s C++.</p>
+<a name="zero-cost-static-00029"></a><p>Let&#x27;s add another static Bar instance, this time in an inline function:</p>
+<a name="zero-cost-static-00030"></a><pre><code>int inline baz(int x) {
+        Bar &amp;b = FAST_STATIC(Bar);
+        return b.var * x;
+}</code></pre>
+<a name="zero-cost-static-00031"></a><p>GCC reports [<a href="https://gcc.godbolt.org/z/Th1ece58b">godbolt</a>]:</p>
+<a name="zero-cost-static-00032"></a><pre><code style="margin-left: 3em;">&lt;source&gt;:9:38: error: &#x27;ph&#x27; causes a section type conflict with &#x27;ph&#x27; in section &#x27;STATIC_Bar&#x27;</code></pre>
+<a name="zero-cost-static-00033"></a><p>(clang works fine [<a href="https://gcc.godbolt.org/z/YT9bdG5Ke">godbolt</a>], by the way.)</p>
+<a name="zero-cost-static-00034"></a><p>The problem is that in addition to name, sections output by the compiler also have attributes. The compiler selects the attributes based on the properties of the scope where the symbol (to which <code class="inline">__attribute__((section))</code> is applied) is defined. Inline functions force a different attribute selection (similarly do template members), and the linker ends up with multiple sections with the same name, but conflicting attributes. See <a href="https://stackoverflow.com/questions/35091862/inline-static-data-causes-a-section-type-conflict">stackoverflow</a> for details.</p>
+<a name="zero-cost-static-00035"></a><p>As it is, <code class="inline">FAST_STATIC()</code> is usable, but section attribute conflicts put awkward resrictions on its applicability. Is this the best we can do? For some time I thought that it is, but then I realised that there is another way to specify the section in which the variable is located: the <a href="https://sourceware.org/binutils/docs/as/PushSection.html"><code class="inline">.pushsection</code></a> directive of the embedded assembler (do not be afraid, we will use only portable part).</p>
+<a name="zero-cost-static-00036"></a><p>If you do something like</p>
+<a name="zero-cost-static-00037"></a><pre><code>__asm__(&quot;.pushsection STATIC_Bar,\&quot;aw\&quot;,@progbits\n&quot; \
+        &quot;.quad &quot; symbol &quot;\n&quot;                         \
+        &quot;.popsection\n&quot;)</code></pre>
+<a name="zero-cost-static-00038"></a><p>then the address of the <code class="inline">symbol</code> is placed in <code class="inline">STATIC_Bar</code> section with the specified <a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_117.html">attributes</a>.</p>
+<a name="zero-cost-static-00039"></a><p>All we need is something like</p>
+<a name="zero-cost-static-00040"></a><pre><code>#define FAST_STATIC(T)                                          \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder ph {{}};                   \
+        __asm__(&quot;.pushsection STATIC_&quot; #T &quot;,\&quot;aw\&quot;,@progbits\n&quot; \
+                &quot;.quad ph\n&quot;                                    \
+                &quot;.popsection\n&quot;);                               \
+        reinterpret_cast&lt;T *&gt;(ph.buf);                          \
+})</code></pre>
+<a name="zero-cost-static-00041"></a><p>and we are good (<code class="inline">section_init()</code> needs to be fixed a bit, because <code class="inline">STATIC_Bar</code> now contains pointers, not instances). <i>But not so fast</i>, it&#x27;s C++. This does not even compile [<a href="https://gcc.godbolt.org/z/b49974Wfr">godbolt</a>]:</p>
+<a name="zero-cost-static-00042"></a><pre><code>ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x0): undefined reference to `ph&#x27;
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x8): undefined reference to `ph&#x27;
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x10): undefined reference to `ph&#x27;
+collect2: error: ld returned 1 exit status
+Execution build compiler returned: 1</code></pre>
+<a name="zero-cost-static-00043"></a><p>When you define <code class="inline">static constinit placeholder ph</code>, the actual name the compiler uses for the symbol is not <code class="inline">ph</code> it is the mangled version of something like <code class="inline">foo(int)::ph</code> that we saw in the assembly listing above. There is no <code class="inline">ph</code> for <code class="inline">.quad ph</code> to resolve to.</p>
+<a name="zero-cost-static-00044"></a><p>OK. Are we stuck <i>now</i>? In fact not. You can <a href="https://gcc.gnu.org/onlinedocs/gcc/Asm-Labels.html">instruct the compiler</a> to use a particular symbol name, instead of the mangled one. With</p>
+<a name="zero-cost-static-00045"></a><pre><code>        int foo asm (&quot;bar&quot;) = 2;</code></pre>
+<a name="zero-cost-static-00046"></a><p>the compiler will use &quot;bar&quot; as the symbol name for <code class="inline">foo</code> (both gcc and clang support this).</p>
+<a name="zero-cost-static-00047"></a><p>Of course if we just do</p>
+<a name="zero-cost-static-00048"></a><pre><code>        static constinit placeholder ph asm(&quot;ph&quot;) {{}};</code></pre>
+<a name="zero-cost-static-00049"></a><p>we fall in the opposite trap of having multiple definitions for &quot;ph&quot;. We need to define unique names for our symbols, but there is more or less standard trick for this, based on <a href="https://www.open-std.org/JTC1/sc22/wg14/www/docs/n3457.htm"><code class="inline">__COUNTER__</code></a> macro. We also need a couple of, again standard, macros for concatenation and stringification. The final version looks like this:</p>
+<a name="zero-cost-static-00050"></a><pre><code>#define CAT0(a, b) a ## b
+#define CAT(a, b) CAT0(a, b)
+
+#define STR0(x) # x
+#define STR(x) STR0(x)
+
+#define FAST_STATIC_DO(T, id)                                   \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder id asm(STR(id)) {{}};      \
+        __asm__(&quot;.pushsection STATIC_&quot; #T &quot;,\&quot;aw\&quot;,@progbits\n&quot; \
+                &quot;.quad &quot; STR(id) &quot;\n&quot;                           \
+                &quot;.popsection\n&quot;);                               \
+        reinterpret_cast&lt;T *&gt;(id.buf);                          \
+})
+
+#define FAST_STATIC(T) FAST_STATIC_DO(T, CAT(ph_, __COUNTER__))
+
+template &lt;typename T&gt; static int section_init(T **start, T **stop)
+{
+        for (T **s = start; s &lt; stop; ++s)
+                new (*s) T; /* Construct in-place. */
+        return 0;
+}
+
+#define FAST_STATIC_INIT(T)                                      \
+extern &quot;C&quot; T *__start_STATIC_ ## T;                              \
+extern &quot;C&quot; T *__stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init&lt;T&gt;(&amp;__start_STATIC_ ## T,  \
+                                         &amp;__stop_STATIC_ ## T);</code></pre>
+<a name="zero-cost-static-00051"></a><p>The resulting assembly for <code class="inline">foo()</code> and <code class="inline">foo_init()</code> [<a href="https://gcc.godbolt.org/z/89xrYWhMh">godbolt</a>] accesses statics directly:</p>
+<a name="zero-cost-static-00052"></a><pre><code>foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_0
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:ph_1
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret
+foo_inline(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_2
+        mov     rax, QWORD PTR [rbp-8]
+        mov     eax, DWORD PTR [rax]
+        imul    eax, DWORD PTR [rbp-20]
+        pop     rbp
+        ret</code></pre>
+<a name="zero-cost-static-00053"></a><p>Finally we won!</p>
+<a name="zero-cost-static-00054"></a><p><span class="align-right"> &quot;<i>Бывает, что усердие превозмогает и рассудок</i>&quot;</span></p>
+<a name="zero-cost-static-00055"></a><p><span class="align-right"> К. Прутков, <a href="https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_II_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)">Мысли и афоризмы, II</a>, 27</span></p>
+<a name="zero-cost-static-00056"></a><p>P.S. The actual implementation requires more bells and whistles. Parameters need to be passed to constructors, they can be stored within the placeholder. Typenames are not necessarily valid identifiers (think <code class="inline">A::B::foo&lt;T&gt;</code>), so the section name needs to be a separate parameter, <i>etc</i>., but the basic idea should be clear.</p>
+<a name="zero-cost-static-00057"></a><p>P.P.S. I have a similar story about optimising access to thread-local variables, involving C++20 <a href="https://en.cppreference.com/w/cpp/language/constinit.html"><code class="inline">constinit</code></a> and <a href="https://www.ibm.com/docs/en/xl-c-and-cpp-aix/16.1.0?topic=attributes-tls-model-attribute"><code class="inline">__attribute__((tls_model(&quot;initial-exec&quot;)))</code></a>.</p><footer><a href="zero.html#zero">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="zero-overrated.html#zero-overrated">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="keyring.html#keyring">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
 <div class="column"><header>Zero everywhere.</header>
 <a name="zero-00000"></a><p><center>
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7sSbGi4zvDY2F4HbR0uDssmUCFc9szMj0KqqXlSlTtAaN8b9aTn5hYY5qbccWhPaaNEUX3GTv5xXURQjkRGrj0ZPC8AWhOpjJ4hvAUJxNLtGmRp1OqOul7pzRc4U-J5FKa_FWdQ/s1600/zero-limit.jpg" border="0" width="50%"></center></p>
@@ -200,7 +435,7 @@ K_n &amp;\;=\;&amp;  \frac{1}{n}\cdot\Bigg(K_{n-1} + \frac{1}{n!}\Bigg) \\
 <a name="zero-00010"></a>$$\bigcup\limits_{cl(U)\cap cl(V) = \varnothing} T_{U,V} = A$$
 <a name="zero-00011"></a><p style="margin-left: 3em;">Because \(X\) and hence \(A\) are Baire spaces, one of \(T_{U,V}\) in the union  above, say \(T_{U_0, V_0}\) is not nowhere dense. That is, there is an open set  \(G\subseteq A\) such that for any \(x_0\in G\), and any open neighbourhood  \(S, x_0\in S\), \(S \cap T_{U_0,V_0}\neq\varnothing\), that is there exists a  \(x&#x27;\in S\) such that \(f(x&#x27;) \in U_0\) and \(g(x&#x27;)\in V_0\).</p>
 <a name="zero-00012"></a><p style="margin-left: 3em;">Suppose that \(\lim\limits_{t\to x_0}f(t) = \lim\limits_{t\to x_0}g(t) = y\in  Y\). This means that every open neighbourhood of \(y\) intersects with \(U_0\),  hence \(y\in cl(U_0)\). Similarly \(y\in cl(V_0)\), contradiction with  \(cl(U_0)\cap cl(V_0) = \varnothing\). <i>End of proof</i>.</p>
-<a name="zero-00013"></a><p>PS: для задачи 2, ответ \(k = 2\cdot n - 2\).</p><footer><a href="xnu-vm.html#xnu-vm">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="zero-overrated.html#zero-overrated">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="commutativity.html#commutativity">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="donne.html#donne">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p><div class="column"><header>XNU VM</header>
+<a name="zero-00013"></a><p>PS: для задачи 2, ответ \(k = 2\cdot n - 2\).</p><footer><a href="xnu-vm.html#xnu-vm">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="zero-cost-static.html#zero-cost-static">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="commutativity.html#commutativity">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="donne.html#donne">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p><div class="column"><header>XNU VM</header>
 <a name="xnu-vm-00000"></a><p>XNU (OSX kernel) VM scanner marks vnodes as <code class="inline">(vp-&gt;v_flag &amp; VHASBEENPAGED)</code>. <code class="inline">write(2)</code> path checks for this and sends all dirty pages for this vnode down the pipe if this flags is set. Reason:</p>
 <a name="xnu-vm-00001"></a><pre><code>/*
  * this vnode had pages cleaned to it by
@@ -1840,7 +2075,7 @@ sub   elg2048 2003-08-08 [E]
 pub   dsa1024 2003-12-01 [SCA]
       86EFEB4D2AB605B5E3549F69A3F4319719FEDF80
 uid           [ unknown] <a href="https://www.cbsnews.com/news/betrayal-29-12-2008/">Nina Reiser</a> &lt;ninasha@namesys.com&gt;
-sub   elg2048 2003-12-01 [E]</code></pre><footer><a href="iso.html#iso">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="later-360.html#later-360">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="ai-early.html#ai-early">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
+sub   elg2048 2003-12-01 [E]</code></pre><footer><a href="iso.html#iso">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="later-360.html#later-360">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="ai-early.html#ai-early">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;<a href="zero-cost-static.html#zero-cost-static">&gt;</a>&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p>
 <div class="column"><header>Unexpected isomorphism.</header><p class="margin-left"><span class="annotation" data-uid="4">[<a href="euclid.html#euclid-00024"><span style="color: purple">0</span></a>]</span>&nbsp;</p>
 <a name="iso-start"></a><p><span class="linktarget" data-uid="4">S</span>ince Cantor&#x27;s &quot;I see it, but I cannot believe it&quot; (1877), we know that \(\mathbb{R}^n\) are isomorphic sets for all \(n &gt; 0\). This being as shocking as it is, over time we learn to live with it, because the bijections between continua of different dimensions are extremely discontinuous and we assume that if we limit ourselves to any reasonably well-behaving class of maps the isomorphisms will disappear. Will they?</p>
 <a name="iso-00001"></a><p style="margin-left: 3em;"><i>Theorem</i>. Additive groups \(\mathbb{R}^n\) are isomorphic for all \(n &gt;0\)  (and, therefore, isomorphic to the additive group of the complex numbers).</p>

@@ -1,0 +1,424 @@
+// name Zero-cost statics in C++
+// id zero-cost-static
+// +# blog zero-cost-static
+// +# timeline 2025/07/13
+// +tags programming
+
+[>>> "_Усердие все превозмогает!_"]
+
+[>>> К. Прутков, Мысли и афоризмы, I, 84]
+/ += . "Мысли и афоризмы, I" -> https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_I_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)
+
+In C and C++ a static variable can be defined in a function scope:
+
+; code
+int foo() {
+        static int counter = 1;
+        printf("foo() has been called %i times.\n", counter++);
+        ...
+}
+
+Technically, this defines `counter` as an object of static storage duration that
+is allocated not within the function activation frame (which is typically on the
+stack, but can be on the heap for a coroutine), but as a global object. This is
+often used to shift computational cost out of the hot path, by precomputing some
+state and storing it in a static object.
+/ += . "static storage duration" -> https://en.cppreference.com/w/cpp/language/storage_duration.html
+/ += . "coroutine" -> https://en.cppreference.com/w/cpp/language/coroutines.html
+
+When exactly a static object is initialised?
+
+For C this question is vacuous, because the initialiser must be a compile-time
+constant, so the actual value of the static object is embedded in the compiled
+binary and is always valid.
+/ += . "compile-time constant" -> https://en.cppreference.com/w/c/language/initialization.html
+
+C++ has a bizarrely complicated taxonomy of initialisations. There is static
+initialisation, which roughly corresponds to C initialisation, subdivided into
+constant-initialisation and zero-initialisation. Then there is dynamic
+initialisation, further divided into unordered, partially-ordered and ordered
+categories. None of these, however, captures our case: for block-local
+variables, the Standard has a special sub-section in "Declaration statement"
+[stmt.dcl.4]:
+/ += . "initialisations" -> https://en.cppreference.com/w/cpp/language/initialization.html
+/ += . "static" -> https://timsong-cpp.github.io/cppwp/n4861/basic.start.static
+/ += . "dynamic" -> https://timsong-cpp.github.io/cppwp/n4861/basic.start.dynamic
+/ += . "stmt.dcl.4" -> https://timsong-cpp.github.io/cppwp/n4861/stmt.dcl#4
+
+>Dynamic initialization of a block-scope variable with static storage duration
+ or thread storage duration is performed the first time control passes through
+ its declaration; such a variable is considered initialized upon the completion
+ of its initialization. If the initialization exits by throwing an exception,
+ the initialization is not complete, so it will be tried again the next time
+ control enters the declaration. If control enters the declaration concurrently
+ while the variable is being initialized, the concurrent execution shall wait
+ for completion of the initialization. [85] If control re-enters the declaration
+ recursively while the variable is being initialized, the behavior is
+ undefined. [ Example:
+/ += . "85" -> !zero-cost-static-footnote-85 "^."
+
+; code
+>int foo(int i) {
+  static int s = foo(2*i);      // undefined behavior: recursive call
+  return i+1;
+}
+
+>— end example ]
+
+>85) The implementation must not introduce any deadlock around execution of the
+initializer. Deadlocks might still be caused by the program logic; the
+implementation need only avoid deadlocks due to its own synchronization
+operations.
+/ id footnote-85
+
+For example in
+
+; code
+struct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+|
+int foo(int x) {
+        static Bar b{};
+        return b.var + 1;
+}
+
+the constructor for `b` should be called exactly once when foo() is called the
+first time. This initialisation semantics is very close (sans the exceptions
+part) to pthread_once(). It is clear that the compiler must add some sort of an
+internal flag to check whether the initialisation has already been performed and
+some synchronisation object to serialise concurrent calls to foo() [godbolt]:
+/ += . "pthread_once()" -> https://pubs.opengroup.org/onlinepubs/7908799/xsh/pthread_once.html
+/ += . "godbolt" -> https://gcc.godbolt.org/z/3xKea3MW4
+
+; code
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 16
+        mov     DWORD PTR [rbp-4], edi
+        movzx   eax, BYTE PTR guard variable for foo(int)::b[rip]
+        test    al, al
+        sete    al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_acquire
+        test    eax, eax
+        setne   al
+        test    al, al
+        je      .L3
+        mov     edi, OFFSET FLAT:foo(int)::b
+        call    Bar::Bar() [complete object constructor]
+        mov     edi, OFFSET FLAT:guard variable for foo(int)::b
+        call    __cxa_guard_release
+.L3:
+        mov     eax, DWORD PTR foo(int)::b[rip]
+        add     eax, 1
+        leave
+        ret
+
+This corresponds roughly to the following code:
+
+; code
+int foo(int x) {
+        static Bar b{};
+        static std::atomic<int> __b_guard = 0;
+        if (__cxa_guard_acquire(&__b_guard) != 0) {
+                new (&b) Bar{}; /* Construct b in-place. */
+                __cxa_guard_release(&__b_guard)
+        }
+        return b.var + 1;
+}
+
+Here `__b_guard` (`guard variable for foo(int)::b` in assembly) is the flag
+variable added by the compiler. __cxa_guard_acquire() is a suprisingly complex
+function, which includes its own synchronisation mechanism implemented directly
+on top of the raw Linux futex syscall.
+/ += . "__cxa_guard_acquire()" -> https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/libsupc%2B%2B/guard.cc#L272
+/ += . "futex syscall" -> https://man7.org/linux/man-pages/man2/futex.2.html
+
+Even after the static variable has been initialised, the overhead of accessing
+it is still considerable: a function call to __cxa_guard_acquire(), plus
+`atomic_load_explicit(&__b_guard, memory_order::acquire)` in
+__cxa_guard_acquire(). On ARM, such atomic load incurs a memory barrier---a
+fairly expensive operation.
+
+Can this additional cost be reduced? Yes, in fact it can be completely
+eliminated, making block-level static variables exactly as efficient as
+file-level ones. For this we need a certain old, but little-known feature of
+UNIX linkers. From GNU binutils documentation (beware than in the old versions
+the terminating symbol is mistakenly referred to as `__end_SECNAME`):
+/ += . "documentation" -> https://sourceware.org/binutils/docs/ld.html#Input-Section-Example
+
+>If an output section’s name is the same as the input section’s name and is
+representable as a C identifier, then the linker will automatically `PROVIDE` two
+symbols: `__start_SECNAME` and `__stop_SECNAME`, where `SECNAME` is the name of the
+section. These indicate the start address and end address of the output section
+respectively. Note: most section names are not representable as C identifiers
+because they contain a ‘.’ character.
+
+(Solaris linker calls them "Encapsulation Symbols", see here.)
+/ += . "here" -> https://docs.oracle.com/en/operating-systems/solaris/oracle-solaris/11.4/linkers-libraries/oracle-solaris-11.4-linkers-and-libraries-guide.pdf
+
+The idea is the following: instead of defining a block-level static instance of
+`Bar`, define a trivially-initialisable object of a size sufficient to hold an
+instance of `Bar` in a dedicated section `STATIC_Bar`, via (more or less
+portable) `__attribute__((section))`. Only such place-holder objects and nothing
+else are placed in this section. Then, during global static initialisation, scan
+the resulting array of place-holder objects from `__start_STATIC_Bar` to
+`__stop_STATIC_Bar` and initialise Bar instances in-place. Assuming that
+functions where static `Bar`s are defined are not themselves called during
+global static initialisation, this would initialise everything correctly: by the
+time foo() is called, its `b` has already been initialised.
+/ += . "__attribute__\(\(section\)\)" -> https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/Variable-Attributes.html
+
+Something like this:
+
+; code
+#include <stdio.h>
+#include <new> /* For placement new. */
+|
+#define FAST_STATIC(T)                                                                    \
+*({                                                                                       \
+        struct placeholder {                                                              \
+            alignas(T) char buf[sizeof(T)];                                               \
+        };                                                                                \
+        static constinit placeholder ph __attribute__((section ("STATIC_" #T))) {{}};     \
+        reinterpret_cast<T *>(ph.buf);                                                    \
+})
+|
+template <typename T> static int section_init(T *start, T *stop)
+{
+        for (T *s = start; s < stop; ++s)
+            new (s) T; /* Construct in-place. */
+        return 0;
+}
+|
+#define FAST_STATIC_INIT(T)                                     \
+extern "C" T __start_STATIC_ ## T;                              \
+extern "C" T __stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init<T>(&__start_STATIC_ ## T, \
+                                         &__stop_STATIC_ ## T);
+|
+struct Bar {
+        Bar() : var(1) {}
+        int var;
+};
+|
+int foo(int x) {
+        Bar &b0 = FAST_STATIC(Bar);
+        Bar &b1 = FAST_STATIC(Bar);
+        return b0.var + b1.var + 1;
+}
+|
+FAST_STATIC_INIT(Bar);
+|
+int main(int argc, char **argv) {
+        return printf("%i\n", foo(argc)); /* Prints "3". */
+}
+
+Check the resulting assembly [godbolt]:
+/ += . "godbolt" -> https://gcc.godbolt.org/z/bf3h7hzcz
+
+; code
+foo(int)::ph:
+        .zero   4
+foo(int)::ph:
+        .zero   4
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:foo(int)::ph
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:foo(int)::ph
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret
+
+_Voilà_! The calls to __cxa_guard_acquire() are gone, yet `b0` and `b1` are
+initialised before foo() is called, just as we want. _But not so fast_, it's C++.
+
+Let's add another static Bar instance, this time in an inline function:
+
+; code
+int inline baz(int x) {
+        Bar &b = FAST_STATIC(Bar);
+        return b.var * x;
+}
+
+GCC reports [godbolt]:
+/ += . "godbolt" -> https://gcc.godbolt.org/z/Th1ece58b
+
+; code
+><source>:9:38: error: 'ph' causes a section type conflict with 'ph' in section 'STATIC_Bar'
+
+(clang works fine [godbolt], by the way.)
+/ += . "godbolt" -> https://gcc.godbolt.org/z/YT9bdG5Ke
+
+The problem is that in addition to name, sections output by the compiler also
+have attributes. The compiler selects the attributes based on the properties of
+the scope where the symbol (to which `__attribute__((section))` is applied) is
+defined. Inline functions force a different attribute selection (similarly do
+template members), and the linker ends up with multiple sections with the
+same name, but conflicting attributes. See stackoverflow for details.
+/ += . "stackoverflow" -> https://stackoverflow.com/questions/35091862/inline-static-data-causes-a-section-type-conflict
+
+As it is, FAST_STATIC() is usable, but section attribute conflicts put awkward
+resrictions on its applicability. Is this the best we can do? For some time I
+thought that it is, but then I realised that there is another way to specify the
+section in which the variable is located: the `.pushsection` directive of the
+embedded assembler (do not be afraid, we will use only portable part).
+/ += . ".pushsection" -> https://sourceware.org/binutils/docs/as/PushSection.html
+
+If you do something like
+
+; code
+__asm__(".pushsection STATIC_Bar,\"aw\",@progbits\n" \
+        ".quad " symbol "\n"                         \
+        ".popsection\n")
+
+then the address of the `symbol` is placed in `STATIC_Bar` section with the
+specified attributes.
+/ += . "attributes" -> https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_117.html
+
+All we need is something like
+
+; code
+#define FAST_STATIC(T)                                          \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder ph {{}};                   \
+        __asm__(".pushsection STATIC_" #T ",\"aw\",@progbits\n" \
+                ".quad ph\n"                                    \
+                ".popsection\n");                               \
+        reinterpret_cast<T *>(ph.buf);                          \
+})
+
+and we are good (section_init() needs to be fixed a bit, because `STATIC_Bar` now
+contains pointers, not instances). _But not so fast_, it's C++. This does not
+even compile [godbolt]:
+/ += . "godbolt" -> https://gcc.godbolt.org/z/b49974Wfr
+
+; code
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x0): undefined reference to `ph'
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x8): undefined reference to `ph'
+ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x10): undefined reference to `ph'
+collect2: error: ld returned 1 exit status
+Execution build compiler returned: 1
+
+When you define `static constinit placeholder ph`, the actual name the compiler
+uses for the symbol is not `ph` it is the mangled version of something like
+`foo(int)::ph` that we saw in the assembly listing above. There is no `ph` for
+`.quad ph` to resolve to.
+
+OK. Are we stuck _now_? In fact not. You can instruct the compiler to use a
+particular symbol name, instead of the mangled one. With
+/ += . "instruct the compiler" -> https://gcc.gnu.org/onlinedocs/gcc/Asm-Labels.html
+
+; code
+        int foo asm ("bar") = 2;
+
+the compiler will use "bar" as the symbol name for `foo` (both gcc and clang
+support this).
+
+Of course if we just do
+
+; code
+        static constinit placeholder ph asm("ph") {{}};
+
+we fall in the opposite trap of having multiple definitions for "ph". We need to
+define unique names for our symbols, but there is more or less standard trick
+for this, based on `__COUNTER__` macro. We also need a couple of, again
+standard, macros for concatenation and stringification. The final version looks
+like this:
+/ += . "__COUNTER__" -> https://www.open-std.org/JTC1/sc22/wg14/www/docs/n3457.htm
+
+; code
+#define CAT0(a, b) a ## b
+#define CAT(a, b) CAT0(a, b)
+|
+#define STR0(x) # x
+#define STR(x) STR0(x)
+|
+#define FAST_STATIC_DO(T, id)                                   \
+*({                                                             \
+        struct placeholder {                                    \
+            alignas(T) char buf[sizeof(T)];                     \
+        };                                                      \
+        static constinit placeholder id asm(STR(id)) {{}};      \
+        __asm__(".pushsection STATIC_" #T ",\"aw\",@progbits\n" \
+                ".quad " STR(id) "\n"                           \
+                ".popsection\n");                               \
+        reinterpret_cast<T *>(id.buf);                          \
+})
+|
+#define FAST_STATIC(T) FAST_STATIC_DO(T, CAT(ph_, __COUNTER__))
+|
+template <typename T> static int section_init(T **start, T **stop)
+{
+        for (T **s = start; s < stop; ++s)
+                new (*s) T; /* Construct in-place. */
+        return 0;
+}
+|
+#define FAST_STATIC_INIT(T)                                      \
+extern "C" T *__start_STATIC_ ## T;                              \
+extern "C" T *__stop_STATIC_ ## T;                               \
+static int _init_ ## T = section_init<T>(&__start_STATIC_ ## T,  \
+                                         &__stop_STATIC_ ## T);
+
+The resulting assembly for foo() and foo_init() [godbolt] accesses statics directly:
+/ += . "godbolt" -> https://gcc.godbolt.org/z/89xrYWhMh
+
+; code
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_0
+        mov     QWORD PTR [rbp-16], OFFSET FLAT:ph_1
+        mov     rax, QWORD PTR [rbp-8]
+        mov     edx, DWORD PTR [rax]
+        mov     rax, QWORD PTR [rbp-16]
+        mov     eax, DWORD PTR [rax]
+        add     eax, edx
+        add     eax, 1
+        pop     rbp
+        ret
+foo_inline(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     QWORD PTR [rbp-8], OFFSET FLAT:ph_2
+        mov     rax, QWORD PTR [rbp-8]
+        mov     eax, DWORD PTR [rax]
+        imul    eax, DWORD PTR [rbp-20]
+        pop     rbp
+        ret
+
+Finally we won!
+
+[>>> "_Бывает, что усердие превозмогает и рассудок_"]
+
+[>>> К. Прутков, Мысли и афоризмы, II, 27]
+/ += . "Мысли и афоризмы, II" -> https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_II_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)
+
+P.S. The actual implementation requires more bells and whistles. Parameters need
+to be passed to constructors, they can be stored within the
+placeholder. Typenames are not necessarily valid identifiers (think
+`A::B::foo<T>`), so the section name needs to be a separate parameter, etc., but
+the basic idea should be clear.
+
+P.P.S. I have a similar story about optimising access to thread-local variables,
+involving C++20 `constinit` and `__attribute__((tls_model("initial-exec")))`.
+/ += . "constinit" -> https://en.cppreference.com/w/cpp/language/constinit.html
+/ += . "__attribute__\(\(tls_model\("initial-exec"\)\)\)" -> https://www.ibm.com/docs/en/xl-c-and-cpp-aix/16.1.0?topic=attributes-tls-model-attribute
