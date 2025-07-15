@@ -4,7 +4,7 @@
         <title>Occasional diary</title>
         <link>https://cofault.com</link>
         <description>Nikita Danilov, Occasional diary</description>
-        <lastBuildDate>Tue, 15 Jul 2025 03:19:52 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 15 Jul 2025 08:14:31 +0000</lastBuildDate>
 
         <item>
             <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
@@ -1871,7 +1871,7 @@ function f(arg) {
             <pubDate>2006/03/03</pubDate>
             <content type="html"
                      xml:base="https://cofault.com/windows-collapse.html#windows-collapse">
-                     &lt;code class=&quot;inline&quot;&gt;Subject: [ntdev] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts&lt;/code&gt;&lt;i&gt;update&lt;/i&gt;: Like this wasn&amp;#x27;t enough.Below are excerpts fromfind . -name \*dll |\
+                     &lt;code class=&quot;inline&quot;&gt;Subject: &lt;a href=&quot;https://community.osr.com/t/wdfusbtargetdevicesendcontroltransfersynchronously-and-timeouts/24465&quot;&gt;[ntdev] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts&lt;/code&gt;&lt;/a&gt;&lt;i&gt;update&lt;/i&gt;: Like this wasn&amp;#x27;t enough.Below are excerpts fromfind . -name \*dll |\
         xargs strings -- |\
         grep -i &amp;#x27;^[a-z0-9_]*$&amp;#x27; |\
         awk &amp;#x27;{ print length($1) &amp;quot;\t&amp;quot; $1 }&amp;#x27; |\

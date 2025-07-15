@@ -5,6 +5,7 @@
 // +tags programming
 
 `Subject: [ntdev] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts`
+/ += . "\[ntdev\] WdfUsbTargetDeviceSendControlTransferSynchronously and timeouts" -> https://community.osr.com/t/wdfusbtargetdevicesendcontroltransfersynchronously-and-timeouts/24465
 
 _update_: Like this wasn't enough.
 
