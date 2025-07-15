@@ -52,24 +52,9 @@ variables, the Standard has a special sub-section in "Declaration statement"
  the initialization is not complete, so it will be tried again the next time
  control enters the declaration. If control enters the declaration concurrently
  while the variable is being initialized, the concurrent execution shall wait
- for completion of the initialization. [85] If control re-enters the declaration
+ for completion of the initialization. If control re-enters the declaration
  recursively while the variable is being initialized, the behavior is
- undefined. [ Example:
-/ += . "85" -> !zero-cost-static-footnote-85 "^."
-
-; code
->int foo(int i) {
-  static int s = foo(2*i);      // undefined behavior: recursive call
-  return i+1;
-}
-
->— end example ]
-
->85) The implementation must not introduce any deadlock around execution of the
-initializer. Deadlocks might still be caused by the program logic; the
-implementation need only avoid deadlocks due to its own synchronization
-operations.
-/ id footnote-85
+ undefined.
 
 For example in
 
