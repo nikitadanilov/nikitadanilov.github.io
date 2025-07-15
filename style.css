@@ -175,6 +175,7 @@ src: url("https://raw.githubusercontent.com/nikitadanilov/card/refs/heads/master
 code.inline { display: inline; background-color: #ebebeb; font-size: 0.75em; }
 pre code  {
 font-family: "SourceCodePro-Regular", Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+font-size: 12px;
 display: block;
 padding: 1em;
 margin: 1em 0;
