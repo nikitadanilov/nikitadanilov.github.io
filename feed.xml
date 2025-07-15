@@ -4,7 +4,7 @@
         <title>Occasional diary</title>
         <link>https://cofault.com</link>
         <description>Nikita Danilov, Occasional diary</description>
-        <lastBuildDate>Tue, 15 Jul 2025 08:14:31 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 15 Jul 2025 08:23:17 +0000</lastBuildDate>
 
         <item>
             <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
@@ -1894,7 +1894,7 @@ function f(arg) {
 62      SxspGenerateTextuallyEncodedPolicyIdentityFromAssemblyIdentity
 64      RtlpQueryAssemblyInformationActivationContextDetailedInformation
 71      &lt;a href=&quot;http://www.openrce.org/reference_library/win32_call_chains/XPSP2/NTDLL/RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation&quot;&gt;RtlpQueryFilesInAssemblyInformationActivationContextDetailedInformation&lt;/a&gt;which probably gives us the champion.As a comparison, for linux-2.6.15find . -type f -follow -name &amp;#x27;*.[chS]&amp;#x27; |\
-        xargs grep -hi &amp;#x27;[a-z0-9_]\{70,\}&amp;#x27; -- /dev/nullgives:70 ZORRO_PROD_PHASE5_BLIZZARD_1230_II_FASTLANE_Z3_CYBERSCSI_CYBERSTORM060So windows is one character closer to hell than linux.</content>
+        xargs grep -hi &amp;#x27;[a-z0-9_]\{70,\}&amp;#x27; -- /dev/nullgives:70 ZORRO_PROD_PHASE5_BLIZZARD_1230_II_FASTLANE_Z3_CYBERSCSI_CYBERSTORM060So windows is one character closer to hell than linux.[2025/05/17] Update: &lt;a href=&quot;https://github.com/ljalves/tplink-gpl/blob/master/ap91fus/linux/kernels/mips-linux-2.6.15/h323.txt#L5075&quot;&gt;&lt;code class=&quot;inline&quot;&gt;_OpenLogicalChannelAck_reverseLogicalChannelParameters_multiplexParameters&lt;/code&gt;&lt;/a&gt;, no comment.</content>
         </item>
 
         <item>
