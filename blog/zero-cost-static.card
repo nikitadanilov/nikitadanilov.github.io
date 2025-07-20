@@ -109,8 +109,8 @@ This corresponds roughly to the following code:
 ; code
 int foo(int x) {
         static Bar b{};
-        static std::atomic<int> __b_guard = 0;
-        if (__cxa_guard_acquire(&__b_guard) != 0) {
+        static std::atomic<int> __b_guard = 1;
+        if (__b_guard != 0 && __cxa_guard_acquire(&__b_guard) != 0) {
                 new (&b) Bar{}; /* Construct b in-place. */
                 __cxa_guard_release(&__b_guard)
         }
@@ -124,11 +124,13 @@ on top of the raw Linux futex syscall.
 / += . "__cxa_guard_acquire()" -> https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/libsupc%2B%2B/guard.cc#L272
 / += . "futex syscall" -> https://man7.org/linux/man-pages/man2/futex.2.html
 
-Even after the static variable has been initialised, the overhead of accessing
-it is still considerable: a function call to __cxa_guard_acquire(), plus
-`atomic_load_explicit(&__b_guard, memory_order::acquire)` in
-__cxa_guard_acquire(). On ARM, such atomic load incurs a memory barrier---a
-fairly expensive operation.
+On the first call to foo() initialisation incurs a function call to
+__cxa_guard_acquire(), plus `atomic_load_explicit(&__b_guard,
+memory_order::acquire)` in __cxa_guard_acquire(). On ARM, such atomic load
+incurs a memory barrier---a fairly expensive operation.
+
+Even after the static variable has been initialised, an additional conditional
+branch (`je .L3`) is required every time.
 
 Can this additional cost be reduced? Yes, in fact it can be completely
 eliminated, making block-level static variables exactly as efficient as
@@ -227,8 +229,9 @@ foo(int):
         pop     rbp
         ret
 
-_Voilà_! The calls to __cxa_guard_acquire() are gone, yet `b0` and `b1` are
-initialised before foo() is called, just as we want. _But not so fast_, it's C++.
+_Voilà_! The "is-initialised" branch and the calls to __cxa_guard_acquire() are
+gone, yet `b0` and `b1` are initialised before foo() is called, just as we
+want. _But not so fast_, it's C++.
 
 Let's add another static Bar instance, this time in an inline function:
 

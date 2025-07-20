@@ -2931,21 +2931,22 @@ int foo(int x) {
 <a name="zero-cost-static-00013"></a><p>This corresponds roughly to the following code:</p>
 <a name="zero-cost-static-00014"></a><pre><code>int foo(int x) {
         static Bar b{};
-        static std::atomic&lt;int&gt; __b_guard = 0;
-        if (__cxa_guard_acquire(&amp;__b_guard) != 0) {
+        static std::atomic&lt;int&gt; __b_guard = 1;
+        if (__b_guard != 0 &amp;&amp; __cxa_guard_acquire(&amp;__b_guard) != 0) {
                 new (&amp;b) Bar{}; /* Construct b in-place. */
                 __cxa_guard_release(&amp;__b_guard)
         }
         return b.var + 1;
 }</code></pre>
 <a name="zero-cost-static-00015"></a><p>Here <code class="inline">__b_guard</code> (<code class="inline">guard variable for foo(int)::b</code> in assembly) is the flag variable added by the compiler. <a href="https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/libsupc%2B%2B/guard.cc#L272"><code class="inline">__cxa_guard_acquire</a>()</code> is a suprisingly complex function, which includes its own synchronisation mechanism implemented directly on top of the raw Linux <a href="https://man7.org/linux/man-pages/man2/futex.2.html">futex syscall</a>.</p>
-<a name="zero-cost-static-00016"></a><p>Even after the static variable has been initialised, the overhead of accessing it is still considerable: a function call to <code class="inline">__cxa_guard_acquire()</code>, plus <code class="inline">atomic_load_explicit(&amp;__b_guard, memory_order::acquire)</code> in <code class="inline">__cxa_guard_acquire()</code>. On ARM, such atomic load incurs a memory barrier---a fairly expensive operation.</p>
-<a name="zero-cost-static-00017"></a><p>Can this additional cost be reduced? Yes, in fact it can be completely eliminated, making block-level static variables exactly as efficient as file-level ones. For this we need a certain old, but little-known feature of UNIX linkers. From GNU binutils <a href="https://sourceware.org/binutils/docs/ld.html#Input-Section-Example">documentation</a> (beware than in the old versions the terminating symbol is mistakenly referred to as <code class="inline">__end_SECNAME</code>):</p>
-<a name="zero-cost-static-00018"></a><p style="margin-left: 3em;">If an output section’s name is the same as the input section’s name and is representable as a C identifier, then the linker will automatically <code class="inline">PROVIDE</code> two symbols: <code class="inline">__start_SECNAME</code> and <code class="inline">__stop_SECNAME</code>, where <code class="inline">SECNAME</code> is the name of the section. These indicate the start address and end address of the output section respectively. Note: most section names are not representable as C identifiers because they contain a ‘.’ character.</p>
-<a name="zero-cost-static-00019"></a><p>(Solaris linker calls them &quot;Encapsulation Symbols&quot;, see <a href="https://docs.oracle.com/en/operating-systems/solaris/oracle-solaris/11.4/linkers-libraries/oracle-solaris-11.4-linkers-and-libraries-guide.pdf">here</a>.)</p>
-<a name="zero-cost-static-00020"></a><p>The idea is the following: instead of defining a block-level static instance of <code class="inline">Bar</code>, define a trivially-initialisable object of a size sufficient to hold an instance of <code class="inline">Bar</code> in a dedicated section <code class="inline">STATIC_Bar</code>, via (more or less portable) <a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/Variable-Attributes.html"><code class="inline">__attribute__((section))</code></a>. Only such place-holder objects and nothing else are placed in this section. Then, during global static initialisation, scan the resulting array of place-holder objects from <code class="inline">__start_STATIC_Bar</code> to <code class="inline">__stop_STATIC_Bar</code> and initialise Bar instances in-place. Assuming that functions where static <code class="inline">Bar</code>s are defined are not themselves called during global static initialisation, this would initialise everything correctly: by the time <code class="inline">foo()</code> is called, its <code class="inline">b</code> has already been initialised.</p>
-<a name="zero-cost-static-00021"></a><p>Something like this:</p>
-<a name="zero-cost-static-00022"></a><pre><code>#include &lt;stdio.h&gt;
+<a name="zero-cost-static-00016"></a><p>On the first call to <code class="inline">foo()</code> initialisation incurs a function call to <code class="inline">__cxa_guard_acquire()</code>, plus <code class="inline">atomic_load_explicit(&amp;__b_guard, memory_order::acquire)</code> in <code class="inline">__cxa_guard_acquire()</code>. On ARM, such atomic load incurs a memory barrier---a fairly expensive operation.</p>
+<a name="zero-cost-static-00017"></a><p>Even after the static variable has been initialised, an additional conditional branch (<code class="inline">je .L3</code>) is required every time.</p>
+<a name="zero-cost-static-00018"></a><p>Can this additional cost be reduced? Yes, in fact it can be completely eliminated, making block-level static variables exactly as efficient as file-level ones. For this we need a certain old, but little-known feature of UNIX linkers. From GNU binutils <a href="https://sourceware.org/binutils/docs/ld.html#Input-Section-Example">documentation</a> (beware than in the old versions the terminating symbol is mistakenly referred to as <code class="inline">__end_SECNAME</code>):</p>
+<a name="zero-cost-static-00019"></a><p style="margin-left: 3em;">If an output section’s name is the same as the input section’s name and is representable as a C identifier, then the linker will automatically <code class="inline">PROVIDE</code> two symbols: <code class="inline">__start_SECNAME</code> and <code class="inline">__stop_SECNAME</code>, where <code class="inline">SECNAME</code> is the name of the section. These indicate the start address and end address of the output section respectively. Note: most section names are not representable as C identifiers because they contain a ‘.’ character.</p>
+<a name="zero-cost-static-00020"></a><p>(Solaris linker calls them &quot;Encapsulation Symbols&quot;, see <a href="https://docs.oracle.com/en/operating-systems/solaris/oracle-solaris/11.4/linkers-libraries/oracle-solaris-11.4-linkers-and-libraries-guide.pdf">here</a>.)</p>
+<a name="zero-cost-static-00021"></a><p>The idea is the following: instead of defining a block-level static instance of <code class="inline">Bar</code>, define a trivially-initialisable object of a size sufficient to hold an instance of <code class="inline">Bar</code> in a dedicated section <code class="inline">STATIC_Bar</code>, via (more or less portable) <a href="https://gcc.gnu.org/onlinedocs/gcc-4.8.5/gcc/Variable-Attributes.html"><code class="inline">__attribute__((section))</code></a>. Only such place-holder objects and nothing else are placed in this section. Then, during global static initialisation, scan the resulting array of place-holder objects from <code class="inline">__start_STATIC_Bar</code> to <code class="inline">__stop_STATIC_Bar</code> and initialise Bar instances in-place. Assuming that functions where static <code class="inline">Bar</code>s are defined are not themselves called during global static initialisation, this would initialise everything correctly: by the time <code class="inline">foo()</code> is called, its <code class="inline">b</code> has already been initialised.</p>
+<a name="zero-cost-static-00022"></a><p>Something like this:</p>
+<a name="zero-cost-static-00023"></a><pre><code>#include &lt;stdio.h&gt;
 #include &lt;new&gt; /* For placement new. */
 
 #define FAST_STATIC(T)                                                                    \
@@ -2986,8 +2987,8 @@ FAST_STATIC_INIT(Bar);
 int main(int argc, char **argv) {
         return printf(&quot;%i\n&quot;, foo(argc)); /* Prints &quot;3&quot;. */
 }</code></pre>
-<a name="zero-cost-static-00023"></a><p>Check the resulting assembly [<a href="https://gcc.godbolt.org/z/bf3h7hzcz">godbolt</a>]:</p>
-<a name="zero-cost-static-00024"></a><pre><code>foo(int)::ph:
+<a name="zero-cost-static-00024"></a><p>Check the resulting assembly [<a href="https://gcc.godbolt.org/z/bf3h7hzcz">godbolt</a>]:</p>
+<a name="zero-cost-static-00025"></a><pre><code>foo(int)::ph:
         .zero   4
 foo(int)::ph:
         .zero   4
@@ -3005,24 +3006,24 @@ foo(int):
         add     eax, 1
         pop     rbp
         ret</code></pre>
-<a name="zero-cost-static-00025"></a><p><i>Voilà</i>! The calls to <code class="inline">__cxa_guard_acquire()</code> are gone, yet <code class="inline">b0</code> and <code class="inline">b1</code> are initialised before <code class="inline">foo()</code> is called, just as we want. <i>But not so fast</i>, it&#x27;s C++.</p>
-<a name="zero-cost-static-00026"></a><p>Let&#x27;s add another static Bar instance, this time in an inline function:</p>
-<a name="zero-cost-static-00027"></a><pre><code>int inline baz(int x) {
+<a name="zero-cost-static-00026"></a><p><i>Voilà</i>! The &quot;is-initialised&quot; branch and the calls to <code class="inline">__cxa_guard_acquire()</code> are gone, yet <code class="inline">b0</code> and <code class="inline">b1</code> are initialised before <code class="inline">foo()</code> is called, just as we want. <i>But not so fast</i>, it&#x27;s C++.</p>
+<a name="zero-cost-static-00027"></a><p>Let&#x27;s add another static Bar instance, this time in an inline function:</p>
+<a name="zero-cost-static-00028"></a><pre><code>int inline baz(int x) {
         Bar &amp;b = FAST_STATIC(Bar);
         return b.var * x;
 }</code></pre>
-<a name="zero-cost-static-00028"></a><p>GCC reports [<a href="https://gcc.godbolt.org/z/Th1ece58b">godbolt</a>]:</p>
-<a name="zero-cost-static-00029"></a><pre><code style="margin-left: 3em;">&lt;source&gt;:9:38: error: &#x27;ph&#x27; causes a section type conflict with &#x27;ph&#x27; in section &#x27;STATIC_Bar&#x27;</code></pre>
-<a name="zero-cost-static-00030"></a><p>(clang works fine [<a href="https://gcc.godbolt.org/z/YT9bdG5Ke">godbolt</a>], by the way.)</p>
-<a name="zero-cost-static-00031"></a><p>The problem is that in addition to name, sections output by the compiler also have attributes. The compiler selects the attributes based on the properties of the scope where the symbol (to which <code class="inline">__attribute__((section))</code> is applied) is defined. Inline functions force a different attribute selection (similarly do template members), and the linker ends up with multiple sections with the same name, but conflicting attributes. See <a href="https://stackoverflow.com/questions/35091862/inline-static-data-causes-a-section-type-conflict">stackoverflow</a> for details.</p>
-<a name="zero-cost-static-00032"></a><p>As it is, <code class="inline">FAST_STATIC()</code> is usable, but section attribute conflicts put awkward resrictions on its applicability. Is this the best we can do? For some time I thought that it is, but then I realised that there is another way to specify the section in which the variable is located: the <a href="https://sourceware.org/binutils/docs/as/PushSection.html"><code class="inline">.pushsection</code></a> directive of the embedded assembler (do not be afraid, we will use only portable part).</p>
-<a name="zero-cost-static-00033"></a><p>If you do something like</p>
-<a name="zero-cost-static-00034"></a><pre><code>__asm__(&quot;.pushsection STATIC_Bar,\&quot;aw\&quot;,@progbits\n&quot; \
+<a name="zero-cost-static-00029"></a><p>GCC reports [<a href="https://gcc.godbolt.org/z/Th1ece58b">godbolt</a>]:</p>
+<a name="zero-cost-static-00030"></a><pre><code style="margin-left: 3em;">&lt;source&gt;:9:38: error: &#x27;ph&#x27; causes a section type conflict with &#x27;ph&#x27; in section &#x27;STATIC_Bar&#x27;</code></pre>
+<a name="zero-cost-static-00031"></a><p>(clang works fine [<a href="https://gcc.godbolt.org/z/YT9bdG5Ke">godbolt</a>], by the way.)</p>
+<a name="zero-cost-static-00032"></a><p>The problem is that in addition to name, sections output by the compiler also have attributes. The compiler selects the attributes based on the properties of the scope where the symbol (to which <code class="inline">__attribute__((section))</code> is applied) is defined. Inline functions force a different attribute selection (similarly do template members), and the linker ends up with multiple sections with the same name, but conflicting attributes. See <a href="https://stackoverflow.com/questions/35091862/inline-static-data-causes-a-section-type-conflict">stackoverflow</a> for details.</p>
+<a name="zero-cost-static-00033"></a><p>As it is, <code class="inline">FAST_STATIC()</code> is usable, but section attribute conflicts put awkward resrictions on its applicability. Is this the best we can do? For some time I thought that it is, but then I realised that there is another way to specify the section in which the variable is located: the <a href="https://sourceware.org/binutils/docs/as/PushSection.html"><code class="inline">.pushsection</code></a> directive of the embedded assembler (do not be afraid, we will use only portable part).</p>
+<a name="zero-cost-static-00034"></a><p>If you do something like</p>
+<a name="zero-cost-static-00035"></a><pre><code>__asm__(&quot;.pushsection STATIC_Bar,\&quot;aw\&quot;,@progbits\n&quot; \
         &quot;.quad &quot; symbol &quot;\n&quot;                         \
         &quot;.popsection\n&quot;)</code></pre>
-<a name="zero-cost-static-00035"></a><p>then the address of the <code class="inline">symbol</code> is placed in <code class="inline">STATIC_Bar</code> section with the specified <a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_117.html">attributes</a>.</p>
-<a name="zero-cost-static-00036"></a><p>All we need is something like</p>
-<a name="zero-cost-static-00037"></a><pre><code>#define FAST_STATIC(T)                                          \
+<a name="zero-cost-static-00036"></a><p>then the address of the <code class="inline">symbol</code> is placed in <code class="inline">STATIC_Bar</code> section with the specified <a href="https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_117.html">attributes</a>.</p>
+<a name="zero-cost-static-00037"></a><p>All we need is something like</p>
+<a name="zero-cost-static-00038"></a><pre><code>#define FAST_STATIC(T)                                          \
 *({                                                             \
         struct placeholder {                                    \
             alignas(T) char buf[sizeof(T)];                     \
@@ -3033,20 +3034,20 @@ foo(int):
                 &quot;.popsection\n&quot;);                               \
         reinterpret_cast&lt;T *&gt;(ph.buf);                          \
 })</code></pre>
-<a name="zero-cost-static-00038"></a><p>and we are good (<code class="inline">section_init()</code> needs to be fixed a bit, because <code class="inline">STATIC_Bar</code> now contains pointers, not instances). <i>But not so fast</i>, it&#x27;s C++. This does not even compile [<a href="https://gcc.godbolt.org/z/b49974Wfr">godbolt</a>]:</p>
-<a name="zero-cost-static-00039"></a><pre><code>ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x0): undefined reference to `ph&#x27;
+<a name="zero-cost-static-00039"></a><p>and we are good (<code class="inline">section_init()</code> needs to be fixed a bit, because <code class="inline">STATIC_Bar</code> now contains pointers, not instances). <i>But not so fast</i>, it&#x27;s C++. This does not even compile [<a href="https://gcc.godbolt.org/z/b49974Wfr">godbolt</a>]:</p>
+<a name="zero-cost-static-00040"></a><pre><code>ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x0): undefined reference to `ph&#x27;
 ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x8): undefined reference to `ph&#x27;
 ld: /tmp/ccZRzXXj.o:(STATIC_Bar+0x10): undefined reference to `ph&#x27;
 collect2: error: ld returned 1 exit status
 Execution build compiler returned: 1</code></pre>
-<a name="zero-cost-static-00040"></a><p>When you define <code class="inline">static constinit placeholder ph</code>, the actual name the compiler uses for the symbol is not <code class="inline">ph</code> it is the mangled version of something like <code class="inline">foo(int)::ph</code> that we saw in the assembly listing above. There is no <code class="inline">ph</code> for <code class="inline">.quad ph</code> to resolve to.</p>
-<a name="zero-cost-static-00041"></a><p>OK. Are we stuck <i>now</i>? In fact not. You can <a href="https://gcc.gnu.org/onlinedocs/gcc/Asm-Labels.html">instruct the compiler</a> to use a particular symbol name, instead of the mangled one. With</p>
-<a name="zero-cost-static-00042"></a><pre><code>        int foo asm (&quot;bar&quot;) = 2;</code></pre>
-<a name="zero-cost-static-00043"></a><p>the compiler will use &quot;bar&quot; as the symbol name for <code class="inline">foo</code> (both gcc and clang support this).</p>
-<a name="zero-cost-static-00044"></a><p>Of course if we just do</p>
-<a name="zero-cost-static-00045"></a><pre><code>        static constinit placeholder ph asm(&quot;ph&quot;) {{}};</code></pre>
-<a name="zero-cost-static-00046"></a><p>we fall in the opposite trap of having multiple definitions for &quot;ph&quot;. We need to define unique names for our symbols, but there is more or less standard trick for this, based on <a href="https://www.open-std.org/JTC1/sc22/wg14/www/docs/n3457.htm"><code class="inline">__COUNTER__</code></a> macro. We also need a couple of, again standard, macros for concatenation and stringification. The final version looks like this:</p>
-<a name="zero-cost-static-00047"></a><pre><code>#define CAT0(a, b) a ## b
+<a name="zero-cost-static-00041"></a><p>When you define <code class="inline">static constinit placeholder ph</code>, the actual name the compiler uses for the symbol is not <code class="inline">ph</code> it is the mangled version of something like <code class="inline">foo(int)::ph</code> that we saw in the assembly listing above. There is no <code class="inline">ph</code> for <code class="inline">.quad ph</code> to resolve to.</p>
+<a name="zero-cost-static-00042"></a><p>OK. Are we stuck <i>now</i>? In fact not. You can <a href="https://gcc.gnu.org/onlinedocs/gcc/Asm-Labels.html">instruct the compiler</a> to use a particular symbol name, instead of the mangled one. With</p>
+<a name="zero-cost-static-00043"></a><pre><code>        int foo asm (&quot;bar&quot;) = 2;</code></pre>
+<a name="zero-cost-static-00044"></a><p>the compiler will use &quot;bar&quot; as the symbol name for <code class="inline">foo</code> (both gcc and clang support this).</p>
+<a name="zero-cost-static-00045"></a><p>Of course if we just do</p>
+<a name="zero-cost-static-00046"></a><pre><code>        static constinit placeholder ph asm(&quot;ph&quot;) {{}};</code></pre>
+<a name="zero-cost-static-00047"></a><p>we fall in the opposite trap of having multiple definitions for &quot;ph&quot;. We need to define unique names for our symbols, but there is more or less standard trick for this, based on <a href="https://www.open-std.org/JTC1/sc22/wg14/www/docs/n3457.htm"><code class="inline">__COUNTER__</code></a> macro. We also need a couple of, again standard, macros for concatenation and stringification. The final version looks like this:</p>
+<a name="zero-cost-static-00048"></a><pre><code>#define CAT0(a, b) a ## b
 #define CAT(a, b) CAT0(a, b)
 
 #define STR0(x) # x
@@ -3078,8 +3079,8 @@ extern &quot;C&quot; T *__start_STATIC_ ## T;                              \
 extern &quot;C&quot; T *__stop_STATIC_ ## T;                               \
 static int _init_ ## T = section_init&lt;T&gt;(&amp;__start_STATIC_ ## T,  \
                                          &amp;__stop_STATIC_ ## T);</code></pre>
-<a name="zero-cost-static-00048"></a><p>The resulting assembly for <code class="inline">foo()</code> and <code class="inline">foo_init()</code> [<a href="https://gcc.godbolt.org/z/89xrYWhMh">godbolt</a>] accesses statics directly:</p>
-<a name="zero-cost-static-00049"></a><pre><code>foo(int):
+<a name="zero-cost-static-00049"></a><p>The resulting assembly for <code class="inline">foo()</code> and <code class="inline">foo_init()</code> [<a href="https://gcc.godbolt.org/z/89xrYWhMh">godbolt</a>] accesses statics directly:</p>
+<a name="zero-cost-static-00050"></a><pre><code>foo(int):
         push    rbp
         mov     rbp, rsp
         mov     DWORD PTR [rbp-20], edi
@@ -3103,9 +3104,9 @@ foo_inline(int):
         imul    eax, DWORD PTR [rbp-20]
         pop     rbp
         ret</code></pre>
-<a name="zero-cost-static-00050"></a><p>Finally we won!</p>
-<a name="zero-cost-static-00051"></a><p><span class="align-right"> &quot;<i>Бывает, что усердие превозмогает и рассудок</i>&quot;</span></p>
-<a name="zero-cost-static-00052"></a><p><span class="align-right"> К. Прутков, <a href="https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_II_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)">Мысли и афоризмы, II</a>, 27</span></p>
-<a name="zero-cost-static-00053"></a><p>P.S. The actual implementation requires more bells and whistles. Parameters need to be passed to constructors, they can be stored within the placeholder. Typenames are not necessarily valid identifiers (think <code class="inline">A::B::foo&lt;T&gt;</code>), so the section name needs to be a separate parameter, <i>etc</i>., but the basic idea should be clear.</p>
-<a name="zero-cost-static-00054"></a><p>P.P.S. I have a similar story about optimising access to thread-local variables, involving C++20 <a href="https://en.cppreference.com/w/cpp/language/constinit.html"><code class="inline">constinit</code></a> and <a href="https://www.ibm.com/docs/en/xl-c-and-cpp-aix/16.1.0?topic=attributes-tls-model-attribute"><code class="inline">__attribute__((tls_model(&quot;initial-exec&quot;)))</code></a>.</p><footer><a href="zero.html#zero">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="zero-overrated.html#zero-overrated">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="keyring.html#keyring">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p> </body>
+<a name="zero-cost-static-00051"></a><p>Finally we won!</p>
+<a name="zero-cost-static-00052"></a><p><span class="align-right"> &quot;<i>Бывает, что усердие превозмогает и рассудок</i>&quot;</span></p>
+<a name="zero-cost-static-00053"></a><p><span class="align-right"> К. Прутков, <a href="https://ru.wikisource.org/wiki/%D0%9C%D1%8B%D1%81%D0%BB%D0%B8_%D0%B8_%D0%B0%D1%84%D0%BE%D1%80%D0%B8%D0%B7%D0%BC%D1%8B_II_(%D0%9F%D1%80%D1%83%D1%82%D0%BA%D0%BE%D0%B2)">Мысли и афоризмы, II</a>, 27</span></p>
+<a name="zero-cost-static-00054"></a><p>P.S. The actual implementation requires more bells and whistles. Parameters need to be passed to constructors, they can be stored within the placeholder. Typenames are not necessarily valid identifiers (think <code class="inline">A::B::foo&lt;T&gt;</code>), so the section name needs to be a separate parameter, <i>etc</i>., but the basic idea should be clear.</p>
+<a name="zero-cost-static-00055"></a><p>P.P.S. I have a similar story about optimising access to thread-local variables, involving C++20 <a href="https://en.cppreference.com/w/cpp/language/constinit.html"><code class="inline">constinit</code></a> and <a href="https://www.ibm.com/docs/en/xl-c-and-cpp-aix/16.1.0?topic=attributes-tls-model-attribute"><code class="inline">__attribute__((tls_model(&quot;initial-exec&quot;)))</code></a>.</p><footer><a href="zero.html#zero">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="zero-overrated.html#zero-overrated">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="keyring.html#keyring">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div><p>&nbsp;</p> </body>
 </html>
