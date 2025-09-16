@@ -10,6 +10,13 @@ span.linktarget { border-bottom: 2px solid; }
     margin-right: 20%;
     margin-left: 20%;
 }
+@media (max-width: 600px) {
+    .column {
+        max-width: 96%;
+        margin-right: 2%;
+        margin-left: 2%;
+    }
+}
 .margin-right {
     margin-right: -22%;
     margin-left: 2%;
