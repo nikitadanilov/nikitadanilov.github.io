@@ -93,7 +93,7 @@ gtag('config', 'G-WEM34DWDR2');
 ----------------------------------------------+--------------+-------+
                                               ^
                                               |
-                                              sp = S-&gt;s_buf`</code></pre>
+                                              sp = S-&gt;s_buf</code></pre>
 <a name="usched-00035"></a><p>A new (never before executed) thread <code class="inline">U</code> is selected by <code class="inline">S-&gt;</code><code class="inline">s_next()</code>, <code class="inline">launch()</code> calls the thread startup function <code class="inline">U-&gt;</code><code class="inline">u_f()</code>:</p>
 <a name="usched-00036"></a><pre><code>                               U-&gt;u_f() launch() usched_run()
  -----------------------------+---------+-----+--------------+-------+
@@ -101,7 +101,7 @@ gtag('config', 'G-WEM34DWDR2');
  -----------------------------+---------+-----+--------------+-------+
                               ^         ^
                               |         |
-                              sp        U-&gt;u_bottom`</code></pre>
+                              sp        U-&gt;u_bottom</code></pre>
 <a name="usched-00037"></a><p>The thread executes as usual on the stack, until it blocks by calling <code class="inline">usched_block()</code>:</p>
 <a name="usched-00038"></a><pre><code>    usched_block()       bar() U-&gt;u_f() launch() usched_run()
  ----------+------+-----+-----+---------+-----+--------------+-------+
@@ -110,7 +110,7 @@ gtag('config', 'G-WEM34DWDR2');
       ^    ^                            ^
       |    +-- sp = U-&gt;u_cont           |
       |                                 U-&gt;u_bottom
-      U-&gt;u_top`</code></pre>
+      U-&gt;u_top</code></pre>
 <a name="usched-00039"></a><p>The stack from <code class="inline">U-&gt;u_top</code> to <code class="inline">U-&gt;u_bottom</code> is copied into the stack buffer <code class="inline">U-&gt;u_stack</code>, and control returns to <code class="inline">usched_run()</code> by <code class="inline">longjmp(S-&gt;s_buf)</code>:</p>
 <a name="usched-00040"></a><pre><code>                                                usched_run()
 ----------------------------------------------+--------------+-------+
@@ -118,7 +118,7 @@ gtag('config', 'G-WEM34DWDR2');
 ----------------------------------------------+--------------+-------+
                                               ^
                                               |
-                                              sp = S-&gt;s_buf`</code></pre>
+                                              sp = S-&gt;s_buf</code></pre>
 <a name="usched-00041"></a><p>Next, suppose <code class="inline">S-&gt;</code><code class="inline">s_next()</code> selects a previously blocked thread <code class="inline">V</code> ready to be resumed. <code class="inline">usched_run()</code> calls <code class="inline">cont(V)</code>.</p>
 <a name="usched-00042"></a><pre><code>                                        cont()  usched_run()
 ----------------------------------------+-----+--------------+-------+
@@ -126,7 +126,7 @@ gtag('config', 'G-WEM34DWDR2');
 ----------------------------------------+-----+--------------+-------+
                                         ^
                                         |
-                                        sp`</code></pre>
+                                        sp</code></pre>
 <a name="usched-00043"></a><p><code class="inline">cont()</code> copies the stack from the buffer to [<code class="inline">V-&gt;u_top</code>, <code class="inline">V-&gt;u_bottom</code>] range. It&#x27;s important that this <code class="inline">memcpy()</code> operation does not overwrite <code class="inline">cont()</code>&#x27;s own stack frame, this is why <code class="inline">pad[]</code> array is needed in <code class="inline">launch()</code>: it advances <code class="inline">V-&gt;u_bottom</code> and gives <code class="inline">cont()</code> some space to operate.</p>
 <a name="usched-00044"></a><pre><code>  usched_block()       foo() V-&gt;u_f()   cont()  usched_run()
 ---------+------+-----+-----+--------+--+-----+--------------+-------+
@@ -135,14 +135,14 @@ gtag('config', 'G-WEM34DWDR2');
     ^    ^                           ^  ^
     |    +-- V-&gt;u_cont               |  +-- sp
     |                                |
-    V-&gt;u_top                         V-&gt;u_bottom`</code></pre>
+    V-&gt;u_top                         V-&gt;u_bottom</code></pre>
 <a name="usched-00045"></a><p>Then <code class="inline">cont()</code> <code class="inline">longjmp()</code>-s to <code class="inline">V-&gt;</code>u_cont, restoring <code class="inline">V</code> execution context:</p>
 <a name="usched-00046"></a><pre><code>  usched_block()       foo() V-&gt;u_f()   cont()  usched_run()
 ---------+------+-----+-----+--------+--+-----+--------------+-------+
          | here | ... |     |        |  |     | buf | anchor |  ...  |
 ---------+------+-----+-----+--------+--+-----+--------------+-------+
          ^
-         +-- sp = V-&gt;u_cont`</code></pre>
+         +-- sp = V-&gt;u_cont</code></pre>
 <a name="usched-00047"></a><p><code class="inline">V</code> continues its execution as if it returned from <code class="inline">usched_block()</code>.</p>
 <a name="usched-00048"></a><h2>Multiprocessing</h2>
 <a name="usched-00049"></a><p>By design, a single instance of <code class="inline">struct usched</code> cannot take advantage of multiple processors, because all its threads are executing within a single native thread. Multiple instances of <code class="inline">struct usched</code> can co-exist within a single process address space, but a ustack thread created for one instance cannot be migrated to another. One possible strategy to add support for multiple processors is to create multiple instances of struct usched and schedule them (that is, schedule the threads running respective <code class="inline">usched_run()</code>-s) to processors via <code class="inline">pthread_setaffinity_np()</code> or similar. See <a href="https://github.com/nikitadanilov/usched/blob/master/rr.c">rr.c</a> for a simplistic implementation.</p>

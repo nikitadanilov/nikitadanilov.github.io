@@ -158,7 +158,7 @@ At the entrance to the dispatcher loop. `usched_run(S)`:
 ----------------------------------------------+--------------+-------+
                                               ^
                                               |
-                                              sp = S->s_buf`
+                                              sp = S->s_buf
 
 A new (never before executed) thread `U` is selected by `S->`s_next(), launch()
 calls the thread startup function `U->`u_f():
@@ -171,7 +171,7 @@ calls the thread startup function `U->`u_f():
  -----------------------------+---------+-----+--------------+-------+
                               ^         ^
                               |         |
-                              sp        U->u_bottom`
+                              sp        U->u_bottom
 
 The thread executes as usual on the stack, until it blocks by calling
 usched_block():
@@ -184,7 +184,7 @@ usched_block():
       ^    ^                            ^
       |    +-- sp = U->u_cont           |
       |                                 U->u_bottom
-      U->u_top`
+      U->u_top
 
 The stack from `U->u_top` to `U->u_bottom` is copied into the stack buffer
 `U->u_stack`, and control returns to usched_run() by `longjmp(S->s_buf)`:
@@ -197,7 +197,7 @@ The stack from `U->u_top` to `U->u_bottom` is copied into the stack buffer
 ----------------------------------------------+--------------+-------+
                                               ^
                                               |
-                                              sp = S->s_buf`
+                                              sp = S->s_buf
 
 Next, suppose `S->`s_next() selects a previously blocked thread `V` ready to be
 resumed. usched_run() calls `cont(V)`.
@@ -210,7 +210,7 @@ resumed. usched_run() calls `cont(V)`.
 ----------------------------------------+-----+--------------+-------+
                                         ^
                                         |
-                                        sp`
+                                        sp
 
 cont() copies the stack from the buffer to [`V->u_top`, `V->u_bottom`]
 range. It's important that this memcpy() operation does not overwrite cont()'s
@@ -225,7 +225,7 @@ own stack frame, this is why `pad[]` array is needed in launch(): it advances
     ^    ^                           ^  ^
     |    +-- V->u_cont               |  +-- sp
     |                                |
-    V->u_top                         V->u_bottom`
+    V->u_top                         V->u_bottom
 
 Then cont() longjmp()-s to `V->`u_cont, restoring `V` execution context:
 
@@ -235,7 +235,7 @@ Then cont() longjmp()-s to `V->`u_cont, restoring `V` execution context:
          | here | ... |     |        |  |     | buf | anchor |  ...  |
 ---------+------+-----+-----+--------+--+-----+--------------+-------+
          ^
-         +-- sp = V->u_cont`
+         +-- sp = V->u_cont
 
 `V` continues its execution as if it returned from usched_block().
 
