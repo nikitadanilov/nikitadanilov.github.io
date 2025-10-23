@@ -122,6 +122,7 @@ iupdat(p, tm)
         rp = p;
         if((rp->i_flag&(IUPD|IACC)) != 0) {
         ...
+/ += . "v6root/usr/sys/ken/iget.c" -> https://www.tuhs.org/cgi-bin/utree.pl?file=LSX/sys/iget.c#:~:text=iupdat(p
      
    
    indicating that member designators (`i_flag` in this
@@ -129,7 +130,7 @@ iupdat(p, tm)
      type. They were, in fact, existing by themselves in a special
      global namespace—a property that led to the custom of
      prefixing field names with a unique prefix.
-   
+
 ; head
 Informal proposal
 / level 2

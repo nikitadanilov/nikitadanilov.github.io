@@ -4,7 +4,7 @@
         <title>Occasional diary</title>
         <link>https://cofault.com</link>
         <description>Nikita Danilov, Occasional diary</description>
-        <lastBuildDate>Thu, 18 Sep 2025 10:36:16 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 23 Oct 2025 22:44:02 +0000</lastBuildDate>
 
         <item>
             <title>3-lisp: an infinite tower of meta-circular interpreters.</title>
@@ -1094,7 +1094,7 @@ while (i != -1) {
  [#3] A postfix expression followed by the . operator and  an
  identifier  designates  a  member  of  a  structure or union
  object.  The value is that of the named member,  and  is  an
- lvalue  if  the first expression is an lvalue.The inflexibility of this definition is clear when compared      with what one can do with the arrays: C permits nothing similar      to &lt;code class=&quot;inline&quot;&gt;foo(a0,a1)[bar(b0.b1)]&lt;/code&gt; for structure and union      member access. Standard &lt;code class=&quot;inline&quot;&gt;offsetof()&lt;/code&gt; macro [7.17]      converts member designator to an integer constant, equal to the      member byte offset within the structure of union, but no support      at the syntax level exists.We propose to introduce a family of scalar types representing      member designators and to define &lt;code class=&quot;inline&quot;&gt;.&lt;/code&gt; and &lt;code class=&quot;inline&quot;&gt;-&amp;gt;&lt;/code&gt;      operations in terms of values of these types, in fact, in the      way very similar to how array subscription is defined.The perceived advantages of this are:array and structure operations become similar;structure and union operations are reduced to (already defined)  pointer manipulations, improving orthogonality of the language;more generic structure-like data types are introduced for free, see  below.Note that in some sense this is not a new development. Vintage C code      fragments sport usage likev6root/usr/sys/ken/iget.c
+ lvalue  if  the first expression is an lvalue.The inflexibility of this definition is clear when compared      with what one can do with the arrays: C permits nothing similar      to &lt;code class=&quot;inline&quot;&gt;foo(a0,a1)[bar(b0.b1)]&lt;/code&gt; for structure and union      member access. Standard &lt;code class=&quot;inline&quot;&gt;offsetof()&lt;/code&gt; macro [7.17]      converts member designator to an integer constant, equal to the      member byte offset within the structure of union, but no support      at the syntax level exists.We propose to introduce a family of scalar types representing      member designators and to define &lt;code class=&quot;inline&quot;&gt;.&lt;/code&gt; and &lt;code class=&quot;inline&quot;&gt;-&amp;gt;&lt;/code&gt;      operations in terms of values of these types, in fact, in the      way very similar to how array subscription is defined.The perceived advantages of this are:array and structure operations become similar;structure and union operations are reduced to (already defined)  pointer manipulations, improving orthogonality of the language;more generic structure-like data types are introduced for free, see  below.Note that in some sense this is not a new development. Vintage C code      fragments sport usage like&lt;a href=&quot;https://www.tuhs.org/cgi-bin/utree.pl?file=LSX/sys/iget.c#:~:text=iupdat(p&quot;&gt;v6root/usr/sys/ken/iget.c&lt;/a&gt;
    
 iupdat(p, tm)
   int *p;
