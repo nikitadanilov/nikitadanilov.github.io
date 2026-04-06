@@ -1,3 +1,5 @@
 #! /bin/sh
 
-$HOME/p/card/card blog/*conf blog/*deck blog/*card
+CARD=$HOME/p/card/card
+$CARD blog/*conf blog/*deck blog/*card
+cd cj && $CARD cj.conf cj.deck
