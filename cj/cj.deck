@@ -20,7 +20,8 @@ of the martyrs the whaups are crying, my heart
 remembers how. Strange that he comes into
 my head so much to-day. I hope it's over some
 flotsam fish that the birds are making whaupee. But all the nice gulls love a sailor. Ugh.
-/ +* "whaups" 'Whaups' (singular: whaup) is a Scottish name for the European curlew (Numenius arquata), https://www.merriam-webster.com/dictionary/whaup
+/ +* "whaups" 'Whaups' (singular: whaup) is a Scottish name for the European curlew (_Numenius arquata_), https://www.merriam-webster.com/dictionary/whaup
+: += . "whaup" -> https://www.merriam-webster.com/dictionary/whaup
 / += . "making whaupee" -> https://en.wikipedia.org/wiki/Makin%27_Whoopee
 / +* "valetudinarian" noun, a person who is unduly anxious about their health.
 / +* "I sit down" NARRATOR sit down
@@ -209,9 +210,12 @@ in Search of a Father, was it? But I had always
 found Conrad unreadable, as far from English
 as the Poles, and did not mean to try again.
 / += . "Charles Victor Hugo" -> https://en.wikipedia.org/wiki/Charles_Hugo_(writer)
-/ +* "Typhoon" https://en.wikipedia.org/wiki/Typhoon_(novella)
-/ +* "Typhoon" https://en.wikipedia.org/wiki/Typhoon_(1933_film)
-/ +* "Typhoon" https://en.wikipedia.org/wiki/The_Typhoon
+/ +* "Typhoon" novella
+: += . "novella" -> https://en.wikipedia.org/wiki/Typhoon_(novella)
+/ +* "Typhoon" 1933 film
+: += . "1933 film" -> https://en.wikipedia.org/wiki/Typhoon_(1933_film)
+/ +* "Typhoon" 1914 film
+: += . "1914 film" -> https://en.wikipedia.org/wiki/The_Typhoon
 / +* "Renard-Beinsky" a character in 'Taifun'
 / += . "Firth of Forth" -> https://en.wikipedia.org/wiki/Firth_of_Forth
 / += . "Youth" -> https://en.wikipedia.org/wiki/Youth_(Conrad_short_story)
@@ -340,7 +344,8 @@ which told me that such things used not
 to happen when the queer old Dean was alive.
 / += . "agree with de Quincey that murders in Ireland did not count" -> https://www.authorama.com/miscellaneous-essays-2.html
 // +# Quincey SPOM.1
-/ +* "the queer old Dean" the Queen old dear (Queen Victoria) https://en.wikipedia.org/wiki/Spoonerism
+/ +* "the queer old Dean" Spoonerism for 'the Queen old dear' (Queen Victoria)
+: += . "Spoonerism" -> https://en.wikipedia.org/wiki/Spoonerism
 / += . "So I came back.*my short legs." -> https://www.kiplingsociety.co.uk/tale/toby-dog.htm
 // +# Kipling Toby-dog
 
@@ -1815,7 +1820,8 @@ intruding charlady—when there came a horribly official knock at the little blu
 (Was it Inspector Barraclough, or only some
 stolid-witted local?) But little the latter
 cared. He went on talking about Browning.
-/ +* "Inspector Barraclough" https://www.imdb.com/title/tt0025959/characters/nm0517058, John Loder: Inspector Yorke, Barraclough
+/ +* "Inspector Barraclough" John Loder: Inspector Yorke, Barraclough
+: += . "John Loder" -> https://www.imdb.com/title/tt0025959/characters/nm0517058
 
 \
 
@@ -1908,7 +1914,8 @@ almost weep at his morbid mistrust of sheep.
 / += . "William the Schoolman" -> https://en.wikipedia.org/wiki/William_of_Ockham
 / +* "Colney Hatch" Colney Hatch was the name of an insane asylum in London
 / += . "Rysbrach" -> https://en.wikipedia.org/wiki/John_Michael_Rysbrack
-/ +* "Great Lexicographer" John Walker, born at Colney Hatch https://en.wikipedia.org/wiki/John_Walker_(lexicographer)
+/ +* "Great Lexicographer" John Walker, born at Colney Hatch
+: += . "John Walker" -> https://en.wikipedia.org/wiki/John_Walker_(lexicographer)
 / +* "my namesake" NARRATOR
 // +# NARRATOR John
 / += . "Le couchant.*eaux" -> https://poetrysociety.org/poems-essays/in-their-own-words/incantation-a-reading-of-paul-verlaines-promenade-sentimentale
@@ -2371,8 +2378,10 @@ the delight that is as wide-eyed as a marigold.
 / +* "ek parergou" (Gr.), as a by-work
 / +* "ephphatha" ἐφφαθά the Greek form of a Syro-Chaldaic or Aramaic word, meaning "Be opened," uttered by Christ when healing the man who was deaf and dumb ( Mark 7:34 )
 / +* "ephphatha" Efate
-/ +* "epea pteroenta" (Ancient Greek: ἔπεα πτερόεντα) is a famous Homeric formula translating to "winged words," frequently used in the Iliad and Odyssey, https://hal.science/hal-01469426
-/ +* "Calendula" https://www.dictionary.com/browse/calendula, "He remarks of “the marigolde” that it is called calendula “as it is to be seene to flower in the calends of almost euerie moneth.”"
+/ +* "epea pteroenta" (Ancient Greek: ἔπεα πτερόεντα) is a famous Homeric formula translating to "winged words," frequently used in the Iliad and Odyssey,
+: += . "winged words" -> https://hal.science/hal-01469426
+/ +* "Calendula" "He remarks of “the marigolde” that it is called calendula “as it is to be seene to flower in the calends of almost euerie moneth.”"
+: += . "calendula" -> https://www.dictionary.com/browse/calendula
 / += . "marigold" -> https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Marigold
 / += . "Gerard" -> https://www.exclassics.com/herbal/herbalv30081.htm
 // +# Efate ephphatha
@@ -2928,7 +2937,7 @@ That his thought process, when I tapped
 its wire, had been calling her a Cambridge week, helped me, surely, not at all.
 / +* "thistledown" noun: thistle-down light fluffy down which is attached to thistle seeds, enabling them to be blown about in the wind.
 / += . "thistledown" -> https://www.merriam-webster.com/dictionary/thistledown
-/ +* "Wails of a Tayside Inn" https://en.wikipedia.org/wiki/Tales_of_a_Wayside_Inn Longfellow
+/ += . "Wails of a Tayside Inn" -> https://en.wikipedia.org/wiki/Tales_of_a_Wayside_Inn
 // +# Longfellow Wails-of-a-Tayside-Inn
 
 \
@@ -3015,7 +3024,8 @@ now, I remember the stew we had that night.
 How it all comes back. The whole circumstances of this meeting are so mysterious. It gars
 me grue, if I may be permitted the expression.
 / += . "Ode on the Intimations of Immorality in Early Childhood" -> https://en.wikipedia.org/wiki/Ode:_Intimations_of_Immortality
-/ +* "I would rather.*in the morning" "Gentlemen, I would rather have written those lines than take Quebec tomorrow." https://en.wikipedia.org/wiki/Elegy_Written_in_a_Country_Churchyard
+/ +* "I would rather.*in the morning" "Gentlemen, I would rather have written those lines than take Quebec tomorrow."
+: += . "Gentlemen, I would rather have written those lines than take Quebec tomorrow" -> https://en.wikipedia.org/wiki/Elegy_Written_in_a_Country_Churchyard
 / += . "Jifjaffa" -> https://en.wikipedia.org/wiki/Raid_on_Jifjafa
 \
 

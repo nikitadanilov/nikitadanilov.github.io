@@ -82,7 +82,7 @@ o", new QR::String("NumericLiteral"))->QR::Terminal::_vb.Q22QR11GrammarNode->QR:
 22QR6Object->QR::Object::_vb.Q22QR3Top : 0)) != 0) ? new QR::ObjectWrapper(((new QR::Terminal("no",
 new QR::String("NumericLiteral")) != 0) ? new QR::Terminal("no", new QR::String("NumericLiteral"))-
 >QR::Terminal::_vb.Q22QR11GrammarNode->QR::GrammarNode::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top
-: 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0))->QR::GrammarNode::_
+|: 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0), 0))->QR::GrammarNode::_
 vb.Q22QR6Object->QR::Object::_vb.Q22QR3Top : 0))->QR::ObjectWrapper::_vb.Q22QR6Object->QR::Object::
 _vb.Q22QR3Top : 0)' cannot be used as a function
 
