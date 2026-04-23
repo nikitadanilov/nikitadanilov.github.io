@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta name="viewport"
+         content="width=device-width,
+                  initial-scale=1">
+   <meta charset="UTF-8">
+   <title>a very occasional diary @ Nikita Danilov | Obvious (but ponderable) matter</title>
+   <link rel="stylesheet" href="style.css">
+   <link rel="alternate"
+         type="application/rss+xml"
+         title="Occasional diary"
+         href="https://cofault.com/feed.xml">
+   <style></style>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-WEM34DWDR2');
+</script>
+   
+        <script>window.MathJax = {
+                loader: {load     : ['[tex]/amscd']},
+                tex:    {packages : {'[+]': ['amscd']}}
+        };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ </head>
+ <body>
+   <a name="matter"></a>
+<div class="column"><header>Obvious (but ponderable) matter</header>
+<a name="matter-00000"></a><p>For a classical mechanical system we are usually given a manifold \(M\) as its &quot;configuration (or state) space&quot;, that is a space to which &quot;positions&quot; (also known as &quot;generalised coordinates&quot;) of the elements of the system belong: \(q \in M\).</p>
+<a name="matter-00001"></a><p>There are two very well-known ways to describe dynamics of such a system:</p>
+<a name="matter-00002"></a><p><a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics"><i>Lagrangian mechanics</i></a> starts with a Lagrangian function: \(L : TM \times \mathbb{R} \to \mathbb{R}\). Here \(TM\) is the <a href="https://en.wikipedia.org/wiki/Tangent_bundle">tangent bundle</a> of \(M\), which consists of \(M\) with a tangent space attached at every point. Elements of \(TM\) are pairs \((q, \dot q)\), where \(\dot q\) is a velocity vector. All of this is a round-about way to say that the Lagrangian is a function \(L(q, \dot q, t)\), where \(q\) and \(\dot q\) are vectors of coordinates and velocities. Once the Lagrangian is given, the behavior of the system is fully described by the Euler-Lagrange equations:</p>
+<a name="matter-00003"></a>$$\frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial \dot q} - \frac{\partial L}{\partial q} = 0$$
+<a name="matter-00004"></a><p><a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics"><a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics#Hamiltonian"><i>Hamiltonian</a> mechanics</i></a>, on the other hand, instead of velocities \(\dot q\), that is vectors, living the tangent space, uses conjugate <i>momenta</i> \(p\), which are velocities that live in the <a href="https://en.wikipedia.org/wiki/Cotangent_bundle">cotangent space</a> \(T^*M\). The translation from one space to another is given by the <a href="https://en.wikipedia.org/wiki/Legendre_transformation#Legendre_transformation_on_manifolds">Legendre transformation</a>. Instead of a Lagrangian, you are given a <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics#Hamiltonian">Hamiltonian</a> function \(H : T^*M \times \mathbb{R} \to \mathbb{R}\), such that \(H(q, p, t)\) gives you the energy of the system. And then you have Hamilton&#x27;s equations that describe the evolution of the system:</p>
+<a name="matter-00005"></a>$$\dot q = \frac{\partial H}{\partial p}$$
+<a name="matter-00006"></a>$$\dot p = - \frac{\partial H}{\partial q}$$
+<a name="matter-00007"></a><p>Lagrangian velocity is a <a href="https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)">vector</a>, that is a <a href="https://en.wikipedia.org/wiki/Tensor">tensor</a> of type \((1, 0)\), that can be written in the component notation as \(\dot q = v^i\). Hamiltonian velocity is a <a href="https://en.wikipedia.org/wiki/Linear_form">co<a href="https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)">vector</a></a>, a <a href="https://en.wikipedia.org/wiki/Tensor">tensor</a> of type \((0, 1)\), written as \(p = v_i\). In classical mechanics, they are related as \(p = m \cdot \dot q\) or</p>
+<a name="matter-00008"></a>$$v_i = m \cdot v^i$$
+<a name="matter-00009"></a><p>where \(m\) is mass. That is, mass lowers (or raises as in \(v^i = m^{-1} \cdot v_i\)) <a href="https://en.wikipedia.org/wiki/Abstract_index_notation">indices</a>. But this is exactly what the <a href="https://en.wikipedia.org/wiki/Metric_tensor">metric tensor</a> <a href="https://en.wikipedia.org/wiki/Musical_isomorphism">does</a> in the Riemann setting:</p>
+<a name="matter-00010"></a>$$v_i = g_{ij} \cdot v^j$$
+<a name="matter-00011"></a><p>Mass looks suspiciously similar to metric. The central idea of the <a href="https://en.wikipedia.org/wiki/General_relativity">general theory of relativity</a>, that distribution of mass determines the geometry of space and thus the movement of matter, was <i>always</i> there from the earliest days of analytical mechanics. <a href="https://en.wikipedia.org/wiki/William_Rowan_Hamilton">Hamilton</a> might have seen it, darkly; <a href="https://en.wikipedia.org/wiki/William_Kingdon_Clifford">Clifford</a> most likely did.</p><footer><a href="macro.html#macro">&lt;</a>&nbsp;<a href="series_blog_compact_reverse_flat.html">blog</a>&nbsp;<a href="mm-units.html#mm-units">&gt;</a>&nbsp;&nbsp;&nbsp;<a href="zero-cost-static.html#zero-cost-static">&lt;</a>&nbsp;<a href="series_timeline_compact_reverse_flat.html">timeline</a>&nbsp;&gt;&nbsp;&nbsp;&nbsp;</footer></div>
+ </body>
+</html>

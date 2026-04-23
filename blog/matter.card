@@ -1,0 +1,76 @@
+// name Obvious (but ponderable) matter
+// id matter
+// +# blog matter
+// +# timeline 2026/04/22
+// +tags math
+
+For a classical mechanical system we are usually given a manifold
+\(M\) as its "configuration (or state) space", that is a space to
+which "positions" (also known as "generalised coordinates") of the
+elements of the system belong: \(q \in M\).
+
+There are two very well-known ways to describe dynamics of such a system:
+
+_Lagrangian mechanics_ starts with a Lagrangian function: \(L : TM
+\times \mathbb{R} \to \mathbb{R}\). Here \(TM\) is the tangent bundle
+of \(M\), which consists of \(M\) with a tangent space attached at
+every point. Elements of \(TM\) are pairs \((q, \dot q)\), where
+\(\dot q\) is a velocity vector. All of this is a round-about way to
+say that the Lagrangian is a function \(L(q, \dot q, t)\), where \(q\)
+and \(\dot q\) are vectors of coordinates and velocities. Once the
+Lagrangian is given, the behavior of the system is fully described by
+the Euler-Lagrange equations:
+/ += . "Lagrangian mechanics" -> https://en.wikipedia.org/wiki/Lagrangian_mechanics
+/ += . "tangent bundle" -> https://en.wikipedia.org/wiki/Tangent_bundle
+
+; math
+\frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial \dot q} - \frac{\partial L}{\partial q} = 0
+
+_Hamiltonian mechanics_, on the other hand, instead of velocities
+\(\dot q\), that is vectors, living the tangent space, uses conjugate
+_momenta_ \(p\), which are velocities that live in the cotangent space
+\(T^*M\). The translation from one space to another is given by the Legendre
+transformation. Instead of a Lagrangian, you are given a Hamiltonian
+function \(H : T^*M \times \mathbb{R} \to \mathbb{R}\), such that
+\(H(q, p, t)\) gives you the energy of the system. And then you have
+Hamilton's equations that describe the evolution of the system:
+/ += . "Hamiltonian mechanics" -> https://en.wikipedia.org/wiki/Hamiltonian_mechanics
+/ += . "cotangent space" -> https://en.wikipedia.org/wiki/Cotangent_bundle
+/ += . "Legendre transformation" -> https://en.wikipedia.org/wiki/Legendre_transformation#Legendre_transformation_on_manifolds
+/ += . "Hamiltonian" -> https://en.wikipedia.org/wiki/Hamiltonian_mechanics#Hamiltonian
+
+; math
+\dot q = \frac{\partial H}{\partial p}
+
+; math
+\dot p = - \frac{\partial H}{\partial q}
+
+Lagrangian velocity is a vector, that is a tensor of type \((1, 0)\),
+that can be written in the component notation as \(\dot q = v^i\). Hamiltonian
+velocity is a covector, a tensor of type \((0, 1)\), written as
+\(p = v_i\). In classical mechanics, they are related as \(p = m \cdot \dot q\) or
+/ += . "vector" -> https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)
+/ += . "tensor" -> https://en.wikipedia.org/wiki/Tensor
+/ += . "covector" -> https://en.wikipedia.org/wiki/Linear_form
+
+; math
+v_i = m \cdot v^i
+
+where \(m\) is mass. That is, mass lowers (or raises as in \(v^i = m^{-1} \cdot v_i\))
+indices. But this is exactly what the metric tensor does in the
+Riemann setting:
+/ += . "metric tensor" -> https://en.wikipedia.org/wiki/Metric_tensor
+/ += . "indices" -> https://en.wikipedia.org/wiki/Abstract_index_notation
+/ += . "does" -> https://en.wikipedia.org/wiki/Musical_isomorphism
+
+; math
+v_i = g_{ij} \cdot v^j
+
+Mass looks suspiciously similar to metric. The central idea of the
+general theory of relativity, that distribution of mass determines the
+geometry of space and thus the movement of matter, was _always_ there
+from the earliest days of analytical mechanics. Hamilton might have
+seen it, darkly; Clifford most likely did.
+/ += . "general theory of relativity" -> https://en.wikipedia.org/wiki/General_relativity
+/ += . "Hamilton" -> https://en.wikipedia.org/wiki/William_Rowan_Hamilton
+/ += . "Clifford" -> https://en.wikipedia.org/wiki/William_Kingdon_Clifford
