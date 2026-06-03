@@ -2756,6 +2756,8 @@ mine. Why, I wonder? Not that it can really
 be skeleton yet ; it must be---worse : a
 loathsome mass of detestable putrescence.
 / += . "a loathsome mass of detestable putrescence" -> https://en.wikipedia.org/wiki/The_Facts_in_the_Case_of_M._Valdemar
+/ +* "pale about the Gills" Exceptionally pale, as due to nausea or fear (ref)
+: += . "ref" -> https://idioms.thefreedictionary.com/pale+around+the+gills
 
 \
 
