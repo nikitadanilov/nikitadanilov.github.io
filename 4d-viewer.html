@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>4D Objects: Projection and W = 0 Section</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    height: 100vh;
+    background: #ffffff;
+    color: #111111;
+  }
+  #controls {
+    width: 300px;
+    padding: 12px;
+    box-sizing: border-box;
+    background: #f4f4f4;
+    border-right: 1px solid #cccccc;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+  }
+  #controls h2 { margin: 0 0 4px 0; font-size: 16px; }
+  #controls h3 { margin: 8px 0 4px 0; font-size: 14px; }
+  select, button, input[type="range"] {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid #bbbbbb;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  button { cursor: pointer; }
+  button:hover { background: #e8e8e8; }
+  button:active { background: #dddddd; }
+  .btn-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-row span.label {
+    width: 40px;
+    display: inline-block;
+  }
+  .coordVal, .angleVal {
+    font-family: monospace;
+    font-size: 11px;
+    margin-left: 4px;
+    white-space: nowrap;
+  }
+  #alphaValue {
+    min-width: 32px;
+    display: inline-block;
+    text-align: right;
+  }
+  #canvasContainer {
+    flex: 1;
+    position: relative;
+  }
+  #view {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #ffffff;
+    cursor: grab;
+  }
+  #view.dragging { cursor: grabbing; }
+  #info { font-size: 12px; color: #444444; }
+  #viewModeNote { font-size: 11px; color: #666666; margin-top: 2px; }
+  #stateText {
+    font-family: monospace;
+    font-size: 11px;
+    white-space: pre;
+    margin-top: 6px;
+  }
+
+  /* Reduced-dimension overlay */
+  #miniView {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 240px;
+    height: 240px;
+    border: 1px solid #cccccc;
+    background: rgba(255,255,255,0.92);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    pointer-events: none;
+  }
+  #miniLabel {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 11px;
+    color: #444;
+    background: rgba(255,255,255,0.75);
+    padding: 2px 6px;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="controls">
+  <div>
+    <h2>4D Visualiser</h2>
+    <label for="objectSelect">Object:</label><br>
+    <select id="objectSelect">
+      <option value="5cell">5-cell (simplex)</option>
+      <option value="8cell">8-cell (tesseract)</option>
+      <option value="16cell">16-cell</option>
+      <option value="24cell">24-cell</option>
+      <option value="600cell">600-cell (pT)</option>
+      <option value="120cell">120-cell (pD)</option>
+    </select>
+  </div>
+
+  <div>
+    <h3>View mode</h3>
+    <label>
+      <input type="checkbox" id="sectionToggle" checked>
+      Section by W = 0
+    </label>
+    <div id="viewModeNote">
+      Off: 4D→2D perspective projection (renders only 2-faces).<br>
+      On: Intersection with W = 0 (uses cell data where available).
+    </div>
+  </div>
+  <div>
+    <h3>Render style</h3>
+    <label>
+      <input type="checkbox" id="wireframeToggle">
+      Wireframe only
+    </label>
+  </div>
+
+  <div>
+    <h3>Facet opacity</h3>
+    <div class="btn-row">
+      <input type="range" id="alphaSlider" min="0" max="1" step="0.05" value="0.35">
+      <span id="alphaValue">0.35</span>
+    </div>
+  </div>
+
+  <div>
+    <h3>Translate (step 0.01)</h3>
+    <div class="btn-row">
+      <span class="label">X:</span>
+      <button data-move-axis="0" data-move-delta="-1">−</button>
+      <button data-move-axis="0" data-move-delta="1">+</button>
+      <span id="coordX" class="coordVal">(1.00)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">Y:</span>
+      <button data-move-axis="1" data-move-delta="-1">−</button>
+      <button data-move-axis="1" data-move-delta="1">+</button>
+      <span id="coordY" class="coordVal">(0.00)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">Z:</span>
+      <button data-move-axis="2" data-move-delta="-1">−</button>
+      <button data-move-axis="2" data-move-delta="1">+</button>
+      <span id="coordZ" class="coordVal">(0.00)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">W:</span>
+      <button data-move-axis="3" data-move-delta="-1">−</button>
+      <button data-move-axis="3" data-move-delta="1">+</button>
+      <span id="coordW" class="coordVal">(0.00)</span>
+    </div>
+    <button id="resetPose">Reset pose</button>
+  </div>
+
+  <div>
+    <h3>Rotate (step 2π / 100)</h3>
+    <div class="btn-row">
+      <span class="label">XY:</span>
+      <button data-rot-plane="0-1" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="0-1" data-rot-dir="1">⟳</button>
+      <span id="angXY" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">XZ:</span>
+      <button data-rot-plane="0-2" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="0-2" data-rot-dir="1">⟳</button>
+      <span id="angXZ" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">XW:</span>
+      <button data-rot-plane="0-3" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="0-3" data-rot-dir="1">⟳</button>
+      <span id="angXW" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">YZ:</span>
+      <button data-rot-plane="1-2" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="1-2" data-rot-dir="1">⟳</button>
+      <span id="angYZ" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">YW:</span>
+      <button data-rot-plane="1-3" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="1-3" data-rot-dir="1">⟳</button>
+      <span id="angYW" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+    <div class="btn-row">
+      <span class="label">ZW:</span>
+      <button data-rot-plane="2-3" data-rot-dir="-1">⟲</button>
+      <button data-rot-plane="2-3" data-rot-dir="1">⟳</button>
+      <span id="angZW" class="angleVal">0.000 rad (0.0°)</span>
+    </div>
+  </div>
+
+  <div id="info">
+    Camera at (0,0,0,0), looking along +X.<br>
+    Object initially centred at (1,0,0,0), radius ≈ 0.25.<br>
+    Canvas drag: rotate in XY / XZ planes.<br>
+    Shift + drag: rotate in YW / ZW planes.<br>
+    Use buttons for translations.
+    <pre id="stateText"></pre>
+  </div>
+</div>
+
+<div id="canvasContainer">
+  <canvas id="view"></canvas>
+  <canvas id="miniView"></canvas>
+  <div id="miniLabel">Reduced view (W ↦ Z), section Z = 0</div>
+</div>
+
+<script>
+function setup4D(document, window) {
+  var canvas = document.getElementById('view');
+  var ctx = canvas.getContext('2d');
+
+  var mini = document.getElementById('miniView');
+  var miniCtx = mini.getContext('2d');
+
+  function resizeCanvas() {
+    var w = canvas.clientWidth;
+    var h = canvas.clientHeight;
+    if (!w || !h) { w = window.innerWidth - 300; h = window.innerHeight; }
+    if (w < 100) w = 100;
+    if (h < 100) h = 100;
+    canvas.width = w;
+    canvas.height = h;
+
+    var mw = mini.clientWidth || 240;
+    var mh = mini.clientHeight || 240;
+    mini.width = mw;
+    mini.height = mh;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  var TRANSLATE_STEP = 0.01;
+  var ROTATE_STEP = 2 * Math.PI / 100;
+  var TARGET_RADIUS = 0.25;
+  var SECTION_EPS = 1e-4;
+
+  var MOUSE_ROTATE_SCALE = 2 * Math.PI / 800;
+
+  // Oblique (Y,Z,W)->2D embedding used by project4Dto2D:
+  // u = y + A*w, v = z + B*w (then scaled, with y_screen = -v)
+  // This corresponds to an orthographic ray direction in 3D (YZW):
+  // d = (-A, -B, 1) projected onto W=0 plane.
+  var OBLIQUE_A = 0.50;
+  var OBLIQUE_B = 0.25;
+
+  var baseColors = [
+    [228, 26, 28],
+    [55, 126, 184],
+    [77, 175, 74],
+    [152, 78, 163],
+    [255, 127, 0],
+    [255, 255, 51],
+    [166, 86, 40],
+    [247, 129, 191],
+    [153, 153, 153],
+    [0, 128, 128],
+    [128, 0, 128],
+    [0, 0, 0]
+  ];
+  function rgbaFromPalette(idx, alpha) {
+    var c = baseColors[((idx % baseColors.length) + baseColors.length) % baseColors.length];
+    return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(3) + ')';
+  }
+
+  var currentObject = { vertices: [], edges: [], cells: [], faces2D: null };
+  var currentKey = '5cell';
+  var rotationMatrix = identity4();
+  var translation = [1, 0, 0, 0];
+  var sectionMode = true;
+
+  var angleMap = {
+    '0-1': 0, '0-2': 0, '0-3': 0,
+    '1-2': 0, '1-3': 0, '2-3': 0
+  };
+
+  function identity4() {
+    return [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+  }
+  function matMul4(A, B) {
+    var R = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    for (var i = 0; i < 4; i++)
+      for (var j = 0; j < 4; j++) {
+        var s = 0;
+        for (var k = 0; k < 4; k++) s += A[i][k] * B[k][j];
+        R[i][j] = s;
+      }
+    return R;
+  }
+  function matVec4(M, v) {
+    return [
+      M[0][0]*v[0] + M[0][1]*v[1] + M[0][2]*v[2] + M[0][3]*v[3],
+      M[1][0]*v[0] + M[1][1]*v[1] + M[1][2]*v[2] + M[1][3]*v[3],
+      M[2][0]*v[0] + M[2][1]*v[1] + M[2][2]*v[2] + M[2][3]*v[3],
+      M[3][0]*v[0] + M[3][1]*v[1] + M[3][2]*v[2] + M[3][3]*v[3]
+    ];
+  }
+  function rotationPlane(i, j, angle) {
+    var c = Math.cos(angle);
+    var s = Math.sin(angle);
+    var R = identity4();
+    R[i][i] = c; R[i][j] = -s;
+    R[j][i] = s; R[j][j] = c;
+    return R;
+  }
+  function normaliseToRadius(points, targetRadius) {
+    var maxR2 = 0;
+    for (var idx = 0; idx < points.length; idx++) {
+      var p = points[idx];
+      var r2 = p[0]*p[0] + p[1]*p[1] + p[2]*p[2] + p[3]*p[3];
+      if (r2 > maxR2) maxR2 = r2;
+    }
+    if (maxR2 === 0) return points;
+    var scale = targetRadius / Math.sqrt(maxR2);
+    var out = [];
+    for (var i = 0; i < points.length; i++) {
+      var q = points[i];
+      out.push([q[0]*scale, q[1]*scale, q[2]*scale, q[3]*scale]);
+    }
+    return out;
+  }
+
+  function vec3Add(a, b) { return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]; }
+  function vec3Sub(a, b) { return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
+  function vec3Scale(a, s) { return [a[0]*s, a[1]*s, a[2]*s]; }
+  function vec3Dot(a, b) { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]; }
+  function vec3Cross(a, b) {
+    return [
+      a[1]*b[2] - a[2]*b[1],
+      a[2]*b[0] - a[0]*b[2],
+      a[0]*b[1] - a[1]*b[0]
+    ];
+  }
+  function vec3Norm(a) { return Math.sqrt(vec3Dot(a,a)); }
+  function vec3Normalize(a) {
+    var n = vec3Norm(a);
+    if (n === 0) return [0,0,0];
+    return [a[0]/n, a[1]/n, a[2]/n];
+  }
+
+  var VIEW_DIR_3 = vec3Normalize([-OBLIQUE_A, -OBLIQUE_B, 1]);
+
+  function dedupePoints4(points, eps) {
+    var out = [];
+    for (var i=0; i<points.length; i++) {
+      var p = points[i];
+      var keep = true;
+      for (var j=0; j<out.length; j++) {
+        var q = out[j];
+        if (Math.abs(p[0]-q[0]) < eps &&
+            Math.abs(p[1]-q[1]) < eps &&
+            Math.abs(p[2]-q[2]) < eps &&
+            Math.abs(p[3]-q[3]) < eps) {
+          keep = false; break;
+        }
+      }
+      if (keep) out.push(p);
+    }
+    return out;
+  }
+
+  function cellEdges(cell, globalEdges) {
+    var inCell = {};
+    for (var i=0; i<cell.length; i++) inCell[cell[i]] = true;
+    var res = [];
+    for (var e=0; e<globalEdges.length; e++) {
+      var a = globalEdges[e][0], b = globalEdges[e][1];
+      if (inCell[a] && inCell[b]) res.push([a,b]);
+    }
+    return res;
+  }
+
+  function dedupeFacesByVertexSet(faces) {
+    var seen = Object.create(null);
+    var out = [];
+    for (var i=0; i<faces.length; i++) {
+      var f = faces[i];
+      if (!f || f.length < 3) continue;
+      var key = f.slice().sort(function(a,b){return a-b;}).join(',');
+      if (!seen[key]) { seen[key] = true; out.push(f.slice()); }
+    }
+    return out;
+  }
+
+  function buildAdjacency(numVerts, edges) {
+    var adj = new Array(numVerts);
+    for (var i=0; i<numVerts; i++) adj[i] = new Set();
+    for (var e=0; e<edges.length; e++) {
+      var a = edges[e][0], b = edges[e][1];
+      adj[a].add(b); adj[b].add(a);
+    }
+    return adj;
+  }
+
+  function facesFromTetraCells(cells) {
+    var faces = [];
+    for (var ci=0; ci<cells.length; ci++) {
+      var c = cells[ci];
+      if (!c || c.length !== 4) continue;
+      var a=c[0], b=c[1], d=c[2], e=c[3];
+      faces.push([a,b,d]);
+      faces.push([a,b,e]);
+      faces.push([a,d,e]);
+      faces.push([b,d,e]);
+    }
+    return dedupeFacesByVertexSet(faces);
+  }
+
+  function triangleFacesFromCellsUsingEdges(cells, edges, numVerts) {
+    var adj = buildAdjacency(numVerts, edges);
+    var faces = [];
+    for (var ci=0; ci<cells.length; ci++) {
+      var cell = cells[ci];
+      if (!cell || cell.length < 3) continue;
+      for (var i=0; i<cell.length; i++) {
+        for (var j=i+1; j<cell.length; j++) {
+          for (var k=j+1; k<cell.length; k++) {
+            var a=cell[i], b=cell[j], c=cell[k];
+            if (adj[a].has(b) && adj[b].has(c) && adj[c].has(a)) faces.push([a,b,c]);
+          }
+        }
+      }
+    }
+    return dedupeFacesByVertexSet(faces);
+  }
+
+  function pentagonFacesFromDodecaCells(cells, edges, numVerts) {
+    var adjG = buildAdjacency(numVerts, edges);
+    var faces = [];
+    var seenGlobal = Object.create(null);
+
+    for (var ci=0; ci<cells.length; ci++) {
+      var cell = cells[ci];
+      if (!cell || cell.length < 10) continue;
+
+      var inCell = new Set(cell);
+      function neighInCell(v) {
+        var arr = [];
+        adjG[v].forEach(function(u){ if (inCell.has(u)) arr.push(u); });
+        return arr;
+      }
+      var neigh = Object.create(null);
+      for (var i=0; i<cell.length; i++) neigh[cell[i]] = neighInCell(cell[i]);
+
+      // Enumerate 5-cycles. Dodecahedron has girth 5, so every 5-cycle is a face.
+      for (i=0; i<cell.length; i++) {
+        var s = cell[i];
+
+        var path = [s];
+        var used = Object.create(null);
+        used[s] = true;
+
+        function dfs(cur, depth) {
+          if (depth === 5) {
+            if (adjG[cur].has(s)) {
+              var cyc = path.slice(); // length 5
+              var key = cyc.slice().sort(function(a,b){return a-b;}).join(',');
+              if (!seenGlobal[key]) {
+                seenGlobal[key] = true;
+                faces.push(cyc);
+              }
+            }
+            return;
+          }
+          var ns = neigh[cur];
+          for (var ti=0; ti<ns.length; ti++) {
+            var nx = ns[ti];
+            if (used[nx]) continue;
+            // Canonicalisation: ensure s is the minimum vertex in the cycle
+            if (nx < s) continue;
+
+            used[nx] = true;
+            path.push(nx);
+            dfs(nx, depth+1);
+            path.pop();
+            used[nx] = false;
+          }
+        }
+
+        var ns0 = neigh[s];
+        for (var j=0; j<ns0.length; j++) {
+          var n1 = ns0[j];
+          if (n1 < s) continue;
+          used[n1] = true;
+          path.push(n1);
+          dfs(n1, 2);
+          path.pop();
+          used[n1] = false;
+        }
+      }
+    }
+    return faces;
+  }
+
+// ---------------- Reduced-dimension view (X,Y,W with W as depth) ----------------
+
+function projectToy3Dto2D(p, width, height, camDist) {
+  var x = p[0], y = p[1], z = p[2]; // z is depth (W)
+  var denom = camDist + z;
+  if (denom < 0.05) denom = 0.05;
+  var k = camDist / denom;
+  return { x: x * k, y: y * k, depth: denom };
+}
+
+function dedupePoints2(pts, eps) {
+  var out = [];
+  for (var i=0;i<pts.length;i++){
+    var p = pts[i], keep = true;
+    for (var j=0;j<out.length;j++){
+      var q = out[j];
+      if (Math.abs(p[0]-q[0])<eps && Math.abs(p[1]-q[1])<eps) { keep = false; break; }
+    }
+    if (keep) out.push(p);
+  }
+  return out;
+}
+
+function sectionPolysToyXY(world4, edgesAll, cells, epsW) {
+  var polys = [];
+  for (var cIdx = 0; cIdx < cells.length; cIdx++) {
+    var cell = cells[cIdx];
+    var cEdges = cellEdges(cell, edgesAll);
+    var rawXY = [];
+
+    for (var ei = 0; ei < cEdges.length; ei++) {
+      var e = cEdges[ei];
+      var A = world4[e[0]];
+      var B = world4[e[1]];
+      var wA = A[3], wB = B[3];
+
+      if (Math.abs(wA) > epsW && Math.abs(wB) > epsW && wA * wB > 0) continue;
+
+      if (Math.abs(wA) <= epsW) rawXY.push([A[0], A[1]]);
+      if (Math.abs(wB) <= epsW) rawXY.push([B[0], B[1]]);
+
+      if (wA * wB < 0) {
+        var t = wA / (wA - wB);
+        rawXY.push([
+          A[0] + t * (B[0] - A[0]),
+          A[1] + t * (B[1] - A[1])
+        ]);
+      }
+    }
+
+    var pts = dedupePoints2(rawXY, 1e-4);
+    if (pts.length < 3) continue;
+
+    var cx = 0, cy = 0;
+    for (var i=0;i<pts.length;i++){ cx += pts[i][0]; cy += pts[i][1]; }
+    cx /= pts.length; cy /= pts.length;
+
+    pts.sort(function(a,b){
+      return Math.atan2(a[1]-cy, a[0]-cx) - Math.atan2(b[1]-cy, b[0]-cx);
+    });
+
+    var depth = 0;
+    for (i=0;i<pts.length;i++) depth += pts[i][0];
+    depth /= pts.length;
+
+    polys.push({ ptsXY: pts, depth: depth, colorIndex: cIdx });
+  }
+
+  polys.sort(function(a,b){ return b.depth - a.depth; });
+  return polys;
+}
+
+function renderReducedView(world4, alpha) {
+  if (!sectionMode) {
+    miniCtx.clearRect(0,0,mini.width,mini.height);
+    document.getElementById('miniLabel').style.display = 'none';
+    mini.style.display = 'none';
+    return;
+  }
+
+  document.getElementById('miniLabel').style.display = 'block';
+  mini.style.display = 'block';
+
+  var w = mini.width, h = mini.height;
+
+  miniCtx.clearRect(0,0,w,h);
+  miniCtx.fillStyle = 'rgba(255,255,255,0.92)';
+  miniCtx.fillRect(0,0,w,h);
+
+  var edgesAll = currentObject.edges || [];
+  var cells = currentObject.cells || [];
+
+  var toy = new Array(world4.length);
+  for (var i=0;i<world4.length;i++) {
+    var p = world4[i];
+    toy[i] = [p[0], p[1], p[3]];
+  }
+
+  var camDist = 1.0;
+
+  var proj = new Array(toy.length);
+  for (i=0;i<toy.length;i++) proj[i] = projectToy3Dto2D(toy[i], w, h, camDist);
+
+  var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (i=0;i<proj.length;i++) {
+    var q = proj[i];
+    if (!q) continue;
+    if (q.x < minX) minX = q.x;
+    if (q.x > maxX) maxX = q.x;
+    if (q.y < minY) minY = q.y;
+    if (q.y > maxY) maxY = q.y;
+  }
+
+  var polys = [];
+  if (cells.length) {
+    polys = sectionPolysToyXY(world4, edgesAll, cells, SECTION_EPS);
+
+    for (var pi=0; pi<polys.length; pi++) {
+      var P = polys[pi].ptsXY;
+      for (var k=0; k<P.length; k++) {
+        var pp = projectToy3Dto2D([P[k][0], P[k][1], 0], w, h, camDist);
+        if (pp.x < minX) minX = pp.x;
+        if (pp.x > maxX) maxX = pp.x;
+        if (pp.y < minY) minY = pp.y;
+        if (pp.y > maxY) maxY = pp.y;
+      }
+    }
+  }
+
+  if (!isFinite(minX) || !isFinite(minY)) return;
+
+  var pad = 14;
+  var spanX = Math.max(1e-6, maxX - minX);
+  var spanY = Math.max(1e-6, maxY - minY);
+  var scale = Math.min((w - 2*pad) / spanX, (h - 2*pad) / spanY);
+
+  var cx0 = (minX + maxX) * 0.5;
+  var cy0 = (minY + maxY) * 0.5;
+
+  function toScreen(q) {
+    return {
+      x: w*0.5 + (q.x - cx0) * scale,
+      y: h*0.5 - (q.y - cy0) * scale,
+      depth: q.depth
+    };
+  }
+
+  if (polys.length) {
+    for (pi=0; pi<polys.length; pi++) {
+      var poly = polys[pi];
+      var ptsXY = poly.ptsXY;
+      if (ptsXY.length < 3) continue;
+
+      var q0 = toScreen(projectToy3Dto2D([ptsXY[0][0], ptsXY[0][1], 0], w, h, camDist));
+      miniCtx.beginPath();
+      miniCtx.moveTo(q0.x, q0.y);
+      for (k=1; k<ptsXY.length; k++) {
+        var qk = toScreen(projectToy3Dto2D([ptsXY[k][0], ptsXY[k][1], 0], w, h, camDist));
+        miniCtx.lineTo(qk.x, qk.y);
+      }
+      miniCtx.closePath();
+      miniCtx.fillStyle = rgbaFromPalette(poly.colorIndex, Math.min(0.60, alpha + 0.20));
+      miniCtx.fill();
+      miniCtx.lineWidth = 1.0;
+      miniCtx.strokeStyle = 'rgba(60,60,60,0.85)';
+      miniCtx.stroke();
+    }
+  }
+
+  miniCtx.lineWidth = 1.0;
+  miniCtx.strokeStyle = 'rgba(40,40,40,0.80)';
+
+  for (i=0; i<edgesAll.length; i++) {
+    var e = edgesAll[i];
+    var a = toScreen(proj[e[0]]);
+    var b = toScreen(proj[e[1]]);
+    miniCtx.beginPath();
+    miniCtx.moveTo(a.x, a.y);
+    miniCtx.lineTo(b.x, b.y);
+    miniCtx.stroke();
+  }
+
+  for (i=0; i<proj.length; i++) {
+    var spt = toScreen(proj[i]);
+    miniCtx.beginPath();
+    miniCtx.arc(spt.x, spt.y, 2.0, 0, Math.PI*2);
+    miniCtx.fillStyle = 'rgba(30,30,30,0.9)';
+    miniCtx.fill();
+  }
+
+  miniCtx.strokeStyle = 'rgba(0,0,0,0.15)';
+  miniCtx.lineWidth = 1;
+  miniCtx.beginPath();
+  miniCtx.arc(w-22, 22, 8, 0, Math.PI*2);
+  miniCtx.stroke();
+  miniCtx.beginPath();
+  miniCtx.moveTo(w-22, 14);
+  miniCtx.lineTo(w-22, 30);
+  miniCtx.moveTo(w-30, 22);
+  miniCtx.lineTo(w-14, 22);
+  miniCtx.stroke();
+
+  miniCtx.lineWidth = 1;
+  miniCtx.strokeStyle = 'rgba(0,0,0,0.15)';
+  miniCtx.strokeRect(0.5,0.5,w-1,h-1);
+}
+
+// ---------------- permutations on 4 indices and parity ----------------
+
+  function allPermutations4() {
+    var res = [];
+    function backtrack(path, used) {
+      if (path.length === 4) { res.push(path.slice()); return; }
+      for (var i = 0; i < 4; i++) {
+        if (!used[i]) {
+          used[i] = true;
+          path.push(i);
+          backtrack(path, used);
+          path.pop();
+          used[i] = false;
+        }
+      }
+    }
+    backtrack([], [false,false,false,false]);
+    return res;
+  }
+  function isEvenPermutation(perm) {
+    var inv = 0;
+    for (var i = 0; i < perm.length; i++)
+      for (var j = i+1; j < perm.length; j++)
+        if (perm[i] > perm[j]) inv++;
+    return (inv % 2) === 0;
+  }
+  var perms4 = allPermutations4();
+  var evenPerms4 = perms4.filter(isEvenPermutation);
+
+  function buildTetraCells(numVerts, edges) {
+    var adj = new Array(numVerts);
+    for (var i = 0; i < numVerts; i++) adj[i] = new Set();
+    for (var e = 0; e < edges.length; e++) {
+      var a = edges[e][0], b = edges[e][1];
+      adj[a].add(b); adj[b].add(a);
+    }
+    function hasEdge(i, j) { return adj[i].has(j); }
+
+    var cells = [];
+    for (var v = 0; v < numVerts; v++) {
+      var neigh = Array.from(adj[v]).filter(function(u){ return u > v; });
+      neigh.sort(function(a,b){ return a - b; });
+      for (var ai = 0; ai < neigh.length; ai++) {
+        var j = neigh[ai];
+        for (var bi = ai+1; bi < neigh.length; bi++) {
+          var k = neigh[bi];
+          if (!hasEdge(j,k)) continue;
+          for (var ci = bi+1; ci < neigh.length; ci++) {
+            var l = neigh[ci];
+            if (!hasEdge(j,l) || !hasEdge(k,l)) continue;
+            cells.push([v,j,k,l]);
+          }
+        }
+      }
+    }
+    return cells;
+  }
+
+  // ---------------- object builders ----------------
+
+  function make5Cell() {
+    var raw = [
+      [1,  1,  1, -1],
+      [1, -1, -1, -1],
+      [-1, 1, -1, -1],
+      [-1,-1,  1, -1],
+      [0,  0,  0,  1]
+    ];
+    var cx=0, cy=0, cz=0, cw=0;
+    for (var i=0; i<raw.length; i++) { cx+=raw[i][0]; cy+=raw[i][1]; cz+=raw[i][2]; cw+=raw[i][3]; }
+    cx/=raw.length; cy/=raw.length; cz/=raw.length; cw/=raw.length;
+
+    var shifted=[];
+    for (i=0; i<raw.length; i++) shifted.push([raw[i][0]-cx, raw[i][1]-cy, raw[i][2]-cz, raw[i][3]-cw]);
+    var vertices = normaliseToRadius(shifted, TARGET_RADIUS);
+
+    var n = vertices.length;
+    var edges=[];
+    for (i=0; i<n; i++) for (var j=i+1; j<n; j++) edges.push([i,j]);
+
+    var cells=[];
+    for (var omit=0; omit<n; omit++) {
+      var cell=[];
+      for (i=0; i<n; i++) if (i!==omit) cell.push(i);
+      cells.push(cell);
+    }
+
+    var faces2D = [
+      [0,1,2],[0,1,3],[0,1,4],
+      [0,2,3],[0,2,4],[0,3,4],
+      [1,2,3],[1,2,4],[1,3,4],
+      [2,3,4]
+    ];
+
+    return { vertices: vertices, edges: edges, cells: cells, faces2D: faces2D };
+  }
+
+  function make8Cell() {
+    var raw = [];
+    var coords = [-1, 1];
+    for (var xi = 0; xi < 2; xi++)
+      for (var yi = 0; yi < 2; yi++)
+        for (var zi = 0; zi < 2; zi++)
+          for (var wi = 0; wi < 2; wi++)
+            raw.push([coords[xi], coords[yi], coords[zi], coords[wi]]);
+
+    var vertices = normaliseToRadius(raw, TARGET_RADIUS);
+    var n = vertices.length;
+
+    var edges=[];
+    for (var i=0; i<n; i++) {
+      for (var j=i+1; j<n; j++) {
+        var a=raw[i], b=raw[j];
+        var diff=0;
+        for (var k=0; k<4; k++) if (a[k]!==b[k]) diff++;
+        if (diff===1) edges.push([i,j]);
+      }
+    }
+
+    // 3-cells (cubes): x=±1, y=±1, z=±1, w=±1
+    var cells=[];
+    var seen = {};
+    for (var axis=0; axis<4; axis++) {
+      for (var sIdx=0; sIdx<2; sIdx++) {
+        var sign = coords[sIdx];
+        var indices=[];
+        for (i=0; i<n; i++) if (raw[i][axis] === sign) indices.push(i);
+        indices.sort(function(a,b){return a-b;});
+        var key = indices.join(',');
+        if (!seen[key]) { seen[key] = true; cells.push(indices); }
+      }
+    }
+
+    // 2-faces (squares) of the tesseract: choose 2 varying axes, fix the other 2.
+    var indexByCoord = Object.create(null);
+    for (i=0; i<raw.length; i++) indexByCoord[raw[i].join(',')] = i;
+    function idxOf(v4) { return indexByCoord[v4.join(',')]; }
+
+    var faces2D = [];
+    var axes = [0,1,2,3];
+    for (var aIdx=0; aIdx<4; aIdx++) {
+      for (var bIdx=aIdx+1; bIdx<4; bIdx++) {
+        var aAxis = axes[aIdx], bAxis = axes[bIdx];
+        var fixed = [];
+        for (var t=0; t<4; t++) if (t!==aAxis && t!==bAxis) fixed.push(t);
+        var f0 = fixed[0], f1 = fixed[1];
+
+        for (var s0=0; s0<2; s0++) for (var s1=0; s1<2; s1++) {
+          var base = [0,0,0,0];
+          base[f0] = coords[s0];
+          base[f1] = coords[s1];
+
+          // cyclic order in (aAxis,bAxis) plane:
+          // (-,-) -> (+,-) -> (+,+) -> (-,+)
+          var v00 = base.slice(); v00[aAxis] = -1; v00[bAxis] = -1;
+          var v10 = base.slice(); v10[aAxis] =  1; v10[bAxis] = -1;
+          var v11 = base.slice(); v11[aAxis] =  1; v11[bAxis] =  1;
+          var v01 = base.slice(); v01[aAxis] = -1; v01[bAxis] =  1;
+
+          faces2D.push([idxOf(v00), idxOf(v10), idxOf(v11), idxOf(v01)]);
+        }
+      }
+    }
+
+    faces2D = dedupeFacesByVertexSet(faces2D);
+
+    return { vertices: vertices, edges: edges, cells: cells, faces2D: faces2D };
+  }
+
+  function make16Cell() {
+    var raw = [
+      [1,0,0,0],[-1,0,0,0],
+      [0,1,0,0],[0,-1,0,0],
+      [0,0,1,0],[0,0,-1,0],
+      [0,0,0,1],[0,0,0,-1]
+    ];
+    var vertices = normaliseToRadius(raw, TARGET_RADIUS);
+    var n = vertices.length;
+
+    var edges=[];
+    function oppositeIndex(i){ return i ^ 1; }
+    for (var i=0; i<n; i++)
+      for (var j=i+1; j<n; j++)
+        if (j!==oppositeIndex(i)) edges.push([i,j]);
+
+    var cells = [
+      [0,2,4,6],[0,2,4,7],[0,2,5,6],[0,2,5,7],
+      [0,3,4,6],[0,3,4,7],[0,3,5,6],[0,3,5,7],
+      [1,2,4,6],[1,2,4,7],[1,2,5,6],[1,2,5,7],
+      [1,3,4,6],[1,3,4,7],[1,3,5,6],[1,3,5,7]
+    ];
+
+    var faces2D = facesFromTetraCells(cells);
+
+    return { vertices: vertices, edges: edges, cells: cells, faces2D: faces2D };
+  }
+
+  function make24Cell() {
+    var pts=[];
+    var signs=[-1,1];
+    for (var a=0; a<4; a++) {
+      for (var b=a+1; b<4; b++) {
+        for (var saIdx=0; saIdx<2; saIdx++) {
+          for (var sbIdx=0; sbIdx<2; sbIdx++) {
+            var sa = signs[saIdx], sb = signs[sbIdx];
+            var p=[0,0,0,0];
+            p[a]=sa; p[b]=sb;
+            pts.push(p);
+          }
+        }
+      }
+    }
+    var vertices = normaliseToRadius(pts, TARGET_RADIUS);
+    var n = vertices.length;
+
+    var edges=[];
+    for (var i=0; i<n; i++) {
+      for (var j=i+1; j<n; j++) {
+        var v1=pts[i], v2=pts[j];
+        var nz=0, diff=0;
+        for (var k=0; k<4; k++) {
+          if (v1[k]!==0 || v2[k]!==0) nz++;
+          if (v1[k]!==v2[k]) diff++;
+        }
+        if (nz===3 && diff===2) edges.push([i,j]);
+      }
+    }
+
+    var cells = [
+      [0,1,4,5,8,9],[0,2,12,13,16,17],[0,4,8,12,16,20],[0,4,9,12,17,21],
+      [0,5,8,13,16,22],[0,5,9,13,17,23],[1,3,14,15,18,19],[1,4,8,14,18,20],
+      [1,4,9,14,19,21],[1,5,8,15,18,22],[1,5,9,15,19,23],[2,3,6,7,10,11],
+      [2,6,10,12,16,20],[2,6,11,12,17,21],[2,7,10,13,16,22],[2,7,11,13,17,23],
+      [3,6,10,14,18,20],[3,6,11,14,19,21],[3,7,10,15,18,22],[3,7,11,15,19,23],
+      [4,6,12,14,20,21],[5,7,13,15,22,23],[8,10,16,18,20,22],[9,11,17,19,21,23]
+    ];
+
+    var faces2D = triangleFacesFromCellsUsingEdges(cells, edges, n);
+
+    return { vertices: vertices, edges: edges, cells: cells, faces2D: faces2D };
+  }
+
+  function build600CellRaw() {
+    var phi = (1 + Math.sqrt(5)) / 2;
+    var invPhi = 1 / phi;
+
+    var rawVerts = [];
+    var seen = {};
+    function addVertex(v) {
+      var key = v.map(function(x){ return x.toFixed(8); }).join(',');
+      if (!seen[key]) { seen[key] = true; rawVerts.push(v); }
+    }
+
+    for (var s = -1; s <= 1; s += 2) {
+      for (var pos = 0; pos < 4; pos++) {
+        var v = [0,0,0,0];
+        v[pos] = s;
+        addVertex(v);
+      }
+    }
+
+    for (var s0 = -1; s0 <= 1; s0 += 2)
+      for (var s1 = -1; s1 <= 1; s1 += 2)
+        for (var s2 = -1; s2 <= 1; s2 += 2)
+          for (var s3 = -1; s3 <= 1; s3 += 2)
+            addVertex([0.5*s0, 0.5*s1, 0.5*s2, 0.5*s3]);
+
+    var base = [phi/2, 0.5, invPhi/2, 0];
+    for (var sx = -1; sx <= 1; sx += 2)
+      for (var sy = -1; sy <= 1; sy += 2)
+        for (var sz = -1; sz <= 1; sz += 2) {
+          var v0 = [sx*base[0], sy*base[1], sz*base[2], base[3]];
+          for (var pi = 0; pi < evenPerms4.length; pi++) {
+            var p = evenPerms4[pi];
+            addVertex([v0[p[0]], v0[p[1]], v0[p[2]], v0[p[3]]]);
+          }
+        }
+
+    var minD2 = Infinity;
+    for (var i = 0; i < rawVerts.length; i++) {
+      for (var j = i+1; j < rawVerts.length; j++) {
+        var dx = rawVerts[i][0] - rawVerts[j][0];
+        var dy = rawVerts[i][1] - rawVerts[j][1];
+        var dz = rawVerts[i][2] - rawVerts[j][2];
+        var dw = rawVerts[i][3] - rawVerts[j][3];
+        var d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+        if (d2 > 0 && d2 < minD2) minD2 = d2;
+      }
+    }
+
+    var edges = [];
+    var eps = 1e-6;
+    for (i = 0; i < rawVerts.length; i++) {
+      for (j = i+1; j < rawVerts.length; j++) {
+        dx = rawVerts[i][0] - rawVerts[j][0];
+        dy = rawVerts[i][1] - rawVerts[j][1];
+        dz = rawVerts[i][2] - rawVerts[j][2];
+        dw = rawVerts[i][3] - rawVerts[j][3];
+        d2 = dx*dx + dy*dy + dz*dz + dw*dw;
+        if (Math.abs(d2 - minD2) < eps) edges.push([i,j]);
+      }
+    }
+
+    var tets = buildTetraCells(rawVerts.length, edges);
+    return { rawVerts: rawVerts, edges: edges, tets: tets };
+  }
+
+  function make600Cell() {
+    var d = build600CellRaw();
+    var vertices = normaliseToRadius(d.rawVerts, TARGET_RADIUS);
+    var faces2D = facesFromTetraCells(d.tets);
+    return { vertices: vertices, edges: d.edges, cells: d.tets, faces2D: faces2D };
+  }
+
+  function make120Cell() {
+    var d = build600CellRaw();
+    var rawVerts600 = d.rawVerts;
+    var tets = d.tets;
+
+    var dualVerts = new Array(tets.length);
+    for (var ti = 0; ti < tets.length; ti++) {
+      var T = tets[ti];
+      var c = [0,0,0,0];
+      for (var k = 0; k < 4; k++) {
+        var v = rawVerts600[T[k]];
+        c[0] += v[0]; c[1] += v[1]; c[2] += v[2]; c[3] += v[3];
+      }
+      dualVerts[ti] = [c[0]/4, c[1]/4, c[2]/4, c[3]/4];
+    }
+
+    var faceMap = Object.create(null);
+    function faceKey(a,b,c) {
+      var arr = [a,b,c];
+      arr.sort(function(x,y){ return x-y; });
+      return arr[0] + ',' + arr[1] + ',' + arr[2];
+    }
+    for (ti = 0; ti < tets.length; ti++) {
+      var tet = tets[ti];
+      var faces = [
+        faceKey(tet[1], tet[2], tet[3]),
+        faceKey(tet[0], tet[2], tet[3]),
+        faceKey(tet[0], tet[1], tet[3]),
+        faceKey(tet[0], tet[1], tet[2])
+      ];
+      for (var fi = 0; fi < faces.length; fi++) {
+        var key = faces[fi];
+        if (faceMap[key] === undefined) faceMap[key] = ti;
+        else {
+          var tj = faceMap[key];
+          faceMap[key] = [tj, ti];
+        }
+      }
+    }
+    var edgesDual = [];
+    var seenEdge = Object.create(null);
+    function pushEdge(a,b) {
+      if (a === b) return;
+      if (a > b) { var t = a; a = b; b = t; }
+      var k = a + ',' + b;
+      if (!seenEdge[k]) { seenEdge[k] = true; edgesDual.push([a,b]); }
+    }
+    for (var key in faceMap) {
+      var v = faceMap[key];
+      if (Array.isArray(v) && v.length === 2) pushEdge(v[0], v[1]);
+    }
+
+    var incident = new Array(rawVerts600.length);
+    for (var vi = 0; vi < incident.length; vi++) incident[vi] = [];
+    for (ti = 0; ti < tets.length; ti++) {
+      tet = tets[ti];
+      for (k = 0; k < 4; k++) incident[tet[k]].push(ti);
+    }
+    var cellsDual = [];
+    for (vi = 0; vi < incident.length; vi++) {
+      var cell = incident[vi].slice();
+      cell.sort(function(a,b){ return a-b; });
+      if (cell.length >= 12) cellsDual.push(cell);
+    }
+
+    var vertices = normaliseToRadius(dualVerts, TARGET_RADIUS);
+
+    // 2-faces (pentagons) by detecting 5-cycles inside each dodecahedral cell
+    var faces2D = pentagonFacesFromDodecaCells(cellsDual, edgesDual, vertices.length);
+
+    return { vertices: vertices, edges: edgesDual, cells: cellsDual, faces2D: faces2D };
+  }
+
+  var objectMakers = {
+    '5cell':  make5Cell,
+    '8cell':  make8Cell,
+    '16cell': make16Cell,
+    '24cell': make24Cell,
+    '600cell': make600Cell,
+    '120cell': make120Cell
+  };
+
+  // ---------------- projection + rendering ----------------
+
+  function project4Dto2D(p, width, height) {
+    var x=p[0], y=p[1], z=p[2], w4=p[3];
+    var minX = 0.05;
+    if (x <= minX) x = minX;
+    var k = 1.0 / x;
+    var u = (y + OBLIQUE_A*w4) * k;
+    var v = (z + OBLIQUE_B*w4) * k;
+    var s = 0.9 * Math.min(width, height) * 0.5;
+    var cx = width/2, cy = height/2;
+    return { x: cx + s*u, y: cy - s*v, depth: x, u: u, v: v };
+  }
+
+  // For face shading/culling in projection mode: embed into 3D (Y,Z,W) after 4D perspective in X.
+  function project4Dto3D_YZW(p) {
+    var x=p[0], y=p[1], z=p[2], w=p[3];
+    var minX = 0.05;
+    if (x <= minX) x = minX;
+    var inv = 1.0 / x;
+    return [y*inv, z*inv, w*inv];
+  }
+
+  function orderFaceInPlane(p3ByIndex, faceIdxs) {
+    // Robust ordering in the face's own plane using a local 2D basis.
+    var pts = [];
+    for (var i=0; i<faceIdxs.length; i++) pts.push(p3ByIndex[faceIdxs[i]]);
+    if (pts.length < 3) return null;
+
+    var center = [0,0,0];
+    for (i=0; i<pts.length; i++) center = vec3Add(center, pts[i]);
+    center = vec3Scale(center, 1/pts.length);
+
+    var p0 = pts[0];
+    var i1 = 1;
+    while (i1 < pts.length && vec3Norm(vec3Sub(pts[i1], p0)) < 1e-9) i1++;
+    if (i1 >= pts.length) return null;
+    var p1 = pts[i1];
+    var v1 = vec3Sub(p1, p0);
+
+    var i2 = i1 + 1, n;
+    while (i2 < pts.length) {
+      var p2 = pts[i2];
+      var v2 = vec3Sub(p2, p0);
+      n = vec3Cross(v1, v2);
+      if (vec3Norm(n) > 1e-9) break;
+      i2++;
+    }
+    if (i2 >= pts.length) return null;
+
+    n = vec3Normalize(n);
+    var e1 = vec3Normalize(v1);
+    var e2 = vec3Normalize(vec3Cross(n, e1));
+
+    var ordered = [];
+    for (i=0; i<faceIdxs.length; i++) {
+      var u = vec3Sub(p3ByIndex[faceIdxs[i]], center);
+      ordered.push({
+        idx: faceIdxs[i],
+        x2: vec3Dot(u, e1),
+        y2: vec3Dot(u, e2)
+      });
+    }
+    ordered.sort(function(a,b){ return Math.atan2(a.y2,a.x2) - Math.atan2(b.y2,b.x2); });
+
+    var out = [];
+    for (i=0; i<ordered.length; i++) out.push(ordered[i].idx);
+    return out;
+  }
+
+  function loadObject(key) {
+    currentKey = key;
+    currentObject = objectMakers[key]();
+    rotationMatrix = identity4();
+    translation = [1, 0, 0, 0];
+    for (var k in angleMap) angleMap[k] = 0;
+  }
+
+  function render() {
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0,0,w,h);
+
+    var alpha = parseFloat(document.getElementById('alphaSlider').value || '0.35');
+    document.getElementById('alphaValue').textContent = alpha.toFixed(2);
+
+    var verts = currentObject.vertices;
+    if (!verts || !verts.length) {
+      ctx.fillStyle = '#000000';
+      ctx.fillText('No vertices', 20, 20);
+      requestAnimationFrame(render);
+      return;
+    }
+
+    var world = [];
+    for (var i=0; i<verts.length; i++) {
+      var v = verts[i];
+      var r = matVec4(rotationMatrix, v);
+      world[i] = [ r[0]+translation[0], r[1]+translation[1], r[2]+translation[2], r[3]+translation[3] ];
+    }
+
+    if (!sectionMode) renderProjection(world, w, h, alpha);
+    else renderSectionGeneral(world, w, h, alpha);
+
+    renderReducedView(world, alpha);
+
+    updateStateText();
+    requestAnimationFrame(render);
+  }
+
+  function renderProjection(world, w, h, alpha) {
+    var proj2 = new Array(world.length);
+    var proj3 = new Array(world.length);
+    for (var i = 0; i < world.length; i++) {
+      proj2[i] = project4Dto2D(world[i], w, h);
+      proj3[i] = project4Dto3D_YZW(world[i]);
+    }
+
+    if (wireframeOnly) {
+      var edges = currentObject.edges || [];
+      ctx.lineWidth = 0.7;
+      ctx.strokeStyle = '#444444';
+      for (i = 0; i < edges.length; i++) {
+        var e = edges[i];
+        var a = proj2[e[0]], b = proj2[e[1]];
+        if (!a || !b) continue;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+      for (var v = 0; v < proj2.length; v++) {
+        var pr = proj2[v];
+        if (!pr) continue;
+        var size = 1.6 * (1.0 / (0.5 + pr.depth));
+        ctx.beginPath();
+        ctx.arc(pr.x, pr.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgb(30,30,30)';
+        ctx.fill();
+      }
+      return;
+    }
+
+    // Projection mode: render ONLY 2-faces (triangles/squares/pentagons/...)
+    var faces2D = currentObject.faces2D || [];
+    if (!faces2D.length) {
+      // No 2-face data available: fall back to edges+vertices.
+      var edgesFallback = currentObject.edges || [];
+      ctx.lineWidth = 0.7;
+      ctx.strokeStyle = '#444444';
+      for (i = 0; i < edgesFallback.length; i++) {
+        var ef = edgesFallback[i];
+        var aa = proj2[ef[0]], bb = proj2[ef[1]];
+        if (!aa || !bb) continue;
+        ctx.beginPath();
+        ctx.moveTo(aa.x, aa.y);
+        ctx.lineTo(bb.x, bb.y);
+        ctx.stroke();
+      }
+      for (v = 0; v < proj2.length; v++) {
+        pr = proj2[v];
+        if (!pr) continue;
+        ctx.beginPath();
+        ctx.arc(pr.x, pr.y, 1.6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgb(40,40,40)';
+        ctx.fill();
+      }
+      return;
+    }
+
+    // Approx centre in projected 3D for outward-normal orientation.
+    var centre3 = [0,0,0];
+    for (i=0; i<proj3.length; i++) centre3 = vec3Add(centre3, proj3[i]);
+    centre3 = vec3Scale(centre3, 1/proj3.length);
+
+    var facets = [];
+    for (var fIdx = 0; fIdx < faces2D.length; fIdx++) {
+      var face = faces2D[fIdx];
+      if (!face || face.length < 3) continue;
+
+      var ordered = orderFaceInPlane(proj3, face);
+      if (!ordered || ordered.length < 3) continue;
+
+      // centroid in 3D
+      var c3 = [0,0,0];
+      for (var k=0; k<ordered.length; k++) c3 = vec3Add(c3, proj3[ordered[k]]);
+      c3 = vec3Scale(c3, 1/ordered.length);
+
+      // normal (in projected 3D)
+      var A = proj3[ordered[0]];
+      var B = proj3[ordered[1]];
+      var C = proj3[ordered[2]];
+      var n = vec3Cross(vec3Sub(B, A), vec3Sub(C, A));
+      var nLen = vec3Norm(n);
+      if (nLen < 1e-9) continue;
+      n = vec3Scale(n, 1/nLen);
+
+      // orient outward using radial direction from centre
+      var radial = vec3Sub(c3, centre3);
+      if (vec3Dot(n, radial) < 0) n = vec3Scale(n, -1);
+
+      // backface culling for the oblique projection ray direction
+      // camera rays go along VIEW_DIR_3, so visible faces have outward normal opposing it.
+      if (vec3Dot(n, VIEW_DIR_3) >= 0) continue;
+
+      var pts2D = [];
+      for (k=0; k<ordered.length; k++) {
+        var pr2 = proj2[ordered[k]];
+        if (!pr2) { pts2D = null; break; }
+        pts2D.push(pr2);
+      }
+      if (!pts2D || pts2D.length < 3) continue;
+
+      var depthKey = vec3Dot(c3, VIEW_DIR_3);
+      facets.push({ points: pts2D, depth: depthKey, colorIndex: fIdx });
+    }
+
+    // Painter: far-to-near along VIEW_DIR_3
+    facets.sort(function(a,b){ return b.depth - a.depth; });
+
+    for (var f = 0; f < facets.length; f++) {
+      var fac = facets[f];
+      var pts = fac.points;
+      if (pts.length < 3) continue;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (var j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+      ctx.closePath();
+      ctx.fillStyle = rgbaFromPalette(fac.colorIndex, alpha);
+      ctx.fill();
+      ctx.lineWidth = 0.6;
+      ctx.strokeStyle = 'rgba(60,60,60,0.85)';
+      ctx.stroke();
+    }
+
+    // Edges overlay (global edge graph)
+    var edges2 = currentObject.edges || [];
+    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = '#555555';
+    for (i = 0; i < edges2.length; i++) {
+      var ee = edges2[i];
+      var a2 = proj2[ee[0]], b2 = proj2[ee[1]];
+      if (!a2 || !b2) continue;
+      ctx.beginPath();
+      ctx.moveTo(a2.x, a2.y);
+      ctx.lineTo(b2.x, b2.y);
+      ctx.stroke();
+    }
+
+    // Vertices
+    for (i = 0; i < proj2.length; i++) {
+      var p2 = proj2[i];
+      if (!p2) continue;
+      var size2 = 1.2 * (1.0 / (0.5 + p2.depth));
+      ctx.beginPath();
+      ctx.arc(p2.x, p2.y, size2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgb(40,40,40)';
+      ctx.fill();
+    }
+  }
+
+  function renderSectionGeneral(world, w, h, alpha) {
+    var edgesAll = currentObject.edges || [];
+    var cells = currentObject.cells || [];
+    if (!cells.length) return;
+
+    if (wireframeOnly) {
+      var pts = [];
+
+      function addPt(p4) { pts.push(p4); return pts.length - 1; }
+
+      for (var cIdx = 0; cIdx < cells.length; cIdx++) {
+        var cell = cells[cIdx];
+        var cEdges = cellEdges(cell, edgesAll);
+
+        for (var ei = 0; ei < cEdges.length; ei++) {
+          var e = cEdges[ei];
+          var A = world[e[0]];
+          var B = world[e[1]];
+          var wA = A[3], wB = B[3];
+
+          if (Math.abs(wA) > SECTION_EPS && Math.abs(wB) > SECTION_EPS && wA * wB > 0) continue;
+
+          if (Math.abs(wA) <= SECTION_EPS) addPt([A[0],A[1],A[2],0]);
+          if (Math.abs(wB) <= SECTION_EPS) addPt([B[0],B[1],B[2],0]);
+
+          if (wA * wB < 0) {
+            var t = wA / (wA - wB);
+            addPt([
+              A[0] + t * (B[0] - A[0]),
+              A[1] + t * (B[1] - A[1]),
+              A[2] + t * (B[2] - A[2]),
+              0
+            ]);
+          }
+        }
+      }
+
+      var uniq = [];
+      for (var i=0; i<pts.length; i++) {
+        var p = pts[i];
+        var found = -1;
+        for (var j=0; j<uniq.length; j++) {
+          var q = uniq[j];
+          if (Math.abs(p[0]-q[0])<1e-4 && Math.abs(p[1]-q[1])<1e-4 && Math.abs(p[2]-q[2])<1e-4) { found=j; break; }
+        }
+        if (found < 0) uniq.push(p);
+      }
+
+      ctx.lineWidth = 1.0;
+      ctx.strokeStyle = '#444444';
+
+      for (cIdx = 0; cIdx < cells.length; cIdx++) {
+        cell = cells[cIdx];
+        cEdges = cellEdges(cell, edgesAll);
+        var rawPts = [];
+
+        for (ei = 0; ei < cEdges.length; ei++) {
+          e = cEdges[ei];
+          A = world[e[0]];
+          B = world[e[1]];
+          wA = A[3]; wB = B[3];
+
+          if (Math.abs(wA) > SECTION_EPS && Math.abs(wB) > SECTION_EPS && wA * wB > 0) continue;
+
+          if (Math.abs(wA) <= SECTION_EPS) rawPts.push([A[0],A[1],A[2],0]);
+          if (Math.abs(wB) <= SECTION_EPS) rawPts.push([B[0],B[1],B[2],0]);
+
+          if (wA * wB < 0) {
+            var t2 = wA / (wA - wB);
+            rawPts.push([
+              A[0] + t2 * (B[0] - A[0]),
+              A[1] + t2 * (B[1] - A[1]),
+              A[2] + t2 * (B[2] - A[2]),
+              0
+            ]);
+          }
+        }
+
+        var polyPts = dedupePoints4(rawPts, 1e-4);
+        if (polyPts.length < 2) continue;
+
+        var center = [0,0,0];
+        for (var pi=0; pi<polyPts.length; pi++) center = vec3Add(center, polyPts[pi]);
+        center = vec3Scale(center, 1/polyPts.length);
+
+        var p0 = polyPts[0];
+        var i1 = 1;
+        while (i1 < polyPts.length && vec3Norm(vec3Sub(polyPts[i1], p0)) < 1e-6) i1++;
+        if (i1 >= polyPts.length) continue;
+        var p1 = polyPts[i1];
+        var v1 = vec3Sub(p1, p0);
+
+        var i2 = i1 + 1, n;
+        while (i2 < polyPts.length) {
+          var p2 = polyPts[i2];
+          var v2 = vec3Sub(p2, p0);
+          n = vec3Cross(v1, v2);
+          if (vec3Norm(n) > 1e-6) break;
+          i2++;
+        }
+        if (i2 >= polyPts.length) continue;
+
+        n = vec3Normalize(n);
+        var e1 = vec3Normalize(v1);
+        var e2 = vec3Normalize(vec3Cross(n, e1));
+
+        var ordered = [];
+        for (pi=0; pi<polyPts.length; pi++) {
+          var u = vec3Sub(polyPts[pi], center);
+          ordered.push({ p4: polyPts[pi], x2: vec3Dot(u,e1), y2: vec3Dot(u,e2) });
+        }
+        ordered.sort(function(a,b){ return Math.atan2(a.y2,a.x2) - Math.atan2(b.y2,b.x2); });
+
+        if (ordered.length >= 2) {
+          var first = project4Dto2D(ordered[0].p4, w, h);
+          ctx.beginPath();
+          ctx.moveTo(first.x, first.y);
+          for (var kk=1; kk<ordered.length; kk++) {
+            var pr = project4Dto2D(ordered[kk].p4, w, h);
+            ctx.lineTo(pr.x, pr.y);
+          }
+          if (ordered.length >= 3) ctx.closePath();
+          ctx.stroke();
+        }
+      }
+
+      for (i=0; i<uniq.length; i++) {
+        var prV = project4Dto2D(uniq[i], w, h);
+        ctx.beginPath();
+        ctx.arc(prV.x, prV.y, 2.0, 0, Math.PI*2);
+        ctx.fillStyle = 'rgb(30,30,30)';
+        ctx.fill();
+      }
+      return;
+    }
+
+    var sectionPolys = [];
+
+    for (var cIdx2 = 0; cIdx2 < cells.length; cIdx2++) {
+      var cell2 = cells[cIdx2];
+      var cEdges2 = cellEdges(cell2, edgesAll);
+      var rawPts2 = [];
+
+      for (var ei2 = 0; ei2 < cEdges2.length; ei2++) {
+        var e2 = cEdges2[ei2];
+        var A2 = world[e2[0]];
+        var B2 = world[e2[1]];
+        var wA2 = A2[3], wB2 = B2[3];
+
+        if (Math.abs(wA2) > SECTION_EPS && Math.abs(wB2) > SECTION_EPS && wA2 * wB2 > 0) continue;
+
+        if (Math.abs(wA2) <= SECTION_EPS) rawPts2.push([A2[0],A2[1],A2[2],0]);
+        if (Math.abs(wB2) <= SECTION_EPS) rawPts2.push([B2[0],B2[1],B2[2],0]);
+
+        if (wA2 * wB2 < 0) {
+          var t3 = wA2 / (wA2 - wB2);
+          rawPts2.push([
+            A2[0] + t3 * (B2[0] - A2[0]),
+            A2[1] + t3 * (B2[1] - A2[1]),
+            A2[2] + t3 * (B2[2] - A2[2]),
+            0
+          ]);
+        }
+      }
+
+      var pts = dedupePoints4(rawPts2, 1e-4);
+      if (pts.length < 3) continue;
+
+      var center = [0,0,0];
+      for (var pi2=0; pi2<pts.length; pi2++) center = vec3Add(center, pts[pi2]);
+      center = vec3Scale(center, 1/pts.length);
+
+      var p02 = pts[0];
+      var i12 = 1;
+      while (i12 < pts.length && vec3Norm(vec3Sub(pts[i12], p02)) < 1e-6) i12++;
+      if (i12 >= pts.length) continue;
+      var p12 = pts[i12];
+      var v12 = vec3Sub(p12, p02);
+
+      var i22 = i12 + 1, n2;
+      while (i22 < pts.length) {
+        var p22 = pts[i22];
+        var v22 = vec3Sub(p22, p02);
+        n2 = vec3Cross(v12, v22);
+        if (vec3Norm(n2) > 1e-6) break;
+        i22++;
+      }
+      if (i22 >= pts.length) continue;
+
+      n2 = vec3Normalize(n2);
+      var ee1 = vec3Normalize(v12);
+      var ee2 = vec3Normalize(vec3Cross(n2, ee1));
+
+      var pts2d = [];
+      for (pi2=0; pi2<pts.length; pi2++) {
+        var u2 = vec3Sub(pts[pi2], center);
+        pts2d.push({ p4: pts[pi2], x2: vec3Dot(u2, ee1), y2: vec3Dot(u2, ee2) });
+      }
+
+      pts2d.sort(function(a,b){ return Math.atan2(a.y2,a.x2) - Math.atan2(b.y2,b.x2); });
+
+      sectionPolys.push({ pts: pts2d, depth: center[0], colorIndex: cIdx2 });
+    }
+
+    sectionPolys.sort(function(a,b){ return b.depth - a.depth; });
+
+    ctx.lineWidth = 1.0;
+    ctx.strokeStyle = 'rgba(60,60,60,0.9)';
+    for (var pIdx=0; pIdx<sectionPolys.length; pIdx++) {
+      var poly = sectionPolys[pIdx];
+      var pts2d2 = poly.pts;
+      if (pts2d2.length < 3) continue;
+      var first2 = project4Dto2D(pts2d2[0].p4, w, h);
+      ctx.beginPath();
+      ctx.moveTo(first2.x, first2.y);
+      for (var kk2=1; kk2<pts2d2.length; kk2++) {
+        var pr2 = project4Dto2D(pts2d2[kk2].p4, w, h);
+        ctx.lineTo(pr2.x, pr2.y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = rgbaFromPalette(poly.colorIndex, alpha);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  // ---------------- state display ----------------
+
+  function updateStateText() {
+    var t = translation;
+    document.getElementById('coordX').textContent = '(' + t[0].toFixed(2) + ')';
+    document.getElementById('coordY').textContent = '(' + t[1].toFixed(2) + ')';
+    document.getElementById('coordZ').textContent = '(' + t[2].toFixed(2) + ')';
+    document.getElementById('coordW').textContent = '(' + t[3].toFixed(2) + ')';
+
+    function wrapAngle(a) {
+      var twoPi = 2*Math.PI;
+      return ((a % twoPi) + twoPi) % twoPi;
+    }
+    function fmtAngle(key, elemId) {
+      var a = wrapAngle(angleMap[key]);
+      var deg = a * 180/Math.PI;
+      document.getElementById(elemId).textContent = a.toFixed(3) + ' rad (' + deg.toFixed(1) + '°)';
+    }
+    fmtAngle('0-1', 'angXY');
+    fmtAngle('0-2', 'angXZ');
+    fmtAngle('0-3', 'angXW');
+    fmtAngle('1-2', 'angYZ');
+    fmtAngle('1-3', 'angYW');
+    fmtAngle('2-3', 'angZW');
+
+    var lines = [];
+    lines.push('Eye: (0.00, 0.00, 0.00, 0.00)');
+    lines.push('Object centre: (' + t[0].toFixed(2) + ', ' + t[1].toFixed(2) + ', ' + t[2].toFixed(2) + ', ' + t[3].toFixed(2) + ')');
+    document.getElementById('stateText').textContent = lines.join('\n');
+  }
+
+  // ---------------- UI controls ----------------
+
+  var sel = document.getElementById('objectSelect');
+  sel.addEventListener('change', function() { loadObject(sel.value); });
+
+  document.getElementById('resetPose').addEventListener('click', function() {
+    rotationMatrix = identity4();
+    translation = [1,0,0,0];
+    for (var k in angleMap) angleMap[k] = 0;
+  });
+
+  var moveButtons = document.querySelectorAll('button[data-move-axis]');
+  for (var i=0; i<moveButtons.length; i++) {
+    moveButtons[i].addEventListener('click', function() {
+      var axis = parseInt(this.getAttribute('data-move-axis'), 10);
+      var dir  = parseInt(this.getAttribute('data-move-delta'), 10);
+      translation[axis] += dir * TRANSLATE_STEP;
+    });
+  }
+
+  var rotButtons = document.querySelectorAll('button[data-rot-plane]');
+  for (i=0; i<rotButtons.length; i++) {
+    rotButtons[i].addEventListener('click', function() {
+      var parts = this.getAttribute('data-rot-plane').split('-');
+      var key   = parts[0] + '-' + parts[1];
+      var iAxis = parseInt(parts[0], 10);
+      var jAxis = parseInt(parts[1], 10);
+      var dir   = parseInt(this.getAttribute('data-rot-dir'), 10);
+      var angle = dir * ROTATE_STEP;
+      var R = rotationPlane(iAxis, jAxis, angle);
+      rotationMatrix = matMul4(R, rotationMatrix);
+      angleMap[key] += angle;
+    });
+  }
+
+  var sectionToggle = document.getElementById('sectionToggle');
+  sectionToggle.checked = true;
+  sectionMode = true;
+  sectionToggle.addEventListener('change', function() { sectionMode = sectionToggle.checked; });
+
+  var wireframeOnly = false;
+  var wireToggle = document.getElementById('wireframeToggle');
+  wireToggle.checked = false;
+  wireframeOnly = false;
+  wireToggle.addEventListener('change', function() {
+    wireframeOnly = wireToggle.checked;
+  });
+
+  // ---------------- mouse rotations ----------------
+
+  var dragging = false;
+  var lastX = 0, lastY = 0;
+
+  canvas.addEventListener('mousedown', function(ev) {
+    dragging = true;
+    lastX = ev.clientX;
+    lastY = ev.clientY;
+    canvas.classList.add('dragging');
+  });
+  window.addEventListener('mouseup', function() {
+    dragging = false;
+    canvas.classList.remove('dragging');
+  });
+  canvas.addEventListener('mouseleave', function() {
+    dragging = false;
+    canvas.classList.remove('dragging');
+  });
+  canvas.addEventListener('mousemove', function(ev) {
+    if (!dragging) return;
+    var dx = ev.clientX - lastX;
+    var dy = ev.clientY - lastY;
+    lastX = ev.clientX;
+    lastY = ev.clientY;
+
+    if (ev.shiftKey) {
+      var angleYW = -dx * MOUSE_ROTATE_SCALE;
+      var angleZW =  dy * MOUSE_ROTATE_SCALE;
+
+      if (angleYW !== 0) {
+        var Ryw = rotationPlane(1,3, angleYW);
+        rotationMatrix = matMul4(Ryw, rotationMatrix);
+        angleMap['1-3'] += angleYW;
+      }
+      if (angleZW !== 0) {
+        var Rzw = rotationPlane(2,3, angleZW);
+        rotationMatrix = matMul4(Rzw, rotationMatrix);
+        angleMap['2-3'] += angleZW;
+      }
+    } else {
+      var angleXY = -dx * MOUSE_ROTATE_SCALE;
+      var angleXZ =  dy * MOUSE_ROTATE_SCALE;
+
+      if (angleXY !== 0) {
+        var Rxy = rotationPlane(0,1, angleXY);
+        rotationMatrix = matMul4(Rxy, rotationMatrix);
+        angleMap['0-1'] += angleXY;
+      }
+      if (angleXZ !== 0) {
+        var Rxz = rotationPlane(0,2, angleXZ);
+        rotationMatrix = matMul4(Rxz, rotationMatrix);
+        angleMap['0-2'] += angleXZ;
+      }
+    }
+  });
+
+  loadObject('5cell');
+  render();
+}
+
+window.addEventListener('load', function() {
+  setup4D(document, window);
+});
+</script>
+</body>
+</html>
