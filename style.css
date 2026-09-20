@@ -2,20 +2,12 @@ span.annotation { border-bottom: 2px solid; }
 span.annotation span.annotation { padding-bottom:4px; }
 span.annotation span.annotation span.annotation { padding-bottom:6px; }
 span.annotation span.annotation span.annotation span.annotation { padding-bottom:8px; }
-span.frag-id { color: #aaaaaa; font-size: 15px; }
 span.linktarget { border-bottom: 2px solid; }
 
 .column {
     max-width: 60%;
     margin-right: 20%;
     margin-left: 20%;
-}
-@media (max-width: 600px) {
-    .column {
-        max-width: 96%;
-        margin-right: 2%;
-        margin-left: 2%;
-    }
 }
 .margin-right {
     margin-right: -22%;
