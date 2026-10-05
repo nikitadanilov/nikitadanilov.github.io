@@ -48,6 +48,9 @@ mjx-container[display="true"] {
 mjx-container:not([display="true"]) {
     font-size: 1em !important;
 }
+.image {
+  text-align: center;
+}
 .align-left {
   display: inline-block;
   width: 100%;
