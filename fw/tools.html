@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta name="viewport"
+         content="width=device-width,
+                  initial-scale=1">
+   <meta charset="UTF-8">
+   <title>Finnegans Wake Tools</title>
+   <link rel="stylesheet" href="style.css">
+   <link rel="alternate"
+         type="application/rss+xml"
+         title="Finnegans Wake"
+         href="https://cofault.com/fw/feed.xml">
+   <style>p { margin: 0.6em 0; text-align: justify; }</style>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-WEM34DWDR2');
+</script>
+   
+ </head>
+ <body>
+   <a name="tools"></a><div class="column"><header>Tools</header>
+<a name="tools-top"></a><p>The deck is generated from the primary sources by the programs in <a href="https://github.com/nikitadanilov/nikitadanilov.github.io/tree/master/fw/tools">tools/</a>. The sources are in src/ (fetched by <a href="https://github.com/nikitadanilov/nikitadanilov.github.io/tree/master/fw/tools">tools/</a>fetch.sh); everything else can be regenerated from them by <a href="https://github.com/nikitadanilov/nikitadanilov.github.io/tree/master/fw/tools">tools/</a>make.sh. The decks I.1.deck ... IV.deck and contents.deck and layout.conf are generated: do not edit them, edit the hand-checked data (overrides.py, observed.txt) and regenerate.</p>
+<a name="tools-pipeline"></a><h3>The pipeline</h3>
+<a name="tools-00002"></a><pre><code>fetch.sh                      sources -&gt; src/
+djvu_lines.py                 OCR (djvu.xml) -&gt; lines and word boxes
+witnesses.py, scans.py        transcriptions, scans -&gt; pages
+collate.py (+ overrides.py)   witnesses -&gt; established text (collation.json)
+imgcmp.py                     word images of 1939 and 1958 -&gt; similarity
+candidates.py                 -&gt; candidate variants
+reocr.py                      candidates -&gt; second OCR reading
+revsheet.py                   candidates -&gt; contact sheets, checked by eye
+observed.txt (+ variants.py)  the variants found
+finwake.py                    finwake.com chapters -&gt; glosses located
+audio.py                      captions of readings -&gt; where they start
+rose.py                       variants of 2010 (jjda.ie) -&gt; placed
+mkdeck.py                     text + variants + glosses -&gt; decks
+make.sh                       collate.py ... rose.py, mkdeck.py</code></pre>
+<a name="tools-programs"></a><h3>The programs</h3>
+<a name="tools-00004"></a><p style="margin-left: 3em;"><b>fetch.sh</b>: downloads the witnesses into src/: the two Oxford Text Archive   transcriptions (from the Wayback Machine, because the archive is behind a   bot challenge), the scans of 1939 and 1958 and their OCR from the Internet   Archive.</p>
+<a name="tools-00005"></a><p style="margin-left: 3em;"><b>djvu_lines.py</b>: extracts the lines of the OCR of a scan (an archive.org   djvu.xml file), with the bounding boxes of the lines and of the words.</p>
+<a name="tools-00006"></a><p style="margin-left: 3em;"><b>witnesses.py</b>: reads the transcriptions W and T into a common form: for   every page, the lines of the main text and, in II.2, of the left and right   marginalia and the footnotes. Decodes the escapes of W (accented letters,   dashes) and the code page of T.</p>
+<a name="tools-00007"></a><p style="margin-left: 3em;"><b>scans.py</b>: maps the scans to printed pages (by the position in the 1939   scan, by shared word trigrams in the 1958 scan), drops page numbers and   printers&#x27; marks, and, in II.2, separates the main text, the marginalia and   the footnotes by their position on the page.</p>
+<a name="tools-00008"></a><p style="margin-left: 3em;"><b>fweet_rules.py</b>: the facts of Fweet&#x27;s line numbering: which pages have 36   (or 37) lines, which have marginalia and footnotes, which verses are   printed with a hanging indent. Used to check the result.</p>
+<a name="tools-00009"></a><p style="margin-left: 3em;"><b>collate.py</b>: establishes the text. For every page and component, the   physical lines come from a scan whose count of lines is right, the words   from W (or T where W lacks a line). The tokens of W are aligned with those   of T and of both scans; disagreements of W and T are decided by the scans.   Every decision is logged. Also records the layout: centred lines, the   position of the marginalia, the continuation lines of verses, the lines   set to the full measure (which are justified) and the measure of each   page relative to the regular pages.</p>
+<a name="tools-00010"></a><p style="margin-left: 3em;"><b>overrides.py</b>: corrections of the collation decided by looking at the page   images: substitutions, replaced components (some marginalia of II.2),   inserted lines (the figures and the musical score), centred lines.</p>
+<a name="tools-00011"></a><p style="margin-left: 3em;"><b>imgcmp.py</b>: compares the image of every word in the 1939 scan with its image   in the 1958 scan (binarised, trimmed, scaled and correlated).</p>
+<a name="tools-00012"></a><p style="margin-left: 3em;"><b>candidates.py</b>: the words whose two images or two OCR readings differ in a   way that OCR confusions do not explain.</p>
+<a name="tools-00013"></a><p style="margin-left: 3em;"><b>reocr.py</b>: reads the candidate words again in both scans with one OCR   engine (RapidOCR), so that identical print is read identically. Also used   for the words where both scans agree against the text. Runs in a separate   Python environment (~/.venvs/fw, with rapidocr_onnxruntime and yt-dlp,   which fetch.sh uses for the captions of the readings).</p>
+<a name="tools-00014"></a><p style="margin-left: 3em;"><b>revsheet.py</b>: contact sheets of the remaining candidates, each line from   1939 above the same line from 1958, for checking by eye.</p>
+<a name="tools-00015"></a><p style="margin-left: 3em;"><b>sheet.py, crop.py</b>: crops of lines of the scans, used to decide the   disagreements of the transcriptions.</p>
+<a name="tools-00016"></a><p style="margin-left: 3em;"><b>finwake.py</b>: locates the glosses of finwake.com in the text: the words of   its chapters (src/finwake/), where the glossed words are links, are aligned   with the words of the established text; each glossed word gives a note   linking to its gloss (finwake.json). Links to anchors missing from the   gloss pages (src/finwake/glosses/) are repaired.</p>
+<a name="tools-00017"></a><p style="margin-left: 3em;"><b>rose.py</b>: the variants of the edition of 2010: parses the pages &quot;1939 -&gt;   2010&quot; of the James Joyce Digital Archive (src/rose/cmp/), with the changes   of 2010 and the page breaks of both editions, aligns them with the text of   each page here and places every change on its line (rose.json, also with   the pages of 2010 that each page here spans).</p>
+<a name="tools-00018"></a><p style="margin-left: 3em;"><b>audio.py</b>: locates the beginnings of the recorded readings listed in   src/audio/readings.txt: the automatic captions of each recording are   matched against the text of its chapter; the line where they start gets a   note linking to the recording at that time (audio.json).</p>
+<a name="tools-00019"></a><p style="margin-left: 3em;"><b>ocrnoise.py</b>: a table of the usual OCR confusions (rn/m, h/b, l/1, ...).</p>
+<a name="tools-00020"></a><p style="margin-left: 3em;"><b>observed.txt, variants.py</b>: the differences between 1939 and 1958 seen in   the images, and their conversion to apparatus notes.</p>
+<a name="tools-00021"></a><p style="margin-left: 3em;"><b>mkdeck.py</b>: writes the decks: a card per page in the series of the book, of   its book and of its chapter; a fragment per line, identified by its line   number; marginalia and footnotes of II.2; apparatus notes; links to the   page images; the contents card. The decks contain only the text, the identifiers   and the notes; the layout of the lines is in a generated style sheet,   layout.conf, which selects a line by its anchor (a[name=&quot;p004-17&quot;] + p).   Lines are justified, except those not set to the full measure in print;   where the printed measure is narrower than usual (II.2, footnotes), its   width is computed from the widths of the lines in the text face   (src/fonts).</p>
+<a name="tools-00022"></a><p style="margin-left: 3em;"><b>make.sh</b>: runs collate.py, finwake.py, audio.py, rose.py and mkdeck.py.</p><footer></footer></div>
+ </body>
+</html>
