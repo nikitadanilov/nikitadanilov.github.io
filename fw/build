@@ -1,0 +1,4 @@
+#! /bin/sh
+
+CARD=$HOME/p/card/card
+$CARD fw.conf layout.conf index.deck contents.deck editions.deck tools.deck I.?.deck II.?.deck III.?.deck IV.deck

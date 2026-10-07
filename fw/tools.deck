@@ -1,0 +1,129 @@
+// name Tools
+// id tools
+// +frag.id.show -
+// brief The programs that establish the text and generate the deck.
+// C A control card: spaced, justified paragraphs; the headwords of list items in bold.
+// +html.style p { margin: 0.6em 0; text-align: justify; }
+// +bd ^(– )?(?P<open>)(?:(?!\. )[^:]){1,40}?(?P<close>)(?=: )
+// +bd ^(?P<open>)(\d{4}|[A-Z])(?P<close>)(?=\. )
+The deck is generated from the primary sources by the programs in tools/.
+The sources are in src/ (fetched by tools/fetch.sh); everything else can be
+regenerated from them by tools/make.sh. The decks I.1.deck ... IV.deck and
+contents.deck and layout.conf are generated: do not edit them, edit the hand-checked data
+(overrides.py, observed.txt) and regenerate.
+/ id top
+/ += . "tools/" -> https://github.com/nikitadanilov/nikitadanilov.github.io/tree/master/fw/tools
+
+; head
+/ level 3
+/ id pipeline
+The pipeline
+
+; code
+|fetch.sh                      sources -> src/
+|djvu_lines.py                 OCR (djvu.xml) -> lines and word boxes
+|witnesses.py, scans.py        transcriptions, scans -> pages
+|collate.py (+ overrides.py)   witnesses -> established text (collation.json)
+|imgcmp.py                     word images of 1939 and 1958 -> similarity
+|candidates.py                 -> candidate variants
+|reocr.py                      candidates -> second OCR reading
+|revsheet.py                   candidates -> contact sheets, checked by eye
+|observed.txt (+ variants.py)  the variants found
+|finwake.py                    finwake.com chapters -> glosses located
+|audio.py                      captions of readings -> where they start
+|rose.py                       variants of 2010 (jjda.ie) -> placed
+|mkdeck.py                     text + variants + glosses -> decks
+|make.sh                       collate.py ... rose.py, mkdeck.py
+
+; head
+/ level 3
+/ id programs
+The programs
+
+> fetch.sh: downloads the witnesses into src/: the two Oxford Text Archive
+  transcriptions (from the Wayback Machine, because the archive is behind a
+  bot challenge), the scans of 1939 and 1958 and their OCR from the Internet
+  Archive.
+
+> djvu_lines.py: extracts the lines of the OCR of a scan (an archive.org
+  djvu.xml file), with the bounding boxes of the lines and of the words.
+
+> witnesses.py: reads the transcriptions W and T into a common form: for
+  every page, the lines of the main text and, in II.2, of the left and right
+  marginalia and the footnotes. Decodes the escapes of W (accented letters,
+  dashes) and the code page of T.
+
+> scans.py: maps the scans to printed pages (by the position in the 1939
+  scan, by shared word trigrams in the 1958 scan), drops page numbers and
+  printers' marks, and, in II.2, separates the main text, the marginalia and
+  the footnotes by their position on the page.
+
+> fweet_rules.py: the facts of Fweet's line numbering: which pages have 36
+  (or 37) lines, which have marginalia and footnotes, which verses are
+  printed with a hanging indent. Used to check the result.
+
+> collate.py: establishes the text. For every page and component, the
+  physical lines come from a scan whose count of lines is right, the words
+  from W (or T where W lacks a line). The tokens of W are aligned with those
+  of T and of both scans; disagreements of W and T are decided by the scans.
+  Every decision is logged. Also records the layout: centred lines, the
+  position of the marginalia, the continuation lines of verses, the lines
+  set to the full measure (which are justified) and the measure of each
+  page relative to the regular pages.
+
+> overrides.py: corrections of the collation decided by looking at the page
+  images: substitutions, replaced components (some marginalia of II.2),
+  inserted lines (the figures and the musical score), centred lines.
+
+> imgcmp.py: compares the image of every word in the 1939 scan with its image
+  in the 1958 scan (binarised, trimmed, scaled and correlated).
+
+> candidates.py: the words whose two images or two OCR readings differ in a
+  way that OCR confusions do not explain.
+
+> reocr.py: reads the candidate words again in both scans with one OCR
+  engine (RapidOCR), so that identical print is read identically. Also used
+  for the words where both scans agree against the text. Runs in a separate
+  Python environment (~/.venvs/fw, with rapidocr_onnxruntime and yt-dlp,
+  which fetch.sh uses for the captions of the readings).
+
+> revsheet.py: contact sheets of the remaining candidates, each line from
+  1939 above the same line from 1958, for checking by eye.
+
+> sheet.py, crop.py: crops of lines of the scans, used to decide the
+  disagreements of the transcriptions.
+
+> finwake.py: locates the glosses of finwake.com in the text: the words of
+  its chapters (src/finwake/), where the glossed words are links, are aligned
+  with the words of the established text; each glossed word gives a note
+  linking to its gloss (finwake.json). Links to anchors missing from the
+  gloss pages (src/finwake/glosses/) are repaired.
+
+> rose.py: the variants of the edition of 2010: parses the pages "1939 ->
+  2010" of the James Joyce Digital Archive (src/rose/cmp/), with the changes
+  of 2010 and the page breaks of both editions, aligns them with the text of
+  each page here and places every change on its line (rose.json, also with
+  the pages of 2010 that each page here spans).
+
+> audio.py: locates the beginnings of the recorded readings listed in
+  src/audio/readings.txt: the automatic captions of each recording are
+  matched against the text of its chapter; the line where they start gets a
+  note linking to the recording at that time (audio.json).
+
+> ocrnoise.py: a table of the usual OCR confusions (rn/m, h/b, l/1, ...).
+
+> observed.txt, variants.py: the differences between 1939 and 1958 seen in
+  the images, and their conversion to apparatus notes.
+
+> mkdeck.py: writes the decks: a card per page in the series of the book, of
+  its book and of its chapter; a fragment per line, identified by its line
+  number; marginalia and footnotes of II.2; apparatus notes; links to the
+  page images; the contents card. The decks contain only the text, the identifiers
+  and the notes; the layout of the lines is in a generated style sheet,
+  layout.conf, which selects a line by its anchor (a[name="p004-17"] + p).
+  Lines are justified, except those not set to the full measure in print;
+  where the printed measure is narrower than usual (II.2, footnotes), its
+  width is computed from the widths of the lines in the text face
+  (src/fonts).
+
+> make.sh: runs collate.py, finwake.py, audio.py, rose.py and mkdeck.py.

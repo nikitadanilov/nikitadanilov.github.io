@@ -1,0 +1,194 @@
+// name Editions
+// id editions
+// +frag.id.show -
+// brief The editions of 1939, 1958 and 2010, the witnesses of the text, and the apparatus.
+// C A control card: spaced, justified paragraphs; the headwords of list items in bold.
+// +html.style p { margin: 0.6em 0; text-align: justify; }
+// +bd ^(– )?(?P<open>)(?:(?!\. )[^:]){1,40}?(?P<close>)(?=: )
+// +bd ^(?P<open>)(\d{4}|[A-Z])(?P<close>)(?=\. )
+The text of this deck is established from four witnesses: two scanned
+printings and two independent transcriptions. The apparatus records the
+differences between three editions: the two scanned printings, the first
+edition of 1939 and the corrected printing of 1958, and the edition of 2010
+by Danis Rose and John O'Hanlon, which revises the text throughout.
+/ id top
+
+; head
+/ level 3
+/ id printings
+The editions
+
+> 1939. James Joyce, _Finnegans Wake_. London: Faber and Faber; New York: The
+  Viking Press, 4 May 1939. Set in Monotype Fournier and printed by R.
+  MacLehose and Company, The University Press, Glasgow. The first edition: the
+  British and American issues were printed from the same setting. The copy
+  used is the scan of the Faber issue in the Digital Library of India (from
+  the Rashtrapati Bhavan Library).
+/ id 1939
+/ += . "the scan of the Faber issue" -> https://archive.org/details/in.ernet.dli.2015.207614
+
+> 1958. James Joyce, _Finnegans Wake_. New York: The Viking Press, 1958 and
+  later printings. Photo-offset from the plates of the first edition, with
+  Joyce's "Corrections of Misprints" (printed separately in 1945 and bound
+  into copies from 1947) entered into the text. Some corrections required
+  resetting a passage, so that a few lines are divided differently from 1939.
+  The copy used is the scan from the University of Toronto (Fisher Library).
+/ id 1958
+/ += . "the scan from the University of Toronto" -> https://archive.org/details/finneganswake00joycuoft
+
+> 2010. James Joyce, _Finnegans Wake_, edited by Danis Rose and John
+  O'Hanlon. Mousehole: Houyhnhnm Press, 2010; reprinted as _The Restored
+  Finnegans Wake_, London: Penguin Classics, 2012. Some 9 000 changes to the
+  text of 1939, of words, punctuation and spacing, and passages restored, from
+  the manuscripts, typescripts and proofs. Set anew, in 493 pages: its pages
+  and lines are not those of 1939. Not available as images; its text, with
+  every change marked, is on the James Joyce Digital Archive.
+/ id 2010
+/ += . "James Joyce\s+Digital\s+Archive" -> https://jjda.ie/f/fwhome.htm
+
+The page and line division of 1939 and 1958 is the same (except where noted
+in the apparatus), and is that of all the later Faber and Viking printings
+and of the line numbers used by Fweet. The pages and lines here are those of
+1939 and 1958; the edition of 2010 enters only through the apparatus, and at
+the foot of each page, through a link to the pages of 2010 that it spans.
+/ += . "line numbers used by Fweet" -> https://fweet.org/pages/fw_lnum.php
+
+; head
+/ level 3
+/ id transcriptions
+The transcriptions
+
+> W. The transcription by David Wilson of the Faber edition (1964), preserving
+  the line and page breaks. Oxford Text Archive 1709 (1992; archived copy).
+/ id W
+/ += . "Oxford Text Archive 1709" -> https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/1709
+/ += . "archived copy" -> https://web.archive.org/web/20250913120344/https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/1709
+
+> T. The transcription by Donald F. Theall, Joan Benedict Theall and Ray
+  Fritz-Németh of the Faber second edition (1950), with the published errata
+  incorporated; the "Trent text", the source of most electronic texts of
+  the book. Oxford Text Archive 1696 (1992; archived copy).
+/ id T
+/ += . "Oxford Text Archive 1696" -> https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/1696
+/ += . "archived copy" -> https://web.archive.org/web/20260305211945/https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/1696
+
+Both are distributed under the Creative Commons Attribution-ShareAlike 3.0
+licence. Each has its own errors (Fweet lists more than three hundred in T):
+lost and doubled lines, dropped words, misreadings.
+/ += . "Creative Commons Attribution-ShareAlike 3.0" -> https://creativecommons.org/licenses/by-sa/3.0/
+/ += . "Fweet lists" -> https://fweet.org/pages/fw_typo.php
+
+; head
+/ level 3
+/ id text
+The established text
+
+The text is that of the corrected Faber and Viking printings. Where W and T
+agree, their reading is taken; where they disagree, the reading of the
+printings, as read from the scans, decides. A little under three hundred
+places were decided by looking at the page images. See Tools.
+/ += . "Tools" -> !tools
+
+Joyce's sigla, the signs for the characters of the book (*E* for
+Humphrey Chimpden Earwicker, *A* for Anna Livia Plurabelle and so on), are
+set in the Fweet Figla font of Raphael Slepon, after a font of Michael
+Powers, with thanks. In the deck files a siglum is written as Fweet writes
+it, the letter between asterisks. The few sigla that the font lacks (the
+turned and reversed forms on 18.36, 36.17, 121.03, 121.07 and 266.22) are
+written with the closest Unicode characters. The musical scores and the
+figures are images cropped from the 1939 scan.
+/ id sigla
+/ += . "Fweet Figla font" -> https://www.fweet.org/pages/fw_font.php
+
+; head
+/ level 3
+/ id notes
+The notes
+
+The right margin carries the notes "ט word" (tet), which link the word to its
+gloss on finwake.com; they are made by aligning the text of finwake.com, where the
+glossed words are links, with the text of this deck (about 51 000 glosses,
+some on parts of words; about 500 could not be placed). Only the links are
+here, not the glosses. Where finwake.com links a gloss to an anchor that its
+page does not have, the link goes to the anchor that was meant; about 2 400
+glosses that are not on the free pages of finwake.com are left out.
+/ += . "finwake\.com" -> https://finwake.com/
+
+Two kinds of notes are footnotes, at the foot of the page, each starting with
+the number of its line, and underlined in the same colour as the words of the
+line it refers to: the notes of the apparatus (below), which start with ב,
+and the notes "ק" (qof, for "qol", voice), which mark the lines where
+recorded readings start and link to the recording at that point; the places
+are found by matching the automatic captions of the recordings against the
+text.
+
+; head
+/ level 3
+/ id apparatus
+The apparatus
+
+Where 1939, 1958 and the edition of 2010 differ, a footnote on the line gives
+the variant, in the usual form of a critical apparatus, at the foot of the
+page as in a printed edition. To tell them from other notes, they start with the letter beth, ב
+(for "variorum"):
+/ id form
+
+; code
+|ב lemma] SIGLUM; reading SIGLUM
+
+The lemma is the reading of the established text, followed by the sigla of
+the editions that have it; after the semicolon are the other readings, each
+followed by the sigla of the editions that have it. "om." means that the printing omits the lemma. For example, on
+4.14 the established text reads "was", as does 1958, while 1939 reads "waz":
+/ += . "4\.14" -> !p004-14
+
+; code
+|ב was] 1958; waz 1939
+
+and on 3.02 the established text, with 1939 and 1958, reads "commodius",
+where 2010 reads "commodious":
+/ += . "3\.02" -> !p003-02
+
+; code
+|ב commodius] 1939 1958; commodious 2010
+
+A passage that the two printings divide into lines differently is marked on
+its first line. Differences in spacing, broken or battered type and other
+accidents of printing that are not readings are not recorded.
+
+The differences were found by comparing the images of every word of the two
+scans (as located by their OCR) and reading again, with a second OCR engine,
+every word whose two images or two OCR readings differed; the remaining
+candidates were then checked by eye. Differences that both OCR engines read
+identically in both scans (for example, a changed punctuation mark that the
+engines did not notice) can have been missed.
+
+At the bottom of each page are links to the images of that page in both
+printings, and to the corresponding pages of the edition of 2010.
+
+; head
+/ level 3
+/ id rose
+The variants of 2010
+
+The variants of 2010 are those recorded by its editors on the James Joyce
+Digital Archive, which shows, for every section of the book, the text of
+1939 with every change of 2010 marked (the pages "1939 → 2010"); about 7 900
+notes of the apparatus record them. Each change is placed on its line here
+by aligning that text with the text of this deck. Where the established text
+already agrees with 2010 (most often in Joyce's own corrections of 1939, which
+2010 also adopts), there is no note of 2010, but the siglum 2010 is added to
+the reading it shares in the note of 1939 and 1958. A reading of 2010 longer
+than a dozen words is abbreviated, and linked to its place on the Archive.
+About 650 changes (some in passages that 2010 moves, and in the marginalia
+and footnotes of II.2) could not be placed. The edition of 2010 is in
+copyright: its readings are cited here, as in any apparatus.
+
+The text of 1939 on the Archive is not always that of the printing (it
+corrects some misprints, and has a few errors of its own): it serves only to
+place the changes. The readings of 1939 and 1958 in the notes are those of
+the scans.
+
+The foot of each page links to the pages of 2010 that correspond to it, on
+the Archive, at the words with which the page begins (the link is a text
+fragment: browsers that do not support them open the section at its top).

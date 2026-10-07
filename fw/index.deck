@@ -1,0 +1,90 @@
+// name Finnegans Wake
+// id index
+// +frag.id.show -
+// brief James Joyce, Finnegans Wake: the text, page by page and line by line.
+// C A control card: spaced, justified paragraphs; the headwords of list items in bold.
+// +html.style p { margin: 0.6em 0; text-align: justify; }
+// +bd ^(– )?(?P<open>)(?:(?!\. )[^:]){1,40}?(?P<close>)(?=: )
+// +bd ^(?P<open>)(\d{4}|[A-Z])(?P<close>)(?=\. )
+James Joyce, _Finnegans Wake_. This deck is the text of the book, one card per
+printed page, one fragment per printed line, made to be read slowly and
+annotated. Each line shows its identifier, the page and the line number
+(p003-04 is the line 3.04); this is how notes and links refer to it.
+/ id top
+
+; head
+/ level 3
+/ id pages
+Pages
+
+> – Contents: every page, by book and chapter.
+/ += . "Contents" -> !contents
+
+> – The whole book, page after page: series book (or all at once, flat).
+/ += . "series book" -> series_book_compact.html
+/ += . "flat" -> series_book_flat.html
+
+> – Book I: I.1, I.2, I.3, I.4, I.5, I.6, I.7, I.8.
+/ += . "Book I(?=:)" -> series_I_compact.html
+/ += . "I\.1" -> series_I.1_compact.html
+/ += . "I\.2" -> series_I.2_compact.html
+/ += . "I\.3" -> series_I.3_compact.html
+/ += . "I\.4" -> series_I.4_compact.html
+/ += . "I\.5" -> series_I.5_compact.html
+/ += . "I\.6" -> series_I.6_compact.html
+/ += . "I\.7" -> series_I.7_compact.html
+/ += . "I\.8" -> series_I.8_compact.html
+
+> – Book II: II.1, II.2, II.3, II.4.
+/ += . "Book II(?=:)" -> series_II_compact.html
+/ += . "II\.1" -> series_II.1_compact.html
+/ += . "II\.2" -> series_II.2_compact.html
+/ += . "II\.3" -> series_II.3_compact.html
+/ += . "II\.4" -> series_II.4_compact.html
+
+> – Book III: III.1, III.2, III.3, III.4.
+/ += . "Book III(?=:)" -> series_III_compact.html
+/ += . "III\.1" -> series_III.1_compact.html
+/ += . "III\.2" -> series_III.2_compact.html
+/ += . "III\.3" -> series_III.3_compact.html
+/ += . "III\.4" -> series_III.4_compact.html
+
+> – Book IV.
+/ += . "Book IV" -> series_IV_compact.html
+
+> – The first page: 3.
+/ += . "3\." -> !p003
+
+; head
+/ level 3
+/ id about
+About the text
+
+> – Editions: the printings and transcriptions used, how the text was
+  established, and the form of the apparatus of variants (the footnotes that
+  record where the first edition, 1939, and the corrected Viking
+  printing, 1958, differ).
+/ += . "Editions" -> !editions
+
+> – Tools: the programs that establish the text and generate the deck.
+/ += . "Tools" -> !tools
+
+> – Glosses: the notes "ט word" in the right margin link to the glosses
+  of finwake.com, a glossary of Finnegans Wake, where the word is explained.
+/ += . "finwake\.com" -> https://finwake.com/
+
+> – Readings: a footnote "ק" on the line where a recorded reading starts links to
+  the recording at that line: James Joyce's own reading of the end of I.8
+  (1929), and the reading of Books I and II.1 by A Poetry Channel.
+
+; head
+/ level 3
+/ id licence
+Licence
+
+The text derives from the transcriptions of the Oxford Text Archive, which
+are distributed under the Creative Commons Attribution-ShareAlike 3.0
+Unported licence; so is this text. Finnegans Wake is in the public domain in
+the countries where the term of copyright is the life of the author plus 70
+years or less.
+/ += . "Creative\s+Commons\s+Attribution-ShareAlike\s+3\.0\s+Unported" -> https://creativecommons.org/licenses/by-sa/3.0/
