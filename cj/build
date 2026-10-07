@@ -1,0 +1,4 @@
+#! /bin/sh
+
+CARD=$HOME/p/card/card
+$CARD cj.conf cj.deck
