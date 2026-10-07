@@ -1,0 +1,47 @@
+README
+
+This set of disks contains an electronic text of James Joyce's
+Finnegans Wake.  It is provided free of charge (except for cost of
+mailing and disks).  It is available in both WP 5.1, with many of
+the graphics and typographic effects included, and in ASCII text
+without these features.  The text was prepared by scanning the
+Second Edition of the Wake (Faber, 1950).  The scanned text was
+checked against a speller, created from a word count list provided 
+by Mark Olsen of the University of Chicago, based on scanning Clive
+Hart's Concordance. (WP 5.1 accepted this speller as the language
+"Icelandic" -- IS!)  Errata to the Second Edition were consulted
+and corrections incorporated  into the text.  
+
+The text was commercially scanned, then edited and proofread
+by Joan Benedict Theall and Donald Theall, assisted by Ray Fritz-
+N&eacute;meth.  The funding that enabled the preparation of this text was
+provided by the Social Science and Humanities Research Council of
+Canada and by Trent University.  While every effort has been made
+to guarantee the accuracy of the text, there will be some errors in
+the first rendition of such a complex text.  Therefore, we cannot
+assume responsiblity for its absolute accuracy.
+
+Since we are interested in developing the most accurate
+electronic text possible, we would appreciate those using the e-
+text materials to notify us of errors.  We will incorporate the
+corrections and periodically contact those who have copies of the
+text.  If there are a sizeable number of corrections, a new text
+will be made available later.
+
+Please send corrections and comments either by e-mail,
+Internet: DTHEALL@TRENTU.CA or by regular mail to Prof. D. Theall,
+1604 Champlain Drive, Peterborough, Ontario, CANADA K9L 1N6. 
+(Phone: (705)-741-0600).  If you find it of value, please let us
+know, so that we can inform the University and the Council.
+This material may be passed on to others for their personal
+use, but we would appreciate being informed that you have done so. 
+If you do pass it on to others, please include this README file
+with the text.    
+
+In the not too distant future this text will probably be
+available by FTP.  I will post any information concerning this on
+the FWAKE-L and on JJL, when it is relevant.  "Lots of fun at
+Finnegans Wake!" 
+
+Donald F. Theall
+

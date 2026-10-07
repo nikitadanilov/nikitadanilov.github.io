@@ -1,0 +1,76 @@
+# Differences between the 1939 and 1958 printings seen in the page images.
+# REF | 1939 reading | 1958 reading      (layout: REF | layout | comment)
+004.14 | waz | was
+006.06 | aufroos, | aufroofs,
+008.27 | 'MacDyke'. | MacDyke.
+008.27 | 'O'Hurry. | O'Hurry.
+014.11 | 1132. | 1132
+015.35 | febre- | febrew-
+015.36 | wery, | ery,
+020.08 | rub- | ru-
+020.09 | rickredd | brickredd
+022.07 | 'a forethought' | a forethought
+032.23 | Srop | Stop
+037.11 | layout | Viking resets the lines
+042.07 | firestufffostered | firestuffostered
+066.29 | layout | Viking resets the lines
+067.04 | layout | Viking resets the lines
+079.13 | feeing | feeding
+086.11 | layout | Viking resets the lines
+096.19 | breach of peace | breach of the peace
+098.07 | tank, the | tank the
+101.16 | know | knows
+122.34 | then) and | then); and
+127.26 | sorrow of Sahara | sorrow or Sahara
+127.26 | oxhide on Iren | oxhide or Iren
+130.36 | layout | Viking resets the lines
+132.36 | eilerdich hecklebury | eilerdich, hecklebury
+136.36 | moontaen | mountaen
+161.36 | outnullused | outnullused.
+176.02 | om. | Prisson your Pritchards and Play Withers
+176.02 | layout | Viking resets the lines
+183.25 | schoolgirl's | schoolgirls'
+219.17 | cellelleneteutoslavzend- latinsoundscript | cellelleneteutoslavzendlatinsoundscript
+223.02 | Snousapinas | Shousapinas
+224.04 | thinker, aunts | thinker's aunts
+224.04 | layout | Viking resets the lines
+224.24 | guardia | guardian
+229.15 | layout | Viking resets the lines
+230.15 | Armentièrcs | Armentières
+256.03 | wreglias | owreglias
+261.F03 | III. Cake Walk. | III, Cake Walk,
+261.F04 | Salt Hill. Co. | Salt Hill, Co.
+261.F06 | said the burglar's | said her burglar's
+267.02 | Multimim | Multimim-
+267.05 | theeward2 | theeward,2
+272.F01 | that ma'am, says | that, ma'am? says
+278.F05 | Essatessa | Essastessa
+285.F02 | Barneycarroll | Barneycorrall
+285.F02 | curiositu | curiosity
+342.14 | layout | Viking resets the lines
+346.02 | muckinslushes | muckinstushes
+438.27 | layout | Viking resets the lines
+443.31 | hebomedaries | hebdomedaries
+504.01 | the cran, the king | the cran the king
+525.27 | Hep! | Help!
+557.25 | pressufe | pressure
+564.34 | Yet not. | Yet not!
+566.26 | Returnu, porkego. | Returnu, porkego!
+566.28 | Then. | Then,
+567.06 | bagbone!) | bigbagbone!)
+577.18 | dishcover her that | dishcover her, that
+594.18 | layout | Viking resets the lines
+615.21 | think of nim | think of him
+626.34 | I isht | I wisht
+032.32 | performance of problem | performance of the problem
+034.25 | layout | 1939 prints this line and the next (34.26) in the reverse order
+082.22 | laying all joking and knobkerries aside | joking and knobkerries all
+082.22 | layout | Viking resets the lines
+093.09 | om. | turn
+093.09 | layout | Viking resets the lines
+147.06 | layout | Viking resets the lines
+172.22 | om. | Anzi,
+427.21 | layout | Viking resets the lines
+427.22 | scrum from orw till | scrum till
+367.18 | layout | the line is not indented in 1939
+044.25 | layout | the score is engraved anew in 1958, with the same notes and words

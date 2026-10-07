@@ -1,0 +1,32 @@
+# Recorded readings of Finnegans Wake: YouTube ID | chapter where the reading
+# starts | reader | part. Used by tools/audio.py.
+vRBehw9nYkg | I.8 | James Joyce (1929) | Anna Livia Plurabelle
+aBDKMJjdujE | I.1 | A Poetry Channel | Book 1, Chapter 1, Pt. 1
+DggOmuR9BpY | I.1 | A Poetry Channel | Book 1, Chapter 1, Part 2
+syfWuvapFgc | I.1 | A Poetry Channel | Chapter 1, Pt  3
+P82i-nQV-TI | I.2 | A Poetry Channel | Book 1, Chapter 2, Pt. 1
+TpoLCf9uu_4 | I.2 | A Poetry Channel | Book 1, Chapter 2, Pt. 2
+AVmSbUBNeTo | I.3 | A Poetry Channel | Book 1, Chapter 3, sections 48 - 53
+2ca-YlCHKqU | I.3 | A Poetry Channel | Book 1, Chapter 3, Sections 53- 65
+uc3k1wWvXJY | I.3 | A Poetry Channel | Book 1, Chapter 3, Pt  2 Lines 65 - 74
+hj2Vm0_3zNM | I.4 | A Poetry Channel | Book 1, Chapter 4
+GaPv-ij0yjE | I.4 | A Poetry Channel | Book 1 Chapter 4 (section 85 to 92 )
+yoD63wmgTjw | I.4 | A Poetry Channel | Book 1 Chapter 4, Sections 92- 98
+3wT8mWA7gJk | I.4 | A Poetry Channel | Book 1 Chapter 4 sections 98 to103
+sN1l0WMOAag | I.5 | A Poetry Channel | Book 1 Chapter 5 sections 104-108
+FO0kpeUQfCE | I.5 | A Poetry Channel | Book 1, Chapter 5, Section 109-117
+GxLSxd80zBI | I.5 | A Poetry Channel | Book 1, Chapter 5, sections 117 - 123
+tBINLKNkeHE | I.5 | A Poetry Channel | Book 1, Chapter 5: sections 124 &125
+g93o1GF4ARc | I.6 | A Poetry Channel | Book 1 Chapter 6: sections 126 to 139
+jfBTO2ubpM8 | I.6 | A Poetry Channel | Book 1, Chapter 6 (sections 139-150)
+CF4EnCFLWaI | I.6 | A Poetry Channel | Book 1, Chapter 6, sec 150 to 157
+KvALFRcixyw | I.6 | A Poetry Channel | Book 1, Chapter 6, sec 157 -168
+n4eZG7N2xME | I.7 | A Poetry Channel | Book 1 Chapter 7
+O5Ehr3bJN-E | I.7 | A Poetry Channel | Book 1, Chapter 7 sections 174  -183
+LOyiVnnerb4 | I.7 | A Poetry Channel | Book 1 Chapter 7 Sections 183 -188
+u8ZgKu9Cv84 | I.7 | A Poetry Channel | Book 1 Ch 7 Sections 188 to 195
+AIiSCDge9ro | I.8 | A Poetry Channel | Book 1 Ch 8 Sections 196 to 204
+aR8Jvh7hoaA | I.8 | A Poetry Channel | Book 1 Ch 8, Sections 205 to 216
+Euw7kxDpMK8 | II.1 | A Poetry Channel | Book 2, Chapter 1: Sec 219- 227
+9V3f1TjwYBc | II.1 | A Poetry Channel | Book 2 Ch 1 Sec 227-235
+LS-jmCs-ELg | II.1 | A Poetry Channel | Book 2, Chap 1, 235-237

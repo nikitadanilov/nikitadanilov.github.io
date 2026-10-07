@@ -1,2 +1,23 @@
 *~
 .DS_Store
+fw/src/f1939-pages/
+fw/src/v1958-pages/
+fw/tools/candidates.json
+fw/tools/collation.json
+fw/tools/imgcmp.json
+fw/tools/__pycache__/
+fw/tools/reocr.json
+# Finnegans Wake: sources fetched by fw/tools/fetch.sh that are large or are
+# copies of other sites' pages, and intermediate files of fw/tools.
+fw/src/f1939.pdf
+fw/src/*_djvu.xml
+fw/src/*_djvu.txt
+fw/src/*_lines.json
+fw/src/*.zip
+fw/src/finwake/
+fw/src/rose/cmp/
+fw/src/rose/*.htm
+fw/src/audio/*.vtt
+fw/tools/review.json
+fw/tools/scancands.json
+fw/tools/scanreocr.json
