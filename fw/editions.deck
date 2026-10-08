@@ -114,6 +114,20 @@ page does not have, the link goes to the anchor that was meant; about 2 400
 glosses that are not on the free pages of finwake.com are left out.
 / += . "finwake\.com" -> https://finwake.com/
 
+The notes "Ω phrase: entry" (omega) link a phrase to the
+entry of the notebook (or notesheet, or copybook) in which Joyce noted it, as
+transcribed on the James Joyce Digital Archive, where these links are called
+"notons". The entry is named as on the archive: the notebook, its page and
+the item on the page ("N18 (VI.B.8): 185(i)"). The archive links about
+24 000 phrases of the text to their entries; about 23 600 are given here.
+The link goes to the phrase in the archive's text of 1939: clicking the
+phrase there shows the entry in a window, with its source, its use in the
+drafts and links to them. This works for every notebook, although most
+full transcriptions of the notebooks are not public on the archive (the
+Joyce estate did not permit their publication). Only the links are taken
+from the archive: no part of its transcriptions is copied here.
+/ += . "James Joyce\s+Digital\s+Archive" -> https://jjda.ie/f/fwhome.htm
+
 Two kinds of notes are footnotes, at the foot of the page, each starting with
 the number of its line, and underlined in the same colour as the words of the
 line it refers to: the notes of the apparatus (below), which start with ב,

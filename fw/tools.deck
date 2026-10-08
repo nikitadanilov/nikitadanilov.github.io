@@ -32,6 +32,7 @@ The pipeline
 |finwake.py                    finwake.com chapters -> glosses located
 |audio.py                      captions of readings -> where they start
 |rose.py                       variants of 2010 (jjda.ie) -> placed
+|notons.py                     notebook links (jjda.ie) -> placed
 |mkdeck.py                     text + variants + glosses -> decks
 |make.sh                       collate.py ... rose.py, mkdeck.py
 
@@ -105,6 +106,12 @@ The programs
   each page here and places every change on its line (rose.json, also with
   the pages of 2010 that each page here spans).
 
+> notons.py: locates the "notons" of the James Joyce Digital Archive: the
+  phrases of its text of 1939 (src/rose/l39/) linked to notebook entries are
+  aligned with the text here; each gives a note linking to the phrase on the
+  archive, labelled with its entry (the labels of the notebooks are in
+  src/rose/notebooks.txt) (notons.json).
+
 > audio.py: locates the beginnings of the recorded readings listed in
   src/audio/readings.txt: the automatic captions of each recording are
   matched against the text of its chapter; the line where they start gets a
@@ -126,4 +133,4 @@ The programs
   width is computed from the widths of the lines in the text face
   (src/fonts).
 
-> make.sh: runs collate.py, finwake.py, audio.py, rose.py and mkdeck.py.
+> make.sh: runs collate.py, finwake.py, audio.py, rose.py, notons.py and mkdeck.py.

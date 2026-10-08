@@ -9,4 +9,5 @@ python3 collate.py collation.json
 python3 finwake.py collation.json finwake.json
 python3 audio.py collation.json audio.json
 python3 rose.py collation.json rose.json
+python3 notons.py collation.json notons.json
 python3 mkdeck.py collation.json ..

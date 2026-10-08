@@ -1,0 +1,91 @@
+# The labels of the notebooks (and notesheets, copybooks) of the James Joyce
+# Digital Archive: code (of its entry codes, e.g. "n18" of "n18185i") and label.
+c01 VI.C.1
+c02 VI.C.2
+c03 VI.C.3
+c04 VI.C.4
+c05 VI.C.5
+c06 VI.C.6
+c07 VI.C.7
+c08 VI.C.8
+c09 VI.C.9
+c10 VI.C.10
+c11 VI.C.11
+c12 VI.C.12
+c13 VI.C.13
+c14 VI.C.14
+c15 VI.C.15b
+c16 VI.C.16
+c17 VI.C.17
+c18 VI.C.18
+n01 N1 (VI.B.10)
+n02 N2 (VI.X.1)
+n03 N3 (VI.B.3)
+n04 N4 (VI.B.25)
+n05 N5 (VI.B.2)
+n06 N6 (VI.B.11)
+n07 N7 (VI.X.2)
+n08 N8 (VI.B.6)
+n09 N9 (VI.B.1)
+n10 N10 (VI.B.16)
+n11 N11 (VI.B.5)
+n12 N12 (VI.B.14)
+n13 N13 (VI.D.3)
+n14 N14 (VI.B.7)
+n15 N15 (VI.D.2)
+n16 N16 (VI.D.1)
+n17 N17 (VI.B.9)
+n18 N18 (VI.B.8)
+n19 N19 (VI.B.19)
+n20 N20 (VI.B.13)
+n21 N21 (VI.B.20)
+n22 N22 (VI.B.17)
+n23 N23 (VI.B.12)
+n24 N24 (VI.D.5)
+n25 N25 (VI.B.15)
+n26 N26 (VI.B.18)
+n27 N27 (VI.X.3)
+n28 N28 (VI.D.6)
+n29 N29 (VI.B.21)
+n30 N30 (VI.B.22)
+n31 N31 (VI.B.26)
+n32 N32 (VI.B.23)
+n33 N33 (VI.B.4)
+n34 N34 (VI.B.27)
+n35 N35 (VI.B.24)
+n36 N36 (VI.B.29)
+n37 N37 (VI.B.28A)
+n38 N38 (VI.B.32)
+n39 N39 (VI.X.4)
+n40 N40 (VI.B.28B)
+n41 N41 (VI.B.33)
+n42 N42 (VI.B.31)
+n43 N43 (VI.B.35)
+n44 N44 (VI.B.34)
+n45 N45 (VI.B.43)
+n46 N46 (VI.B.36)
+n47 N47 (VI.B.40)
+n48 N48 (VI.B.38)
+n49 N49 (VI.B.39)
+n50 N50 (VI.B.37)
+n51 N51 (VI.B.44)
+n52 N52 (VI.B.42)
+n53 N53 (VI.B.46)
+n54 N54 (VI.B.45)
+n55 N55 (VI.X.5)
+n56 N56 (VI.B.41)
+n57 N57 (VI.B.47)
+n58 N58 (VI.B.30)
+n59 N59 (VI.B.48)
+n60 N60 (VIII.C.2)
+sd1 SD1 (VI.A)
+sd2 SD2 (VI.A)
+sh1 Sheets I
+sh2 Sheets II
+sh3 Sheets III
+sh4 Sheets IV
+sh5 Sheets V
+sh6 Sheets VI
+sh7 Sheets VII
+sh8 Sheets VIII
+ssa SA & SB(VI.A)

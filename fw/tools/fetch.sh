@@ -66,3 +66,10 @@ sed -E 's|^\.\./||; s|^([a-z]+)10\.htm$|\1/\110.htm|' rose/sections.txt | while 
     [ -s rose/cmp/$s.htm ] || curl -sL -o rose/cmp/$s.htm "https://jjda.ie/f/flex/$p"
     sleep 1
 done
+# The text of 1939 on the James Joyce Digital Archive, with its links to the
+# notebooks (the "notons").
+mkdir -p rose/l39
+sed -E 's|^\.\./||; s|^([a-z]+)10\.htm$|\1/\110.htm|' rose/sections.txt | sed -E 's|^([a-z]+)/.*|\1|' | while read s; do
+    [ -s rose/l39/$s.htm ] || curl -sL -o rose/l39/$s.htm "https://jjda.ie/f/flex/$s/l39$s.htm"
+    sleep 1
+done

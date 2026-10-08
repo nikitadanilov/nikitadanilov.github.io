@@ -16,6 +16,7 @@ fw/src/*_lines.json
 fw/src/*.zip
 fw/src/finwake/
 fw/src/rose/cmp/
+fw/src/rose/l39/
 fw/src/rose/*.htm
 fw/src/audio/*.vtt
 fw/tools/review.json

@@ -104,6 +104,26 @@ def finwake(key, raw):
 # right to left with it.
 LRM = '\u200e'
 
+# Notes linking to the notebook entries of the James Joyce Digital Archive
+# start with a capital omega (distinct from the Hebrew letters of the other
+# notes; left-to-right, so no mark is needed after it).
+NOTON_LETTER = '\u03a9'
+NOTONS = collections.defaultdict(list)  # (page, component, line) -> [(lemma, notebook, url, token)].
+
+def notons(key, raw):
+    """Notes linking phrases of the line to the notebook entries they come from."""
+    out = []
+    for (lemma, nb, url, token) in NOTONS.get(key, []):
+        span = locate(raw, dashes(lemma).replace('_', ''), token)
+        if span is None:
+            continue
+        rx = unique(raw, *span)
+        if rx is None:
+            continue
+        out.append('/ +* "{}" {} {}: {}'.format(rx.replace('"', '.'), NOTON_LETTER, dashes(lemma).replace('_', ''), nb))
+        out.append(': += . "(?<=: ){}$" -> {}'.format(re.escape(nb), url))
+    return out
+
 # Notes linking to recorded readings start with the letter qof ("qol", voice).
 AUDIO_LETTER = '\u05e7'
 AUDIO = collections.defaultdict(list)   # (page, line) -> [(url, reader, part)].
@@ -220,6 +240,12 @@ def marks(line):
         body = line[1:]
         body = re.sub(r'^\d{1,2}(?= )', lambda m: m.group(0).translate(SUP), body)
         return '|' + MARK.sub(lambda m: m.group(0).translate(SUP), body)
+    if line.startswith('/ +* "') and NOTON_LETTER in line:
+        # A note of a notebook: the entry ("notebook: page(item)", after the
+        # last but one ": ") is not text.
+        m = re.search(r': [^:]*: [^:]*$', line)
+        (head, label) = (line[:m.start()], line[m.start():])
+        return MARK.sub(lambda m: m.group(0).translate(SUP), head) + label
     if line.startswith('/ +* "'):
         line = re.sub(r'^(/ \+\* ")(\d{1,2})(?=\\ )', lambda m: m.group(1) + m.group(2).translate(SUP), line)
         return MARK.sub(lambda m: m.group(0).translate(SUP), line)
@@ -366,16 +392,16 @@ def card_lines(p, page, first, F, V):
     pid = 'p{:03d}'.format(p)
     for (i, (fid, l)) in enumerate(zip(ids(main), main)):
         for (comp, mid, t) in margins.get(i, []):
-            out += fragment(mid, t, notes = apparatus('{:03d}.{}'.format(p, mid), t) + finwake((p, mid[0], int(mid[1:])), t), image_width = '60%')
+            out += fragment(mid, t, notes = apparatus('{:03d}.{}'.format(p, mid), t) + finwake((p, mid[0], int(mid[1:])), t) + notons((p, mid[0], int(mid[1:])), t), image_width = '60%')
         classify(pid + '-' + fid, l)
-        out += fragment(fid, texts[i], notes = apparatus('{:03d}.{}'.format(p, fid), texts[i], (p, 'main', i + 1)) + finwake((p, 'main', i + 1), texts[i]) + audio((p, i + 1), texts[i]))
+        out += fragment(fid, texts[i], notes = apparatus('{:03d}.{}'.format(p, fid), texts[i], (p, 'main', i + 1)) + finwake((p, 'main', i + 1), texts[i]) + notons((p, 'main', i + 1), texts[i]) + audio((p, i + 1), texts[i]))
     for (comp, mid, t) in [x for (at, xs) in sorted(margins.items()) if at >= len(main) for x in xs]:
         out += fragment(mid, t, notes = apparatus('{:03d}.{}'.format(p, mid), t) + finwake((p, mid[0], int(mid[1:])), t), image_width = '60%')
     ft = balance([dashes(l['t']) for l in page.get('F', [])])
     for (i, l) in enumerate(page.get('F', [])):
         fid = 'F{:02d}'.format(i + 1)
         classify(pid + '-' + fid, dict(l, p = re.match(r'\d+ ', l['t']) is not None), center = False)
-        out += fragment(fid, ft[i], notes = apparatus('{:03d}.{}'.format(p, fid), ft[i]) + finwake((p, 'F', i + 1), ft[i]))
+        out += fragment(fid, ft[i], notes = apparatus('{:03d}.{}'.format(p, fid), ft[i]) + finwake((p, 'F', i + 1), ft[i]) + notons((p, 'F', i + 1), ft[i]))
     # Links to the images of the page in the scanned editions.
     line = '|Page images: 1939 Faber, 1958 Viking.'
     links = ['/ += . "1939 Faber" -> ' + image(F_ITEM, F[p]['scan']),
@@ -479,6 +505,10 @@ def main():
             ROSE[(p, comp, line)].append({ 'token' : tok, 'whole' : whole, 'old' : old, 'new' : new,
                                            'near' : near, 'url' : url, 'first' : first })
         ROSE_PAGES.update({ int(p) : v for (p, v) in d['pages'].items() })
+    no = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'notons.json')
+    if os.path.exists(no):
+        for (p, comp, line, tok, lemma, nb, url) in json.load(open(no)):
+            NOTONS[(p, comp, line)].append((lemma, nb, url, tok))
     au = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'audio.json')
     if os.path.exists(au):
         for (p, line, url, reader, part) in json.load(open(au)):
