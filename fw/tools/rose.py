@@ -172,6 +172,15 @@ def our_tokens(page):
                 out.append((comp, i, k, w))
     return out
 
+def aligned_keys(ours, key):
+    """The keys of the tokens of a page, for alignment: a word broken at the
+    end of a line is the key of its first half, the second half is empty."""
+    b = [key(w) for (_, _, _, w) in ours]
+    for j in range(len(ours) - 1):
+        if ours[j][:2] != ours[j + 1][:2] and re.search(r'\w-$', ours[j][3]):
+            b[j], b[j + 1] = b[j] + b[j + 1], ''
+    return b
+
 def run(collation):
     text = { int(p) : v for (p, v) in json.load(open(collation))['text'].items() }
     sections = [os.path.basename(s.strip())[:-4] for s in open(os.path.join(SRC, 'sections.txt')) if s.strip()]
@@ -217,7 +226,7 @@ def run(collation):
                 continue
             ours = ourtoks[p] = our_tokens(text[p])
             a = [key(t39.text[toks39[i][0]:toks39[i][1]]) for i in idx]
-            b = [key(w) for (_, _, _, w) in ours]
+            b = aligned_keys(ours, key)
             for (tag, i1, i2, j1, j2) in difflib.SequenceMatcher(None, a, b, autojunk = False).get_opcodes():
                 if tag == 'equal' or (tag == 'replace' and i2 - i1 == j2 - j1):
                     for k in range(i2 - i1):
@@ -271,8 +280,11 @@ def run(collation):
             ours = ourtoks[p]
             js = [where[i][1] for i in touch if where[i][0] == p]
             # Words broken at the end of a line here: the other half too.
-            if js and re.search(r'\w-$', ours[js[-1]][3]) and js[-1] + 1 < len(ours):
-                js.append(js[-1] + 1)
+            for j in list(js):
+                if re.search(r'\w-$', ours[j][3]) and j + 1 < len(ours) and ours[j][:2] != ours[j + 1][:2] \
+                   and j + 1 not in js:
+                    js.append(j + 1)
+            js.sort()
             if js and js[0] > 0 and ours[js[0] - 1][:2] != ours[js[0]][:2] and re.search(r'\w-$', ours[js[0] - 1][3]):
                 js.insert(0, js[0] - 1)
             (comp, line, tok, _) = ours[js[0]]
@@ -281,7 +293,9 @@ def run(collation):
                 w = ours[j][3]
                 if n > 0:
                     joined = ours[js[n - 1]][:2] != ours[j][:2] and re.search(r'\w-$', whole)
-                    whole = whole[:-1] if joined else whole + ' '
+                    # A hyphen at the end of a line is kept where 1939 has it.
+                    hyphen = joined and whole.split()[-1] + w.split()[0] in old.split()
+                    whole = whole if hyphen else whole[:-1] if joined else whole + ' '
                 whole += w
             first = ' '.join(ours[j][3] for j in js if ours[j][:2] == (comp, line))
             near = norm(t10.text[max(0, a10 - 60):e10 + 60]).strip()

@@ -152,10 +152,11 @@ ROSE = collections.defaultdict(list)    # (page, component, line) -> variants of
 ROSE_PAGES = {}
 MAXQUOTE = 12   # Longer readings of 2010 are abbreviated (and linked to jjda.ie).
 
-def vkey(s):
-    """Comparison key of readings: no italics, blanks, dash forms or soft
-    breaks."""
-    return re.sub(r'\s+', '', dashes(s).replace('_', '').replace('\u00ad', ''))
+def vkey(s, blanks = False):
+    """Comparison key of readings: no italics, blanks (or, with blanks, only
+    single blanks between words: the division of words counts), dash forms or
+    soft breaks."""
+    return re.sub(r'\s+', ' ' if blanks else '', dashes(s).replace('_', '').replace('\u00ad', '')).strip()
 
 def vwords(s):
     """Words of a text for comparison: no italics, dash forms, case."""
@@ -199,7 +200,7 @@ def apparatus(ref, text, key = None):
         out.append(': place foot')
     for r in rose:
         whole, new = dashes(r['whole']), dashes(r['new'])
-        if vkey(whole) == vkey(new):
+        if vkey(whole, blanks = True) == vkey(new, blanks = True):
             continue    # 2010 agrees with this text (and differs only from jjda.ie's 1939).
         span = locate(text, dashes(r['first']).replace('_', ''), r['token'])
         if span is None:
