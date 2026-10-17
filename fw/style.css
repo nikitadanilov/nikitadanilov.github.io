@@ -80,13 +80,16 @@ span[data-uid="5"] { border-color: violet; }
 @font-face { font-family: "Fweet Figla"; src: url("fonts/FweetFig.ttf") format("truetype"); }
 code.inline { font-family: "Fweet Figla"; font-size: 1.1em; background: none; color: inherit; padding: 0; }
 span.frag-id { font-family: "Source Serif 4", Georgia, serif; font-size: 11px; }
-.column { position: relative; max-width: 590px; margin-left: 240px; margin-right: auto; }
+.column { position: relative; max-width: 590px; margin-left: 80px; margin-right: auto; --notes: clamp(300px, calc(100vw - 750px), 1000px); }
+.column:has(a[name^="p"][name*="-L"]) { margin-left: 240px; --notes: clamp(300px, calc(100vw - 910px), 1000px); }
 p.margin-left { position: absolute; float: none; margin: 0 0 0 -66px; width: 58px; max-width: none; text-align: right; line-height: 1.45; font-size: 20px; }
-p.margin-right { clear: right; margin-right: -640px; max-width: 600px; width: 600px; margin-top: 0; margin-bottom: 0; font-size: 11px; line-height: 14px; display: flex; flex-wrap: wrap; column-gap: 0.3em; }
+p.margin-right { clear: right; margin-right: calc(-1 * var(--notes) - 40px); max-width: var(--notes); width: var(--notes); margin-top: 0; margin-bottom: 0; font-size: 11px; line-height: 14px; display: flex; flex-wrap: wrap; column-gap: 0.3em; }
 p.margin-right br { display: none; }
 p.footnote { font-size: 14px; line-height: 1.4; text-align: left; text-align-last: auto; min-width: 0; }
 div.footnotes p.footnote { display: inline; margin-right: 1.2em; }
-p.margin-right span.annotation { margin-right: 0.6em; white-space: nowrap; }
+p.margin-right span.annotation { margin-right: 0.6em; flex-shrink: 0; max-width: 100%; }
+.lit { background-color: #fff1a6; }
+p.margin-right span.annotation.lit, p.footnote span.annotation.lit { outline: 2px solid #fff1a6; }
 p         { margin: 0; line-height: 1.45; }
 p         { font-size: 20px; font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif; }
 table     { font-size: 20px; font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif; }
