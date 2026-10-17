@@ -131,6 +131,14 @@ The programs
   Lines are justified, except those not set to the full measure in print;
   where the printed measure is narrower than usual (II.2, footnotes), its
   width is computed from the widths of the lines in the text face
-  (src/fonts).
+  (src/fonts). Each deck starts with a comment on its notation.
+
+> personal.py: keeps the reader's own notes, those starting with Λ, when the
+  decks are regenerated: mkdeck.py takes them from the old decks and puts
+  them back after the notes generated for the same lines. Nothing else in a
+  generated deck should be edited: mkdeck.py records a digest of every card
+  it writes (generated.json) and refuses to overwrite a card edited outside
+  its own notes (unless run with --force). "personal.py check" lists such
+  cards; "personal.py list" lists the own notes.
 
 > make.sh: runs collate.py, finwake.py, audio.py, rose.py, notons.py and mkdeck.py.
