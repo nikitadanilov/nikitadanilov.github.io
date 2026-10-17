@@ -71,7 +71,10 @@ def split(lines):
     return rest, [tuple(n) for n in notes]
 
 def digest(lines):
-    return hashlib.sha1(''.join(lines).encode('utf-8')).hexdigest()
+    """The digest of the lines of a card: blank lines (any number of them, as
+    long as there is one) and trailing blanks do not count."""
+    text = re.sub(r'\n\s*\n(\s*\n)*', '\n\n', ''.join(l.rstrip() + '\n' for l in lines))
+    return hashlib.sha1(text.encode('utf-8')).hexdigest()
 
 def attach(lines, notes):
     """Put the own notes back into the lines of a card: each at the end of
