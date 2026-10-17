@@ -105,7 +105,7 @@ figures are images cropped from the 1939 scan.
 / id notes
 The notes
 
-The right margin carries the notes "ט word" (tet), which link the word to its
+The right margin carries the notes "Ξ word" (xi), which link the word to its
 gloss on finwake.com; they are made by aligning the text of finwake.com, where the
 glossed words are links, with the text of this deck (about 51 000 glosses,
 some on parts of words; about 500 could not be placed). Only the links are
@@ -130,8 +130,8 @@ from the archive: no part of its transcriptions is copied here.
 
 Two kinds of notes are footnotes, at the foot of the page, each starting with
 the number of its line, and underlined in the same colour as the words of the
-line it refers to: the notes of the apparatus (below), which start with ב,
-and the notes "ק" (qof, for "qol", voice), which mark the lines where
+line it refers to: the notes of the apparatus (below), which start with Π (pi),
+and the notes "ρ" (rho), which mark the lines where
 recorded readings start and link to the recording at that point; the places
 are found by matching the automatic captions of the recordings against the
 text.
@@ -143,12 +143,12 @@ The apparatus
 
 Where 1939, 1958 and the edition of 2010 differ, a footnote on the line gives
 the variant, in the usual form of a critical apparatus, at the foot of the
-page as in a printed edition. To tell them from other notes, they start with the letter beth, ב
-(for "variorum"):
+page as in a printed edition. To tell them from other notes, they start with the letter pi, Π
+(for παραλλαγή, variant):
 / id form
 
 ; code
-|ב lemma] SIGLUM; reading SIGLUM
+|Π lemma] SIGLUM; reading SIGLUM
 
 The lemma is the reading of the established text, followed by the sigla of
 the editions that have it; after the semicolon are the other readings, each
@@ -157,14 +157,14 @@ followed by the sigla of the editions that have it. "om." means that the printin
 / += . "4\.14" -> !p004-14
 
 ; code
-|ב was] 1958; waz 1939
+|Π was] 1958; waz 1939
 
 and on 3.02 the established text, with 1939 and 1958, reads "commodius",
 where 2010 reads "commodious":
 / += . "3\.02" -> !p003-02
 
 ; code
-|ב commodius] 1939 1958; commodious 2010
+|Π commodius] 1939 1958; commodious 2010
 
 A passage that the two printings divide into lines differently is marked on
 its first line. Differences in spacing, broken or battered type and other

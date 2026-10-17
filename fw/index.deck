@@ -69,7 +69,7 @@ About the text
 > – Tools: the programs that establish the text and generate the deck.
 / += . "Tools" -> !tools
 
-> – Glosses: the notes "ט word" in the right margin link to the glosses
+> – Glosses: the notes "Ξ word" in the right margin link to the glosses
   of finwake.com, a glossary of Finnegans Wake, where the word is explained.
 / += . "finwake\.com" -> https://finwake.com/
 
@@ -78,9 +78,11 @@ About the text
   (click the phrase there to see the entry).
 / += . "James Joyce Digital Archive" -> https://jjda.ie/f/fwhome.htm
 
-> – Readings: a footnote "ק" on the line where a recorded reading starts links to
+> – Readings: a footnote "ρ" on the line where a recorded reading starts links to
   the recording at that line: James Joyce's own reading of the end of I.8
   (1929), and the reading of Books I and II.1 by A Poetry Channel.
+
+> – Own notes: the notes "Λ" are the reader's own.
 
 ; head
 / level 3

@@ -81,8 +81,12 @@ def locate(raw, lemma, token):
 
 FINWAKE = collections.defaultdict(list)   # (page, component, line) -> [(lemma, url, token)].
 
-# Notes linking to finwake.com start with the letter tet.
-FINWAKE_LETTER = '\u05d8'
+# The notes start with a Greek capital telling where they come from: Ξ
+# (xi) finwake.com, Ω (omega) the notebooks, ρ (rho) recorded readings, Π
+# (pi) the apparatus of variants. Λ (lambda) is for the reader's own notes,
+# which the generated decks never have.
+FINWAKE_LETTER = '\u039e'
+PERSONAL_LETTER = '\u039b'
 
 def finwake(key, raw):
     """Notes linking the glossed words of the line to finwake.com."""
@@ -95,18 +99,11 @@ def finwake(key, raw):
         if rx is None:
             continue
         rx = rx.replace('"', '.')
-        out.append('/ +* "{}" {} {}'.format(rx, FINWAKE_LETTER + LRM, lemma))
-        out.append(': += . "(?<={} ).+" -> '.format(FINWAKE_LETTER + LRM) + url.replace('{', '{{').replace('}', '}}'))
+        out.append('/ +* "{}" {} {}'.format(rx, FINWAKE_LETTER, lemma))
+        out.append(': += . "(?<={} ).+" -> '.format(FINWAKE_LETTER) + url.replace('{', '{{').replace('}', '}}'))
     return out
 
-# The Hebrew letters that start the notes are right-to-left: a left-to-right
-# mark after the letter keeps what follows (often digits) from being laid out
-# right to left with it.
-LRM = '\u200e'
-
-# Notes linking to the notebook entries of the James Joyce Digital Archive
-# start with a capital omega (distinct from the Hebrew letters of the other
-# notes; left-to-right, so no mark is needed after it).
+# Notes linking to the notebook entries of the James Joyce Digital Archive.
 NOTON_LETTER = '\u03a9'
 NOTONS = collections.defaultdict(list)  # (page, component, line) -> [(lemma, notebook, url, token)].
 
@@ -124,8 +121,8 @@ def notons(key, raw):
         out.append(': += . "(?<=: ){}$" -> {}'.format(re.escape(nb), url))
     return out
 
-# Notes linking to recorded readings start with the letter qof ("qol", voice).
-AUDIO_LETTER = '\u05e7'
+# Notes linking to recorded readings.
+AUDIO_LETTER = '\u03c1'
 AUDIO = collections.defaultdict(list)   # (page, line) -> [(url, reader, part)].
 
 def audio(key, raw):
@@ -139,14 +136,13 @@ def audio(key, raw):
         rx = unique(raw, *span)
         if rx is None:
             continue
-        out.append('/ +* "{}" {} {}: {}'.format(rx.replace('"', '.'), AUDIO_LETTER + LRM, reader, part))
-        out.append(': += . "(?<={} ).+" -> '.format(AUDIO_LETTER + LRM) + url)
+        out.append('/ +* "{}" {} {}: {}'.format(rx.replace('"', '.'), AUDIO_LETTER, reader, part))
+        out.append(': += . "(?<={} ).+" -> '.format(AUDIO_LETTER) + url)
         out.append(': place foot')
     return out
 
-# Variorum notes start with the letter beth ("v" for variorum), to tell them
-# from the other marginalia.
-VARIORUM = '\u05d1'
+# Notes of the apparatus of variants.
+VARIORUM = '\u03a0'
 
 ROSE = collections.defaultdict(list)    # (page, component, line) -> variants of 2010.
 ROSE_PAGES = {}
@@ -196,7 +192,7 @@ def apparatus(ref, text, key = None):
                 note = '{}] {} 2010; {} {}'.format(lemma, s1, reading, s2)
             elif agrees == s2:
                 note = '{}] {}; {} {} 2010'.format(lemma, s1, reading, s2)
-        out.append('/ +* "{}" {} {}'.format(exact(text, rx).replace('"', '.'), VARIORUM + LRM, note))
+        out.append('/ +* "{}" {} {}'.format(exact(text, rx).replace('"', '.'), VARIORUM, note))
         out.append(': place foot')
     for r in rose:
         whole, new = dashes(r['whole']), dashes(r['new'])
@@ -216,7 +212,7 @@ def apparatus(ref, text, key = None):
             new = '{} … {} ({} words)'.format(' '.join(words[:5]), ' '.join(words[-3:]), len(words))
             link = fragment_url(r['url'], r['near'])
         reading = new if new else 'om.'
-        out.append('/ +* "{}" {} {}] {}; {} 2010'.format(rx.replace('"', '.'), VARIORUM + LRM,
+        out.append('/ +* "{}" {} {}] {}; {} 2010'.format(rx.replace('"', '.'), VARIORUM,
                                                       whole.replace('_', ''), sigla, reading.replace('_', '')))
         if link:
             out.append(': += . "\\(\\d+ words\\)" -> ' + link.replace('{', '{{').replace('}', '}}'))
