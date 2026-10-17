@@ -399,15 +399,18 @@ def card_lines(p, page, first, F, V):
         fid = 'F{:02d}'.format(i + 1)
         classify(pid + '-' + fid, dict(l, p = re.match(r'\d+ ', l['t']) is not None), center = False)
         out += fragment(fid, ft[i], notes = apparatus('{:03d}.{}'.format(p, fid), ft[i]) + finwake((p, 'F', i + 1), ft[i]) + notons((p, 'F', i + 1), ft[i]))
-    # Links to the images of the page in the scanned editions.
-    line = '|Page images: 1939 Faber, 1958 Viking.'
+    # Links to the page in the editions: the images of the page in the scans
+    # of 1939 and 1958.
+    eds = ['1939 Faber', '1958 Viking']
     links = ['/ += . "1939 Faber" -> ' + image(F_ITEM, F[p]['scan']),
              '/ += . "1958 Viking" -> ' + image(V_ITEM, V[p]['scan'])]
+    # The text of 2010 on the James Joyce Digital Archive, from the start of
+    # the page.
     if p in ROSE_PAGES:
         r = ROSE_PAGES[p]
-        pp = 'p. {}'.format(r['from']) if r['from'] == r['to'] else 'pp. {}–{}'.format(r['from'], r['to'])
-        line += ' Edition of 2010 (Rose and O\'Hanlon): {}, on the James Joyce Digital Archive.'.format(pp)
-        links.append('/ += . "{}" -> {}'.format(re.escape(pp), fragment_url(r['jjda'], r['start'])))
+        eds.append("2010 Rose and O'Hanlon")
+        links.append('/ += . "2010 Rose and O.Hanlon" -> {}'.format(fragment_url(r['jjda'], r['start'])))
+    line = '|Pages: {}.'.format(', '.join(eds))
     out += [line, '/ id scans'] + links + ['']
     return out
 
