@@ -14,6 +14,16 @@
    <style>p { margin: 0.6em 0; text-align: justify; }</style>
    <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<script>
+document.addEventListener('mouseover', function (ev) {
+document.querySelectorAll('.lit').forEach(function (x) { x.classList.remove('lit'); });
+for (var e = ev.target; e && e.dataset; e = e.parentElement) {
+if (e.dataset.note) {
+document.querySelectorAll('[data-note="' + e.dataset.note + '"]').forEach(function (x) { x.classList.add('lit'); });
+}
+}
+});
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WEM34DWDR2"></script>
 <script>
 window.dataLayer = window.dataLayer || [];

@@ -297,11 +297,11 @@
 |divorce.
 / id F07
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 205, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n266.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n531.jpg
-/ += . "p\.\ 205" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=RM1%20As%20we%20there%20are%20where
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=RM1%20As%20we%20there%20are%20where
 
 \
 
@@ -665,11 +665,11 @@
 / +* "soto\ poce" Ξ soto poce
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod261.htm#soto61
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 205–206, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n267.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n534.jpg
-/ += . "pp\.\ 205–206" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=gipsylike%20chinkaminx%27%20pulshandjupeyjade%20and%20her%20petsybluse
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=gipsylike%20chinkaminx%27%20pulshandjupeyjade%20and%20her%20petsybluse
 
 \
 
@@ -1048,11 +1048,11 @@
 |Begge. Goodbeg, buggey Begge.
 / id F09
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 206–207, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n268.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n535.jpg
-/ += . "pp\.\ 206–207" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=anyway%2C%20the%20decemt%20man%3F%20Easy%2C%20calm
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=anyway%2C%20the%20decemt%20man%3F%20Easy%2C%20calm
 
 \
 
@@ -1394,11 +1394,11 @@
 / +* "extraordinary" Ξ extraordinary
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod263.htm#extraord
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 207, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n269.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n538.jpg
-/ += . "p\.\ 207" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=seldomers%20that%20most%20frequent%20him.%20That
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/la/lexla.htm#:~:text=seldomers%20that%20most%20frequent%20him.%20That
 
 \
 
@@ -1837,11 +1837,11 @@
 |on our side every time.
 / id F05
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. None–208, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n270.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n539.jpg
-/ += . "pp\.\ None–208" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=RM7%20Honour%20commercio%27s%20energy%20yet%20aid
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=RM7%20Honour%20commercio%27s%20energy%20yet%20aid
 
 \
 
@@ -2223,11 +2223,11 @@
 / +* "P\.\ Shuter" Ξ P. Shuter
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod265.htm#pshut
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 208, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n271.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n542.jpg
-/ += . "p\.\ 208" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=of%20stone%2C%20belgroved%20of%20mulbrey%2C%20the
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=of%20stone%2C%20belgroved%20of%20mulbrey%2C%20the
 
 \
 
@@ -2548,11 +2548,11 @@
 |⁴ A question of pull.
 / id F06
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 208–209, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n272.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n543.jpg
-/ += . "pp\.\ 208–209" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=boxomness%20of%20the%20bedeliasF27%20makes%20hobbyhodge
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lb/lexlb.htm#:~:text=boxomness%20of%20the%20bedeliasF27%20makes%20hobbyhodge
 
 \
 
@@ -2966,11 +2966,11 @@
 |manger.
 / id F08
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. None–210, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n273.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n546.jpg
-/ += . "pp\.\ None–210" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=lead%20us%20seek%2C%20lote%20us%20see%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=lead%20us%20seek%2C%20lote%20us%20see%2C
 
 \
 
@@ -3353,11 +3353,11 @@
 |⁷ A washable lovable floatable doll.
 / id F08
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 210, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n274.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n547.jpg
-/ += . "p\.\ 210" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=If%20has%20faded%20from%20the%20fleur%2CF37
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=If%20has%20faded%20from%20the%20fleur%2CF37
 
 \
 
@@ -3665,11 +3665,11 @@
 / +* "Wenchcraft" Ξ Wenchcraft
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod269.htm#witchcraft
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 210–211, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n275.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n550.jpg
-/ += . "pp\.\ 210–211" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=knowledge%20that%20often%20hate%20on%20first
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=knowledge%20that%20often%20hate%20on%20first
 
 \
 
@@ -4038,11 +4038,11 @@
 / +* "desception" Ξ desception
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod270a.htm#description
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 211, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n276.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n551.jpg
-/ += . "p\.\ 211" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=from%20her%20postconditional%20future.%20Lumpsome%20is
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=from%20her%20postconditional%20future.%20Lumpsome%20is
 
 \
 
@@ -4443,11 +4443,11 @@
 / +* "charmeuse" Ξ charmeuse
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod271.htm#charmeuse
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 211–212, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n277.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n554.jpg
-/ += . "pp\.\ 211–212" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=The%20O%27Connor%2C%20The%20MacLoughlin%20and%20The
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=The%20O%27Connor%2C%20The%20MacLoughlin%20and%20The
 
 \
 
@@ -4863,11 +4863,11 @@
 |pepettes of our lovelives.
 / id F05
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 212–213, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n278.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n555.jpg
-/ += . "pp\.\ 212–213" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=Hoots%20fromm%2C%20we%27re%20globing.%20Why%20hidest
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=Hoots%20fromm%2C%20we%27re%20globing.%20Why%20hidest
 
 \
 
@@ -5243,11 +5243,11 @@
 / +* "tathair" Ξ tathair
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod273.htm#an
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 213, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n279.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n558.jpg
-/ += . "p\.\ 213" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=LM42%20By%20old%20Grumbledum%27s%20walls.%20Bumps%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=LM42%20By%20old%20Grumbledum%27s%20walls.%20Bumps%2C
 
 \
 
@@ -5627,11 +5627,11 @@
 / +* "jelly" Ξ jelly
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod274.htm#jelly
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 213–214, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n280.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n559.jpg
-/ += . "pp\.\ 213–214" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=coverchaf%20emblem%20on.%20LM47%20For%20the
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=coverchaf%20emblem%20on.%20LM47%20For%20the
 
 \
 
@@ -5938,11 +5938,11 @@
 / +* "dolphins\ born" Ξ dolphins born
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod275.htm#Dolphin
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 214, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n281.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n562.jpg
-/ += . "p\.\ 214" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=from%20Bryan%20Awlining%2C%20Erin%27s%20hircohaired%20culoteer.F74
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lc/lexlc.htm#:~:text=from%20Bryan%20Awlining%2C%20Erin%27s%20hircohaired%20culoteer.F74
 
 \
 
@@ -6357,11 +6357,11 @@
 / +* "liss" Ξ liss
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod276.htm#liss
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. None–215, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n282.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n563.jpg
-/ += . "pp\.\ None–215" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=other%27s%20weariness%20waiting%20to%20beadroll%20his
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=other%27s%20weariness%20waiting%20to%20beadroll%20his
 
 \
 
@@ -6738,11 +6738,11 @@
 |with his bakset of yosters.
 / id F12
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 215–216, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n283.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n566.jpg
-/ += . "pp\.\ 215–216" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=King.F87%20His%20sevencoloured%27s%20soot%20%28Ochone%21%20Ochonal%21%29F88
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=King.F87%20His%20sevencoloured%27s%20soot%20%28Ochone%21%20Ochonal%21%29F88
 
 \
 
@@ -7054,11 +7054,11 @@
 / +* "hat" Ξ hat
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod278.htm#Is
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 216, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n284.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n567.jpg
-/ += . "p\.\ 216" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=gobbet%20for%20its%20quantity%20of%20quality
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/ld/lexld.htm#:~:text=gobbet%20for%20its%20quantity%20of%20quality
 
 \
 
@@ -7648,11 +7648,11 @@
 / +* "clothes" Ξ clothes
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod279.htm#Priest
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. None, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n285.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n570.jpg
-/ += . "p\.\ None" -> https://jjda.ie/f/flex/le/lexle.htm#:~:text=Key%3A%202010%20text%20f101%20Come%2C%20smooth
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/le/lexle.htm#:~:text=Key%3A%202010%20text%20f101%20Come%2C%20smooth
 
 \
 
@@ -7972,11 +7972,11 @@
 / +* "Till" Ω Till: Sheets II: 2(b)
 : += . "(?<=: )Sheets\ II:\ 2\(b\)$" -> https://jjda.ie/f/flex/lf/l39lf.htm#sh2002b
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. None–218, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n286.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n571.jpg
-/ += . "pp\.\ None–218" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=A%20scene%20at%20sight.%20Or%20dreamoneire.
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=A%20scene%20at%20sight.%20Or%20dreamoneire.
 
 \
 
@@ -8336,11 +8336,11 @@
 / +* "nickleless" Ξ nickleless
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod281.htm#nickel
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 218, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n287.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n574.jpg
-/ += . "p\.\ 218" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=Lammas%20is%20led%20in%20by%20baith
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=Lammas%20is%20led%20in%20by%20baith
 
 \
 
@@ -8623,11 +8623,11 @@
 |Stop.
 / id F05
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 218, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n288.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n575.jpg
-/ += . "p\.\ 218" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=RM22%20With%20sobs%20for%20his%20job%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lf/lexlf.htm#:~:text=RM22%20With%20sobs%20for%20his%20job%2C
 
 \
 
@@ -9016,11 +9016,11 @@
 / +* "pellet" Ξ pellet
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod283.htm#pellet
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 219, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n289.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n578.jpg
-/ += . "p\.\ 219" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=Foughty%20Unn%2C%20Enoch%20Thortig%2C%20endso%20one%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=Foughty%20Unn%2C%20Enoch%20Thortig%2C%20endso%20one%2C
 
 \
 
@@ -9382,11 +9382,11 @@
 / +* "jaunts" Ξ jaunts
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod284.htm#jaunt
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 219–220, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n290.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n579.jpg
-/ += . "pp\.\ 219–220" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=median%2C%20LM84%20hce%20che%20ech%2C%20interecting
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=median%2C%20LM84%20hce%20che%20ech%2C%20interecting
 
 \
 
@@ -9772,11 +9772,11 @@
 |Indiana Blues on the violens.
 / id F09
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 220–221, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n291.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n582.jpg
-/ += . "pp\.\ 220–221" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=but%20%28lenz%20alack%20lends%20a%20lot%29%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=but%20%28lenz%20alack%20lends%20a%20lot%29%2C
 
 \
 
@@ -10155,11 +10155,11 @@
 / +* "choucolout" Ξ choucolout
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod286.htm#chocolate
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 221, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n292.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n583.jpg
-/ += . "p\.\ 221" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=For%20his%20neuralgiabrows.%20Equal%20to%20%3D
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=For%20his%20neuralgiabrows.%20Equal%20to%20%3D
 
 \
 
@@ -10466,11 +10466,11 @@
 |way to work a curse.
 / id F05
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 221–222, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n293.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n586.jpg
-/ += . "pp\.\ 221–222" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=the%20virtuoser%20prays%2C%20olorum%21%20What%20the
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=the%20virtuoser%20prays%2C%20olorum%21%20What%20the
 
 \
 
@@ -10857,11 +10857,11 @@
 / +* "mutchtatches" Ξ mutchtatches
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod288.htm#moustache
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 222–223, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n294.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n587.jpg
-/ += . "pp\.\ 222–223" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=for%20a%20dillon%20a%20dollar%2Cf133%20changing
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=for%20a%20dillon%20a%20dollar%2Cf133%20changing
 
 \
 
@@ -11265,11 +11265,11 @@
 / +* "modeln" Ξ modeln
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod289.htm#modeln
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 223–224, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n295.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n590.jpg
-/ += . "pp\.\ 223–224" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=ford%20to%20their%20healing%20andf140%20byleave
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=ford%20to%20their%20healing%20andf140%20byleave
 
 \
 
@@ -11677,11 +11677,11 @@
 |who the slave is doing behind the curtain.
 / id F09
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 224, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n296.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n591.jpg
-/ += . "p\.\ 224" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=deceptered%2C%20in%20what%20niche%20of%20timef146
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=deceptered%2C%20in%20what%20niche%20of%20timef146
 
 \
 
@@ -12084,11 +12084,11 @@
 |death.
 / id F10
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 224–225, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n297.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n594.jpg
-/ += . "pp\.\ 224–225" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=One%20and%20Only%2C%20Unic%20bar%20None%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=One%20and%20Only%2C%20Unic%20bar%20None%2C
 
 \
 
@@ -12466,11 +12466,11 @@
 / +* "Wolsley" Ξ Wolsley
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod292.htm#Wolseley
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 225–226, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n298.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n595.jpg
-/ += . "pp\.\ 225–226" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=granyou%20and%20Vae%20Vinctis%2C%20if%20that
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=granyou%20and%20Vae%20Vinctis%2C%20if%20that
 
 \
 
@@ -12747,11 +12747,11 @@
 / +* "Burtt" Ξ Burtt
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod293.htm#Burtt
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 226–227, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n299.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n598.jpg
-/ += . "pp\.\ 226–227" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=%3A%20Fig.1.%20Bass.%20RM30%20Coss%3F%20Cossist%3F
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=%3A%20Fig.1.%20Bass.%20RM30%20Coss%3F%20Cossist%3F
 
 \
 
@@ -13123,11 +13123,11 @@
 / +* "anmal\ matter" Ξ anmal matter
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod294.htm#Alma94
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 227, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n300.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n599.jpg
-/ += . "p\.\ 227" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=your%20dappled%20eye%20here%2C%20mine%27s%20presbyoperian%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=your%20dappled%20eye%20here%2C%20mine%27s%20presbyoperian%2C
 
 \
 
@@ -13472,11 +13472,11 @@
 / +* "tinkle" Ξ tinkle
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod295.htm#tinkle
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 227–228, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n301.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n602.jpg
-/ += . "pp\.\ 227–228" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=homolocous%20humminbass%20hesterdie%20and%20istherdie%20and
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=homolocous%20humminbass%20hesterdie%20and%20istherdie%20and
 
 \
 
@@ -13823,11 +13823,11 @@
 / +* "impudence" Ξ impudence
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod296.htm#impudence
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 228, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n302.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n603.jpg
-/ += . "p\.\ 228" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=mea.%20The%20doubleviewed%20seeds.%20Nun%2C%20lemmas
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=mea.%20The%20doubleviewed%20seeds.%20Nun%2C%20lemmas
 
 \
 
@@ -14257,11 +14257,11 @@
 / +* "whiss" Ξ whiss
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod297.htm#whiss
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 228–229, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n303.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n606.jpg
-/ += . "pp\.\ 228–229" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=geomater.%20Where%20Hoddum%20and%20Heave%2C%20our
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=geomater.%20Where%20Hoddum%20and%20Heave%2C%20our
 
 \
 
@@ -14622,11 +14622,11 @@
 |³ The boast of the town.
 / id F03
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 229–230, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n304.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n607.jpg
-/ += . "pp\.\ 229–230" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=lm104%20Paa%20lickam%20laa%20%2C%20all
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=lm104%20Paa%20lickam%20laa%20%2C%20all
 
 \
 
@@ -15003,11 +15003,11 @@
 |fam.?
 / id F06
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 230, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n305.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n610.jpg
-/ += . "p\.\ 230" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=to%20scherts.f186%20Scholium%3A%20there%20are%20trist
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=to%20scherts.f186%20Scholium%3A%20there%20are%20trist
 
 \
 
@@ -15397,11 +15397,11 @@
 / +* "whide\ elephant" Ξ whide elephant
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod300a.htm#white00
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 230–231, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n306.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n611.jpg
-/ += . "pp\.\ 230–231" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=Want%20to%20join%20the%20police%3F%20f190
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=Want%20to%20join%20the%20police%3F%20f190
 
 \
 
@@ -15734,11 +15734,11 @@
 |corner. Grunny Grant.
 / id F07
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 231, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n307.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n614.jpg
-/ += . "p\.\ 231" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=taughtropes.%20%28Spry%20him%21%20Call%20a%20bloodlekar%21
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=taughtropes.%20%28Spry%20him%21%20Call%20a%20bloodlekar%21
 
 \
 
@@ -16112,11 +16112,11 @@
 |³ Gag his tubes yourself.
 / id F05
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 231–232, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n308.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n615.jpg
-/ += . "pp\.\ 231–232" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=quoths%20the%20Bhagavat%20biskop%20Leech.%29%20Ann
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=quoths%20the%20Bhagavat%20biskop%20Leech.%29%20Ann
 
 \
 
@@ -16497,11 +16497,11 @@
 |³ The Brownes de Browne - Browne of Castlehacknolan.
 / id F04
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 232–233, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n309.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n618.jpg
-/ += . "pp\.\ 232–233" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=And%20this%2C%20pardonsky%21%2C%20is%20the%20way
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=And%20this%2C%20pardonsky%21%2C%20is%20the%20way
 
 \
 
@@ -16783,11 +16783,11 @@
 / +* "Alls\ Sings" Ξ Alls Sings
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod304.htm#Saints04
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): p. 233, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n310.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n619.jpg
-/ += . "p\.\ 233" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=wan%27s%20won%21%20Rip%21f205%20And%20his%20countinghands
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lg/lexlg.htm#:~:text=wan%27s%20won%21%20Rip%21f205%20And%20his%20countinghands
 
 \
 
@@ -17171,11 +17171,11 @@
 / +* "Gusty" Ξ Gusty
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod305.htm#gusty
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. None–234, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n311.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n622.jpg
-/ += . "pp\.\ None–234" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=read%20we%20in%20must%20book.%20It
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=read%20we%20in%20must%20book.%20It
 
 \
 
@@ -17484,11 +17484,11 @@
 / +* "things" Ξ things
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod306.htm#Catechism
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 234–235, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n312.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n623.jpg
-/ += . "pp\.\ 234–235" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=staff%2C%20scarf%20and%20blessed%20wallet%20and
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=staff%2C%20scarf%20and%20blessed%20wallet%20and
 
 \
 
@@ -17786,11 +17786,11 @@
 / +* "hit\ the\ hay" Ξ hit the hay
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod307.htm#hit07
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 235–236, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n313.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n626.jpg
-/ += . "pp\.\ 235–236" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=Visit%20to%20Guinness%27s%20Brewery%2C%20lm141%20Clubs%2C
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=Visit%20to%20Guinness%27s%20Brewery%2C%20lm141%20Clubs%2C
 
 \
 
@@ -18053,9 +18053,9 @@
 / +* "on\ the\ line" Ξ on the line
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod308.htm#line08
 
-|Page images: 1939 Faber, 1958 Viking. Edition of 2010 (Rose and O'Hanlon): pp. 236–237, on the James Joyce Digital Archive.
+|Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
 / += . "1939 Faber" -> https://archive.org/download/in.ernet.dli.2015.207614/page/n314.jpg
 / += . "1958 Viking" -> https://archive.org/download/finneganswake00joycuoft/page/n627.jpg
-/ += . "pp\.\ 236–237" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=lm175%20Delays%20are%20Dangerous.%20RM41%20Vitavite%21
+/ += . "2010 Rose and O.Hanlon" -> https://jjda.ie/f/flex/lh/lexlh.htm#:~:text=lm175%20Delays%20are%20Dangerous.%20RM41%20Vitavite%21
 
