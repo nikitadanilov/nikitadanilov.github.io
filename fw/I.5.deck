@@ -3224,6 +3224,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod113.htm#browned
 / +* "nolensed" Ξ nolensed
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod113.htm#nolens
+/ +* "browned or nolensed" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |find it devilish hard now and again even to believe itself. _Habes_
 / id 29
@@ -5121,6 +5122,8 @@
 
 |called after some his hes hecitency Hec, which, moved contra-
 / id 18
+/ +* "hecitency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |watchwise, represents his title in sigla as the smaller *A*, fontly
 / id 19

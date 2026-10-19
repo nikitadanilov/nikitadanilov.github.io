@@ -2484,6 +2484,8 @@
 / id 14
 / +* "hesitency," Ω hesitency,: VI.C.18: 35(d)
 : += . "(?<=: )VI\.C\.18:\ 35\(d\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#c18035d
+/ +* "hesitency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |at the place and period under consideration a socially organic
 / id 15
@@ -2577,6 +2579,7 @@
 : += . "(?<=: )VI\.C\.18:\ 35\(g\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#c18035g
 / +* "Tip\.(?=$)" Ω Tip.: VI.C.18: 37(h)
 : += . "(?<=: )VI\.C\.18:\ 37\(h\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#c18037h
+/ +* "Browne yet Noland" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |Advert.
 / id 24

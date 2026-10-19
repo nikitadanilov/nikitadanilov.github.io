@@ -7859,6 +7859,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod421.htm#cerebrate
 / +* "men" Ξ men
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod421.htm#mentioning
+/ +* "hesitancy" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |tioningahem?
 / id 20
@@ -7877,6 +7879,8 @@
 / id 23
 / +* "ares" Ξ ares
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod421.htm#Ares
+/ +* "HeCitEncy" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |Notorious I rather would feel inclined to myself in the first place
 / id 24

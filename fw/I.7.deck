@@ -3279,6 +3279,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter7/prevod177.htm#davy
 / +* "pal\ around\ with," Ω pal around with,: N6 (VI.B.11): 115(e)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 115\(e\)$" -> https://jjda.ie/f/flex/g/l39g.htm#n06115e
+/ +* "Browne-Nowlan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |heavenlaid twin, (this hambone dogpoet pseudoed himself under
 / id 21
@@ -7639,6 +7640,8 @@
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 227\(a\)$" -> https://jjda.ie/f/flex/g/l39g.htm#n26227a
 / +* "but" Ω but: N8 (VI.B.6): 84(k)
 : += . "(?<=: )N8\ \(VI\.B\.6\):\ 84\(k\)$" -> https://jjda.ie/f/flex/g/l39g.htm#n08084k
+/ +* "hesitensies" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |dress myself to you, with the empirative of my vendettative, pro-
 / id 31

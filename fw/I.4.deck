@@ -3144,6 +3144,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter4/prevod82.htm#maul
 / +* "hesitency" Ω hesitency: N51 (VI.B.44): 158(e)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 158\(e\)$" -> https://jjda.ie/f/flex/d/l39d.htm#n51158e
+/ +* "hesitency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |carried to excelcism) rather amusedly replied: Woowoo would
 / id 31
@@ -8765,6 +8767,9 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter4/prevod97.htm#atake
 / +* "His\ atake\ is" Ω His atake is: N48 (VI.B.38): 71(d)
 : += . "(?<=: )N48\ \(VI\.B\.38\):\ 71\(d\)$" -> https://jjda.ie/f/flex/d/l39d.htm#n48071d
+/ +* "hesitency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
+
 
 |it ashe, tittery taw tatterytail, hasitense humponadimply, heyhey-
 / id 26

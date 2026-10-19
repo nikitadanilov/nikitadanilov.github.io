@@ -1979,6 +1979,8 @@
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 96\(h\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n23096h
 / +* "Execration" Ω Execration: N26 (VI.B.18): 262(h)
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 262\(h\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n26262h
+/ +* "Hesitency" Λ 'Hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |to be honnisoid. The Earwicker of that spurring instant, realising
 / id 21
@@ -3207,6 +3209,7 @@
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 193\(d\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n18193d
 / +* "seized" Ω seized: N5 (VI.B.2): 51(k)
 : += . "(?<=: )N5\ \(VI\.B\.2\):\ 51\(k\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n05051k
+/ +* "Browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |of the facts, was overheard, in his secondary personality as a
 / id 27
@@ -3225,6 +3228,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod38.htm#reared
 / +* "by\ accident\ —\ if,\ that\ is," Ω by accident — if, that is,: N6 (VI.B.11): 117(f)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 117\(f\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n06117f
+/ +* "Nolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |incident it was an accident for here the ruah of Ecclectiastes
 / id 29

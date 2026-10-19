@@ -5399,6 +5399,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod16.htm#Brian
 / +* "Hasatency\?" Ω Hasatency?: N51 (VI.B.44): 158(e)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 158\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n51158e
+/ +* "Hasatency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |Usurp! I trumple from rath in mine mines when I
 / id 27
@@ -5441,6 +5443,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod16.htm#gilt
 / +* "hasitancy" Ω hasitancy: N51 (VI.B.44): 158(e)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 158\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n51158e
+/ +* "hasitancy" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |have sylvan coyne, a piece of oak. Ghinees hies good
 / id 31
@@ -9513,6 +9517,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod26.htm#turn26
 / +* "hathatansy" Ω hathatansy: N53 (VI.B.46): 39(ag)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 39\(ag\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n53039ag
+/ +* "hathatansy" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |mudapplication. Allfor the books and never pegging smashers
 / id 36

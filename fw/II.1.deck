@@ -4848,6 +4848,7 @@
 : place foot
 / +* "tumtum" Ξ tumtum
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod231.htm#tumtum
+/ +* "^.*$" Λ Ellman p.33: from 'Et Tu, Healy'.
 
 |_Whereof in youthfood port I preyed_
 / id 06

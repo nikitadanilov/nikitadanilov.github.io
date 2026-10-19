@@ -3084,6 +3084,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod268.htm#BROWNE68
 / +* "a\ rhythmatick" Ω a rhythmatick: N41 (VI.B.33): 138(f)
 : += . "(?<=: )N41\ \(VI\.B\.33\):\ 138\(f\)$" -> https://jjda.ie/f/flex/lc/l39lc.htm#n41138f
+/ +* "Browne\ and" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |Nolan's divisional tables whereas she, of
 / id 09
@@ -7945,6 +7946,7 @@
 / id 32
 / +* "Bandusian" Ξ Bandusian
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod280a.htm#BANDUSIA
+/ +* "^.*$" Λ Ellman p.52: from _Moods_, tr. _O fons Bandisiae_.
 
 |after odours sigh of musk. Blotsbloshblothe,
 / id 33
@@ -13817,6 +13819,8 @@
 / id F04
 / +* "Hasitatense" Ξ Hasitatense
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod296.htm#hesitancy
+/ +* "Hasitatense" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |⁵ The impudence of that in girl's things!
 / id F05
@@ -15325,6 +15329,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod300a.htm#Eliot
 / +* "noland's\ browne" Ω noland's browne: N23 (VI.B.12): 101(d)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 101\(d\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n23101d
+/ +* "noland's\ browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |(thur him no quartos!) till that on him poorin
 / id 30
@@ -16496,6 +16501,7 @@
 
 |³ The Brownes de Browne - Browne of Castlehacknolan.
 / id F04
+/ +* "Browne\ of\ Castlehacknolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
@@ -16853,6 +16859,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod305.htm#forge
 / +* "Forge" Ω Forge: VI.C.2: 22(e)
 : += . "(?<=: )VI\.C\.2:\ 22\(e\)$" -> https://jjda.ie/f/flex/lh/l39lh.htm#c02022e
+/ +* "hazeydency" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |CONKERY
 / id R05

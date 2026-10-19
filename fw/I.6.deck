@@ -2703,6 +2703,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod133.htm#porto
 / +* "flippant" Ξ flippant
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod133.htm#flippant
+/ +* "unhesitent" Λ 'hesitency' _vs_. 'hesitancy'.
+: += . "(?<=Λ ).+" -> https://www.newyorker.com/magazine/2012/08/13/word-counts-3
 
 |his unionism and yet a pigotted nationalist; Sylviacola is shy of
 / id 15
@@ -12253,6 +12255,7 @@
 / id 22
 / +* "Nolan\ Browne," Π Nolan Browne,] 1939 1958; Nolan-Browne, 2010
 : place foot
+/ +* "Nolan\ Browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
 
 |Peters, Fox.
 / id 23
