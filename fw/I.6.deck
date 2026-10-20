@@ -262,6 +262,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod127.htm#heptagon
 / +* "emprisoms" Ξ emprisoms
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod127.htm#imprison
+/ +* "heptagon crystal emprisoms" Λ HCE
 
 |fauss for us; is infinite swell in unfitting induments; once was he
 / id 04
@@ -508,6 +509,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod127.htm#plead
 / +* "pleaded\ and\ proved;" Ω pleaded and proved;: N51 (VI.B.44): 117(a)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 117\(a\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n51117a
+/ +* "and\ lited,\ pleaded" Λ ALP
 
 |catches his check at banck of Indgangd and endurses his doom at
 / id 28
@@ -1759,6 +1761,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod130a.htm#Hwang30
 / +* "Hwang\ Chang" Ω Hwang Chang: N33 (VI.B.4): 60(g)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 60\(g\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n33060g
+/ +* "Hwang Chang evelytime" Λ HCE
 
 |highbigpipey boys but fancy him as smoking fags his at time of
 / id 36
@@ -1856,6 +1859,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod131.htm#ostman
 / +* "Ostman" Ω Ostman: N33 (VI.B.4): 135(i)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 135\(i\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n33135i
+/ +* "hoveth chieftains evrywehr" Λ HCE
 
 |Effendi, Serge Paddishaw; baases two mmany, outpriams al'
 / id 08
@@ -2129,6 +2133,8 @@
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 255\(f\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n33255f
 / +* "hagion" Ω hagion: N33 (VI.B.4): 298(c)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 298\(c\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n33298c
+/ +* "hereditatis columna erecta" Λ HCE
+/ +* "hagion chiton eraphon" Λ HCE
 
 |the nonce but crows cheerio when they get ecunemical; is a simul-
 / id 31
@@ -2813,6 +2819,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod133.htm#ectoplasm
 / +* "ectoplasm;" Ω ectoplasm;: N18 (VI.B.8): 148(b)
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 148\(b\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n18148b
+/ +* "hallucination, cauchman, ectoplasm" Λ HCE
 
 |passed for baabaa blacksheep till he grew white woo woo woolly;
 / id 25
@@ -3131,6 +3138,7 @@
 / id 19
 / +* "hard\ cash" Ξ hard cash
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod134.htm#hard34
+/ +* "hard\ cash" Λ HCE
 
 |earned in Watling Street; his birth proved accidental shows his
 / id 20
@@ -3138,6 +3146,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod134.htm#Watling34
 / +* "his\ birth\ proved\ accidental" Ω his birth proved accidental: N53 (VI.B.46): 124(b)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 124\(b\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n53124b
+/ +* "earned" Λ HCE
 
 |death its grave mistake; brought us giant ivy from the land of
 / id 21
@@ -3584,6 +3593,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod135.htm#equerry
 / +* "Dear\ Hewitt\ Castello,\ Equerry," Ω Dear Hewitt Castello, Equerry,: N54 (VI.B.45): 144(b)
 : += . "(?<=: )N54\ \(VI\.B\.45\):\ 144\(b\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n54144b
+/ +* "Hewitt Castello, Equerry" Λ HCE
 
 |were daylighted with our outing and are looking backwards to
 / id 30
@@ -4245,6 +4255,7 @@
 / id 14
 / +* "chaosfoedted" Ξ chaosfoedted
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod137.htm#chaos
+/ +* "heavengendered, chaosfoedted, earthborn" Λ HCE
 
 |father presumptively ploughed it deep on overtime and his
 / id 15
@@ -4507,6 +4518,7 @@
 / id 05
 / +* "importunate" Ξ importunate
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod138.htm#importunate
+/ +* "a\ lovely\ park" Λ ALP
 
 |Z are easily over reached; is an excrescence to civilised humanity
 / id 06
@@ -4626,6 +4638,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod138.htm#Hans
 / +* "weaks\ of\ his\ evenin" Ξ weaks of his evenin
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod138.htm#evenings
+/ +* "H. C. Endersen" Λ HCE
 
 |Ivaun the Taurrible every strongday morn; soaps you soft to your
 / id 17
@@ -6682,6 +6695,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod143.htm#beautiful
 / +* "pitounette," Ω pitounette,: N53 (VI.B.46): 31(ai)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 31\(ai\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n53031ai
+/ +* "are\ lovely,\ pitounette" Λ ALP
 
 |the wind, sweet! What exquisite hands you have, you angiol, if
 / id 33
@@ -7435,6 +7449,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod145.htm#NEW
 / +* "that\ New\ Free\ Woman\ with\ novel\ inside\." Ω that New Free Woman with novel inside.: N35 (VI.B.24): 57(d)
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ 57\(d\)$" -> https://jjda.ie/f/flex/fa/l39fa.htm#n35057d
+/ +* "I\'m\ so\ keen\ on\ that\ New\ Free\ Woman\ with\ novel\ inside" Λ Ellmann p.362: novel = _A Portrait_; Dora Marsden ... founded the Freewoman. Out of this she begot the New Freewoman
 
 |always as tickled as can be over Man in a Surplus by the Lady
 / id 30
@@ -8618,6 +8633,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod149.htm#fox49
 / +* "pricking" Ξ pricking
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod149.htm#picking
+/ +* "and\ lice,\ pricking" Λ ALP
 
 |or wringing his handcuffs for peace, the blind blighter, praying
 / id 02
@@ -9916,6 +9932,7 @@
 / id 02
 / +* "Amnis\ Limina\ Permanent" Ξ Amnis Limina Permanent
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod153.htm#amnis
+/ +* "Amnis\ Limina\ Permanent" Λ ALP
 
 |most unconsciously boggylooking stream he ever locked his
 / id 03
@@ -9946,6 +9963,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod153.htm#rinn
 / +* "dribbled" Ξ dribbled
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod153.htm#dribble
+/ +* "any" Λ ALP
 
 |lively purliteasy: _My, my, my! Me and me! Little down dream_
 / id 07
@@ -9955,6 +9973,7 @@
 : place foot
 / +* "down" Ξ down
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod153.htm#donn
+/ +* "lively\ purliteasy" Λ ALP
 
 |_don't I love thee!_
 / id 08
@@ -12255,7 +12274,7 @@
 / id 22
 / +* "Nolan\ Browne," Π Nolan Browne,] 1939 1958; Nolan-Browne, 2010
 : place foot
-/ +* "Nolan\ Browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Nolan\ Browne" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |Peters, Fox.
 / id 23
@@ -14224,6 +14243,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter6/prevod165.htm#planner
 / +* "vivarious" Ω vivarious: N54 (VI.B.45): 126(e)
 : += . "(?<=: )N54\ \(VI\.B\.45\):\ 126\(e\)$" -> https://jjda.ie/f/flex/fd/l39fd.htm#n54126e
+/ +* "a\ lunger\ planner's" Λ ALP
 
 |and you may not care for argon, it will be very convenient for
 / id 11

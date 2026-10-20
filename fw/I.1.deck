@@ -564,6 +564,7 @@
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 147\(d\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n17147d
 / +* "Phall" Ω Phall: N25 (VI.B.15): 181(f)
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 181\(f\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25181f
+/ +* "askes\ lay\.\ Phall" Λ ALP
 
 |you but will, rise you must: and none so soon either shall the
 / id 16
@@ -719,6 +720,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod4.htm#anny
 / +* "He\ addle" Ω He addle: N20 (VI.B.13): 138(c)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 138\(c\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n20138c
+/ +* "addle\ liddle\ phifie" Λ ALP
 
 |ugged the little craythur. Wither hayre in honds tuck up your part
 / id 29
@@ -787,6 +789,7 @@
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 143\(d\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n33143d
 / +* "caligulate" Ω caligulate: N12 (VI.B.14): 72(a)
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 72\(a\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n12072a
+/ +* "Haroun\ Childeric\ Eggeberth" Λ HCE
 
 |les the alltitude and malltitude until he seesaw by neatlight of the
 / id 33
@@ -1658,6 +1661,7 @@
 / id 35
 / +* "bill" Ξ bill
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod6.htm#hill
+/ +* "he\ calmly\ extensolies" Λ HCE
 
 |horn!) from fjord to fjell his baywinds' oboboes shall wail him
 / id 36
@@ -1906,6 +1910,7 @@
 : place foot
 / +* "Bronto" Ξ Bronto
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod7.htm#bronto
+/ +* "Hic\ cubat" Λ HCE
 
 |_edilis. Apud libertinam parvulam._ Whatif she be in flags or flitters,
 / id 23
@@ -1915,6 +1920,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod7.htm#flag
 / +* "flitters" Ξ flitters
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod7.htm#flitter
+/ +* "edilis" Λ HCE
+/ +* "Apud\ libertinam\ parvulam" Λ ALP
 
 |reekierags or sundyechosies, with a mint of mines or beggar a
 / id 24
@@ -2960,6 +2967,7 @@
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 89\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25089e
 / +* "bluddle" Ω bluddle: N25 (VI.B.15): 53(l)
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 53\(l\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25053l
+/ +* "bluddle" Λ Ellmann p.410: When the battle is over and the field is covered with blood, it is no longer a battlefield, but a bloodfield.
 
 |filth. This is the hinndoo waxing ranjymad for a bombshoob.
 / id 09
@@ -3062,6 +3070,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod10.htm#bullseye
 / +* "How" Ω How: N25 (VI.B.15): 108(e)
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 108\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25108e
+/ +* "How\ Copen\-" Λ HCE
 
 |hagen ended. This way the museyroom. Mind your boots goan
 / id 22
@@ -3069,6 +3078,7 @@
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 108\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25108e
 / +* "Mind\ your\ boots\ goan" Ω Mind your boots goan: N23 (VI.B.12): 178(d)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 178\(d\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n23178d
+/ +* "hagen\ ended" Λ HCE
 
 |out.
 / id 23
@@ -3359,6 +3369,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod11.htm#truce
 / +* "minutia" Ω minutia: N1 (VI.B.10): 48(b)
 : += . "(?<=: )N1\ \(VI\.B\.10\):\ 48\(b\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n01048b
+/ +* "happinest" Λ HCE
 
 |childher everwere. Come nebo me and suso sing the day we
 / id 16
@@ -3370,6 +3381,7 @@
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 135\(c\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n53135c
 / +* "suso" Ω suso: N53 (VI.B.46): 135(c)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 135\(c\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n53135c
+/ +* "childher\ everwere" Λ HCE
 
 |sallybright. She's burrowed the coacher's headlight the better to
 / id 17
@@ -3451,6 +3463,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod11.htm#nickel
 / +* "nacks" Ξ nacks
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod11.htm#nack
+/ +* "a\ lugly\ parson" Λ ALP
 
 |of cates and howitzer muchears and midgers and maggets, ills and
 / id 24
@@ -4009,11 +4022,13 @@
 
 |Hush! Caution! Echoland!
 / id 05
+/ +* "Hush!\ Caution!\ Echoland" Λ HCE
 
 |How charmingly exquisite! It reminds you of the outwashed
 / id 06
 / +* "outwashed" Ξ outwashed
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod13.htm#outwash
+/ +* "How\ charmingly\ exquisite" Λ HCE
 
 |engravure that we used to be blurring on the blotchwall of his
 / id 07
@@ -4756,6 +4771,7 @@
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 144\(c\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n09144c
 / +* "bouts" Ω bouts: N25 (VI.B.15): 113(e)
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 113\(e\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25113e
+/ +* "Since\ the\ bouts\ of\ Hebear" Λ Ellmann p.676: Edgar Quinet
 
 |and Hairyman the cornflowers have been staying at Ballymun,
 / id 36
@@ -5815,6 +5831,7 @@
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 164\(h\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n25164h
 / +* "eastuards,\ they\ are\ in\ surgence:" Ω eastuards, they are in surgence:: N11 (VI.B.5): 144(c)
 : += . "(?<=: )N11\ \(VI\.B\.5\):\ 144\(c\)$" -> https://jjda.ie/f/flex/a/l39a.htm#n11144c
+/ +* "Hither\,\ craching\ eastuards" Λ HCE
 
 |hence, cool at ebb, they requiesce. Countlessness of
 / id 26
@@ -6511,6 +6528,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod19.htm#paddy
 / +* "Wip" Ξ Wip
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter1/prevod19.htm#Wippingham
+/ +* "along\ landed\ Paddy" Λ ALP
 
 |pingham and the his garbagecans cotched the creeps of them
 / id 16

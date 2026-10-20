@@ -355,6 +355,7 @@
 : += . "(?<=: )N42\ \(VI\.B\.31\):\ 174\(c\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n42174c
 / +* "Victrolia\ Nuancee" Ω Victrolia Nuancee: SD2 (VI.A): 749(g)
 : += . "(?<=: )SD2\ \(VI\.A\):\ 749\(g\)$" -> https://jjda.ie/f/flex/e/l39e.htm#sd2749g
+/ +* "He Can Explain" Λ HCE
 
 |Da's a Daisy so Guimea your Handsel too, What Barbaras Done
 / id 15
@@ -868,6 +869,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod106.htm#Hawkeye
 / +* "Cotch" Ξ Cotch
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod106.htm#cotch
+/ +* "Howke Cotchme Eye" Λ HCE
 
 |i big U to Beleaves from Love and Mother, Fine's Fault was no
 / id 25
@@ -952,6 +954,8 @@
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 190\(f\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n26190f
 / +* "Abbrace\ of\ Umbellas" Ω Abbrace of Umbellas: N26 (VI.B.18): 191(b)
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 191\(b\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n26191b
+/ +* "Huffy Chops Eads" Λ HCE
+/ +* "Amy\ Licks\ Porter" Λ ALP
 
 |or a Tripple of Caines, Buttbutterbust, From the Manorlord Hoved
 / id 33
@@ -1085,6 +1089,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod107.htm#occiput
 / +* "hardily" Ξ hardily
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod107.htm#hardily
+/ +* "hardily\ curio\-" Λ HCE
 
 |_sing entomophilust then it has shown a very sexmosaic of nym-_
 / id 13
@@ -1098,6 +1103,7 @@
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 107\(c\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n53107c
 / +* "sexmosaic" Ω sexmosaic: N53 (VI.B.46): 106(v)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 106\(v\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n53106v
+/ +* "sing\ entomophilust" Λ HCE
 
 |_phosis in which the eternal chimerahunter Oriolopos, now frond_
 / id 14
@@ -1561,6 +1567,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod108.htm#ace
 / +* "patent" Ξ patent
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod108.htm#patent
+/ +* "Hear!\ Calls!\ Everywhair" Λ HCE
 
 |then as to this radiooscillating epiepistle to which, cotton, silk or
 / id 24
@@ -3224,7 +3231,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod113.htm#browned
 / +* "nolensed" Ξ nolensed
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod113.htm#nolens
-/ +* "browned or nolensed" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "browned or nolensed" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |find it devilish hard now and again even to believe itself. _Habes_
 / id 29
@@ -3836,6 +3843,7 @@
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ 59\(h\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n35059h
 / +* "who\ have" Ω who have: N14 (VI.B.7): 5(a)
 : += . "(?<=: )N14\ \(VI\.B\.7\):\ 5\(a\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n14005a
+/ +* "we\ grisly\ old\ Sykos\ who\ have" Λ Ellmann p.692: Jung
 
 |done our unsmiling bit on 'alices, when they were yung and
 / id 22
@@ -3866,6 +3874,7 @@
 : += . "(?<=: )N14\ \(VI\.B\.7\):\ 94\(d\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n14094d
 / +* "room" Ω room: N14 (VI.B.7): 5(a)
 : += . "(?<=: )N14\ \(VI\.B\.7\):\ 5\(a\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n14005a
+/ +* "freudened" Λ Ellmann p.486: He derides psychoanalysis ...
 
 |what oracular comepression we have had to apply to them! could
 / id 24
@@ -5765,6 +5774,7 @@
 / id 13
 / +* "hole\ of" Ω hole of: N51 (VI.B.44): 100(a)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 100\(a\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n51100a
+/ +* "^.*$" Λ Ellmann p.692: Jung's comment that Ulysses could be read backwards or forwards.
 
 |Aran man the hat through the whispering his ho (here keen
 / id 14
@@ -6238,6 +6248,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter5/prevod122.htm#tunc
 / +* "Book\ of\ Kells" Ω Book of Kells: N8 (VI.B.6): 35(b)
 : += . "(?<=: )N8\ \(VI\.B\.6\):\ 35\(b\)$" -> https://jjda.ie/f/flex/e/l39e.htm#n08035b
+/ +* "the Book of Kells" Λ Ellmann p.558: Joyce makes the Book of Kells derive from the Wake.
 
 |lost sight of that there are exactly three squads of candidates for
 / id 24

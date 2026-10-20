@@ -2749,6 +2749,7 @@
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 201\(f\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n12201f
 / +* "It's\ his\ lost\ chance," Ω It's his lost chance,: N32 (VI.B.23): 98(c)
 : += . "(?<=: )N32\ \(VI\.B\.23\):\ 98\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n32098c
+/ +* "Hunkalus Childared Easterheld" Λ HCE
 
 |Emania. Ware him well.
 / id 21
@@ -6106,7 +6107,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod488.htm#bogholder
 / +* "bogholders" Ω bogholders: N18 (VI.B.8): 223(c)
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 223\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n18223c
-/ +* "Bruno and Nola" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Bruno and Nola" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |and stationary lifepartners off orangey Saint Nessau Street, were
 / id 05
@@ -6419,6 +6420,7 @@
 : += . "(?<=: )Sheets\ VI:\ 1\(e\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh6001e
 / +* "coglionial" Ω coglionial: N47 (VI.B.40): 125(c)
 : += . "(?<=: )N47\ \(VI\.B\.40\):\ 125\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n47125c
+/ +* "his\ coglionial" Λ HCE
 
 |expancian? Won't you join me in a small halemerry, a bottle of
 / id 32
@@ -6430,6 +6432,7 @@
 : += . "(?<=: )Sheets\ V:\ 29\(k\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5029k
 / +* "bottle\ of" Ω bottle of: VI.C.5: 202(h)
 : += . "(?<=: )VI\.C\.5:\ 202\(h\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#c05202h
+/ +* "expancian" Λ HCE
 
 |the best, for wellmet Capeler, united Irishmen, what though pre-
 / id 33
@@ -7129,6 +7132,7 @@
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 48\(e\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n12048e
 / +* "with\ a" Ω with a: N12 (VI.B.14): 195(q)
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 195\(q\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n12195q
+/ +* "doblinganger" Λ Ellmann p.612: Joyce remarked that "le seul esprit" he believed in was "l'esprit de l'escalier"
 
 |sandy whiskers? Poke me nabs in the ribs and pick the erstwort
 / id 18
@@ -9481,6 +9485,7 @@
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 154\(h\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n51154h
 / +* "by\ degrees," Ω by degrees,: N51 (VI.B.44): 27(d)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 27\(d\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n51027d
+/ +* "artis\ litterarum\-" Λ ALP
 
 |_que patrona_ but I am afraid, my poor woman of that same
 / id 35
@@ -9492,6 +9497,7 @@
 : += . "(?<=: )Sheets\ III:\ 65\(h\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh3065h
 / +* "that\ same" Ω that same: VI.C.1: 209(i)
 : += . "(?<=: )VI\.C\.1:\ 209\(i\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#c01209i
+/ +* "que\ patrona" Λ ALP
 
 |name, what with your silvanes and your salvines, you are misled.
 / id 36
@@ -12590,7 +12596,7 @@
 : += . "(?<=: )Sheets\ VIII:\ 16\(j\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh8016j
 / +* "Thesaurus" Ω Thesaurus: N52 (VI.B.42): 25(g)
 : += . "(?<=: )N52\ \(VI\.B\.42\):\ 25\(g\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n52025g
-/ +* "Browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |_Plantarum_ from Nolan's, The Prittlewell Press, has nothing alike
 / id 35
@@ -13144,6 +13150,7 @@
 : += . "(?<=: )Sheets\ III:\ 75\(b\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh3075b
 / +* "Evovae!" Ω Evovae!: N23 (VI.B.12): 30(d)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 30\(d\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n23030d
+/ +* "encircle him circuly" Λ HCE
 
 |— Is it so exaltated, eximious, extraoldandairy and excels-
 / id 14
@@ -13670,6 +13677,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod506.htm#(notebook
 / +* "a\ man\ of\ around\ fifty," Ω a man of around fifty,: N12 (VI.B.14): 132(c)
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 132\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n12132c
+/ +* "Anna\ Lynsha's" Λ ALP
 
 |Pekoe with milk and whisky, who does messuages and has more
 / id 35
@@ -13685,6 +13693,7 @@
 : += . "(?<=: )Sheets\ V:\ 29\(n\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5029n
 / +* "has\ more" Ω has more: VI.C.5: 205(h)
 : += . "(?<=: )VI\.C\.5:\ 205\(h\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#c05205h
+/ +* "Pekoe" Λ ALP
 
 |dirt on him than an old dog has fleas, kicking stones and knocking
 / id 36
@@ -14198,6 +14207,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod508.htm#casus
 / +* "esobhrakonton" Ξ esobhrakonton
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod508.htm#eso
+/ +* "Hodie\ casus\ esobhrakonton" Λ HCE
 
 |— It looked very like it.
 / id 13
@@ -15692,6 +15702,7 @@
 : += . "(?<=: )Sheets\ V:\ 10\(i\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5010i
 / +* "yep\?" Ω yep?: Sheets V: 10(i)
 : += . "(?<=: )Sheets\ V:\ 10\(i\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5010i
+/ +* "Annabella,\ Lovabella,\ Pullabella" Λ ALP
 
 |— Yup! Titentung Tollertone in S. Sabina's. Aye aye, she
 / id 11
@@ -19865,6 +19876,7 @@
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 96\(d\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n17096d
 / +* "no" Ω no: Sheets V: 24(h)
 : += . "(?<=: )Sheets\ V:\ 24\(h\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5024h
+/ +* "^.*$" Λ Ellmann p.480: Joyce ... vehemently refused to submit---at [Mrs. McCormick] suggestion ... to analysis by Jung.
 
 |laughing matter. Do you think we are tonedeafs in our noses to
 / id 28
@@ -20075,6 +20087,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod523.htm#everready
 / +* "one\ brother\ to" Ω one brother to: N23 (VI.B.12): 9(b)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 9\(b\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n23009b
+/ +* "Hotchkiss Culthur's Everready" Λ HCE
 
 |reached, well over countless hands, sieur of many winners and
 / id 15
@@ -20167,6 +20180,7 @@
 : += . "(?<=: )N21\ \(VI\.B\.20\):\ 50\(e\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n21050e
 / +* "pals" Ω pals: Sheets III: 64(c)
 : += . "(?<=: )Sheets\ III:\ 64\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh3064c
+/ +* "asseveralation\.\ Ladiegent,\ pals" Λ ALP
 
 |will smile but me and Frisky Shorty, my inmate friend, as is un-
 / id 23
@@ -20225,6 +20239,7 @@
 : += . "(?<=: )Sheets\ V:\ 10\(g\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#sh5010g
 / +* "the\ old" Ω the old: N12 (VI.B.14): 221(c)
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 221\(c\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n12221c
+/ +* "his comfy estably" Λ HCE
 
 |middlesex party and his moral turps, meaning flu, pock, pox
 / id 28
@@ -20736,6 +20751,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod524.htm#rigolo
 / +* "finsky" Ω finsky: N20 (VI.B.13): 9(i)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 9\(i\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n20009i
+/ +* "a\ libidous\ pickpuckparty" Λ ALP
 
 |doodah in testimonials to their early bisectualism. Such, he says,
 / id 36
@@ -21084,6 +21100,7 @@
 / id 26
 / +* "Conger\ Eel" Ξ Conger Eel
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod525.htm#conger
+/ +* "Human Conger Eel" Λ HCE
 
 |— Hep! I can see him in the fishnoo! Up wi'yer whippy!
 / id 27
@@ -23924,6 +23941,7 @@
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 93\(d\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n17093d
 / +* "croak," Ω croak,: N22 (VI.B.17): 76(d)
 : += . "(?<=: )N22\ \(VI\.B\.17\):\ 76\(d\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n22076d
+/ +* "Ho,\ croak," Λ HCE
 
 |evildoer! Arise, sir ghostus! As long as you've lived there'll be no
 / id 04
@@ -23931,6 +23949,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod532.htm#evildoer
 / +* "sir\ ghostus!" Ω sir ghostus!: N58 (VI.B.30): 2(a)
 : += . "(?<=: )N58\ \(VI\.B\.30\):\ 2\(a\)$" -> https://jjda.ie/f/flex/ra/l39ra.htm#n58002a
+/ +* "evildoer" Λ HCE
 
 |other. Doff!
 / id 05
@@ -25328,6 +25347,7 @@
 : place foot
 / +* "promises" Ξ promises
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod535.htm#premises
+/ +* "handshakey" Λ HCE
 
 |congrandyoulikethems, ecclesency.
 / id 12
@@ -25337,6 +25357,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod535.htm#excellency
 / +* "ecclesency\." Ω ecclesency.: N37 (VI.B.28A): 1(h)
 : += . "(?<=: )N37\ \(VI\.B\.28A\):\ 1\(h\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n37001h
+/ +* "congrandyoulikethems,\ ecclesency" Λ HCE
 
 |Whosaw the jackery dares at handgripper thisa breast? Dose
 / id 13
@@ -25444,6 +25465,7 @@
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ back\ flyleaf\ recto\(d\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n35bfrd
 / +* "Noksagt!" Ω Noksagt!: N35 (VI.B.24): back flyleaf recto(e)
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ back\ flyleaf\ recto\(e\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n35bfre
+/ +* "Ibscenest\ nansence" Λ Ellmann p.82: _A Brilliant Career_, a play by Joyce.
 
 |heartened shugon! Hole affair is rotten muckswinish porcupig's
 / id 20
@@ -25609,6 +25631,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod535.htm#boom
 / +* "Childers" Ξ Childers
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod535.htm#childer
+/ +* "Haveth Childers Every" Λ HCE
 
 |where with Mudder!
 / id 35
@@ -26314,6 +26337,7 @@
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ 298\(e\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n35298e
 / +* "viktrae!_\)," Ω viktrae!),: N14 (VI.B.7): 138(b)
 : += . "(?<=: )N14\ \(VI\.B\.7\):\ 138\(b\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n14138b
+/ +* "and\ Lorencz\ Pattorn" Λ ALP
 
 |when I will westerneyes those poor sunuppers and outbreighten
 / id 11
@@ -30157,6 +30181,7 @@
 
 |and with all the liberties and free customs which the men of Tol-
 / id 20
+/ +* "Tol" Λ Ellmann p.630: Henry II presented Dublin as a colony to the Bristolmen
 
 |bris, a city of Tolbris, have at Tolbris, in the county of their city
 / id 21
@@ -30546,6 +30571,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod546.htm#hery
 / +* "Crass" Ξ Crass
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod546.htm#crass
+/ +* "Hery\ Crass" Λ HCE
 
 |_Evohodie_. Idle were it, repassing from elserground to the elder
 / id 11
@@ -30559,6 +30585,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter33/prevod546.htm#Elserground
 / +* "elserground" Ω elserground: N35 (VI.B.24): 225(n)
 : += . "(?<=: )N35\ \(VI\.B\.24\):\ 225\(n\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n35225n
+/ +* "Evohodie" Λ HCE
 
 |disposition, to inquire whether I, draggedasunder, be the forced
 / id 12
@@ -31462,6 +31489,7 @@
 : += . "(?<=: )N37\ \(VI\.B\.28A\):\ 4\(i\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n37004i
 / +* "Appia\ Lippia" Ω Appia Lippia: N33 (VI.B.4): 188(f)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 188\(f\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n33188f
+/ +* "Appia\ Lippia\ Pluviabilla" Λ ALP
 
 |whiles I herr lifer amstell and been: I chained her chastemate to
 / id 07
@@ -33942,6 +33970,7 @@
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 9\(b\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n18009b
 / +* "chastener" Ω chastener: N37 (VI.B.28A): 5(j)
 : += . "(?<=: )N37\ \(VI\.B\.28A\):\ 5\(j\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n37005j
+/ +* "her chastener ever" Λ HCE
 
 |I did learn my little ana countrymouse in alphabeater cameltem-
 / id 02
@@ -34185,6 +34214,7 @@
 : += . "(?<=: )N21\ \(VI\.B\.20\):\ 69\(a\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n21069a
 / +* "Chesterfield\ elms" Ω Chesterfield elms: N9 (VI.B.1): 62(e)
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 62\(e\)$" -> https://jjda.ie/f/flex/rb/l39rb.htm#n09062e
+/ +* "huge Chesterfield elms" Λ HCE
 
 |and rigs of barlow and bowery nooks and greenwished villas
 / id 20

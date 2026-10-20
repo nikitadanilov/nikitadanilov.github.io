@@ -505,6 +505,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod261.htm#chthonic
 / +* "tumulous" Ω tumulous: VI.C.6: 49(j)
 : += . "(?<=: )VI\.C\.6:\ 49\(j\)$" -> https://jjda.ie/f/flex/la/l39la.htm#c06049j
+/ +* "his chthonic exterior" Λ HCE
 
 |but plain Mr Tumulty in muftilife,² in his an-
 / id 19
@@ -625,6 +626,7 @@
 / id F01
 / +* "ludo" Ξ ludo
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod261.htm#ludo
+/ +* "alla\ ludo\ poker" Λ ALP
 
 |to feel how fetching I can look in clingarounds.
 / id F02
@@ -779,6 +781,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod262.htm#caved
 / +* "wight" Ξ wight
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod262.htm#wight
+/ +* "Hoo\ cavedin\ earthwight" Λ HCE
 
 |At furscht kracht of thunder.³
 / id 12
@@ -1193,9 +1196,13 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod263.htm#Castilian
 / +* "Hispano\-Cathayan\-Euxine," Ω Hispano-Cathayan-Euxine,: N46 (VI.B.36): 297(a)
 : += . "(?<=: )N46\ \(VI\.B\.36\):\ 297\(a\)$" -> https://jjda.ie/f/flex/la/l39la.htm#n46297a
+/ +* "Hispano\-Cathayan\-Euxine" Λ HCE
+/ +* "Castil\-" Λ HCE
 
 |lian-Emeratic-Hebridian, Espanol-Cymric-
 / id 14
+/ +* "lian\-Emeratic\-Hebridian" Λ HCE
+/ +* "Espanol\-Cymric\-" Λ HCE
 
 |Smith, no home.
 / id L02
@@ -1208,6 +1215,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod263.htm#Hellenic
 / +* "Rolf\ the\ Ganger" Ξ Rolf the Ganger
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod263.htm#Rolf63
+/ +* "Helleniky" Λ HCE
 
 |ster, not a feature alike and the face the same.²
 / id 16
@@ -1327,6 +1335,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod263.htm#haud63
 / +* "orb" Ω orb: N46 (VI.B.36): 301(c)
 : += . "(?<=: )N46\ \(VI\.B\.36\):\ 301\(c\)$" -> https://jjda.ie/f/flex/la/l39la.htm#n46301c
+/ +* "Haud certo ergo" Λ HCE
 
 |Hearasay in
 / id L05
@@ -1430,6 +1439,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod264.htm#commercio
 / +* "aid" Ξ aid
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod264.htm#aid
+/ +* "Honour commercio's energy" Λ HCE
 
 |linkless proud, the plurable with everybody
 / id 02
@@ -1500,6 +1510,7 @@
 / id 09
 / +* "Canaan" Ξ Canaan
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod264.htm#Canaan
+/ +* "Harbourer-cum-Enheritance" Λ HCE
 
 |the Hateful. Ever a-going, ever a-coming.
 / id 10
@@ -1993,6 +2004,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod265.htm#lief
 / +* "an\ litlee\ plads\ af\ liefest\ pose," Ω an litlee plads af liefest pose,: N46 (VI.B.36): 246(b)
 : += . "(?<=: )N46\ \(VI\.B\.36\):\ 246\(b\)$" -> https://jjda.ie/f/flex/lb/l39lb.htm#n46246b
+/ +* "an\ litlee\ plads" Λ ALP
+/ +* "af\ liefest\ pose" Λ ALP
 
 |In snowdrop,
 / id L01
@@ -2293,6 +2306,7 @@
 : place foot
 / +* "peripateting" Ξ peripateting
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod266.htm#peripatetic
+/ +* "D\'Oblong" Λ Ellmann p.379: Dublin
 
 |we all pass. Tons. In our snoo. Znore. While
 / id 07
@@ -2933,6 +2947,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod267.htm#anama
 / +* "anamaba(?=\ )" Ξ anamaba
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod267.htm#anama67
+/ +* "^.*$" Λ Ellmann p.692: Jung
 
 |⁵ Only for he's fathering law I could skewer that old one and slosh her out
 / id F05
@@ -3084,7 +3099,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod268.htm#BROWNE68
 / +* "a\ rhythmatick" Ω a rhythmatick: N41 (VI.B.33): 138(f)
 : += . "(?<=: )N41\ \(VI\.B\.33\):\ 138\(f\)$" -> https://jjda.ie/f/flex/lc/l39lc.htm#n41138f
-/ +* "Browne\ and" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne\ and" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |Nolan's divisional tables whereas she, of
 / id 09
@@ -3328,6 +3343,7 @@
 / id F03
 / +* "jungerl" Ξ jungerl
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod268.htm#law
+/ +* "jungerl" Λ Ellmann p.692: Jung
 
 |⁴ Let me blush to think of all those halfwayhoist pullovers.
 / id F04
@@ -5265,6 +5281,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod274.htm#coverchief
 / +* "emblem" Ξ emblem
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod274.htm#emblem
+/ +* "helm coverchaf emblem" Λ HCE
 
 |Murdoch.
 / id L01
@@ -7946,7 +7963,7 @@
 / id 32
 / +* "Bandusian" Ξ Bandusian
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod280a.htm#BANDUSIA
-/ +* "^.*$" Λ Ellman p.52: from _Moods_, tr. _O fons Bandisiae_.
+/ +* "^.*$" Λ Ellmann p.52: from _Moods_, tr. _O fons Bandisiae_.
 
 |after odours sigh of musk. Blotsbloshblothe,
 / id 33
@@ -8071,6 +8088,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod281.htm#Quinet
 / +* "Aujourd'hui\ comme\ aux\ temps\ de\ Pline\ et\ de" Ω Aujourd'hui comme aux temps de Pline et de: N9 (VI.B.1): 84(g)
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 84\(g\)$" -> https://jjda.ie/f/flex/lf/l39lf.htm#n09084g
+/ +* "^.*$" Λ Ellmann p.676: Edgar Quinet
 
 |_Columelle la jacinthe se plait dans les Gaules,_
 / id 05
@@ -9057,6 +9075,7 @@
 : += . "(?<=: )N29\ \(VI\.B\.21\):\ 86\(c\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n29086c
 / +* "interecting" Ω interecting: N29 (VI.B.21): 86(h)
 : += . "(?<=: )N29\ \(VI\.B\.21\):\ 86\(h\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n29086h
+/ +* "hce che ech" Λ HCE
 
 |angles the parilegs of a given obtuse one bis-
 / id 02
@@ -9231,6 +9250,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod284.htm#solation
 / +* "Imagine" Ω Imagine: N34 (VI.B.27): 69(a)
 : += . "(?<=: )N34\ \(VI\.B\.27\):\ 69\(a\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n34069a
+/ +* "Imagine\ the\ twelve" Λ Ellmann p.626: FW chapters
 
 |deaferended dumbbawls of the whowl above-
 / id 19
@@ -9407,6 +9427,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod285.htm#alack
 / +* "cyclic" Ω cyclic: N34 (VI.B.27): 35(a)
 : += . "(?<=: )N34\ \(VI\.B\.27\):\ 35\(a\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n34035a
+/ +* "habby\ cyclic" Λ HCE
 
 |erdor be outraciously enviolated by a mierelin
 / id 02
@@ -9422,6 +9443,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod285.htm#inviolate
 / +* "mierelin" Ξ mierelin
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod285.htm#Merlin
+/ +* "erdor" Λ HCE
 
 |roundtableturning, like knuts in maze, the zitas
 / id 03
@@ -11598,6 +11620,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod290a.htm#lacrima
 / +* "Gemiti" Ξ Gemiti
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod290a.htm#gemitus
+/ +* "his" Λ HCE
 
 |craft ebbing, invoked by the unirish title, Grindings of Nash,⁷ the
 / id 28
@@ -11609,6 +11632,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod290a.htm#ebb
 / +* "invoked" Ξ invoked
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod290a.htm#invoke
+/ +* "craft\ ebbing" Λ HCE
 
 |¹ Muckross Abbey with the creepers taken off.
 / id F01
@@ -11756,6 +11780,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod291.htm#insulted
 / +* "Crampton's" Ξ Crampton's
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod291.htm#Crampton
+/ +* "a\ lonely\ peggy" Λ ALP
 
 |peartree, (she sall eurn bitter bed by thirt sweet of her face!), and
 / id 06
@@ -12268,6 +12293,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod292.htm#convolvula
 / +* "strayed" Ξ strayed
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod292.htm#strayed
+/ +* "^.*$" Λ Ellmann p.607: Wyndham Lewis: Ulysses contained a 'suffocating, noetic expanse of objects, all of them lifeless'.
 
 |derelict and of tongues laggin too, longa yamsayore, not only that
 / id 17
@@ -12576,6 +12602,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod293.htm#lazily
 / +* "lapis" Ξ lapis
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod293.htm#lapis
+/ +* "^.*$" Λ Ellmann p.608: the diagram Shaun uses ... is parodying Yeats's _A Vision_.
 
 ; img
 / url img/figure-293.png
@@ -13965,6 +13992,7 @@
 : += . "(?<=: )N52\ \(VI\.B\.42\):\ 137\(d\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n52137d
 / +* "maidsapron" Ω maidsapron: N23 (VI.B.12): 157(f)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 157\(f\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n23157f
+/ +* "A\.L\.P" Λ ALP
 
 |fearfully! till its nether nadir is vortically where
 / id 12
@@ -14152,6 +14180,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod297.htm#pluvia
 / +* "appia\ lippia" Ω appia lippia: N33 (VI.B.4): 188(f)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 188\(f\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n33188f
+/ +* "appia\ lippia\ pluvaville" Λ ALP
 
 |hula, girls!) the no niggard spot of her safety
 / id 26
@@ -15329,7 +15358,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod300a.htm#Eliot
 / +* "noland's\ browne" Ω noland's browne: N23 (VI.B.12): 101(d)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 101\(d\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#n23101d
-/ +* "noland's\ browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "noland's\ browne" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |(thur him no quartos!) till that on him poorin
 / id 30
@@ -15978,6 +16007,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod302.htm#happiest
 / +* "Game\ of" Ω Game of: VI.C.1: 111(f)
 : += . "(?<=: )VI\.C\.1:\ 111\(f\)$" -> https://jjda.ie/f/flex/lg/l39lg.htm#c01111f
+/ +* "happinext\ complete,\ \(Exquisite" Λ HCE
 
 |spiration! I always adored your hand. So could
 / id 20
@@ -16354,6 +16384,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod303.htm#meddle
 / +* "hof" Ξ hof
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod303.htm#Hof
+/ +* "hof" Λ HCE
 
 |Ideal Present
 / id L12
@@ -16372,6 +16403,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod303.htm#culture
 / +* "citrawn\ woodint" Ξ citrawn woodint
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod303.htm#citron03
+/ +* "cullchaw\ end" Λ HCE
 
 |rep of the triperforator awlrite blast through
 / id 22
@@ -16501,7 +16533,7 @@
 
 |³ The Brownes de Browne - Browne of Castlehacknolan.
 / id F04
-/ +* "Browne\ of\ Castlehacknolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne\ of\ Castlehacknolan" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
@@ -17319,9 +17351,11 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod306.htm#quadrivium
 / +* "intermidgets" Ξ intermidgets
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod306.htm#intermezzo
+/ +* "Art," Λ ALP
 
 |literature, politics, economy,chemistry, human-
 / id 14
+/ +* "literature,\ politics" Λ ALP
 
 |Cato.
 / id L03
@@ -17548,6 +17582,7 @@
 / id 03
 / +* "Animus" Ξ Animus
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod307.htm#animus
+/ +* "Is\ the\ Co\-Education\ of\ Animus\ and" Λ Ellmann p.692: Jung
 
 |Anima Wholly Desirable?¹ What Happened at
 / id 04
@@ -17619,6 +17654,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod307.htm#Alfie
 / +* "Hengler's" Ξ Hengler's
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod307.htm#Hengler
+/ +* "Hengler's Circus Entertainment" Λ HCE
 
 |Thrift,³ The Kettle-Griffith-Moynihan Scheme
 / id 09
@@ -17634,6 +17670,7 @@
 : place foot
 / +* "Olden" Ξ Olden
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter22/prevod307.htm#olden
+/ +* "American\ Lake\ Poetry" Λ ALP
 
 |Strangest Dream that was ever Halfdreamt.⁵
 / id 12

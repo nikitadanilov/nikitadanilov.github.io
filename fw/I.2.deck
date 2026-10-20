@@ -184,6 +184,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod30.htm#Chevy
 / +* "Hag\ Chivychas" Ω Hag Chivychas: N53 (VI.B.46): 34(q)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 34\(q\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n53034q
+/ +* "Hag\ Chivychas\ Eve" Λ HCE
 
 |in prefall paradise peace by following his plough for rootles in the
 / id 15
@@ -247,6 +248,7 @@
 : += . "(?<=: )N1\ \(VI\.B\.10\):\ 5\(l\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n01005l
 / +* "cocker\ spaniels\." Ω cocker spaniels.: N5 (VI.B.2): 53(b)
 : += . "(?<=: )N5\ \(VI\.B\.2\):\ 53\(b\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n05053b
+/ +* "a\ lady\ pack" Λ ALP
 
 |getful of all save his vassal's plain fealty to the ethnarch Humphrey
 / id 20
@@ -860,6 +862,7 @@
 / id 14
 / +* "sigla" Ξ sigla
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod32.htm#sigla
+/ +* "H\.C\.E" Λ HCE
 
 |only and long and always good Dook Umphrey for the hunger-
 / id 15
@@ -886,11 +889,13 @@
 / id 18
 / +* "normative" Ξ normative
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod32.htm#normative
+/ +* "Here\ Comes" Λ HCE
 
 |Everybody. An imposing everybody he always indeed looked,
 / id 19
 / +* "imposing" Ξ imposing
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod32.htm#imposing
+/ +* "Everybody" Λ HCE
 
 |constantly the same as and equal to himself and magnificently well
 / id 20
@@ -1153,6 +1158,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod33.htm#standing
 / +* "Habituels" Ξ Habituels
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod33.htm#habitual
+/ +* "Habituels" Λ HCE
 
 |conspicuously emergent.
 / id 13
@@ -1160,6 +1166,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod33.htm#conspicuous
 / +* "emergent" Ξ emergent
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod33.htm#emergant
+/ +* "conspicuously\ emergent" Λ HCE
 
 |A baser meaning has been read into these characters the literal
 / id 14
@@ -1307,6 +1314,7 @@
 : += . "(?<=: )N4\ \(VI\.B\.25\):\ 160\(n\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n04160n
 / +* "excellency" Ω excellency: N51 (VI.B.44): 144(c)
 : += . "(?<=: )N51\ \(VI\.B\.44\):\ 144\(c\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n51144c
+/ +* "H\.\ C\.\ Earwicker" Λ HCE
 
 |tence the mere suggestion of him as a lustsleuth nosing for trou-
 / id 31
@@ -1727,6 +1735,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod34.htm#maler
 / +* "abushed" Ξ abushed
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod34.htm#abush
+/ +* "a\ lilyth,\ pull" Λ ALP
 
 |keep black, keep black! Guiltless of much laid to him he was
 / id 34
@@ -1741,6 +1750,7 @@
 : place foot
 / +* "expressed\ himself\ as\ being" Π expressed himself as being] 1939 1958; and 2010
 : place foot
+/ +* "he\ clearly\ expressed" Λ HCE
 
 |still a trace of his erstwhile burr and hence it has been received of
 / id 36
@@ -2280,6 +2290,7 @@
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 27\(h\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n23027h
 / +* "of\ H\.\ C\.\ Earwicker," Ω of H. C. Earwicker,: N6 (VI.B.11): 125(e)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 125\(e\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n06125e
+/ +* "H\.\ C\.\ Earwicker" Λ HCE
 
 |prize on schillings, postlots free), the flaxen Gygas tapped his
 / id 13
@@ -3142,6 +3153,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod38.htm#cupple
 / +* "lawrie" Ξ lawrie
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod38.htm#lawrie
+/ +* "annie\ lawrie\ promises" Λ ALP
 
 |Esnekerry pudden come Hunanov for her pecklapitschens!) that
 / id 22
@@ -3209,7 +3221,7 @@
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 193\(d\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n18193d
 / +* "seized" Ω seized: N5 (VI.B.2): 51(k)
 : += . "(?<=: )N5\ \(VI\.B\.2\):\ 51\(k\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n05051k
-/ +* "Browne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |of the facts, was overheard, in his secondary personality as a
 / id 27
@@ -3228,7 +3240,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod38.htm#reared
 / +* "by\ accident\ —\ if,\ that\ is," Ω by accident — if, that is,: N6 (VI.B.11): 117(f)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 117\(f\)$" -> https://jjda.ie/f/flex/b/l39b.htm#n06117f
-/ +* "Nolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Nolan" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |incident it was an accident for here the ruah of Ecclectiastes
 / id 29
@@ -4654,6 +4666,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod42.htm#executive
 / +* "capahand" Ξ capahand
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod42.htm#cap-in-hand
+/ +* "a\ lady's\ postscript" Λ ALP
 
 |money. Pleasend), wiping their laughleaking lipes on their sleeves,
 / id 10
@@ -4719,6 +4732,7 @@
 / id 16
 / +* "avatar" Ξ avatar
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod42.htm#avatar
+/ +* "avatar" Λ Ellmann p.103: Joyce finally said shyly [to George Russell...] that he thought it possible an avatar might be born in Ireland.
 
 |This, more krectly lubeen or fellow — me — lieder was first
 / id 17
@@ -5812,6 +5826,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod46.htm#small%20wonder
 / +* "E'erawan" Ξ E'erawan
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter2/prevod46.htm#eerawan
+/ +* "He\'ll\ Cheat\ E\'erawan" Λ HCE
 
 |When Chimpden first took the floor
 / id 02

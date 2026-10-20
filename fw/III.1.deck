@@ -5184,6 +5184,7 @@
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 275\(h\)$" -> https://jjda.ie/f/flex/pc/l39pc.htm#n33275h
 / +* "nymphs," Ω nymphs,: N33 (VI.B.4): 275(g)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 275\(g\)$" -> https://jjda.ie/f/flex/pc/l39pc.htm#n33275g
+/ +* "him,\ com\-" Λ HCE
 
 |pound eyes on hornitosehead, and Auld Letty Plussiboots to
 / id 03
@@ -5199,6 +5200,8 @@
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 238\(h\)$" -> https://jjda.ie/f/flex/pc/l39pc.htm#n33238h
 / +* "to(?=$)" Ω to: N33 (VI.B.4): 274(e)
 : += . "(?<=: )N33\ \(VI\.B\.4\):\ 274\(e\)$" -> https://jjda.ie/f/flex/pc/l39pc.htm#n33274e
+/ +* "pound\ eyes" Λ HCE
+/ +* "Auld\ Letty\ Plussiboots" Λ ALP
 
 |scratch his cacumen and cackle his tramsitus, diva deborah (seven
 / id 04
@@ -6731,6 +6734,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod418.htm#polka
 / +* "Floh\ and\ Luse" Ω Floh and Luse: N29 (VI.B.21): 148(c)
 : += . "(?<=: )N29\ \(VI\.B\.21\):\ 148\(c\)$" -> https://jjda.ie/f/flex/pc/l39pc.htm#n29148c
+/ +* "and\ Luse\ polkas" Λ ALP
 
 |_And be sure Vespatilla fines fat ones to heat._
 / id 15
@@ -7084,6 +7088,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod419.htm#Shem
 / +* "Em" Ξ Em
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod419.htm#Majesty
+/ +* "His Christian's Em" Λ HCE
 
 |_— Greek! Hand it to me! Shaun replied, plosively pointing to_
 / id 20
@@ -7457,6 +7462,7 @@
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 226\(l\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n56226l
 / +* "Baile\-Atha\-Cliath\.\ 31\ Jan\.\ 1132\ A\.D\." Ω Baile-Atha-Cliath. 31 Jan. 1132 A.D.: N29 (VI.B.21): 186(b)
 : += . "(?<=: )N29\ \(VI\.B\.21\):\ 186\(b\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n29186b
+/ +* "Here\ Com\-" Λ HCE
 
 |merces Enville. Tried Apposite House. 13 Fitzgibbets. Loco.
 / id 21
@@ -7470,6 +7476,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter31/prevod420a.htm#loco
 / +* "13\ Fitzgibbets\." Ω 13 Fitzgibbets.: N29 (VI.B.21): appendix 1(f)
 : += . "(?<=: )N29\ \(VI\.B\.21\):\ appendix\ 1\(f\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n29a01f
+/ +* "merces\ Enville" Λ HCE
 
 |Dangerous. Tax 9d. B.L. Guineys, esqueer. L.B. Not known at
 / id 22
@@ -8029,6 +8036,7 @@
 : += . "(?<=: )N52\ \(VI\.B\.42\):\ 7\(f\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n52007f
 / +* "is\ on\ his\ last" Ω is on his last: N21 (VI.B.20): 8(a)
 : += . "(?<=: )N21\ \(VI\.B\.20\):\ 8\(a\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n21008a
+/ +* "pixillated\ doodler" Λ Ellmann p.603: McAlmon assured him he was not mad, 'just touched enough for genius in the James Jesus Joyce manner'.
 
 |illegible clergimanths boasting always of his ruddy complexious!
 / id 34
@@ -8313,6 +8321,7 @@
 : += . "(?<=: )Sheets\ V:\ 22\(j\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#sh5022j
 / +* "posthumust!" Ω posthumust!: Sheets V: 33(g)
 : += . "(?<=: )Sheets\ V:\ 33\(g\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#sh5033g
+/ +* "Obnoximost posthumust" Λ Ellmann p.592: Samuel Roth, pirated edition of _Ulysses_ and _Work In Progress_.
 
 |unique hornbook and his prince of the apauper's pride, blunder-
 / id 15
@@ -9047,6 +9056,7 @@
 : += . "(?<=: )Sheets\ III:\ 11\(i\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#sh3011i
 / +* "the\ saint" Ω the saint: N22 (VI.B.17): 17(h)
 : += . "(?<=: )N22\ \(VI\.B\.17\):\ 17\(h\)$" -> https://jjda.ie/f/flex/pd/l39pd.htm#n22017h
+/ +* "Helpless Corpses Enactment" Λ HCE
 
 |kicked him whereby the sum taken Berkeley showed the reason
 / id 32

@@ -993,7 +993,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod50a.htm#Nuallain
 / +* "sinning\ society" Ω sinning society: N4 (VI.B.25): 126(b)
 : += . "(?<=: )N4\ \(VI\.B\.25\):\ 126\(b\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n04126b
-/ +* "Nawlanmore\ and\ Brawne" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Nawlanmore\ and\ Brawne" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |sirens (see the [Roman Catholic] presspassim) fortunately became
 / id 24
@@ -1296,6 +1296,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod51.htm#haberdasher
 / +* "Cur" Ξ Cur
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod51.htm#churchie
+/ +* "haardly\ creditable\ edventyres" Λ HCE
 
 |chies and the three Enkelchums in their Bearskin ghoats! Girles
 / id 15
@@ -2109,6 +2110,7 @@
 : += . "(?<=: )Sheets\ VIII:\ 3\(l\)$" -> https://jjda.ie/f/flex/c/l39c.htm#sh8003l
 / +* "La\ arboro," Ω La arboro,: N53 (VI.B.46): 137(p)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 137\(p\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n53137p
+/ +* "arboro,\ lo" Λ ALP
 
 |_petrusu_. The augustan peacebetothem oaks, the monolith rising
 / id 15
@@ -2118,6 +2120,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod53.htm#Augustan
 / +* "monolith" Ξ monolith
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod53.htm#monolith
+/ +* "petrusu" Λ ALP
 
 |stark from the moonlit pinebarren. In all fortitudinous ajaxious
 / id 16
@@ -3014,6 +3017,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod55.htm#cacuminal
 / +* "erubescent" Ξ erubescent
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod55.htm#erubescent
+/ +* "haughty,\ cacuminal,\ erubescent" Λ HCE
 
 |asches with lustres of peins. For as often as the Archicadenus,
 / id 30
@@ -5745,6 +5749,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod62.htm#proper
 / +* "of\ their\ proper\ sins\." Ω of their proper sins.: N6 (VI.B.11): 154(k)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 154\(k\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n06154k
+/ +* "Humpheres\ Cheops\ Exarchas" Λ HCE
 
 |ness bred to speak with a stiff upper lip to all men and most occa-
 / id 22
@@ -6940,6 +6945,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod65.htm#Charley
 / +* "Charley\ Chance" Ω Charley Chance: N26 (VI.B.18): 22(d)
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 22\(d\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n26022d
+/ +* "Charley\ Chance" Λ Ellmann p.385: the man named Hunter [...] is first mentioned in the story 'Grace' under the name of C. P. M'Coy. M'Coy's actual prototype, Charles Chance.
 
 |so tolloll Mr Hunker you're too dada for me to dance (so off she
 / id 17
@@ -7264,6 +7270,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod66.htm#gummy
 / +* "to\ hand\ in" Ω to hand in: N6 (VI.B.11): 105(c)
 : += . "(?<=: )N6\ \(VI\.B\.11\):\ 105\(c\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n06105c
+/ +* "huge" Λ HCE
 
 |chain envelope, written in seven divers stages of ink, from blanch-
 / id 14
@@ -7275,6 +7282,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod66.htm#divers
 / +* "blanch" Ξ blanch
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod66.htm#blanch
+/ +* "chain\ envelope" Λ HCE
 
 |essance to lavandaiette, every pothook and pancrook bespaking
 / id 15
@@ -7303,6 +7311,7 @@
 : += . "(?<=: )N22\ \(VI\.B\.17\):\ 31\(c\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n22031c
 / +* "A" Ω A: N26 (VI.B.18): 75(g)
 : += . "(?<=: )N26\ \(VI\.B\.18\):\ 75\(g\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n26075g
+/ +* "A\ Laugh\-" Λ ALP
 
 |able Party, with afterwite, S.A.G., to Hyde and Cheek, Eden-
 / id 17
@@ -7318,6 +7327,7 @@
 : += . "(?<=: )N22\ \(VI\.B\.17\):\ 31\(c\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n22031c
 / +* "S\.A\.G\.," Ω S.A.G.,: N53 (VI.B.46): 139(f)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 139\(f\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n53139f
+/ +* "able\ Party" Λ ALP
 
 |berry, Dubblenn, WC? Will whatever will be written in lappish
 / id 18
@@ -8365,6 +8375,7 @@
 : += . "(?<=: )N21\ \(VI\.B\.20\):\ 104\(a\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n21104a
 / +* "whole\ of" Ω whole of: N23 (VI.B.12): 7(j)
 : += . "(?<=: )N23\ \(VI\.B\.12\):\ 7\(j\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n23007j
+/ +* "^.*$" Λ Ellmann p.609: I am making an engine with only one wheel. 
 
 |the wall. Where Gyant Blyant fronts Peannlueamoore There was
 / id 06
@@ -9488,6 +9499,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter3/prevod71.htm#muddle
 / +* "Hatches\ Cocks'\ Eggs," Ω Hatches Cocks' Eggs,: N25 (VI.B.15): 111(a)
 : += . "(?<=: )N25\ \(VI\.B\.15\):\ 111\(a\)$" -> https://jjda.ie/f/flex/c/l39c.htm#n25111a
+/ +* "Hatches\ Cocks\'\ Eggs" Λ HCE
 
 |_Wedlock, I Divorce Thee Husband, Tanner and a Make, Go to_
 / id 28
@@ -10427,6 +10439,7 @@
 : += . "(?<=: )SD2\ \(VI\.A\):\ 744\(o\)$" -> https://jjda.ie/f/flex/c/l39c.htm#sd2744o
 / +* "elmer," Ω elmer,: SD2 (VI.A): 744(h)
 : += . "(?<=: )SD2\ \(VI\.A\):\ 744\(h\)$" -> https://jjda.ie/f/flex/c/l39c.htm#sd2744h
+/ +* "haught\ crested\ elmer" Λ HCE
 
 |man's Rise O, (lost leaders live! the heroes return!) and o'er dun
 / id 03

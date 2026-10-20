@@ -363,6 +363,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod197.htm#caput
 / +* "Qu'appelle\?" Ω Qu'appelle?: N28 (VI.D.6): 82(a)
 : += . "(?<=: )N28\ \(VI\.D\.6\):\ 82\(a\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n28082a
+/ +* "Huges Caput Earlyfouler" Λ HCE
 
 |where was he born or how was he found? Urgothland, Tvistown
 / id 09
@@ -826,6 +827,7 @@
 : += . "(?<=: )N8\ \(VI\.B\.6\):\ 127\(g\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n08127g
 / +* "H\.C\.E\." Ω H.C.E.: N8 (VI.B.6): 127(e)
 : += . "(?<=: )N8\ \(VI\.B\.6\):\ 127\(e\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n08127e
+/ +* "H\.C\.E" Λ HCE
 
 |has a codfisck ee. Shyr she's nearly as badher as him herself.
 / id 09
@@ -2196,6 +2198,8 @@
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 52\(f\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n09052f
 / +* "Florence" Ω Florence: N8 (VI.B.6): 145(e)
 : += . "(?<=: )N8\ \(VI\.B\.6\):\ 145\(e\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n08145e
+/ +* "Denis\ Florence" Λ Ellmann p.158: Denis Florence McCarthy
+: += . "Denis\ Florence\ McCarthy" -> https://en.wikipedia.org/wiki/Denis_Florence_MacCarthy
 
 |MacCarthy's combies. Rise it, flut ye, pian piena! I'm dying
 / id 35
@@ -4200,6 +4204,7 @@
 : += . "(?<=: )N28\ \(VI\.D\.6\):\ 90\(e\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n28090e
 / +* "savuto!" Ω savuto!: N28 (VI.D.6): 90(g)
 : += . "(?<=: )N28\ \(VI\.D\.6\):\ 90\(g\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n28090g
+/ +* "Her Chuff Exsquire" Λ HCE
 
 |Everywhere erriff you went and every bung you arver dropped
 / id 23
@@ -4946,6 +4951,7 @@
 : += . "(?<=: )SA\ \&\ SB\(VI\.A\):\ 805\(bx\)$" -> https://jjda.ie/f/flex/h/l39h.htm#sa0805bx
 / +* "Annushka" Ω Annushka: N30 (VI.B.22): 44(b)
 : += . "(?<=: )N30\ \(VI\.B\.22\):\ 44\(b\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n30044b
+/ +* "Annushka\ Lutetiavitch" Λ ALP
 
 |Pufflovah, and the lellipos cream to her lippeleens and the pick
 / id 09
@@ -4959,6 +4965,7 @@
 : += . "(?<=: )N30\ \(VI\.B\.22\):\ 43\(h\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n30043h
 / +* "lippeleens" Ω lippeleens: N28 (VI.D.6): 125(r)
 : += . "(?<=: )N28\ \(VI\.D\.6\):\ 125\(r\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n28125r
+/ +* "Pufflovah" Λ ALP
 
 |of the paintbox for her pommettes, from strawbirry reds to
 / id 10
@@ -5194,6 +5201,7 @@
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 47\(a\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n09047a
 / +* "electrifies" Ω electrifies: N17 (VI.B.9): 8(h)
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 8\(h\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n17008h
+/ +* "her calamity electrifies" Λ HCE
 
 |No electress at all but old Moppa Necessity, angin mother of
 / id 29
@@ -6805,6 +6813,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod211.htm#will11
 / +* "Barny\-the\-Bark" Ξ Barny-the-Bark
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod211.htm#Barney-the-Bark
+/ +* "Will-of-the-Wisp" Λ Ellmann p.105: Yeats
 
 |mangolds noble to sweeden their bitters; for Oliver Bound a
 / id 03
@@ -7175,7 +7184,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod211.htm#Donn
 / +* "Vance" Ξ Vance
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod211.htm#Vance
-/ +* "Browne\ but\ Nolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne\ but\ Nolan" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |all lock and no stable for Honorbright Merreytrickx; a big drum
 / id 33
@@ -7618,6 +7627,7 @@
 : place foot
 / +* "Ho!(?=\ _)" Π Ho!] 1939 1958; Ho! E 2010
 : place foot
+/ +* "^.*$" Λ Ellmann p.478: Paula Weiss, "God said: Let there be man, and man was. God said: Let there be Adam, and Adam was."
 
 |_Hidamo! Hidamo se ga facessà._ Ha! Ha! And _Die Windermere_
 / id 36
@@ -7647,6 +7657,10 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod213.htm#Dichter
 / +* "Lefanu\ \(Sheridan's" Ξ Lefanu (Sheridan's
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter8/prevod213.htm#Sheridan13
+/ +* "Lefanu" Λ Sheridan Le Fanu
+: += . "(?<=Λ ).+" -> https://en.wikipedia.org/wiki/Sheridan_Le_Fanu
+/ +* "House\ by\ the\ Coachyard" Λ House by the Coachyard
+: += . "(?<=Λ ).+" -> https://en.wikipedia.org/wiki/The_House_by_the_Churchyard
 
 |_Mill (J.) _On Woman_ with _Ditto on the Floss_. Ja, a swamp for Alt-_
 / id 02
@@ -7781,6 +7795,7 @@
 : += . "(?<=: )N28\ \(VI\.D\.6\):\ 109\(m\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n28109m
 / +* "Filou!" Ω Filou!: N5 (VI.B.2): 168(i)
 : += . "(?<=: )N5\ \(VI\.B\.2\):\ 168\(i\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n05168i
+/ +* "Fieluhr\?\ Filou\!\ What\ age\ is\ at\?" Λ Ellmann p.479: Paula Weiss, "The German understood him to say, 'Wieviel Uhr? Wieviel Uhr?'"
 
 |_It saon is late. 'Tis endless now senne eye or erewone last saw_
 / id 15
@@ -8135,6 +8150,8 @@
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 8\(c\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n18008c
 / +* "joakimono" Ω joakimono: N18 (VI.B.8): 20(g)
 : += . "(?<=: )N18\ \(VI\.B\.8\):\ 20\(g\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n18020g
+/ +* "great\ Finnleader\ himself" Λ Ellmann p.97: Joyce, for his part, remembered how Polly describes in Act II [of Robertson's Caste] the mimicking, at Astley’s Amphitheatre in London, of Napoleon on horseback before the battle of Waterloo. 
+: += . "Caste" -> https://en.wikipedia.org/wiki/Caste_(play)
 
 |riding the high horse there forehengist? Father of Otters, it is
 / id 12
@@ -8702,6 +8719,8 @@
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 92\(b\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n17092b
 / +* "He\ had\ buckgoat\ paps\ on" Ω He had buckgoat paps on: N9 (VI.B.1): 6(e)
 : += . "(?<=: )N9\ \(VI\.B\.1\):\ 6\(e\)$" -> https://jjda.ie/f/flex/h/l39h.htm#n09006e
+/ +* "He\ had\ buckgoat\ paps\ on" Λ Ellmann p.478: Paula Weiss
+/ +* "Hircus Civis Eblanensis" Λ HCE
 
 |him, soft ones for orphans. Ho, Lord! Twins of his bosom. Lord
 / id 28

@@ -364,6 +364,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod556.htm#She
 / +* "Easter" Ω Easter: N19 (VI.B.19): 201(c)
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 201\(c\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19201c
+/ +* "Holiday, Christmas, Easter" Λ HCE
 
 |the wonderful widow of eighteen springs, Madame Isa Veuve La
 / id 09
@@ -4923,7 +4924,7 @@
 : += . "(?<=: )Sheets\ VIII:\ 18\(e\)$" -> https://jjda.ie/f/flex/s/l39s.htm#sh8018e
 / +* "brigadier\-general" Ω brigadier-general: N52 (VI.B.42): 26(e)
 : += . "(?<=: )N52\ \(VI\.B\.42\):\ 26\(e\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n52026e
-/ +* "Nolan" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Nolan" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |admiral Browne, with — who can doubt it? — his golden beagles
 / id 23
@@ -6627,6 +6628,7 @@
 : place foot
 / +* "Horsehem" Ω Horsehem: N20 (VI.B.13): 22(i)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 22\(i\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20022i
+/ +* "Horsehem\ coughs" Λ HCE
 
 |enough. Annshee lispes privily.
 / id 26
@@ -6636,6 +6638,8 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod571.htm#privily
 / +* "privily\." Ω privily.: N20 (VI.B.13): 14(d)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 14\(d\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20014d
+/ +* "enough" Λ HCE
+/ +* "Annshee\ lispes\ privily" Λ ALP
 
 |— He is quieter now.
 / id 27
@@ -7427,6 +7431,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod574.htm#trustee
 / +* "trustee" Ω trustee: N20 (VI.B.13): 39(k)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 39\(k\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20039k
+/ +* "heathen church emergency" Λ HCE
 
 |fund, suing by its trustee, a resigned civil servant, for the pay-
 / id 08
@@ -9073,6 +9078,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod578.htm#ethnicist
 / +* "deft" Ξ deft
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod578.htm#deft
+/ +* "Hecklar's champion ethnicist" Λ HCE
 
 |fuchser schouws daft as a fish! He's the dibble's own doges for
 / id 13
@@ -9612,6 +9618,7 @@
 : += . "(?<=: )N12\ \(VI\.B\.14\):\ 27\(b\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n12027b
 / +* "Herenow\ chuck" Ω Herenow chuck: N20 (VI.B.13): 210(e)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 210\(e\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20210e
+/ +* "Herenow\ chuck" Λ HCE
 
 |english and learn to pray plain. Lean on your lunch. No cods
 / id 21
@@ -9621,6 +9628,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod579.htm#cod
 / +* "Lean\ on\ your\ lunch\." Ω Lean on your lunch.: N19 (VI.B.19): 162(f)
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 162\(f\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19162f
+/ +* "english" Λ HCE
 
 |before Me. Practise preaching. Think in your stomach. Import
 / id 22
@@ -10023,6 +10031,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod580a.htm#ambling
 / +* "limfy" Ξ limfy
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod580a.htm#lympha
+/ +* "ambling\ limfy" Λ ALP
 
 |peepingpartner, the slave of the ring that worries the hand that
 / id 26
@@ -10030,6 +10039,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod580a.htm#The
 / +* "slave\ of\ the\ ring" Ω slave of the ring: N14 (VI.B.7): 196(b)
 : += . "(?<=: )N14\ \(VI\.B\.7\):\ 196\(b\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n14196b
+/ +* "peepingpartner" Λ ALP
 
 |sways the lamp that shadows the walk that bends to his bane the
 / id 27
@@ -10228,6 +10238,7 @@
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 84\(e\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19084e
 / +* "Heinz\ cans\ everywhere" Ω Heinz cans everywhere: N17 (VI.B.9): 93(g)
 : += . "(?<=: )N17\ \(VI\.B\.9\):\ 93\(g\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n17093g
+/ +* "Heinz cans everywhere" Λ HCE
 
 |and the swanee her ainsell and Eyrewaker's family sock that they
 / id 06
@@ -10597,6 +10608,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#experimenter
 / +* "thanksalot" Ω thanksalot: N19 (VI.B.19): 16(b)
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 16\(b\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19016b
+/ +* "huskiest coaxing experimenter" Λ HCE
 
 |that ever gave his best hand into chancerisk, wishing him with
 / id 04
@@ -10836,6 +10848,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#maidenhead
 / +* "Youghal" Ξ Youghal
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#YOUGHAL
+/ +* "Humpfrey,\ champion" Λ HCE
 
 |emir, holds his own. Shysweet, she rests.
 / id 27
@@ -10847,6 +10860,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#MacMahon
 / +* "emir," Ω emir,: N20 (VI.B.13): 33(a)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 33\(a\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20033a
+/ +* "emir" Λ HCE
 
 |Or show pon him now, will you! Derg rudd face should take
 / id 28
@@ -10930,6 +10944,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#drew
 / +* "mettroll" Ξ mettroll
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod582.htm#metropolis
+/ +* "all\ ladies\ please" Λ ALP
 
 |ops. Leary, leary, twentytun nearly, he's plotting kings down
 / id 35
@@ -13590,6 +13605,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod589.htm#weighty
 / +* "bourse" Ξ bourse
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod589.htm#bourse
+/ +* "hugest" Λ HCE
 
 |commercial emporialist, with his sons booing home from afar
 / id 10
@@ -13599,6 +13615,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter34/prevod589.htm#boo
 / +* "commercial" Ω commercial: N19 (VI.B.19): 46(f)
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 46\(f\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19046f
+/ +* "commercial\ emporialist" Λ HCE
 
 |and his daughters bridling up at his side. Finner!
 / id 11
@@ -14132,6 +14149,7 @@
 : += . "(?<=: )N19\ \(VI\.B\.19\):\ 221\(a\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n19221a
 / +* "Fourth\ position" Ω Fourth position: N20 (VI.B.13): 1(g)
 : += . "(?<=: )N20\ \(VI\.B\.13\):\ 1\(g\)$" -> https://jjda.ie/f/flex/s/l39s.htm#n20001g
+/ +* "honoured\ christmastyde\ easteredman" Λ HCE
 
 |tion. How johnny! Finest view from horizon. Tableau final.
 / id 23

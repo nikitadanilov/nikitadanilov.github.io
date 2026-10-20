@@ -175,6 +175,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod593a.htm#letter
 / +* "Securest\ jubilends\ albas\ Te" Ξ Securest jubilends albas Te
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod593a.htm#Securus
+/ +* "Securest\ jubilends\ albas\ Te" Λ Ellmann p.74: 'Untroubled, the world judges.' Augustine, _Contra Epistolam Parmeniani_, II, 24. [...] Newman’s Apologia drew Joyce’s attention to the phrase.
 
 |moram. Clogan slogan. Quake up, dim dusky, wook doom for
 / id 14
@@ -608,6 +609,7 @@
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 119\(f\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56119f
 / +* "horned\ cairns" Ω horned cairns: N53 (VI.B.46): 15(c)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 15\(c\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n53015c
+/ +* "horned cairns erge" Λ HCE
 
 |to floran frohn, idols of isthmians. Overwhere. Gaunt grey
 / id 25
@@ -768,6 +770,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod594.htm#ceol
 / +* "kursses," Ω kursses,: N56 (VI.B.41): 117(g)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 117\(g\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56117g
+/ +* "Henge\ Ceol\-" Λ HCE
 
 |Pages: 1939 Faber, 1958 Viking, 2010 Rose and O'Hanlon.
 / id scans
@@ -797,6 +800,7 @@
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 117\(d\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56117d
 / +* "each\ and\ one\?" Ω each and one?: N56 (VI.B.41): 117(e)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 117\(e\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56117e
+/ +* "leges,\ Exmooth" Λ HCE
 
 |and the quick quoke. But life wends and the dombs spake!
 / id 02
@@ -1271,6 +1275,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod596.htm#kind
 / +* "chimers'" Ω chimers': N56 (VI.B.41): 154(e)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 154\(e\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56154e
+/ +* "hailed chimers' ersekind" Λ HCE
 
 |fum in his mow; awike in wave risurging into chrest; _victis poenis_
 / id 06
@@ -1406,6 +1411,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod596.htm#ceathar
 / +* "bloke" Ξ bloke
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod596.htm#bloke
+/ +* "holiday" Λ HCE
 
 |crowd encounter; benedicted be the barrel; kilderkins, lids off; a
 / id 17
@@ -1417,6 +1423,7 @@
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 117\(j\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56117j
 / +* "a(?=$)" Ω a: N56 (VI.B.41): 115(i)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 115\(i\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56115i
+/ +* "crowd\ encounter" Λ HCE
 
 |roache, an oxmaster, a sort of heaps, a pamphilius, a vintivat
 / id 18
@@ -1530,6 +1537,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod596.htm#holocaust
 / +* "chyst" Ω chyst: N53 (VI.B.46): 15(d)
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ 15\(d\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n53015d
+/ +* "hullow chyst ex" Λ HCE
 
 |cavement; astronomically fabulafigured; as Jambudvispa Vipra
 / id 29
@@ -2579,7 +2587,7 @@
 : += . "(?<=: )VI\.C\.18:\ 35\(g\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#c18035g
 / +* "Tip\.(?=$)" Ω Tip.: VI.C.18: 37(h)
 : += . "(?<=: )VI\.C\.18:\ 37\(h\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#c18037h
-/ +* "Browne yet Noland" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "Browne yet Noland" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |Advert.
 / id 24
@@ -2992,6 +3000,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod600a.htm#Lochlannensis
 / +* "Homos\ Circas\ Elochlannensis_!" Ω Homos Circas Elochlannensis!: N56 (VI.B.41): 142(e)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 142\(e\)$" -> https://jjda.ie/f/flex/ta/l39ta.htm#n56142e
+/ +* "Homos Circas Elochlannensis" Λ HCE
 
 |showplace at Leeambye. Old Wommany Wyes. Pfif! But, while
 / id 30
@@ -4516,6 +4525,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod604.htm#hagiographic
 / +* "aubrey" Ξ aubrey
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod604.htm#Aubrey
+/ +* "Hagiographice canat Ecclesia" Λ HCE
 
 |first shall show. Inattendance who is who is will play that's what's
 / id 20
@@ -7298,6 +7308,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod612.htm#Sukkot
 / +* "Sukkot\?" Ω Sukkot?: N56 (VI.B.41): 246(h)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 246\(h\)$" -> https://jjda.ie/f/flex/tc/l39tc.htm#n56246h
+/ +* "Hump cumps Ebblybally" Λ HCE
 
 |Punc. Bigseer, refrects the petty padre, whackling it out, a
 / id 16
@@ -7758,6 +7769,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod613.htm#chalice
 / +* "likkypuggers" Ξ likkypuggers
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod613.htm#buy
+/ +* "Health,\ chalce,\ endnessnessessity" Λ HCE
 
 |a poke! The folgor of the frightfools is olympically optimo-
 / id 28
@@ -9312,6 +9324,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod618.htm#Lilliburlero
 / +* "jump\ a\ little\ bit" Ξ jump a little bit
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod618.htm#What
+/ +* "a\ lady!\)\ pulling" Λ ALP
 
 |find out what goes on when love walks in besides the solicitous
 / id 18
@@ -9613,6 +9626,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod619.htm#Luvia
 / +* "Pollabella" Ξ Pollabella
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod619.htm#polla
+/ +* "Alma\ Luvia,\ Pollabella" Λ ALP
 
 |P.S. Soldier Rollo's sweetheart. And she's about fetted up now
 / id 17
@@ -10673,11 +10687,14 @@
 / id 12
 / +* "Buah" Ξ Buah
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod622.htm#buadh
+/ +* "As" Λ ALP
 
 |leisure paces. And the helpyourselftoastrool cure's easy. It seems
 / id 13
 / +* "leisure" Ξ leisure
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod622.htm#leisure
+/ +* "helpyourselftoastrool cure's easy" Λ HCE
+/ +* "leisure\ paces" Λ ALP
 
 |so long since, ages since. As if you had been long far away.
 / id 14
@@ -11202,6 +11219,7 @@
 / id 33
 / +* "me(?=\ )" Π me] 1939 1958; be 2010
 : place foot
+/ +* "hardest" Λ HCE
 
 |crux ever. Hack an axe, hook an oxe, hath an an, heth hith ences.
 / id 34
@@ -11215,6 +11233,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod623.htm#aleph
 / +* "hath" Ξ hath
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter41/prevod623.htm#heth
+/ +* "crux\ ever" Λ HCE
 
 |But once done, dealt and delivered, tattat, you're on the map.
 / id 35
@@ -11854,6 +11873,7 @@
 : += . "(?<=: )N57\ \(VI\.B\.47\):\ 53\(a\)$" -> https://jjda.ie/f/flex/te/l39te.htm#n57053a
 / +* "Look\ what\ I\ found!" Ω Look what I found!: N57 (VI.B.47): 53(b)
 : += . "(?<=: )N57\ \(VI\.B\.47\):\ 53\(b\)$" -> https://jjda.ie/f/flex/te/l39te.htm#n57053b
+/ +* "A\ lintil\ pea" Λ ALP
 
 |This cara weeseed. Pretty mites, my sweetthings, was they poor-
 / id 24

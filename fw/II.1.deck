@@ -1143,6 +1143,7 @@
 : place foot
 / +* "grafted" Ξ grafted
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod221.htm#take
+/ +* "All\ Ladies'\ presents" Λ ALP
 
 |Rock rent. Phenecian blends and Sourdanian doofpoosts by
 / id 32
@@ -4848,7 +4849,7 @@
 : place foot
 / +* "tumtum" Ξ tumtum
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod231.htm#tumtum
-/ +* "^.*$" Λ Ellman p.33: from 'Et Tu, Healy'.
+/ +* "^.*$" Λ Ellmann p.33: from 'Et Tu, Healy'.
 
 |_Whereof in youthfood port I preyed_
 / id 06
@@ -6637,6 +6638,7 @@
 / +* "A" ρ A Poetry Channel: Book 2, Chap 1, 235-237
 : += . "(?<=ρ ).+" -> https://www.youtube.com/watch?v=LS-jmCs-ELg&t=6s
 : place foot
+/ +* "Their\ orison\ arises\ misquewhite\ as\ Osman\ glory" Λ Ellmann p.510: he parodied _The Waste Land_
 
 |ing wasteward, leaves to the soul of light its fading silence (allah-
 / id 07
@@ -7374,6 +7376,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod237.htm#espy
 / +* "through\ them," Ω through them,: N41 (VI.B.33): 190(a)
 : += . "(?<=: )N41\ \(VI\.B\.33\):\ 190\(a\)$" -> https://jjda.ie/f/flex/kc/l39kc.htm#n41190a
+/ +* "he can eyespy" Λ HCE
 
 |their selfcolours, nevertheleast their tissue peepers, (meaning
 / id 04
@@ -7530,6 +7533,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod237.htm#arise
 / +* "ceive" Ξ ceive
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod237.htm#conceive
+/ +* "and\ letters\ play" Λ ALP
 
 |chief celtech chappy, from your holy post now you hast as-
 / id 20
@@ -9011,6 +9015,7 @@
 : += . "(?<=: )N53\ \(VI\.B\.46\):\ appendix\ 4\(v\)$" -> https://jjda.ie/f/flex/kd/l39kd.htm#n53a04v
 / +* "heather\ cliff" Ω heather cliff: VI.C.18: 62(a)
 : += . "(?<=: )VI\.C\.18:\ 62\(a\)$" -> https://jjda.ie/f/flex/kd/l39kd.htm#c18062a
+/ +* "heather cliff emurgency" Λ HCE
 
 |days because souffrant chronic from a plentitude of house torts.
 / id 07
@@ -9976,6 +9981,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod242.htm#Gladstone
 / +* "Howarden's\ Castle,\ Englandwales\." Ω Howarden's Castle, Englandwales.: N41 (VI.B.33): 25(b)
 : += . "(?<=: )N41\ \(VI\.B\.33\):\ 25\(b\)$" -> https://jjda.ie/f/flex/kd/l39kd.htm#n41025b
+/ +* "Howarden's Castle, Englandwales" Λ HCE
 
 |_be the alleance of iern on his flamen vestacoat, the fibule of brooch-_
 / id 34
@@ -10156,6 +10162,7 @@
 : += . "(?<=: )Sheets\ I:\ 12\(c\)$" -> https://jjda.ie/f/flex/kd/l39kd.htm#sh1012c
 / +* "jackticktating" Ω jackticktating: N41 (VI.B.33): 23(h)
 : += . "(?<=: )N41\ \(VI\.B\.33\):\ 23\(h\)$" -> https://jjda.ie/f/flex/kd/l39kd.htm#n41023h
+/ +* "jackticktating" Λ Ellmann p.651: jactitation, the false and malicious claim to be married to another person (HCE to ALP).
 
 |liness due to pannellism and grime for that he harboured her when
 / id 09
@@ -10951,6 +10958,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod245.htm#pageboy
 / +* "Brights" Ξ Brights
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod245.htm#bright
+/ +* "apes\.\ Lights,\ pageboy" Λ ALP
 
 |we'll be brights. With help of Hanoukan's lamp. When otter
 / id 05
@@ -11153,6 +11161,7 @@
 : += . "(?<=: )VI\.C\.18:\ 39\(d\)$" -> https://jjda.ie/f/flex/ke/l39ke.htm#c18039d
 
 |of the way for jogjoy. Hulker's cieclest elbownunsense. Hold
+/ +* "Hulker's cieclest elbownunsense" Λ HCE
 / id 21
 / +* "jog" Ξ jog
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod245.htm#jog
@@ -11281,6 +11290,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod245.htm#trouble
 / +* "troublebedded" Ω troublebedded: N38 (VI.B.32): 125(a)
 : += . "(?<=: )N38\ \(VI\.B\.32\):\ 125\(a\)$" -> https://jjda.ie/f/flex/ke/l39ke.htm#n38125a
+/ +* "here\'s\ dapplebellied\ mugs\ and\ troublebedded" Λ Ellmann p.550: the Euston Hotel, London, Mr E. H. Knight, manager.
 
 |rooms and sawdust strown in expectoration and for ratification by
 / id 31
@@ -11423,6 +11433,7 @@
 : += . "(?<=: )VI\.C\.18:\ 79\(d\)$" -> https://jjda.ie/f/flex/ke/l39ke.htm#c18079d
 
 |tog! God es El? Housefather calls enthreateningly. From Bran-
+/ +* "Housefather calls enthreateningly" Λ HCE
 / id 06
 / +* "God" Π God] 1939 1958; Qod 2010
 : place foot
@@ -14817,6 +14828,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod254.htm#Polycarp
 / +* "as\ John," Ω as John,: N54 (VI.B.45): 82(d)
 : += . "(?<=: )N54\ \(VI\.B\.45\):\ 82\(d\)$" -> https://jjda.ie/f/flex/kf/l39kf.htm#n54082d
+/ +* "human\ chain\ extends" Λ HCE
 
 |carp and Irenews eye-to-eye ayewitnessed and to Paddy Palmer,
 / id 10
@@ -14953,6 +14965,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod254.htm#esquiliae
 / +* "Faineant" Ξ Faineant
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter21/prevod254.htm#faineant
+/ +* "Hocus\ Crocus,\ Esquilocus" Λ HCE
 
 |foes in furrinarr! Doth it not all come aft to you, puritysnooper,
 / id 21

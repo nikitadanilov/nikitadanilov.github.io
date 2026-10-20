@@ -40,6 +40,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod383a.htm#muster
 / +* "Mark" Ξ Mark
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod383a.htm#King
+/ +* "^.*$" Λ Ellmann p.566: theme of cuckoldry, and the squawking of the sea gulls to suggest the derision visited upon King Mark
 
 |_Sure he hasn't got much of a bark_
 / id 02
@@ -2999,7 +3000,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod391.htm#brown
 / +* "brownesberrow" Ω brownesberrow: N56 (VI.B.41): 193(k)
 : += . "(?<=: )N56\ \(VI\.B\.41\):\ 193\(k\)$" -> https://jjda.ie/f/flex/nb/l39nb.htm#n56193k
-/ +* "brownes" Λ Ellman p.61: Browne and Nolan = Bruno of Nola
+/ +* "brownes" Λ Ellmann p.61: Browne and Nolan = Bruno of Nola
 
 |nolandsland, the poor old chronometer, all persecuted with ally
 / id 15
@@ -4318,6 +4319,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod394.htm#immanence
 / +* "Itself(?=\ i)" Ξ Itself
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod394.htm#Sinn
+/ +* "hear,$" Λ HCE
 
 |Caller Errin!) exteriorises on this ourherenow plane in disunited
 / id 34
@@ -4327,6 +4329,7 @@
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod394.htm#exteriorize
 / +* "ourherenow" Ξ ourherenow
 : += . "(?<=Ξ ).+" -> https://finwake.com/1024chapter24/prevod394.htm#our94
+/ +* "Caller\ Errin" Λ HCE
 
 |solod, likeward and gushious bodies with (science, say!) peril-
 / id 35
@@ -5686,6 +5689,7 @@
 : += . "(?<=: )SA\ \&\ SB\(VI\.A\):\ 801\(y\)$" -> https://jjda.ie/f/flex/nb/l39nb.htm#sa0801y
 / +* "highly\ continental" Ω highly continental: SA & SB(VI.A): 301(i)
 : += . "(?<=: )SA\ \&\ SB\(VI\.A\):\ 301\(i\)$" -> https://jjda.ie/f/flex/nb/l39nb.htm#sa0301i
+/ +* "highly continental evenements" Λ HCE
 
 |for meter and peter to temple an eslaap, for auld acquaintance, to
 / id 14
